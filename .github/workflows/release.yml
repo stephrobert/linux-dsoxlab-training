@@ -22,6 +22,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write # créer la release et y attacher le tar.gz
+      id-token: write # OIDC pour signer la provenance SLSA
+      attestations: write # enregistrer l'attestation de build SLSA du tar.gz
     steps:
       - name: Checkout
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
@@ -60,6 +62,13 @@ jobs:
               solution ssh
           sha256sum "${PKG}.tar.gz" > "${PKG}.tar.gz.sha256"
           echo "PKG=${PKG}" >> "$GITHUB_ENV"
+
+      # Provenance SLSA (niveau 3) du bundle tar.gz, vérifiable avec
+      # `gh attestation verify <tar.gz> --repo stephrobert/linux-dsoxlab-training`.
+      - name: Attest build provenance
+        uses: actions/attest-build-provenance@0f67c3f4856b2e3261c31976d6725780e5e4c373 # v4.1.1
+        with:
+          subject-path: "${{ env.PKG }}.tar.gz"
 
       - name: Create GitHub release
         env:

@@ -54,7 +54,7 @@ jobs:
           threshold: "100"
           upload-sarif: "true"          # findings to the Security tab (internal)
           upload-artifacts: "false"     # no downloadable artifact published
-          score-push: "false"          # no external badge published
+          score-push: "true"           # publish the score (drives the README badge)
           # Fine-grained PAT (Administration + Contents + Metadata = Read),
           # stored as an environment secret in the protected `security`
           # environment, so branchMustBeProtected is verified for real.
