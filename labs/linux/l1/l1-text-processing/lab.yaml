@@ -1,0 +1,34 @@
+id: l1-text-processing
+title: "Transform and aggregate text with cut, sort, uniq, sed and awk"
+description: "Slice columns, deduplicate, count occurrences, sum a field and rewrite a delimiter to turn a raw record file into exact facts."
+section: linux
+type: lab
+level: l1
+track:
+  - fondamentaux
+skills:
+  - cut
+  - sort
+  - uniq
+  - sed
+  - awk
+difficulty: beginner
+estimated_time: 30m
+runtime:
+  type: shell
+  workdir: challenge/work
+  fixtures:
+    - ventes.csv
+distros:
+  - debian12
+  - ubuntu24.04
+  - rhel10
+  - almalinux10
+doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/traiter-texte/cut-tr-paste/
+validation:
+  functional: true
+  security: false
+  persistence_after_reboot: false
+certification_tags:
+  - rhcsa
+  - lfcs

@@ -1,0 +1,32 @@
+id: l1-prepare-vm
+title: Identify your Linux machine
+description: Run commands to collect your system's hostname, distribution, kernel
+  version and IP address. Produce a machine identity card stored in vm-info.txt.
+section: linux
+level: l1
+lab_type: lab
+bloc: 0
+bloc_order: 3
+track:
+- fundamentals
+skills:
+- linux-concepts
+- terminal-basics
+difficulty: beginner
+estimated_time: 15m
+runtime:
+  type: shell
+  topology: local
+  workdir: challenge/work
+  fixtures:
+  - vm-info.txt
+distros:
+- debian12
+- ubuntu24.04
+- rhel10
+doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/installer-vm/
+validation:
+  functional: true
+  security: false
+  persistence_after_reboot: false
+certification_tags: []

@@ -1,0 +1,3 @@
+id: l1-text-processing
+title: "Transformer et agréger du texte avec cut, sort, uniq, sed et awk"
+description: "Découper des colonnes, dédoublonner, compter, sommer un champ et réécrire un séparateur pour transformer un fichier brut en faits précis."

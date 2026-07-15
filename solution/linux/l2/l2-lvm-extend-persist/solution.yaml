@@ -1,0 +1,23 @@
+---
+# Solution formateur — étend lvdata à 3 GiB et agrandit le XFS. Idempotent.
+# Le montage /data est déjà déclaré dans /etc/fstab par UUID par le setup, donc
+# la persistance est acquise ; le point clé est d'agrandir le filesystem après
+# le lvextend (sinon l'espace ajouté reste invisible).
+- name: Solution lvm-extend-persist
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Extend lvdata to 3 GiB (only if smaller)
+      ansible.builtin.shell: |
+        set -e
+        cur=$(lvs --noheadings --units b -o lv_size vgdata/lvdata | tr -dc '0-9')
+        want=$((3 * 1024 * 1024 * 1024))
+        if [ "${cur:-0}" -lt "$want" ]; then
+          lvextend -L 3G /dev/vgdata/lvdata
+        fi
+      changed_when: false
+
+    - name: Grow the XFS filesystem online
+      ansible.builtin.command: xfs_growfs /data
+      changed_when: false

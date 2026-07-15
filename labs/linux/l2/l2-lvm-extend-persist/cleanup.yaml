@@ -1,0 +1,25 @@
+---
+# Remet à zéro pour que le lab soit rejouable : démonte /data, supprime le LV,
+# le VG, le PV, l'entrée fstab et les marqueurs.
+- name: Cleanup lvm-extend-persist lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Tear down the LVM stack (best-effort)
+      ansible.builtin.shell: |
+        set +e
+        umount /data 2>/dev/null
+        lvremove -y vgdata/lvdata 2>/dev/null
+        vgremove -y vgdata 2>/dev/null
+        if [ -f /root/lvm-disk.env ]; then . /root/lvm-disk.env; pvremove -y "$DISK" 2>/dev/null; fi
+        rm -f /root/lvm-disk.env /root/.lvm-lab-ready
+        rmdir /data 2>/dev/null
+      changed_when: false
+
+    - name: Remove the /data fstab entry
+      ansible.builtin.lineinfile:
+        path: /etc/fstab
+        regexp: '\s/data\s+xfs'
+        state: absent
+      failed_when: false

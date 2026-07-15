@@ -1,0 +1,3 @@
+id: l1-tar-archives
+title: "Archiver, compresser et extraire sélectivement avec tar, gzip et bzip2"
+description: "Créer des archives gzip et bzip2, lister leur contenu et extraire un seul membre dans un répertoire cible."

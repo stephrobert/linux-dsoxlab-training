@@ -1,0 +1,32 @@
+id: l1-choose-distro
+title: Choose your reference Linux distribution
+description: Compare Debian/Ubuntu and RHEL-based distributions, understand the criteria
+  for choosing between them, and document your choice for three practical scenarios.
+section: linux
+level: l1
+lab_type: lab
+bloc: 0
+bloc_order: 2
+track:
+- fundamentals
+skills:
+- linux-concepts
+- terminal-basics
+difficulty: beginner
+estimated_time: 15m
+runtime:
+  type: shell
+  topology: local
+  workdir: challenge/work
+  fixtures:
+  - choix-distro.txt
+distros:
+- debian12
+- ubuntu24.04
+- rhel10
+doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/distributions-serveur/
+validation:
+  functional: true
+  security: false
+  persistence_after_reboot: false
+certification_tags: []

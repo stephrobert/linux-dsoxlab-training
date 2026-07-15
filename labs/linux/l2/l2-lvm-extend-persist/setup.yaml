@@ -1,0 +1,52 @@
+---
+# Met en place l'état initial : un LV lvdata de 1 GiB (XFS) monté sur /data via
+# fstab UUID. L'apprenant devra l'ÉTENDRE. Le disque additionnel est détecté
+# dynamiquement (kvm : /dev/vdb, incus : /dev/sdb) : on prend le seul disque qui
+# ne porte pas la racine.
+- name: Setup lvm-extend-persist lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Ensure LVM + XFS tooling
+      ansible.builtin.package:
+        name:
+          - lvm2
+          - xfsprogs
+        state: present
+      failed_when: false
+
+    - name: Detect the additional block device (not the root disk)
+      ansible.builtin.shell: |
+        set -e
+        root_src=$(findmnt -no SOURCE /)
+        root_disk=$(lsblk -no pkname "$root_src" 2>/dev/null | head -1)
+        extra=$(lsblk -dno NAME,TYPE | awk '$2=="disk"{print $1}' \
+                | grep -v "^${root_disk}$" | head -1)
+        [ -n "$extra" ] || { echo "no additional disk found" >&2; exit 1; }
+        echo "DISK=/dev/${extra}" > /root/lvm-disk.env
+      args:
+        creates: /root/lvm-disk.env
+
+    - name: Build the starting LVM (PV + VG vgdata + LV lvdata 1G + XFS + fstab UUID)
+      ansible.builtin.shell: |
+        set -e
+        . /root/lvm-disk.env
+        pvs "$DISK" >/dev/null 2>&1 || pvcreate -y "$DISK"
+        vgs vgdata >/dev/null 2>&1 || vgcreate vgdata "$DISK"
+        lvs vgdata/lvdata >/dev/null 2>&1 || lvcreate -y -L 1G -n lvdata vgdata
+        blkid /dev/vgdata/lvdata | grep -q xfs || mkfs.xfs -f /dev/vgdata/lvdata
+        mkdir -p /data
+        uuid=$(blkid -s UUID -o value /dev/vgdata/lvdata)
+        grep -q "UUID=$uuid" /etc/fstab || echo "UUID=$uuid /data xfs defaults 0 0" >> /etc/fstab
+        mountpoint -q /data || mount /data
+        touch /root/.lvm-lab-ready
+      args:
+        creates: /root/.lvm-lab-ready
+
+    - name: Brief the learner
+      ansible.builtin.debug:
+        msg: >-
+          /data est monté à 1 GiB (vgdata/lvdata, XFS). Objectif : étendre
+          lvdata à au moins 3 GiB, agrandir le XFS, et garder le montage
+          persistant (déjà déclaré dans /etc/fstab par UUID).

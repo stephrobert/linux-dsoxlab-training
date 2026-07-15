@@ -1,0 +1,2 @@
+title: "Rediriger les flux et chaîner des commandes avec des pipes"
+description: "Redirige la sortie standard et la sortie d'erreur, fusionne-les, et enchaîne des commandes avec des pipes pour produire des artefacts exacts."

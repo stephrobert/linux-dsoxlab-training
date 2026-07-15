@@ -1,0 +1,34 @@
+id: l1-tar-archives
+title: "Archive, compress and selectively extract with tar, gzip and bzip2"
+description: "Create gzip and bzip2 tarballs, list their contents, and extract a single member into a target directory."
+section: linux
+type: lab
+level: l1
+track:
+  - fondamentaux
+skills:
+  - tar
+  - gzip
+  - bzip2
+  - archives
+difficulty: beginner
+estimated_time: 25m
+runtime:
+  type: shell
+  workdir: challenge/work
+  fixtures:
+    - rapport.txt
+    - config.yaml
+    - notes.txt
+distros:
+  - debian12
+  - ubuntu24.04
+  - rhel10
+  - almalinux10
+doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/manipuler-fichiers-texte/archives-compression/
+validation:
+  functional: true
+  security: false
+  persistence_after_reboot: false
+certification_tags:
+  - rhcsa
