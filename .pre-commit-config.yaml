@@ -55,3 +55,16 @@ repos:
         language: system
         pass_filenames: false
         stages: [pre-push]
+
+      # The root README must list every lab with its guide URL. Regenerated
+      # from the real lab.yaml files; a stale catalog blocks the push.
+      - id: catalog-fresh
+        name: README catalog up to date (labs + guide URLs)
+        # --no-project: ephemeral env with just pyyaml, so uv does NOT resolve
+        # this repo's pyproject (which pins dsoxlab to a local path) — that would
+        # rebuild dsoxlab and rewrite uv.lock, which pre-commit flags as a
+        # modification, and would outright fail in CI where ../dsoxlab is absent.
+        entry: uv run --no-project --with pyyaml python scripts/gen_catalog.py --check
+        language: system
+        pass_filenames: false
+        stages: [pre-push]

@@ -166,7 +166,19 @@ def _read_lab_runtime(lab_root: Path) -> tuple[str, str | None]:
     with lab_yaml.open(encoding="utf-8") as fh:
         data = yaml.safe_load(fh) or {}
     runtime = data.get("runtime") or {}
-    return str(runtime.get("type", "shell")), runtime.get("host")
+    host = runtime.get("host")
+    # Labs VM mono/multi-hôte : le host peut vivre dans runtime.targets[].host
+    # (schéma des labs l2+). On prend la target ``default`` si déclarée, sinon
+    # la première.
+    if host is None:
+        targets = runtime.get("targets") or []
+        if targets:
+            default = runtime.get("default")
+            chosen = next(
+                (t for t in targets if t.get("name") == default), targets[0]
+            )
+            host = chosen.get("host")
+    return str(runtime.get("type", "shell")), host
 
 
 @pytest.fixture(scope="module", autouse=True)

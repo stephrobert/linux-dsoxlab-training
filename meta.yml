@@ -97,23 +97,28 @@ sections:
     title: "Fondamentaux (l1)"
     description: "Découvrir Linux, le shell, les fichiers — runtime: shell."
     labs:
-      - linux/l1/l1-01-discover-linux-map
-      - linux/l1/l1-02-choose-distro
-      - linux/l1/l1-03-prepare-vm
-      - linux/l1/l1-04-first-terminal
-      - linux/l1/l1-05-read-a-command
-      - linux/l1/l1-06-get-help
-      - linux/l1/l1-07-linux-filesystem
-      - linux/l1/l1-08-navigate-filesystem
-      - linux/l1/l1-09-paths-absolute-relative
+      - linux/l1/l1-discover-linux-map
+      - linux/l1/l1-choose-distro
+      - linux/l1/l1-prepare-vm
+      - linux/l1/l1-first-terminal
+      - linux/l1/l1-read-a-command
+      - linux/l1/l1-get-help
+      - linux/l1/l1-linux-filesystem
+      - linux/l1/l1-navigate-filesystem
+      - linux/l1/l1-paths-absolute-relative
+      - linux/l1/l1-redirections-pipes
+      - linux/l1/l1-grep-regex
+      - linux/l1/l1-text-processing
+      - linux/l1/l1-tar-archives
 
   - id: l2
     title: "Exploiter + Maintenir (l2)"
     description: "Scripts, services, paquets, réseau, sécurité de base — runtime: vm."
     labs:
-      - linux/l2/l2-04-swap-management
+      - linux/l2/l2-swap-management
       - linux/l2/l2-raid-mdadm
       - linux/l2/l2-luks-encryption
+      - linux/l2/l2-lvm-extend-persist
 
   - id: depanner
     title: "Dépanner"

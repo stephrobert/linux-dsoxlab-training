@@ -56,11 +56,19 @@ solution/…              # solution de référence, rejouée en CI pour se prou
 ```bash
 dsoxlab validate-structure     # le contrat meta.yml + lab.yaml
 dsoxlab check <id-du-lab>       # lancer les tests du lab (ou : pytest)
+python3 scripts/gen_catalog.py # rafraîchir le catalogue du README (labs + URLs)
 ```
+
+**Obligatoire avant chaque push :** le `README.md` racine et `README.fr.md`
+doivent lister **tous** les labs avec l'**URL de leur guide compagnon**. Le
+catalogue est généré à partir des vrais `lab.yaml` : lance
+`python3 scripts/gen_catalog.py` après avoir ajouté ou renommé un lab, et
+`python3 scripts/gen_catalog.py --check` pour vérifier. La CI et le hook
+`pre-push` refusent tous deux un catalogue périmé.
 
 ## Conventions
 
-- **Id de lab :** `<niveau>-<nn>-<slug>` (ex. `l1-04-first-terminal`),
+- **Id de lab :** `<niveau>-<slug>` (ex. `l1-first-terminal`),
   identique au nom du répertoire.
 - **Commits :** `feat(<lab>): …`, `fix: …`, `docs: …`, `test: …`.
 - **i18n :** `lab.fr.yaml` surcharge le `title` et la `description` uniquement.

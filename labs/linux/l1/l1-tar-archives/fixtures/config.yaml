@@ -1,0 +1,3 @@
+service: web
+port: 8080
+replicas: 3

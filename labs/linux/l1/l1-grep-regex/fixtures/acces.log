@@ -1,0 +1,10 @@
+192.168.1.10 - GET /index.html 200
+192.168.1.11 - POST /login 200
+10.0.0.5 - GET /admin 403
+192.168.1.10 - GET /style.css 200
+10.0.0.5 - POST /login 500
+172.16.0.2 - GET /api/users 502
+192.168.1.11 - POST /cart 200
+10.0.0.5 - GET /missing 404
+172.16.0.2 - POST /api/order 503
+192.168.1.10 - GET /logout 200

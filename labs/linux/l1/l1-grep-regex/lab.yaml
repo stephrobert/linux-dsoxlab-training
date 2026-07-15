@@ -1,0 +1,32 @@
+id: l1-grep-regex
+title: "Filter a log with grep and regular expressions"
+description: "Use grep with anchors, character classes, invert-match and count to extract exact facts from an access log."
+section: linux
+type: lab
+level: l1
+track:
+  - fondamentaux
+skills:
+  - grep
+  - regex
+  - filtering
+difficulty: beginner
+estimated_time: 25m
+runtime:
+  type: shell
+  workdir: challenge/work
+  fixtures:
+    - acces.log
+distros:
+  - debian12
+  - ubuntu24.04
+  - rhel10
+  - almalinux10
+doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/manipuler-fichiers-texte/filtrer-texte/
+validation:
+  functional: true
+  security: false
+  persistence_after_reboot: false
+certification_tags:
+  - rhcsa
+  - lfcs

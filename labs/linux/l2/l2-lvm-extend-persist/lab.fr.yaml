@@ -1,0 +1,2 @@
+title: "Étendre un volume logique et prouver que le montage survit au reboot"
+description: "Étends un volume logique LVM, agrandis le filesystem XFS, et rends le montage persistant via /etc/fstab par UUID."

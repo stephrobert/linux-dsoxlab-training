@@ -1,0 +1,3 @@
+id: l1-grep-regex
+title: "Filtrer un journal avec grep et les expressions régulières"
+description: "Utilise grep avec ancres, classes de caractères, invert-match et comptage pour extraire des faits précis d'un journal d'accès."

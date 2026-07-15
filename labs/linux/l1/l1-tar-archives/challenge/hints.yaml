@@ -1,0 +1,10 @@
+points: 100
+hints:
+  - text: "dGFyIHJlZ3JvdXBlIGV0IGNvbXByZXNzZSBlbiB1bmUgY29tbWFuZGUgOiB0YXIgY3pmIGRvY3MudGFyLmd6IGZpY2hpZXIxIGZpY2hpZXIyIGZpY2hpZXIzLiBjPWNyw6llciwgej1nemlwLCBmPW5vbSBkdSBmaWNoaWVyIGFyY2hpdmUu"
+    cost: 10
+  - text: "UG91ciBsaXN0ZXIgc2FucyBleHRyYWlyZSwgcmVtcGxhY2UgYyBwYXIgdCA6IHRhciB0emYgZG9jcy50YXIuZ3ogPiBsaXN0ZS50eHQuIFJpZW4gbidlc3Qgw6ljcml0IHN1ciBsZSBkaXNxdWUsIGp1c3RlIGxhIGxpc3RlIGRlcyBtZW1icmVzLg=="
+    cost: 10
+  - text: "UG91ciBleHRyYWlyZSBVTiBTRVVMIGZpY2hpZXIgZGFucyB1biBkb3NzaWVyIDogY3LDqWUgZCdhYm9yZCBsZSBkb3NzaWVyIChta2RpciAtcCBleHRyYWl0KSwgcHVpcyB0YXIgeHpmIGRvY3MudGFyLmd6IC1DIGV4dHJhaXQgcmFwcG9ydC50eHQuIHg9ZXh0cmFpcmUsIC1DPW/DuSwgZXQgbGUgbm9tIGR1IG1lbWJyZSBsaW1pdGUgbCdleHRyYWN0aW9uLg=="
+    cost: 15
+  - text: "YnppcDIgc2UgY2hvaXNpdCBhdmVjIGogYXUgbGlldSBkZSB6IDogdGFyIGNqZiBkb2NzLnRhci5iejIgcmFwcG9ydC50eHQgY29uZmlnLnlhbWwgbm90ZXMudHh0LiBNw6ptZSBsb2dpcXVlLCBhdXRyZSBjb21wcmVzc2V1ci4="
+    cost: 20

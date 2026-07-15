@@ -13,13 +13,9 @@ updates:
     cooldown:
       default-days: 7
 
-  # Dépendances Python de dev (pytest, dsoxlab) via uv.
-  - package-ecosystem: "uv"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-    open-pull-requests-limit: 5
-    commit-message:
-      prefix: "chore(deps)"
-    cooldown:
-      default-days: 7
+  # Pas d'écosystème "uv" ici : ce dépôt de contenu n'a aucune dépendance
+  # Python à builder (pyproject.toml : package = false, dependencies = []).
+  # La seule dev-dep est dsoxlab, déclaré en source chemin local éditable
+  # (`../dsoxlab`) que Dependabot ne peut pas atteindre — il abandonne sur
+  # `path_dependencies_not_reachable`. dsoxlab est suivi et publié dans son
+  # propre dépôt ; ici on ne surveille que les actions GitHub.

@@ -1,0 +1,34 @@
+id: l1-discover-linux-map
+title: 'Map Linux: kernel, distribution and key directories'
+description: 'Explore what Linux is made of: run real commands on your own system
+  to discover the kernel, your distribution and the role of /etc, /var/log and /proc.
+  Fill in a knowledge map.'
+section: linux
+level: l1
+lab_type: lab
+bloc: 0
+bloc_order: 1
+track:
+- fundamentals
+skills:
+- linux-concepts
+- terminal-basics
+- man-help
+difficulty: beginner
+estimated_time: 20m
+runtime:
+  type: shell
+  topology: local
+  workdir: challenge/work
+  fixtures:
+  - notions.md
+distros:
+- debian12
+- ubuntu24.04
+- rhel10
+doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/notions/
+validation:
+  functional: true
+  security: false
+  persistence_after_reboot: false
+certification_tags: []

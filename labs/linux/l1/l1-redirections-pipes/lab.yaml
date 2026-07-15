@@ -1,0 +1,32 @@
+id: l1-redirections-pipes
+title: "Redirect streams and chain commands with pipes"
+description: "Redirect stdout and stderr, merge them, and chain commands with pipes to produce exact artifacts."
+section: linux
+type: lab
+level: l1
+track:
+  - fondamentaux
+skills:
+  - redirections
+  - pipes
+  - stderr
+  - stdout
+difficulty: beginner
+estimated_time: 20m
+runtime:
+  type: shell
+  workdir: challenge/work
+  fixtures:
+    - journal.log
+distros:
+  - debian12
+  - ubuntu24.04
+  - rhel10
+  - almalinux10
+doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/manipuler-fichiers-texte/redirections-pipes/
+validation:
+  functional: true
+  security: false
+  persistence_after_reboot: false
+certification_tags:
+  - rhcsa

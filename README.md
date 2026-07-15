@@ -150,14 +150,46 @@ repo in `.dsoxlab-context.json`.
 
 ## Catalog
 
-Labs live under `labs/linux/` and are ordered by `meta.yml`:
+Labs live under `labs/linux/` and are ordered by `meta.yml`. The table below is
+generated from the real `lab.yaml` files — run `python3 scripts/gen_catalog.py`
+to refresh it.
 
-| Block | Focus | Runtime |
-|---|---|---|
-| **L1** | Fundamentals — shell, files, exploration (real-state validated) | shell |
-| **L2** | Storage & security — swap, LUKS, RAID, hardening | VM |
-| **depanner** | Troubleshooting — services, boot, logs | VM |
-| **capstones** | RHCSA/LFCS mock exams | VM |
+<!-- LABS:START -->
+### Fondamentaux (l1)
+
+| Lab (id) | Title | Level | Runtime | Companion guide |
+|---|---|---|---|---|
+| `l1-discover-linux-map` | Map Linux: kernel, distribution and key directories | l1 | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/notions/) |
+| `l1-choose-distro` | Choose your reference Linux distribution | l1 | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/distributions-serveur/) |
+| `l1-prepare-vm` | Identify your Linux machine | l1 | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/installer-vm/) |
+| `l1-first-terminal` | First steps in the terminal | l1 | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/prompt-terminal/) |
+| `l1-read-a-command` | Read and decode a command | l1 | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/anatomie-commande/) |
+| `l1-get-help` | Get help from the command line | l1 | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/obtenir-aide/) |
+| `l1-linux-filesystem` | Linux filesystem hierarchy (FHS) | l1 | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/se-reperer-fichiers/arborescence-fhs/) |
+| `l1-navigate-filesystem` | Navigate the filesystem | l1 | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/se-reperer-fichiers/navigation-fichiers/) |
+| `l1-paths-absolute-relative` | Absolute and relative paths | l1 | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/se-reperer-fichiers/chemins-linux/) |
+| `l1-redirections-pipes` | Redirect streams and chain commands with pipes | l1 | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/manipuler-fichiers-texte/redirections-pipes/) |
+| `l1-grep-regex` | Filter a log with grep and regular expressions | l1 | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/manipuler-fichiers-texte/filtrer-texte/) |
+| `l1-text-processing` | Transform and aggregate text with cut, sort, uniq, sed and awk | l1 | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/traiter-texte/cut-tr-paste/) |
+| `l1-tar-archives` | Archive, compress and selectively extract with tar, gzip and bzip2 | l1 | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/manipuler-fichiers-texte/archives-compression/) |
+
+### Exploiter + Maintenir (l2)
+
+| Lab (id) | Title | Level | Runtime | Companion guide |
+|---|---|---|---|---|
+| `l2-swap-management` | Add and manage swap space | l2 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/swap/) |
+| `l2-raid-mdadm` | Build a software RAID 1 with mdadm | l2 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/raid-mdadm/) |
+| `l2-luks-encryption` | Encrypt a disk with LUKS | l2 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/chiffrement-luks/) |
+| `l2-lvm-extend-persist` | Extend a logical volume and prove the mount survives a reboot | l2 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/lvm/) |
+
+### Dépanner
+
+| Lab (id) | Title | Level | Runtime | Companion guide |
+|---|---|---|---|---|
+| `depanner-service-crash-loop` | Diagnose and fix a systemd service stuck in a crash loop | l2 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/depanner/service-ne-demarre-pas/) |
+
+_18 labs — table générée par `scripts/gen_catalog.py`._
+<!-- LABS:END -->
 
 ## Contributing & license
 

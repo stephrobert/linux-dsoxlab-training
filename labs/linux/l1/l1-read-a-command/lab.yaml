@@ -1,0 +1,31 @@
+id: l1-read-a-command
+title: Read and decode a command
+description: Decompose 5 Linux commands into their command/options/arguments parts
+  and fix 3 broken commands.
+section: linux
+type: lab
+level: l1
+bloc: 0
+bloc_order: 5
+difficulty: beginner
+estimated_time: 20m
+runtime:
+  type: shell
+  workdir: challenge/work
+  fixtures:
+  - source.txt
+distros:
+- debian12
+- ubuntu24.04
+- rhel10
+skills:
+- terminal-basics
+- shell-commands
+- command-syntax
+doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/anatomie-commande/
+track:
+- fundamentals
+validation:
+  functional: true
+  security: false
+  persistence_after_reboot: false

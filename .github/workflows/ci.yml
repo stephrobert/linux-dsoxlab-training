@@ -64,6 +64,12 @@ jobs:
       - name: Validate the meta.yml + lab.yaml contract
         run: uvx dsoxlab validate-structure
 
+      - name: README catalog is up to date (all labs + guide URLs)
+        # --no-project: run in an ephemeral env with only pyyaml. Without it, uv
+        # resolves this repo's pyproject, which pins dsoxlab to a local path
+        # (../dsoxlab) absent on the runner — the resolve would fail.
+        run: uv run --no-project --with pyyaml python scripts/gen_catalog.py --check
+
       - name: Lint lab Python (ruff)
         run: uvx ruff check .
 
