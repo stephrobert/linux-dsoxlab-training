@@ -1,0 +1,3 @@
+id: l1-env-profiles
+title: "Variables d'environnement : export, PATH et un fichier env sourcé"
+description: "Écrire env.sh qui, une fois sourcé, exporte des variables, en réutilise une dans une autre, et ajoute un répertoire bin en tête de PATH — prouvé en le sourçant dans un sous-shell."

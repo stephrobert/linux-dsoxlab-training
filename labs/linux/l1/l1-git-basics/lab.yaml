@@ -1,0 +1,30 @@
+id: l1-git-basics
+title: "Initialize a Git repo: commit, history and a branch"
+description: "Create a repository, make two commits tracking real files, and open a feature branch — proven by inspecting the repository state itself."
+section: linux
+type: lab
+level: l1
+track:
+  - fondamentaux
+skills:
+  - git
+  - commit
+  - branch
+  - version-control
+difficulty: beginner
+estimated_time: 30m
+runtime:
+  type: shell
+  workdir: challenge/work
+  fixtures: []
+distros:
+  - debian12
+  - ubuntu24.04
+  - rhel10
+  - almalinux10
+doc_url: https://blog.stephane-robert.info/docs/developper/version/git/bases-git/
+validation:
+  functional: true
+  security: false
+  persistence_after_reboot: false
+certification_tags: []

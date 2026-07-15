@@ -1,0 +1,3 @@
+id: l1-bash-script
+title: "Écrire un premier script Bash : variables, boucle et condition"
+description: "Écrire rapport.sh qui lit un fichier d'état passé en argument, compte les UP/DOWN avec une boucle, les affiche, et sort en erreur si un hôte est down."

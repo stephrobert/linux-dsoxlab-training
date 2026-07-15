@@ -1,0 +1,3 @@
+id: l1-ssl-certificates
+title: "Inspecter un certificat TLS avec openssl"
+description: "Lire un certificat X.509 fourni : en extraire le sujet, les dates de validité, l'empreinte SHA-256 et la clé publique avec openssl x509."

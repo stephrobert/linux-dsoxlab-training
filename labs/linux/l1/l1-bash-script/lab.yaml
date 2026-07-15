@@ -1,0 +1,34 @@
+id: l1-bash-script
+title: "Write a first Bash script: variables, a loop and a condition"
+description: "Write rapport.sh that reads a status file passed as an argument, counts UP/DOWN with a loop, prints them, and exits non-zero when any host is down."
+section: linux
+type: lab
+level: l1
+track:
+  - fondamentaux
+skills:
+  - bash
+  - script
+  - loop
+  - condition
+  - exit-code
+difficulty: beginner
+estimated_time: 35m
+runtime:
+  type: shell
+  workdir: challenge/work
+  fixtures:
+    - serveurs.txt
+distros:
+  - debian12
+  - ubuntu24.04
+  - rhel10
+  - almalinux10
+doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/scripts-bash/premier-script/
+validation:
+  functional: true
+  security: false
+  persistence_after_reboot: false
+certification_tags:
+  - rhcsa
+  - lfcs

@@ -1,0 +1,31 @@
+id: l1-env-profiles
+title: "Environment variables: export, PATH and a sourced env file"
+description: "Write env.sh that, when sourced, exports variables, reuses one in another, and prepends a bin directory to PATH — proven by sourcing it in a subshell."
+section: linux
+type: lab
+level: l1
+track:
+  - fondamentaux
+skills:
+  - environment
+  - export
+  - PATH
+  - source
+difficulty: beginner
+estimated_time: 25m
+runtime:
+  type: shell
+  workdir: challenge/work
+  fixtures: []
+distros:
+  - debian12
+  - ubuntu24.04
+  - rhel10
+  - almalinux10
+doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/efficace-shell/variables-environnement/
+validation:
+  functional: true
+  security: false
+  persistence_after_reboot: false
+certification_tags:
+  - lfcs

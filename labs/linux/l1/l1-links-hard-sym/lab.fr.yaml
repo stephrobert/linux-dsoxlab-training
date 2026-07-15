@@ -1,0 +1,3 @@
+id: l1-links-hard-sym
+title: "Créer des liens physiques et symboliques et les distinguer"
+description: "Faire un lien physique qui partage l'inode, un lien symbolique qui pointe par chemin, et un lien symbolique vers un répertoire — prouvés par inode, compteur de liens et cible."

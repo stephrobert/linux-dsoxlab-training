@@ -110,6 +110,12 @@ sections:
       - linux/l1/l1-grep-regex
       - linux/l1/l1-text-processing
       - linux/l1/l1-tar-archives
+      - linux/l1/l1-permissions-ugo
+      - linux/l1/l1-links-hard-sym
+      - linux/l1/l1-bash-script
+      - linux/l1/l1-git-basics
+      - linux/l1/l1-env-profiles
+      - linux/l1/l1-ssl-certificates
 
   - id: l2
     title: "Exploiter + Maintenir (l2)"

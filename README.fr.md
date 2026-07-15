@@ -67,6 +67,20 @@ dsoxlab use --provider kvm     # persisté pour ce dépôt
 # ou, one-shot : DSOXLAB_PROVIDER=kvm dsoxlab provision
 ```
 
+### Garder à jour
+
+De nouveaux labs arrivent dans ce dépôt, et la CLI évolue de son côté. Mets à
+jour chacun séparément :
+
+```bash
+git pull                       # récupère les labs nouveaux/mis à jour dans ton clone
+uv tool upgrade dsoxlab        # met à jour la CLI (ou : pipx upgrade dsoxlab)
+```
+
+Tes réponses en cours vivent dans le `challenge/work/` de chaque lab, qui est
+gitignoré — `git pull` apporte donc les nouveaux labs sans jamais toucher à ton
+travail.
+
 ## Comment ça marche
 
 ### Le contrat déclaratif (deux niveaux)
@@ -174,6 +188,12 @@ ci-dessous est générée à partir des vrais `lab.yaml` : lance
 | `l1-grep-regex` | Filtrer un journal avec grep et les expressions régulières | l1 | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/manipuler-fichiers-texte/filtrer-texte/) |
 | `l1-text-processing` | Transformer et agréger du texte avec cut, sort, uniq, sed et awk | l1 | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/traiter-texte/cut-tr-paste/) |
 | `l1-tar-archives` | Archiver, compresser et extraire sélectivement avec tar, gzip et bzip2 | l1 | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/manipuler-fichiers-texte/archives-compression/) |
+| `l1-permissions-ugo` | Poser les permissions exactes avec chmod (octal et symbolique) | l1 | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/utilisateurs-droits-processus/modifier-droits/) |
+| `l1-links-hard-sym` | Créer des liens physiques et symboliques et les distinguer | l1 | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/se-reperer-fichiers/navigation-fichiers/) |
+| `l1-bash-script` | Écrire un premier script Bash : variables, boucle et condition | l1 | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/scripts-bash/premier-script/) |
+| `l1-git-basics` | Initialiser un dépôt Git : commit, historique et branche | l1 | shell | [guide](https://blog.stephane-robert.info/docs/developper/version/git/bases-git/) |
+| `l1-env-profiles` | Variables d'environnement : export, PATH et un fichier env sourcé | l1 | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/efficace-shell/variables-environnement/) |
+| `l1-ssl-certificates` | Inspecter un certificat TLS avec openssl | l1 | shell | [guide](https://blog.stephane-robert.info/docs/reseaux/fondamentaux/tls-diagnostic/) |
 
 ### Exploiter + Maintenir (l2)
 
@@ -190,7 +210,7 @@ ci-dessous est générée à partir des vrais `lab.yaml` : lance
 |---|---|---|---|---|
 | `depanner-service-crash-loop` | Diagnostiquer et corriger un service systemd en crash loop | l2 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/depanner/service-ne-demarre-pas/) |
 
-_18 labs — table générée par `scripts/gen_catalog.py`._
+_24 labs — table générée par `scripts/gen_catalog.py`._
 <!-- LABS:END -->
 
 ## Contribuer et licence
