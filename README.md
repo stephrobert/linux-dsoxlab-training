@@ -67,6 +67,19 @@ dsoxlab use --provider kvm     # persisted for this repo
 # or, one-shot: DSOXLAB_PROVIDER=kvm dsoxlab provision
 ```
 
+### Keeping it up to date
+
+New labs land in this repository, and the CLI evolves separately. Update each on
+its own:
+
+```bash
+git pull                       # pull new/updated labs into your clone
+uv tool upgrade dsoxlab        # update the CLI (or: pipx upgrade dsoxlab)
+```
+
+Your in-progress answers live in each lab's `challenge/work/`, which is
+gitignored — so `git pull` brings new labs without ever touching your work.
+
 ## How it works
 
 ### The declarative contract (two levels)
@@ -172,6 +185,12 @@ to refresh it.
 | `l1-grep-regex` | Filter a log with grep and regular expressions | l1 | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/manipuler-fichiers-texte/filtrer-texte/) |
 | `l1-text-processing` | Transform and aggregate text with cut, sort, uniq, sed and awk | l1 | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/traiter-texte/cut-tr-paste/) |
 | `l1-tar-archives` | Archive, compress and selectively extract with tar, gzip and bzip2 | l1 | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/manipuler-fichiers-texte/archives-compression/) |
+| `l1-permissions-ugo` | Set exact file permissions with chmod (octal and symbolic) | l1 | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/utilisateurs-droits-processus/modifier-droits/) |
+| `l1-links-hard-sym` | Create hard and symbolic links and tell them apart | l1 | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/se-reperer-fichiers/navigation-fichiers/) |
+| `l1-bash-script` | Write a first Bash script: variables, a loop and a condition | l1 | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/scripts-bash/premier-script/) |
+| `l1-git-basics` | Initialize a Git repo: commit, history and a branch | l1 | shell | [guide](https://blog.stephane-robert.info/docs/developper/version/git/bases-git/) |
+| `l1-env-profiles` | Environment variables: export, PATH and a sourced env file | l1 | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/efficace-shell/variables-environnement/) |
+| `l1-ssl-certificates` | Inspect a TLS certificate with openssl | l1 | shell | [guide](https://blog.stephane-robert.info/docs/reseaux/fondamentaux/tls-diagnostic/) |
 
 ### Exploiter + Maintenir (l2)
 
@@ -188,7 +207,7 @@ to refresh it.
 |---|---|---|---|---|
 | `depanner-service-crash-loop` | Diagnose and fix a systemd service stuck in a crash loop | l2 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/depanner/service-ne-demarre-pas/) |
 
-_18 labs — table générée par `scripts/gen_catalog.py`._
+_24 labs — table générée par `scripts/gen_catalog.py`._
 <!-- LABS:END -->
 
 ## Contributing & license

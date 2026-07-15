@@ -1,0 +1,3 @@
+id: l1-git-basics
+title: "Initialiser un dépôt Git : commit, historique et branche"
+description: "Créer un dépôt, faire deux commits qui suivent de vrais fichiers, et ouvrir une branche feature — prouvé en inspectant l'état du dépôt lui-même."

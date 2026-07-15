@@ -1,0 +1,35 @@
+id: l1-permissions-ugo
+title: "Set exact file permissions with chmod (octal and symbolic)"
+description: "Give each file the right owner/group/other bits: a private secret, an executable script, a group-readable note and a private directory."
+section: linux
+type: lab
+level: l1
+track:
+  - fondamentaux
+skills:
+  - chmod
+  - permissions
+  - octal
+  - umask
+difficulty: beginner
+estimated_time: 25m
+runtime:
+  type: shell
+  workdir: challenge/work
+  fixtures:
+    - secret.txt
+    - deploy.sh
+    - notes.txt
+distros:
+  - debian12
+  - ubuntu24.04
+  - rhel10
+  - almalinux10
+doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/utilisateurs-droits-processus/modifier-droits/
+validation:
+  functional: true
+  security: true
+  persistence_after_reboot: false
+certification_tags:
+  - rhcsa
+  - lfcs
