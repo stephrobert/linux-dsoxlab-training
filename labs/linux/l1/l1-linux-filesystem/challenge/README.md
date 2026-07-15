@@ -1,28 +1,28 @@
-# Challenge — l1-07 : Se repérer dans l'arborescence (FHS)
+# Challenge — l1-07: Find your way around the tree (FHS)
 
-Travaille dans **`challenge/work/`** — le fichier `fhs.txt` y a été créé par
+Work in **`challenge/work/`** — the file `fhs.txt` was created there by
 `dsoxlab run`.
 
 ---
 
 ## Mission
 
-La FHS (Filesystem Hierarchy Standard) dit où chaque chose vit sous Linux. Mets
-cette connaissance à l'épreuve : **localise quatre éléments réels** sur ta
-machine et donne leur chemin absolu dans `fhs.txt`.
+The FHS (Filesystem Hierarchy Standard) says where each thing lives under Linux. Put
+that knowledge to the test: **locate four real items** on your
+machine and give their absolute path in `fhs.txt`.
 
-1. `LS_PATH` — le chemin absolu de la commande `ls` (via `which ls`).
-2. `USER_DB` — le fichier qui liste les comptes utilisateurs locaux.
-3. `LOG_DIR` — le répertoire des journaux système.
-4. `HOME_PARENT` — le répertoire parent des dossiers personnels.
+1. `LS_PATH` — the absolute path of the `ls` command (via `which ls`).
+2. `USER_DB` — the file that lists the local user accounts.
+3. `LOG_DIR` — the system logs directory.
+4. `HOME_PARENT` — the parent directory of the personal folders.
 
-## Contraintes
+## Constraints
 
-- Chaque chemin doit **exister réellement à l'endroit attendu** : la validation
-  le vérifie sur ta machine. Un chemin inventé ou mal placé échoue.
-- Tous les placeholders `VOTRE_RÉPONSE_ICI` doivent être remplacés.
+- Each path must **actually exist at the expected location**: validation
+  checks it on your machine. An invented or misplaced path fails.
+- All `VOTRE_RÉPONSE_ICI` placeholders must be replaced.
 
-## Commandes utiles
+## Useful commands
 
 ```bash
 which ls
@@ -37,6 +37,6 @@ ls -d /home
 dsoxlab check l1-linux-filesystem
 ```
 
-> Le **rôle** de chaque branche de l'arborescence (`/etc`, `/var`, `/usr`,
-> `/dev`, `/tmp`…) est expliqué dans le cours et vérifié par le quiz. Ce lab,
-> lui, prouve que tu sais retrouver ces emplacements sur un vrai système.
+> The **role** of each branch of the tree (`/etc`, `/var`, `/usr`,
+> `/dev`, `/tmp`…) is explained in the course and checked by the quiz. This lab
+> proves that you can find these locations on a real system.

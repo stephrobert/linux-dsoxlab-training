@@ -107,6 +107,7 @@ A learner drives everything through the CLI; a typical run:
 
 ```bash
 dsoxlab use --provider kvm            # pick an infra provider (VM labs)
+dsoxlab doctor                        # check the environment (Python, pytest, runtimes, labs)
 dsoxlab list-labs                     # browse the catalog
 dsoxlab show <id>                     # metadata + status of one lab
 dsoxlab run <id>                      # prepare & start the lab environment
@@ -197,17 +198,46 @@ to refresh it.
 | Lab (id) | Title | Level | Runtime | Companion guide |
 |---|---|---|---|---|
 | `l2-swap-management` | Add and manage swap space | l2 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/swap/) |
+| `l2-fstab-persist-uuid` | Mount a filesystem persistently by UUID in /etc/fstab | l2 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/montage-persistance/) |
+| `l2-partition-gpt` | Create GPT partitions on a disk with parted | l2 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/partitions/) |
+| `l2-filesystem-create-xfs` | Create and label an XFS filesystem, then mount it | l2 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/xfs/) |
+| `l2-disk-space-troubleshoot` | Diagnose a full filesystem and reclaim space | l2 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/espace-disque/) |
+| `l2-storage-performance` | Tune a mount for performance with noatime (persistently) | l2 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/performances-disques/) |
+| `l2-lvm-extend-persist` | Extend a logical volume and prove the mount survives a reboot | l2 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/lvm/) |
+| `l2-nfs-mount-persist` | Mount an NFS export persistently from a server | l2 | vm | [guide](https://blog.stephane-robert.info/docs/services/stockage/nfs/) |
+| `l2-autofs-ondemand` | Mount a filesystem on demand with autofs | l2 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/autofs/) |
 | `l2-raid-mdadm` | Build a software RAID 1 with mdadm | l2 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/raid-mdadm/) |
 | `l2-luks-encryption` | Encrypt a disk with LUKS | l2 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/chiffrement-luks/) |
-| `l2-lvm-extend-persist` | Extend a logical volume and prove the mount survives a reboot | l2 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/lvm/) |
+| `l2-user-lifecycle` | Create a local account with exact UID, shell and groups | l2 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/securiser/utilisateurs-groupes/) |
+| `l2-password-policy` | Enforce password aging and complexity policy | l2 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/securiser/utilisateurs-groupes/) |
+| `l2-sudo-delegation` | Delegate limited sudo rights with a sudoers drop-in | l2 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/securiser/sudo/) |
+| `l2-acl-posix` | Grant fine-grained access with POSIX ACLs | l2 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/securiser/acl/) |
+| `l2-package-management` | Install, remove and query packages with dnf | l2 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/maintenir/paquets/dnf/) |
+| `l2-repo-configure` | Configure a dnf repository with a .repo file | l2 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/maintenir/paquets/dnf/) |
 
-### Dépanner
+### Services + Dépannage (l3)
 
 | Lab (id) | Title | Level | Runtime | Companion guide |
 |---|---|---|---|---|
-| `depanner-service-crash-loop` | Diagnose and fix a systemd service stuck in a crash loop | l2 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/depanner/service-ne-demarre-pas/) |
+| `l3-boot-target` | Set the default systemd boot target | l3 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/demarrage-reboot/) |
+| `l3-service-create-unit` | Create and enable a systemd service unit | l3 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/systemd/services/) |
+| `l3-service-diagnose` | Diagnose and fix a systemd service stuck in a crash loop | l3 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/depanner/service-ne-demarre-pas/) |
+| `l3-journald-persist` | Make the systemd journal persistent across reboots | l3 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/systemd/journaux/) |
+| `l3-scheduling-cron` | Schedule a recurring job with cron | l3 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/planification/cron/) |
+| `l3-app-constraints` | Set per-user resource limits (open files) with limits.d | l3 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/processus/limites-ressources/) |
+| `l3-sysctl-persist` | Harden kernel parameters persistently with sysctl.d | l3 | vm | [guide](https://blog.stephane-robert.info/docs/securiser/durcissement/sysctl/) |
+| `l3-process-signals-priority` | Lower a service's scheduling priority with Nice | l3 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/utilisateurs-droits-processus/comprendre-processus/) |
+| `l3-tuned-profile` | Apply a tuned performance profile | l3 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/tuned/) |
+| `l3-fs-readonly-recover` | Recover a read-only mount caused by a broken fstab | l3 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/depanner/systeme-fichiers-lecture-seule/) |
+| `l3-ssh-access-recovery` | Repair a broken sshd config before it locks you out | l3 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/depanner/perte-acces-ssh/) |
 
-_24 labs — table générée par `scripts/gen_catalog.py`._
+### Capstones
+
+| Lab (id) | Title | Level | Runtime | Companion guide |
+|---|---|---|---|---|
+| `rhcsa-mock-exam` | RHCSA EX200 mock exam — 20 tasks across 2 VMs | l2 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/certifications/rhcsa/) |
+
+_48 labs — table générée par `scripts/gen_catalog.py`._
 <!-- LABS:END -->
 
 ## Contributing & license

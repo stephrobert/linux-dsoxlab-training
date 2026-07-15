@@ -1,0 +1,60 @@
+---
+# État initial : /srv/data (XFS sur le disque additionnel) monté en LECTURE
+# SEULE, et son entrée /etc/fstab contient une option INVALIDE (« defalts ») qui
+# fait échouer mount -a. L'apprenant diagnostique et répare. Joué par dsoxlab run.
+- name: Setup fs-readonly-recover lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Ensure xfsprogs + parted
+      ansible.builtin.package:
+        name:
+          - xfsprogs
+          - parted
+          - util-linux
+        state: present
+      failed_when: false
+
+    - name: Detect the additional block device (not the root disk)
+      ansible.builtin.shell:
+        cmd: |
+          set -e
+          root_src=$(findmnt -no SOURCE /)
+          root_disk=$(lsblk -no pkname "$root_src" 2>/dev/null | head -1)
+          extra=$(lsblk -dno NAME,TYPE | awk '$2=="disk"{print $1}' \
+                  | grep -v "^${root_disk}$" | head -1)
+          [ -n "$extra" ] || { echo "no additional disk found" >&2; exit 1; }
+          echo "DISK=/dev/${extra}" > /root/fsro-disk.env
+        creates: /root/fsro-disk.env
+
+    - name: Build XFS on /srv/data, mount READ-ONLY, and break the fstab option
+      ansible.builtin.shell:
+        cmd: |
+          set -e
+          . /root/fsro-disk.env
+          umount /srv/data 2>/dev/null || true
+          wipefs -a "$DISK"
+          sgdisk --zap-all "$DISK" 2>/dev/null || true
+          parted -s "$DISK" mklabel gpt
+          parted -s "$DISK" mkpart primary 1MiB 1025MiB
+          partprobe "$DISK"
+          part="${DISK}1"; [ -b "$part" ] || part="${DISK}p1"
+          mkfs.xfs -f "$part"
+          mkdir -p /srv/data
+          uuid=$(blkid -s UUID -o value "$part")
+          sed -i '\#[[:space:]]/srv/data[[:space:]]#d' /etc/fstab
+          # Option volontairement fautive : "defalts" au lieu de "defaults".
+          echo "UUID=$uuid /srv/data xfs defalts 0 0" >> /etc/fstab
+          # Monte quand même, mais en LECTURE SEULE.
+          mount -o ro "$part" /srv/data
+          touch /root/.fsro-ready
+        creates: /root/.fsro-ready
+
+    - name: Brief the learner
+      ansible.builtin.debug:
+        msg: >-
+          /srv/data est monté en LECTURE SEULE et son entrée /etc/fstab a une
+          option invalide (« defalts ») qui casse mount -a. Corrige l'entrée
+          fstab (defaults), remonte /srv/data en lecture-écriture (mount -o
+          remount,rw), et vérifie que mount -a ne renvoie plus d'erreur.

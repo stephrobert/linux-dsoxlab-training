@@ -2,21 +2,21 @@
 
 ## Mission
 
-À partir de `serveur.crt` (dans `challenge/work/`), produis quatre artefacts de
-diagnostic avec `openssl x509`.
+From `serveur.crt` (in `challenge/work/`), produce four diagnostic artifacts with
+`openssl x509`.
 
-## Objectif (fichiers à produire)
+## Goal (files to produce)
 
-1. `sujet.txt` — le **sujet** du certificat.
-2. `dates.txt` — les **dates de validité**.
-3. `empreinte.txt` — l'**empreinte SHA-256**.
-4. `cle-publique.pem` — la **clé publique** extraite.
+1. `sujet.txt` — the certificate **subject**.
+2. `dates.txt` — the **validity dates**.
+3. `empreinte.txt` — the **SHA-256 fingerprint**.
+4. `cle-publique.pem` — the extracted **public key**.
 
-## Contraintes
+## Constraints
 
-- Uniquement `openssl x509 -in serveur.crt -noout <sélecteur>`.
-- La validation **relance openssl** sur le certificat et compare : un fichier
-  vide ou tapé à la main échoue.
+- Only `openssl x509 -in serveur.crt -noout <sélecteur>`.
+- Validation **re-runs openssl** on the certificate and compares: an empty file
+  or one typed by hand fails.
 
 ## Validation
 

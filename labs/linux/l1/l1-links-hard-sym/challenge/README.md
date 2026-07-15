@@ -2,19 +2,19 @@
 
 ## Mission
 
-À partir de `original.txt` (dans `challenge/work/`), crée deux types de liens.
+From `original.txt` (in `challenge/work/`), create two types of links.
 
-## Objectif
+## Goal
 
-1. `copie-dure.txt` — **lien physique** vers `original.txt` (même inode).
-2. `raccourci.txt` — **lien symbolique** vers `original.txt`.
-3. `data/` (répertoire) + `lien-data` — **lien symbolique** vers `data/`.
+1. `copie-dure.txt` — **hard link** to `original.txt` (same inode).
+2. `raccourci.txt` — **symbolic link** to `original.txt`.
+3. `data/` (directory) + `lien-data` — **symbolic link** to `data/`.
 
-## Contraintes
+## Constraints
 
-- `ln` pour le lien physique, `ln -s` pour le symbolique. Pas de `cp`.
-- La validation lit l'**inode**, le **compteur de liens** et la **cible** réelle
-  (`readlink`) : une copie échoue le test.
+- `ln` for the hard link, `ln -s` for the symbolic one. No `cp`.
+- Validation reads the **inode**, the **link count** and the real **target**
+  (`readlink`): a copy fails the test.
 
 ## Validation
 

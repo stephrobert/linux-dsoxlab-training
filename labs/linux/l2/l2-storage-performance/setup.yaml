@@ -1,0 +1,59 @@
+---
+# État initial : un XFS monté sur /srv/data via /etc/fstab PAR UUID, avec les
+# options par défaut (donc relatime — atime mis à jour). L'apprenant doit
+# ajouter noatime, l'activer (remount) et le rendre persistant. Disque détecté
+# dynamiquement. Joué par dsoxlab run (ansible-runner).
+- name: Setup storage-performance lab (fs mounted with default options)
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Ensure parted + xfsprogs
+      ansible.builtin.package:
+        name:
+          - parted
+          - xfsprogs
+          - util-linux
+        state: present
+      failed_when: false
+
+    - name: Detect the additional block device (not the root disk)
+      ansible.builtin.shell: |
+        set -e
+        root_src=$(findmnt -no SOURCE /)
+        root_disk=$(lsblk -no pkname "$root_src" 2>/dev/null | head -1)
+        extra=$(lsblk -dno NAME,TYPE | awk '$2=="disk"{print $1}' \
+                | grep -v "^${root_disk}$" | head -1)
+        [ -n "$extra" ] || { echo "no additional disk found" >&2; exit 1; }
+        echo "DISK=/dev/${extra}" > /root/perf-disk.env
+      args:
+        creates: /root/perf-disk.env
+
+    - name: Build XFS on /srv/data, mounted via fstab (UUID) with DEFAULT options
+      ansible.builtin.shell: |
+        set -e
+        . /root/perf-disk.env
+        umount /srv/data 2>/dev/null || true
+        wipefs -a "$DISK"
+        sgdisk --zap-all "$DISK" 2>/dev/null || true
+        parted -s "$DISK" mklabel gpt
+        parted -s "$DISK" mkpart primary 1MiB 1025MiB
+        partprobe "$DISK"
+        part="${DISK}1"; [ -b "$part" ] || part="${DISK}p1"
+        mkfs.xfs -f "$part"
+        mkdir -p /srv/data
+        uuid=$(blkid -s UUID -o value "$part")
+        # Nettoie toute ancienne ligne puis pose une entrée aux options par défaut.
+        sed -i '\#[[:space:]]/srv/data[[:space:]]#d' /etc/fstab
+        echo "UUID=$uuid /srv/data xfs defaults 0 0" >> /etc/fstab
+        mountpoint -q /srv/data || mount /srv/data
+        touch /root/.perf-lab-ready
+      args:
+        creates: /root/.perf-lab-ready
+
+    - name: Brief the learner
+      ansible.builtin.debug:
+        msg: >-
+          /srv/data est monté avec les options par défaut (atime activé). Charge
+          de lecture intensive : ajoute l'option noatime, applique-la sans reboot
+          (mount -o remount) et rends-la persistante dans /etc/fstab.

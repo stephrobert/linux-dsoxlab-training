@@ -1,0 +1,19 @@
+---
+# Reset idempotent : démonte, retire l'entrée fstab, efface le FS.
+# Joué par dsoxlab clean.
+- name: Cleanup fs-readonly-recover lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Unmount /srv/data, drop fstab line, wipe FS
+      ansible.builtin.shell:
+        cmd: |
+          umount /srv/data 2>/dev/null || true
+          sed -i '\#[[:space:]]/srv/data[[:space:]]#d' /etc/fstab
+          . /root/fsro-disk.env 2>/dev/null || exit 0
+          part="${DISK}1"; [ -b "$part" ] || part="${DISK}p1"
+          wipefs -a "$part" 2>/dev/null || true
+          rm -f /root/.fsro-ready
+        chdir: /
+      changed_when: false

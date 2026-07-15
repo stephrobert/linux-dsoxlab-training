@@ -1,0 +1,16 @@
+---
+# Reset idempotent : arrête/désactive/retire l'unit et le programme.
+# Joué par dsoxlab clean.
+- name: Cleanup service-create-unit lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Disable, stop and remove the unit + program
+      ansible.builtin.shell:
+        cmd: |
+          systemctl disable --now labapp.service 2>/dev/null || true
+          rm -f /etc/systemd/system/labapp.service
+          systemctl daemon-reload
+          rm -f /usr/local/bin/labapp.sh /run/labapp.status
+      changed_when: false

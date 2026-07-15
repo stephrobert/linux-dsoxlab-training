@@ -1,0 +1,3 @@
+id: l2-disk-space-troubleshoot
+title: "Diagnostiquer un filesystem plein et récupérer de l'espace"
+description: "Un filesystem est plein. Trouve le coupable avec df/du, supprime le superflu sans effacer les données légitimes, et fais redescendre l'occupation."

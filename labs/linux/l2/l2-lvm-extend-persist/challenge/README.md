@@ -2,20 +2,20 @@
 
 ## Mission
 
-`/data` (XFS, 1 GiB, porté par `vgdata/lvdata`) est trop petit. Agrandis-le, en
-ligne, et garde-le persistant.
+`/data` (XFS, 1 GiB, backed by `vgdata/lvdata`) is too small. Grow it, online,
+and keep it persistent.
 
-## Objectif (état à atteindre)
+## Goal (expected state)
 
-- `vgdata/lvdata` fait **≥ 3 GiB**.
-- Le filesystem XFS de `/data` **reflète** l'extension (`df` montre ≥ 3 G).
-- `/data` est monté et déclaré dans `/etc/fstab` **par UUID** (survit au reboot).
+- `vgdata/lvdata` is **≥ 3 GiB**.
+- The XFS filesystem of `/data` **reflects** the extension (`df` shows ≥ 3 G).
+- `/data` is mounted and declared in `/etc/fstab` **by UUID** (survives reboot).
 
-## Contraintes
+## Constraints
 
-- Sans démonter `/data` (extension en ligne).
-- La validation vérifie l'**état du système**, pas les commandes tapées :
-  étendre le LV sans agrandir le XFS échoue.
+- Without unmounting `/data` (online extension).
+- Validation checks the **system state**, not the commands typed:
+  extending the LV without growing the XFS fails.
 
 ## Validation
 

@@ -1,0 +1,17 @@
+---
+# Reset idempotent : arrête/retire le service, le drop-in et le programme.
+# Joué par dsoxlab clean.
+- name: Cleanup process-signals-priority lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Disable, remove unit + drop-in + program
+      ansible.builtin.shell:
+        cmd: |
+          systemctl disable --now labworker.service 2>/dev/null || true
+          rm -rf /etc/systemd/system/labworker.service /etc/systemd/system/labworker.service.d
+          rm -f /usr/local/bin/labworker.sh
+          systemctl daemon-reload
+        chdir: /
+      changed_when: false

@@ -1,0 +1,3 @@
+id: l3-tuned-profile
+title: "Appliquer un profil de performance tuned"
+description: "Basculer le profil tuned actif sur throughput-performance et le rendre durable — prouvé par le profil actif que rapporte le démon tuned."

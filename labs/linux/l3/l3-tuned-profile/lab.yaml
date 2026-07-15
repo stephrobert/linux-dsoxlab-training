@@ -1,0 +1,34 @@
+id: l3-tuned-profile
+title: "Apply a tuned performance profile"
+description: "Switch the active tuned profile to throughput-performance and make it stick — proven by the active profile the tuned daemon reports."
+section: linux
+type: lab
+level: l3
+track:
+  - maintenir
+  - rhcsa
+skills:
+  - tuned
+  - tuned-adm
+  - performance
+difficulty: intermediate
+estimated_time: 20m
+runtime:
+  type: vm
+  default: rhel
+  snapshot_required: false
+  targets:
+    - name: rhel
+      host: alma-rhcsa-1.lab
+      label_en: "AlmaLinux 10 (tuned-adm profile)"
+      label_fr: "AlmaLinux 10 (tuned-adm profile)"
+distros:
+  - rhel10
+  - almalinux10
+doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/tuned/
+validation:
+  functional: true
+  security: false
+  persistence_after_reboot: true
+certification_tags:
+  - rhcsa

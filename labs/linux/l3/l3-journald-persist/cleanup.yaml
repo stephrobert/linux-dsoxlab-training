@@ -1,0 +1,15 @@
+---
+# Reset idempotent : repasse en volatile. Joué par dsoxlab clean.
+- name: Cleanup journald-persist lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Remove persistent config + journal, restart journald
+      ansible.builtin.shell:
+        cmd: |
+          rm -f /etc/systemd/journald.conf.d/*persist*.conf 2>/dev/null || true
+          rm -rf /var/log/journal
+          systemctl restart systemd-journald
+        chdir: /
+      changed_when: false

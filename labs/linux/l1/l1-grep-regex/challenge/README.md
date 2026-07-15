@@ -2,21 +2,21 @@
 
 ## Mission
 
-À partir de `acces.log` (dans `challenge/work/`), produis quatre fichiers avec
-`grep` et des expressions régulières.
+From `acces.log` (in `challenge/work/`), produce four files with
+`grep` and regular expressions.
 
-## Objectif (fichiers à produire)
+## Goal (files to produce)
 
-1. `erreurs5xx.txt` — uniquement les lignes dont le **code HTTP est 5xx**.
-2. `sans-200.txt` — toutes les lignes **sauf** les `200`.
-3. `ips.txt` — les **IP distinctes**, triées.
-4. `nb-post.txt` — le **nombre** de requêtes POST.
+1. `erreurs5xx.txt` — only the lines whose **HTTP code is 5xx**.
+2. `sans-200.txt` — all lines **except** the `200` ones.
+3. `ips.txt` — the **distinct IPs**, sorted.
+4. `nb-post.txt` — the **number** of POST requests.
 
-## Contraintes
+## Constraints
 
-- Uniquement `grep` (et `sort -u` pour dédoublonner les IP) : pas d'éditeur.
-- La validation lit le **contenu réel** des fichiers, pas la commande tapée, et
-  recalcule chaque attendu depuis `acces.log`.
+- Only `grep` (and `sort -u` to deduplicate the IPs): no editor.
+- Validation reads the **real content** of the files, not the command typed, and
+  recomputes each expected result from `acces.log`.
 
 ## Validation
 

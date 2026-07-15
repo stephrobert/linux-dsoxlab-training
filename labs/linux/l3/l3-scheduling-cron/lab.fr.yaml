@@ -1,0 +1,3 @@
+id: l3-scheduling-cron
+title: "Planifier une tâche récurrente avec cron"
+description: "Lancer /usr/local/bin/report.sh chaque jour à 02:30 via une entrée cron — prouvé par la planification réelle qu'honorera le démon cron."

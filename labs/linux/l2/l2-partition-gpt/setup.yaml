@@ -1,0 +1,47 @@
+---
+# État initial : le disque additionnel est VIERGE (aucune table de partition).
+# L'apprenant doit y poser une table GPT et deux partitions. Le disque est
+# détecté dynamiquement (seul disque hors racine : kvm /dev/vdb, incus /dev/sdb).
+# Joué par dsoxlab run (ansible-runner).
+- name: Setup partition-gpt lab (wipe the spare disk clean)
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Ensure parted + util-linux
+      ansible.builtin.package:
+        name:
+          - parted
+          - util-linux
+        state: present
+      failed_when: false
+
+    - name: Detect the additional block device (not the root disk)
+      ansible.builtin.shell: |
+        set -e
+        root_src=$(findmnt -no SOURCE /)
+        root_disk=$(lsblk -no pkname "$root_src" 2>/dev/null | head -1)
+        extra=$(lsblk -dno NAME,TYPE | awk '$2=="disk"{print $1}' \
+                | grep -v "^${root_disk}$" | head -1)
+        [ -n "$extra" ] || { echo "no additional disk found" >&2; exit 1; }
+        echo "DISK=/dev/${extra}" > /root/part-disk.env
+      args:
+        creates: /root/part-disk.env
+
+    - name: Wipe any existing partition table / signatures on the spare disk
+      ansible.builtin.shell: |
+        set -e
+        . /root/part-disk.env
+        umount "${DISK}"* 2>/dev/null || true
+        wipefs -a "$DISK"
+        # Zap any GPT/MBR structures so the disk starts truly blank.
+        sgdisk --zap-all "$DISK" 2>/dev/null || true
+        partprobe "$DISK" 2>/dev/null || true
+      changed_when: false
+
+    - name: Brief the learner
+      ansible.builtin.debug:
+        msg: >-
+          Le disque additionnel est vierge (aucune table de partition). Objectif :
+          poser une table GPT et créer deux partitions — la 1re de 512 Mio, la 2e
+          de 1 Gio — puis faire relire la table au noyau (partprobe).

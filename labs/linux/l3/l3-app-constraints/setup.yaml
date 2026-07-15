@@ -1,0 +1,26 @@
+---
+# État initial : un compte appuser avec les limites par défaut. L'apprenant
+# relève sa limite de fichiers ouverts. Joué par dsoxlab run (ansible-runner).
+- name: Setup app-constraints lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: User appuser (login shell)
+      ansible.builtin.user:
+        name: appuser
+        shell: /bin/bash
+        create_home: true
+
+    - name: Remove any leftover limits drop-in
+      ansible.builtin.file:
+        path: /etc/security/limits.d/appuser.conf
+        state: absent
+
+    - name: Brief the learner
+      ansible.builtin.debug:
+        msg: >-
+          Le service d'appuser ouvre beaucoup de fichiers et se heurte à la
+          limite par défaut. Relève la limite de fichiers ouverts (nofile) pour
+          appuser : soft 4096, hard 8192, via /etc/security/limits.d/. Vérifie
+          avec : su - appuser -c 'ulimit -Sn ; ulimit -Hn'.

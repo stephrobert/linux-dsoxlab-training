@@ -1,0 +1,22 @@
+---
+# Reset idempotent : retire /srv/projet, carol et auditors. Joué par dsoxlab clean.
+- name: Cleanup acl-posix lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Remove the project directory
+      ansible.builtin.file:
+        path: /srv/projet
+        state: absent
+
+    - name: Remove carol
+      ansible.builtin.user:
+        name: carol
+        state: absent
+        remove: true
+
+    - name: Remove auditors group
+      ansible.builtin.group:
+        name: auditors
+        state: absent

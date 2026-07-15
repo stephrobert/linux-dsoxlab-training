@@ -1,0 +1,24 @@
+---
+# État initial : IP forwarding ACTIVÉ (non durci) et pas de drop-in de
+# durcissement. L'apprenant durcit. Joué par dsoxlab run (ansible-runner).
+- name: Setup sysctl-persist lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Loosen at start — enable IP forwarding, remove hardening drop-in
+      ansible.builtin.shell:
+        cmd: |
+          rm -f /etc/sysctl.d/99-hardening.conf
+          sysctl -w net.ipv4.ip_forward=1
+          sysctl -w net.ipv4.conf.all.accept_redirects=1
+        chdir: /
+      changed_when: false
+
+    - name: Brief the learner
+      ansible.builtin.debug:
+        msg: >-
+          Durcis le noyau : désactive le routage IP (net.ipv4.ip_forward = 0) et
+          l'acceptation des redirections ICMP (net.ipv4.conf.all.accept_redirects
+          = 0), de façon PERSISTANTE via /etc/sysctl.d/, puis applique sans
+          reboot (sysctl --system). Vérifie avec sysctl -n <param>.

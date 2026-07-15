@@ -1,0 +1,38 @@
+id: l2-user-lifecycle
+title: "Create a local account with exact UID, shell and groups"
+description: "Onboard a user with a specific UID, home, login shell, a primary group and a supplementary group — the RHCSA account-creation drill."
+section: linux
+type: lab
+level: l2
+track:
+  - maintenir
+  - rhcsa
+  - lfcs
+skills:
+  - useradd
+  - groups
+  - uid
+  - shell
+difficulty: intermediate
+estimated_time: 20m
+runtime:
+  type: vm
+  default: rhel
+  snapshot_required: false
+  targets:
+    - name: rhel
+      host: alma-rhcsa-1.lab
+      label_en: "AlmaLinux 10 (useradd, groups, id)"
+      label_fr: "AlmaLinux 10 (useradd, groupes, id)"
+distros:
+  - rhel10
+  - almalinux10
+  - ubuntu24.04
+doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/securiser/utilisateurs-groupes/
+validation:
+  functional: true
+  security: false
+  persistence_after_reboot: false
+certification_tags:
+  - rhcsa
+  - lfcs

@@ -1,0 +1,28 @@
+---
+# État initial : ni le compte alice, ni les groupes staff/developers. L'apprenant
+# crée tout de zéro avec les bons attributs. Joué par dsoxlab run (ansible-runner).
+- name: Setup user-lifecycle lab (clean slate)
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Remove any leftover alice account (and its home)
+      ansible.builtin.user:
+        name: alice
+        state: absent
+        remove: true
+
+    - name: Remove any leftover lab groups
+      ansible.builtin.group:
+        name: "{{ item }}"
+        state: absent
+      loop:
+        - developers
+        - staff
+
+    - name: Brief the learner
+      ansible.builtin.debug:
+        msg: >-
+          Crée le compte 'alice' : UID 1500, home /home/alice, shell /bin/bash,
+          groupe PRIMAIRE 'staff' et groupe SECONDAIRE 'developers' (crée les
+          groupes si besoin). Vérifie avec id alice.

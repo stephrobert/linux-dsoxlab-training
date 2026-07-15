@@ -1,0 +1,33 @@
+---
+# État initial : un groupe 'operators' et un utilisateur 'ops' membre, mais AUCUN
+# droit sudo. L'apprenant délègue un sudo restreint. Joué par dsoxlab run.
+- name: Setup sudo-delegation lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Group operators
+      ansible.builtin.group:
+        name: operators
+        state: present
+
+    - name: User ops (member of operators)
+      ansible.builtin.user:
+        name: ops
+        shell: /bin/bash
+        groups: operators
+        append: true
+        create_home: true
+
+    - name: Ensure no leftover delegation drop-in
+      ansible.builtin.file:
+        path: /etc/sudoers.d/operators
+        state: absent
+
+    - name: Brief the learner
+      ansible.builtin.debug:
+        msg: >-
+          Le groupe 'operators' (dont 'ops' est membre) n'a aucun droit sudo.
+          Crée un drop-in /etc/sudoers.d/operators qui autorise le groupe
+          operators à lancer /usr/bin/systemctl SANS mot de passe (NOPASSWD),
+          et RIEN d'autre. Valide la syntaxe avec visudo -cf avant de sauver.

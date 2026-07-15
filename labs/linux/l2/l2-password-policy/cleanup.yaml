@@ -1,0 +1,25 @@
+---
+# Reset idempotent : supprime bob et remet login.defs/pwquality au point de
+# départ du lab. Joué par dsoxlab clean.
+- name: Cleanup password-policy lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Remove bob
+      ansible.builtin.user:
+        name: bob
+        state: absent
+        remove: true
+
+    - name: Restore loose PASS_MAX_DAYS
+      ansible.builtin.lineinfile:
+        path: /etc/login.defs
+        regexp: '^\s*PASS_MAX_DAYS'
+        line: "PASS_MAX_DAYS\t99999"
+
+    - name: Restore loose pwquality minlen
+      ansible.builtin.lineinfile:
+        path: /etc/security/pwquality.conf
+        regexp: '^\s*#?\s*minlen'
+        line: "minlen = 6"

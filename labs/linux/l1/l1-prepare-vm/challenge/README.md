@@ -1,28 +1,28 @@
-# Challenge — l1-03 : Inventorier les ressources de ta machine
+# Challenge — l1-03 : Inventory your machine's resources
 
-Travaille dans **`challenge/work/`** — le fichier `vm-info.txt` y a été créé par
+Work in **`challenge/work/`** — the `vm-info.txt` file was created there by
 `dsoxlab run`.
 
 ---
 
 ## Mission
 
-Devant une machine neuve, le premier réflexe d'un administrateur est de savoir
-**de quoi elle dispose**. Inventorie les ressources de ta machine et relève
-quatre valeurs réelles dans `vm-info.txt` :
+When facing a fresh machine, an administrator's first reflex is to know
+**what it has**. Inventory your machine's resources and record four real values
+in `vm-info.txt`:
 
-1. `CPU_COUNT` — le nombre de processeurs, via `nproc`.
-2. `ARCH` — l'architecture, via `uname -m`.
-3. `MEM_TOTAL_KB` — la mémoire totale en kB, dans `/proc/meminfo`.
-4. `BLOCK_DEVICE` — le nom d'**un** disque réel, via `lsblk`.
+1. `CPU_COUNT` — the number of processors, via `nproc`.
+2. `ARCH` — the architecture, via `uname -m`.
+3. `MEM_TOTAL_KB` — the total memory in kB, in `/proc/meminfo`.
+4. `BLOCK_DEVICE` — the name of **one** real disk, via `lsblk`.
 
-## Contraintes
+## Constraints
 
-- Chaque valeur doit être la **vraie valeur de ta machine** : la validation la
-  compare à l'état réel du système. Une valeur inventée échoue.
-- Tous les placeholders `VOTRE_RÉPONSE_ICI` doivent être remplacés.
+- Each value must be the **actual value of your machine**: validation compares
+  it to the real system state. A made-up value fails.
+- All `VOTRE_RÉPONSE_ICI` placeholders must be replaced.
 
-## Commandes utiles
+## Useful commands
 
 ```bash
 nproc

@@ -1,0 +1,3 @@
+id: l2-acl-posix
+title: "Accorder un accès fin avec les ACL POSIX"
+description: "Aller au-delà d'ugo : donner à un utilisateur rw sur un fichier et à un groupe rx sur un répertoire, avec une ACL par défaut pour que les nouveaux fichiers en héritent — via setfacl/getfacl."

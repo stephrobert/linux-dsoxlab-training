@@ -1,0 +1,3 @@
+id: l2-sudo-delegation
+title: "Déléguer des droits sudo limités via un drop-in sudoers"
+description: "Accorder au groupe operators un sudo sans mot de passe pour systemctl seulement, via un drop-in /etc/sudoers.d validé — moindre privilège, pas root complet."

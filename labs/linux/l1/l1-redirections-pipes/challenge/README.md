@@ -2,21 +2,21 @@
 
 ## Mission
 
-À partir de `journal.log` (dans `challenge/work/`), produis quatre fichiers avec
-les bons opérateurs de redirection.
+From `journal.log` (in `challenge/work/`), produce four files with the right
+redirection operators.
 
-## Objectif (fichiers à produire)
+## Goal (files to produce)
 
-1. `total.txt` — le **nombre de lignes** de `journal.log`.
-2. `erreurs.txt` — uniquement les lignes contenant **`ERROR`**.
-3. `stderr.txt` — le **message d'erreur** d'une commande qui échoue (lis un
-   fichier absent).
-4. `tout.txt` — la sortie standard **et** l'erreur d'une commande, **fusionnées**.
+1. `total.txt` — the **line count** of `journal.log`.
+2. `erreurs.txt` — only the lines containing **`ERROR`**.
+3. `stderr.txt` — the **error message** of a failing command (read a missing
+   file).
+4. `tout.txt` — the standard output **and** the error of a command, **merged**.
 
-## Contraintes
+## Constraints
 
-- Aucun éditeur : uniquement des redirections (`>`, `2>`, `2>&1`) et des pipes (`|`).
-- La validation lit le **contenu réel** des fichiers, pas la commande tapée.
+- No editor: only redirections (`>`, `2>`, `2>&1`) and pipes (`|`).
+- Validation reads the **actual content** of the files, not the command you typed.
 
 ## Validation
 

@@ -1,0 +1,47 @@
+---
+# État initial : un service labworker tourne à priorité normale (nice 0).
+# L'apprenant abaisse sa priorité à nice 10. Joué par dsoxlab run.
+- name: Setup process-signals-priority lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Provide the worker program
+      ansible.builtin.copy:
+        dest: /usr/local/bin/labworker.sh
+        mode: "0755"
+        content: |
+          #!/bin/bash
+          exec sleep infinity
+
+    - name: Base unit (no Nice yet → nice 0)
+      ansible.builtin.copy:
+        dest: /etc/systemd/system/labworker.service
+        mode: "0644"
+        content: |
+          [Unit]
+          Description=Lab batch worker
+
+          [Service]
+          Type=simple
+          ExecStart=/usr/local/bin/labworker.sh
+
+          [Install]
+          WantedBy=multi-user.target
+
+    - name: Remove any leftover Nice drop-in, then start the service
+      ansible.builtin.shell:
+        cmd: |
+          rm -rf /etc/systemd/system/labworker.service.d
+          systemctl daemon-reload
+          systemctl enable --now labworker.service
+        chdir: /
+      changed_when: false
+
+    - name: Brief the learner
+      ansible.builtin.debug:
+        msg: >-
+          Le service labworker tourne à priorité normale (nice 0) et gêne le
+          travail interactif. Abaisse sa priorité à nice 10 (Nice=10 dans l'unit,
+          idéalement via un drop-in systemctl edit), recharge et redémarre.
+          Vérifie avec ps -o ni= -p $(systemctl show -p MainPID --value labworker).

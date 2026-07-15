@@ -1,0 +1,62 @@
+---
+# État initial : un petit filesystem XFS monté sur /srv/data, REMPLI à ~80 % par
+# un gros fichier de cache dans un sous-répertoire. Un fichier légitime
+# (app.log) doit être conservé. L'apprenant diagnostique (df/du) et récupère de
+# l'espace. Disque détecté dynamiquement. Joué par dsoxlab run (ansible-runner).
+- name: Setup disk-space-troubleshoot lab (small full filesystem)
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Ensure parted + xfsprogs
+      ansible.builtin.package:
+        name:
+          - parted
+          - xfsprogs
+          - util-linux
+        state: present
+      failed_when: false
+
+    - name: Detect the additional block device (not the root disk)
+      ansible.builtin.shell: |
+        set -e
+        root_src=$(findmnt -no SOURCE /)
+        root_disk=$(lsblk -no pkname "$root_src" 2>/dev/null | head -1)
+        extra=$(lsblk -dno NAME,TYPE | awk '$2=="disk"{print $1}' \
+                | grep -v "^${root_disk}$" | head -1)
+        [ -n "$extra" ] || { echo "no additional disk found" >&2; exit 1; }
+        echo "DISK=/dev/${extra}" > /root/dsk-disk.env
+      args:
+        creates: /root/dsk-disk.env
+
+    - name: Build a small 400 MiB XFS on /srv/data and fill it to ~80%
+      ansible.builtin.shell: |
+        set -e
+        . /root/dsk-disk.env
+        umount /srv/data 2>/dev/null || true
+        umount "${DISK}"* 2>/dev/null || true
+        wipefs -a "$DISK"
+        sgdisk --zap-all "$DISK" 2>/dev/null || true
+        parted -s "$DISK" mklabel gpt
+        parted -s "$DISK" mkpart primary 1MiB 401MiB
+        partprobe "$DISK"
+        part="${DISK}1"; [ -b "$part" ] || part="${DISK}p1"
+        mkfs.xfs -f "$part"
+        mkdir -p /srv/data
+        mountpoint -q /srv/data || mount "$part" /srv/data
+        # Donnée légitime à conserver.
+        echo "log applicatif important" > /srv/data/app.log
+        # Le coupable : un gros fichier de cache qui sature le FS.
+        mkdir -p /srv/data/cache
+        fallocate -l 300M /srv/data/cache/dump.bin
+        sync
+        touch /root/.dsk-lab-ready
+      args:
+        creates: /root/.dsk-lab-ready
+
+    - name: Brief the learner
+      ansible.builtin.debug:
+        msg: >-
+          /srv/data est presque plein (df -h). Diagnostique ce qui l'occupe
+          (du), supprime le superflu SANS effacer app.log, et fais redescendre
+          l'occupation sous 50 %.

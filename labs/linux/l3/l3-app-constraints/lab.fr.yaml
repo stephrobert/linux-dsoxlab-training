@@ -1,0 +1,3 @@
+id: l3-app-constraints
+title: "Régler les limites de ressources par utilisateur (fichiers ouverts) avec limits.d"
+description: "Donner au compte appuser une limite de fichiers ouverts plus haute via /etc/security/limits.d — prouvé par le ulimit effectif dans une vraie session de login."

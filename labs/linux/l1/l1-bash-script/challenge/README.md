@@ -2,23 +2,23 @@
 
 ## Mission
 
-Écris `rapport.sh` dans `challenge/work/`. Il lit un fichier d'état
-(`nom up` / `nom down`) passé en argument et en fait un rapport.
+Write `rapport.sh` in `challenge/work/`. It reads a status file
+(`name up` / `name down`) passed as an argument and turns it into a report.
 
-## Contrat de sortie
+## Output contract
 
-`./rapport.sh serveurs.txt` doit :
+`./rapport.sh serveurs.txt` must:
 
-1. lire le fichier passé en `$1` ;
-2. compter les UP et les DOWN (boucle + variables) ;
-3. afficher exactement `UP=<n>` et `DOWN=<n>` ;
-4. sortir avec un code **non nul** si au moins un hôte est down, `0` sinon.
+1. read the file passed in `$1`;
+2. count the UP and the DOWN entries (loop + variables);
+3. print exactly `UP=<n>` and `DOWN=<n>`;
+4. exit with a **non-zero** code if at least one host is down, `0` otherwise.
 
-## Contraintes
+## Constraints
 
-- Shebang obligatoire, script exécutable (`chmod +x rapport.sh`).
-- La validation **exécute** le script (sortie + code de retour) et le rejoue sur
-  un fichier tout-up : le code de retour doit dépendre du vrai comptage.
+- Mandatory shebang, executable script (`chmod +x rapport.sh`).
+- Validation **runs** the script (output + return code) and replays it on
+  an all-up file: the return code must depend on the real count.
 
 ## Validation
 

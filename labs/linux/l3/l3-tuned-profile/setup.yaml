@@ -1,0 +1,31 @@
+---
+# État initial : tuned installé et actif, profil 'balanced'. L'apprenant bascule
+# sur throughput-performance. Joué par dsoxlab run (ansible-runner).
+- name: Setup tuned-profile lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Ensure tuned is installed and running
+      block:
+        - ansible.builtin.package:
+            name: tuned
+            state: present
+          failed_when: false
+        - ansible.builtin.systemd_service:
+            name: tuned
+            enabled: true
+            state: started
+          failed_when: false
+
+    - name: Start from the balanced profile
+      ansible.builtin.command: tuned-adm profile balanced
+      changed_when: false
+      failed_when: false
+
+    - name: Brief the learner
+      ansible.builtin.debug:
+        msg: >-
+          Le profil tuned actif est 'balanced'. Ce serveur a besoin de débit :
+          bascule le profil actif sur 'throughput-performance' (tuned-adm profile
+          throughput-performance). Vérifie avec tuned-adm active.

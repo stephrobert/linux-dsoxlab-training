@@ -1,0 +1,19 @@
+---
+# État initial : aucun dépôt 'labrepo'. L'apprenant en crée un correctement.
+# Joué par dsoxlab run (ansible-runner).
+- name: Setup repo-configure lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Ensure no leftover labrepo definition
+      ansible.builtin.file:
+        path: /etc/yum.repos.d/labrepo.repo
+        state: absent
+
+    - name: Brief the learner
+      ansible.builtin.debug:
+        msg: >-
+          Déclare un dépôt 'labrepo' sous /etc/yum.repos.d/labrepo.repo :
+          id [labrepo], une baseurl valide (ex. le miroir AppStream AlmaLinux 10),
+          enabled=1 et gpgcheck=1 (avec gpgkey). Vérifie avec dnf repolist.

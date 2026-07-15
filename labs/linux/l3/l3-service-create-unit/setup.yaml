@@ -1,0 +1,34 @@
+---
+# État initial : un programme /usr/local/bin/labapp.sh existe, mais AUCUNE unit
+# systemd pour lui. L'apprenant écrit et active le service. Joué par dsoxlab run.
+- name: Setup service-create-unit lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Provide the program to be supervised
+      ansible.builtin.copy:
+        dest: /usr/local/bin/labapp.sh
+        mode: "0755"
+        content: |
+          #!/bin/bash
+          # Petit service de démo : marque qu'il tourne puis reste actif.
+          echo running > /run/labapp.status
+          exec sleep infinity
+
+    - name: Ensure no leftover unit
+      ansible.builtin.shell:
+        cmd: |
+          systemctl disable --now labapp.service 2>/dev/null || true
+          rm -f /etc/systemd/system/labapp.service
+          systemctl daemon-reload
+          rm -f /run/labapp.status
+      changed_when: false
+
+    - name: Brief the learner
+      ansible.builtin.debug:
+        msg: >-
+          Le programme /usr/local/bin/labapp.sh n'a pas de service systemd. Crée
+          une unit /etc/systemd/system/labapp.service (Type=simple,
+          ExecStart=/usr/local/bin/labapp.sh), recharge systemd (daemon-reload),
+          puis démarre ET active le service au boot (systemctl enable --now).

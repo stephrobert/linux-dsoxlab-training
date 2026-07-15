@@ -1,0 +1,24 @@
+---
+# État initial : journald en stockage VOLATILE (pas de /var/log/journal, pas de
+# drop-in persistant). L'apprenant rend le journal persistant. Joué par dsoxlab run.
+- name: Setup journald-persist lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Force volatile storage (remove persistent journal + drop-ins)
+      ansible.builtin.shell:
+        cmd: |
+          rm -f /etc/systemd/journald.conf.d/*persist*.conf 2>/dev/null || true
+          rm -rf /var/log/journal
+          systemctl restart systemd-journald
+        chdir: /
+      changed_when: false
+
+    - name: Brief the learner
+      ansible.builtin.debug:
+        msg: >-
+          Les journaux sont volatiles (perdus au reboot). Rends journald
+          persistant : Storage=persistent (dans /etc/systemd/journald.conf ou un
+          drop-in journald.conf.d/), crée /var/log/journal, puis redémarre
+          systemd-journald. Vérifie avec journalctl --disk-usage.

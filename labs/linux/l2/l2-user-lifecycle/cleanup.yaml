@@ -1,0 +1,20 @@
+---
+# Reset idempotent : supprime alice et les groupes du lab. Joué par dsoxlab clean.
+- name: Cleanup user-lifecycle lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Remove alice and her home
+      ansible.builtin.user:
+        name: alice
+        state: absent
+        remove: true
+
+    - name: Remove the lab groups
+      ansible.builtin.group:
+        name: "{{ item }}"
+        state: absent
+      loop:
+        - developers
+        - staff

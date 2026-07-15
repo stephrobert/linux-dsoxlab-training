@@ -1,0 +1,3 @@
+id: l2-filesystem-create-xfs
+title: "Créer et labelliser un filesystem XFS, puis le monter"
+description: "Formater une partition préparée en XFS avec un label, créer un point de montage et le monter — prouvé par le type du filesystem, son label et le montage actif."

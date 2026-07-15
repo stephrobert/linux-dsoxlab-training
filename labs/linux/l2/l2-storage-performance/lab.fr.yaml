@@ -1,0 +1,3 @@
+id: l2-storage-performance
+title: "Optimiser un montage avec noatime (de façon persistante)"
+description: "Un filesystem très sollicité en lecture gaspille des I/O à écrire les dates d'accès. Ajoute l'option noatime, rends-la active et persistante dans /etc/fstab."

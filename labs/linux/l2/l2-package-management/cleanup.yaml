@@ -1,0 +1,17 @@
+---
+# Reset idempotent : remet l'état de départ (tree absent, zip présent).
+# Joué par dsoxlab clean.
+- name: Cleanup package-management lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Remove tree
+      ansible.builtin.package:
+        name: tree
+        state: absent
+
+    - name: Restore zip
+      ansible.builtin.package:
+        name: zip
+        state: present

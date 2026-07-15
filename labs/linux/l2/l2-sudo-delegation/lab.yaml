@@ -1,0 +1,38 @@
+id: l2-sudo-delegation
+title: "Delegate limited sudo rights with a sudoers drop-in"
+description: "Grant the operators group password-less sudo for systemctl only, via a validated /etc/sudoers.d drop-in — least privilege, not full root."
+section: linux
+type: lab
+level: l2
+track:
+  - maintenir
+  - rhcsa
+  - lfcs
+skills:
+  - sudo
+  - sudoers
+  - visudo
+  - least-privilege
+difficulty: intermediate
+estimated_time: 25m
+runtime:
+  type: vm
+  default: rhel
+  snapshot_required: false
+  targets:
+    - name: rhel
+      host: alma-rhcsa-1.lab
+      label_en: "AlmaLinux 10 (sudoers.d, visudo -c)"
+      label_fr: "AlmaLinux 10 (sudoers.d, visudo -c)"
+distros:
+  - rhel10
+  - almalinux10
+  - ubuntu24.04
+doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/securiser/sudo/
+validation:
+  functional: true
+  security: true
+  persistence_after_reboot: false
+certification_tags:
+  - rhcsa
+  - lfcs

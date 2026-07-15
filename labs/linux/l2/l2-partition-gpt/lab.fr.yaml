@@ -1,0 +1,3 @@
+id: l2-partition-gpt
+title: "Créer des partitions GPT sur un disque avec parted"
+description: "Poser une table GPT sur le disque supplémentaire et y découper deux partitions (512 Mio et 1 Gio), puis faire relire la table au noyau."

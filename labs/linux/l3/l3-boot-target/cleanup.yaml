@@ -1,0 +1,11 @@
+---
+# Reset idempotent : remet la cible par défaut sur graphical (état de départ).
+# Joué par dsoxlab clean.
+- name: Cleanup boot-target lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Restore graphical target as default
+      ansible.builtin.command: systemctl set-default graphical.target
+      changed_when: false

@@ -1,0 +1,91 @@
+---
+# Lab MULTI-HÔTE (feature dsoxlab roles) :
+#   - lab_server (alma-rhcsa-2) : exporte un partage NFS.
+#   - lab_target (alma-rhcsa-1) : client, prêt à monter (l'apprenant monte).
+# Joué par dsoxlab run (ansible-runner) sur l'inventory serveur+client.
+
+- name: NFS server — export a share (lab_server)
+  hosts: lab_server
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Install nfs-utils
+      ansible.builtin.package:
+        name: nfs-utils
+        state: present
+      failed_when: false
+
+    - name: Create the export directory and a served file
+      ansible.builtin.file:
+        path: /srv/export
+        state: directory
+        mode: "0777"
+
+    - name: Put a marker file in the export
+      ansible.builtin.copy:
+        dest: /srv/export/hello.txt
+        content: "fichier servi par le serveur NFS\n"
+        mode: "0644"
+
+    - name: Declare the export to the lab subnet
+      ansible.builtin.copy:
+        dest: /etc/exports
+        content: "/srv/export 10.10.30.0/24(rw,sync,no_root_squash,no_subtree_check)\n"
+        mode: "0644"
+
+    - name: Enable and start nfs-server
+      ansible.builtin.systemd_service:
+        name: nfs-server
+        enabled: true
+        state: started
+
+    - name: Re-export all shares
+      ansible.builtin.command: exportfs -ra
+      changed_when: false
+
+    - name: Open the firewall for NFS (best-effort)
+      ansible.builtin.shell: |
+        firewall-cmd --add-service=nfs --permanent
+        firewall-cmd --add-service=rpc-bind --permanent
+        firewall-cmd --add-service=mountd --permanent
+        firewall-cmd --reload
+      failed_when: false
+      changed_when: false
+
+- name: NFS client — prepare mount point (lab_target)
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Install nfs client tooling
+      ansible.builtin.package:
+        name: nfs-utils
+        state: present
+      failed_when: false
+
+    - name: Record the NFS server address for the learner
+      ansible.builtin.copy:
+        dest: /root/nfs-server.env
+        content: |
+          SERVER={{ hostvars[groups['lab_server'][0]]['ansible_host'] }}
+          EXPORT=/srv/export
+        mode: "0644"
+
+    - name: Clean state — no leftover mount or fstab line
+      ansible.builtin.shell: |
+        umount /mnt/nfs 2>/dev/null || true
+        sed -i '\#[[:space:]]/mnt/nfs[[:space:]]#d' /etc/fstab
+      changed_when: false
+
+    - name: Create the mount point
+      ansible.builtin.file:
+        path: /mnt/nfs
+        state: directory
+        mode: "0755"
+
+    - name: Brief the learner
+      ansible.builtin.debug:
+        msg: >-
+          Un serveur NFS exporte /srv/export (son IP est dans
+          /root/nfs-server.env). Monte cet export sur /mnt/nfs de façon
+          persistante (/etc/fstab, option _netdev) et valide avec mount -a.

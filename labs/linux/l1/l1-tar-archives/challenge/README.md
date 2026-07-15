@@ -2,21 +2,21 @@
 
 ## Mission
 
-À partir de `rapport.txt`, `config.yaml`, `notes.txt` (dans `challenge/work/`),
-produis quatre artefacts avec `tar`.
+From `rapport.txt`, `config.yaml`, `notes.txt` (in `challenge/work/`), produce
+four artifacts with `tar`.
 
-## Objectif (fichiers à produire)
+## Goal (files to produce)
 
-1. `docs.tar.gz` — archive **gzip** des trois fichiers.
-2. `liste.txt` — le **listing** de l'archive.
-3. `extrait/rapport.txt` — **uniquement** `rapport.txt`, extrait dans `extrait/`.
-4. `docs.tar.bz2` — archive **bzip2** des trois fichiers.
+1. `docs.tar.gz` — **gzip** archive of the three files.
+2. `liste.txt` — the archive **listing**.
+3. `extrait/rapport.txt` — **only** `rapport.txt`, extracted into `extrait/`.
+4. `docs.tar.bz2` — **bzip2** archive of the three files.
 
-## Contraintes
+## Constraints
 
-- Uniquement `tar` (et `mkdir` pour le dossier d'extraction) : pas d'archiveur graphique.
-- La validation **ouvre réellement les archives** et vérifie leurs membres et la
-  compression — taper la bonne commande sans produire le bon fichier échoue.
+- Only `tar` (and `mkdir` for the extraction directory): no graphical archiver.
+- Validation **actually opens the archives** and checks their members and the
+  compression — typing the right command without producing the right file fails.
 
 ## Validation
 

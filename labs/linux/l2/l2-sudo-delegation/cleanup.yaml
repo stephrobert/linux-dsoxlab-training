@@ -1,0 +1,22 @@
+---
+# Reset idempotent : retire le drop-in, ops et operators. Joué par dsoxlab clean.
+- name: Cleanup sudo-delegation lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Remove the sudoers drop-in
+      ansible.builtin.file:
+        path: /etc/sudoers.d/operators
+        state: absent
+
+    - name: Remove user ops
+      ansible.builtin.user:
+        name: ops
+        state: absent
+        remove: true
+
+    - name: Remove group operators
+      ansible.builtin.group:
+        name: operators
+        state: absent

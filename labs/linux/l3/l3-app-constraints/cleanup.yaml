@@ -1,0 +1,17 @@
+---
+# Reset idempotent : retire le drop-in de limites et appuser. Joué par dsoxlab clean.
+- name: Cleanup app-constraints lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Remove the limits drop-in
+      ansible.builtin.file:
+        path: /etc/security/limits.d/appuser.conf
+        state: absent
+
+    - name: Remove appuser
+      ansible.builtin.user:
+        name: appuser
+        state: absent
+        remove: true

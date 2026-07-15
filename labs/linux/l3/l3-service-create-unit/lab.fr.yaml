@@ -1,0 +1,3 @@
+id: l3-service-create-unit
+title: "Créer et activer un service systemd"
+description: "Encapsuler un programme dans une unit .service systemd, le démarrer et l'activer au boot — prouvé par le service actif, activé et qui fait son travail."

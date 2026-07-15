@@ -1,0 +1,14 @@
+---
+# Reset idempotent : retire la planification et le script. Joué par dsoxlab clean.
+- name: Cleanup scheduling-cron lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Remove cron entries + script + log
+      ansible.builtin.shell:
+        cmd: |
+          rm -f /etc/cron.d/report /usr/local/bin/report.sh /var/log/report.log
+          crontab -r 2>/dev/null || true
+        chdir: /
+      changed_when: false

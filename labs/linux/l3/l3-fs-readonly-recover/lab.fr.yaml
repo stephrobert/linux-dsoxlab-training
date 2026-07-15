@@ -1,0 +1,3 @@
+id: l3-fs-readonly-recover
+title: "Récupérer un montage en lecture seule dû à un fstab cassé"
+description: "Une mauvaise option dans /etc/fstab a laissé /srv/data monté en lecture seule. Corrige l'entrée, remonte en lecture-écriture, et rends mount -a de nouveau propre."

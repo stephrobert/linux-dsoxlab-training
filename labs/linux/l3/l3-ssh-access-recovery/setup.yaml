@@ -1,0 +1,33 @@
+---
+# État initial : un drop-in sshd_config.d contient une directive INVALIDE
+# (MaxAuthTries beaucoup-trop) → sshd -t échoue. Le sshd EN COURS n'est pas
+# touché (config relue seulement au reload), donc la connexion actuelle survit,
+# mais un reload/reboot casserait l'accès. L'apprenant répare. Joué par dsoxlab run.
+- name: Setup ssh-access-recovery lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Ensure the drop-in directory exists
+      ansible.builtin.file:
+        path: /etc/ssh/sshd_config.d
+        state: directory
+        mode: "0755"
+
+    - name: Write a broken sshd drop-in (invalid MaxAuthTries value)
+      ansible.builtin.copy:
+        dest: /etc/ssh/sshd_config.d/99-lab.conf
+        mode: "0600"
+        content: |
+          # Config du lab — contient une erreur volontaire.
+          PermitRootLogin no
+          MaxAuthTries beaucoup-trop
+
+    - name: Brief the learner (do NOT reload a broken config)
+      ansible.builtin.debug:
+        msg: >-
+          Le drop-in /etc/ssh/sshd_config.d/99-lab.conf a une directive invalide :
+          sshd -t échoue, donc un reload/reboot couperait l'accès SSH. Corrige la
+          valeur fautive (MaxAuthTries doit être un nombre, ex. 3), GARDE
+          PermitRootLogin no, puis valide avec sshd -t et recharge (systemctl
+          reload sshd). Ne recharge jamais une config que sshd -t rejette.

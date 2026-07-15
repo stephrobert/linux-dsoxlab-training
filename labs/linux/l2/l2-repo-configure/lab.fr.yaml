@@ -1,0 +1,3 @@
+id: l2-repo-configure
+title: "Configurer un dépôt dnf avec un fichier .repo"
+description: "Ajouter un dépôt logiciel sous /etc/yum.repos.d : un id, une baseurl, activé et vérifié GPG, puis confirmer que dnf le voit."
