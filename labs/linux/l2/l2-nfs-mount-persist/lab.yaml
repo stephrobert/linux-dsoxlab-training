@@ -1,0 +1,38 @@
+id: l2-nfs-mount-persist
+title: "Mount an NFS export persistently from a server"
+description: "A second host exports an NFS share. Mount it on the client at /mnt/nfs, make it persistent in /etc/fstab with _netdev so it survives a reboot."
+section: linux
+type: lab
+level: l2
+track:
+  - maintenir
+  - lfcs
+skills:
+  - nfs
+  - mount
+  - fstab
+  - network-storage
+difficulty: intermediate
+estimated_time: 30m
+runtime:
+  type: vm
+  default: rhel
+  snapshot_required: false
+  targets:
+    - name: rhel
+      host: alma-rhcsa-1.lab
+      label_en: "AlmaLinux 10 client + alma-rhcsa-2 NFS server"
+      label_fr: "Client AlmaLinux 10 + serveur NFS alma-rhcsa-2"
+      roles:
+        server: alma-rhcsa-2.lab
+distros:
+  - rhel10
+  - almalinux10
+  - ubuntu24.04
+doc_url: https://blog.stephane-robert.info/docs/services/stockage/nfs/
+validation:
+  functional: true
+  security: false
+  persistence_after_reboot: true
+certification_tags:
+  - lfcs

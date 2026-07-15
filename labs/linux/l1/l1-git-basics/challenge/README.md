@@ -2,21 +2,21 @@
 
 ## Mission
 
-Dans `challenge/work/`, crée un dépôt Git `monprojet/` et fais-le vivre.
+In `challenge/work/`, create a Git repository `monprojet/` and make it live.
 
-## Objectif (état attendu du dépôt)
+## Goal (expected repository state)
 
-1. `monprojet/` est un dépôt Git (`git init`).
-2. Au moins **2 commits**.
-3. `README.md` et `app.sh` sont **suivis**.
-4. Une branche `feature` existe.
-5. Arbre de travail **propre** (tout commité).
+1. `monprojet/` is a Git repository (`git init`).
+2. At least **2 commits**.
+3. `README.md` and `app.sh` are **tracked**.
+4. A `feature` branch exists.
+5. Working tree is **clean** (everything committed).
 
-## Contraintes
+## Constraints
 
-- `git init`, `git add`, `git commit`, `git branch`/`git switch -c`. Pas de dépôt distant.
-- La validation interroge l'**état du dépôt** (log, ls-files, branch, status),
-  pas les commandes tapées.
+- `git init`, `git add`, `git commit`, `git branch`/`git switch -c`. No remote repository.
+- Validation queries the **repository state** (log, ls-files, branch, status),
+  not the commands typed.
 
 ## Validation
 

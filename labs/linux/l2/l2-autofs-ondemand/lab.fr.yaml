@@ -1,0 +1,3 @@
+id: l2-autofs-ondemand
+title: "Monter un filesystem à la demande avec autofs"
+description: "Configurer autofs pour qu'accéder à /autofs/data monte automatiquement le disque supplémentaire, et le démonte après inactivité — une carte maître et une carte de montage."

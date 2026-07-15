@@ -1,0 +1,3 @@
+id: l3-sysctl-persist
+title: "Durcir des paramètres noyau durablement avec sysctl.d"
+description: "Désactiver le routage IP et les redirections ICMP via /etc/sysctl.d, appliqué maintenant et persistant au reboot — prouvé par les valeurs sysctl actives."

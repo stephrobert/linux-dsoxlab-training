@@ -1,29 +1,29 @@
-# Challenge — l1-01 : Cartographier ton système Linux
+# Challenge — l1-01: Map your Linux system
 
-Travaille dans **`challenge/work/`** — le fichier `notions.md` y a été créé par
-`dsoxlab run`. Complète-le sans pas-à-pas.
+Work in **`challenge/work/`** — the file `notions.md` was created there by
+`dsoxlab run`. Complete it without a step-by-step guide.
 
 ---
 
 ## Mission
 
-Tu prépares ton premier poste Linux. Avant de toucher à quoi que ce soit, tu dois
-savoir sur quoi tu travailles. **Explore ta machine** et relève quatre faits
-réels dans `notions.md` :
+You are setting up your first Linux workstation. Before touching anything, you must
+know what you are working on. **Explore your machine** and record four
+real facts in `notions.md`:
 
-1. `KERNEL` — la version de ton noyau, via `uname -r`.
-2. `DISTRO_ID` — l'identifiant de ta distribution, dans `/etc/os-release`.
-3. `ETC_FILE` — le nom d'**un** fichier réellement présent dans `/etc`.
-4. `LOG_FILE` — le nom d'**un** fichier réellement présent dans `/var/log`.
+1. `KERNEL` — your kernel version, via `uname -r`.
+2. `DISTRO_ID` — your distribution's identifier, in `/etc/os-release`.
+3. `ETC_FILE` — the name of **one** file actually present in `/etc`.
+4. `LOG_FILE` — the name of **one** file actually present in `/var/log`.
 
-## Contraintes
+## Constraints
 
-- Chaque champ doit contenir la **vraie valeur de ta machine**, pas un exemple.
-  La validation compare tes réponses à l'état réel du système : une valeur
-  inventée échoue.
-- Tous les placeholders `VOTRE_RÉPONSE_ICI` doivent être remplacés.
+- Each field must contain the **real value from your machine**, not an example.
+  Validation compares your answers against the real system state: an
+  invented value fails.
+- All `VOTRE_RÉPONSE_ICI` placeholders must be replaced.
 
-## Commandes utiles
+## Useful commands
 
 ```bash
 uname -r
@@ -39,7 +39,7 @@ dsoxlab check l1-discover-linux-map   # valide ton travail
 dsoxlab hint  l1-discover-linux-map   # bloqué ? un indice (coûte des points)
 ```
 
-> Les **concepts** (à quoi sert un noyau, en quoi une distribution diffère du
-> noyau, le rôle de `/etc` et `/var/log`) sont traités dans le cours et vérifiés
-> par le quiz associé. Ce lab, lui, prouve que tu as réellement exploré ton
-> système.
+> The **concepts** (what a kernel is for, how a distribution differs from
+> the kernel, the role of `/etc` and `/var/log`) are covered in the course and checked
+> by the associated quiz. This lab proves that you have actually explored your
+> system.

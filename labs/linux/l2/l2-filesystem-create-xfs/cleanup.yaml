@@ -1,0 +1,23 @@
+---
+# Reset idempotent : démonte /srv/xfs et efface le FS de la partition.
+# Joué par dsoxlab clean.
+- name: Cleanup filesystem-create-xfs lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Unmount /srv/xfs if mounted
+      ansible.builtin.command: umount /srv/xfs
+      changed_when: false
+      failed_when: false
+
+    - name: Wipe the filesystem on the target partition
+      ansible.builtin.shell: |
+        . /root/xfs-disk.env 2>/dev/null || exit 0
+        [ -n "$PART" ] && wipefs -a "$PART" 2>/dev/null || true
+      changed_when: false
+
+    - name: Remove the mount point
+      ansible.builtin.file:
+        path: /srv/xfs
+        state: absent

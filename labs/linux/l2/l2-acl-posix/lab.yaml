@@ -1,0 +1,38 @@
+id: l2-acl-posix
+title: "Grant fine-grained access with POSIX ACLs"
+description: "Go beyond ugo: give one user rw on a file and a group rx on a directory, with a default ACL so new files inherit it — using setfacl/getfacl."
+section: linux
+type: lab
+level: l2
+track:
+  - maintenir
+  - rhcsa
+  - lfcs
+skills:
+  - setfacl
+  - getfacl
+  - acl
+  - default-acl
+difficulty: intermediate
+estimated_time: 25m
+runtime:
+  type: vm
+  default: rhel
+  snapshot_required: false
+  targets:
+    - name: rhel
+      host: alma-rhcsa-1.lab
+      label_en: "AlmaLinux 10 (setfacl, getfacl, default ACL)"
+      label_fr: "AlmaLinux 10 (setfacl, getfacl, ACL par défaut)"
+distros:
+  - rhel10
+  - almalinux10
+  - ubuntu24.04
+doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/securiser/acl/
+validation:
+  functional: true
+  security: true
+  persistence_after_reboot: false
+certification_tags:
+  - rhcsa
+  - lfcs

@@ -1,29 +1,29 @@
-# Challenge — l1-06 : Trouver la bonne commande avec l'aide
+# Challenge — l1-06: Find the right command with help
 
-Travaille dans **`challenge/work/`** — le fichier `donnees.txt` (5 lignes de log)
-y a été créé par `dsoxlab run`.
+Work in **`challenge/work/`** — the file `donnees.txt` (5 log lines)
+was created there by `dsoxlab run`.
 
 ---
 
 ## Mission
 
-Personne ne connaît toutes les commandes : ce qui compte, c'est savoir **trouver
-la bonne** avec `man`, `--help` et `apropos`, puis **s'en servir**. À partir de
-`donnees.txt`, produis trois fichiers :
+Nobody knows every command: what matters is knowing how to **find
+the right one** with `man`, `--help` and `apropos`, then **use it**. From
+`donnees.txt`, produce three files:
 
-1. `fin.txt` — les **3 dernières lignes** de `donnees.txt`.
-2. `compte.txt` — le **nombre de lignes** de `donnees.txt`.
-3. `erreurs.txt` — uniquement les lignes contenant **`ERROR`**.
+1. `fin.txt` — the **last 3 lines** of `donnees.txt`.
+2. `compte.txt` — the **number of lines** in `donnees.txt`.
+3. `erreurs.txt` — only the lines containing **`ERROR`**.
 
-Pour chaque tâche, trouve d'abord la commande adaptée avec les outils d'aide,
-puis exécute-la.
+For each task, first find the right command with the help tools,
+then run it.
 
-## Contraintes
+## Constraints
 
-- La validation compare tes fichiers au **contenu réel** de `donnees.txt` : il ne
-  suffit pas de nommer la commande, il faut produire le bon résultat.
+- Validation compares your files against the **real content** of `donnees.txt`: it is not
+  enough to name the command, you must produce the correct result.
 
-## Outils d'aide
+## Help tools
 
 ```bash
 apropos "last"        # chercher une commande par mot-clé

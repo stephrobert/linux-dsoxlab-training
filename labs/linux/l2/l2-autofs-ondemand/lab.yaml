@@ -1,0 +1,35 @@
+id: l2-autofs-ondemand
+title: "Mount a filesystem on demand with autofs"
+description: "Configure autofs so that accessing /autofs/data mounts the spare disk automatically, and unmounts it after idle — a master map plus a mount map."
+section: linux
+type: lab
+level: l2
+track:
+  - maintenir
+  - lfcs
+skills:
+  - autofs
+  - automount
+  - auto.master
+difficulty: intermediate
+estimated_time: 30m
+runtime:
+  type: vm
+  default: rhel
+  snapshot_required: false
+  targets:
+    - name: rhel
+      host: alma-rhcsa-1.lab
+      label_en: "AlmaLinux 10 (autofs, auto.master, mount map)"
+      label_fr: "AlmaLinux 10 (autofs, auto.master, carte de montage)"
+distros:
+  - rhel10
+  - almalinux10
+  - ubuntu24.04
+doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/autofs/
+validation:
+  functional: true
+  security: false
+  persistence_after_reboot: false
+certification_tags:
+  - lfcs

@@ -1,0 +1,38 @@
+id: l3-fs-readonly-recover
+title: "Recover a read-only mount caused by a broken fstab"
+description: "A bad /etc/fstab option left /srv/data mounted read-only. Fix the entry, remount read-write, and make mount -a clean again."
+section: linux
+type: lab
+level: l3
+track:
+  - depanner
+  - rhcsa
+  - lfcs
+skills:
+  - fstab
+  - mount
+  - remount
+  - troubleshooting
+difficulty: intermediate
+estimated_time: 25m
+runtime:
+  type: vm
+  default: rhel
+  snapshot_required: false
+  targets:
+    - name: rhel
+      host: alma-rhcsa-1.lab
+      label_en: "AlmaLinux 10 (fstab, mount -a, remount rw)"
+      label_fr: "AlmaLinux 10 (fstab, mount -a, remount rw)"
+distros:
+  - rhel10
+  - almalinux10
+  - ubuntu24.04
+doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/depanner/systeme-fichiers-lecture-seule/
+validation:
+  functional: true
+  security: false
+  persistence_after_reboot: true
+certification_tags:
+  - rhcsa
+  - lfcs

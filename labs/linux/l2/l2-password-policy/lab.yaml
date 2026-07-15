@@ -1,0 +1,38 @@
+id: l2-password-policy
+title: "Enforce password aging and complexity policy"
+description: "Set per-account password aging with chage, the system default max age in login.defs, and a minimum password length via pwquality."
+section: linux
+type: lab
+level: l2
+track:
+  - maintenir
+  - rhcsa
+  - lfcs
+skills:
+  - chage
+  - login.defs
+  - pwquality
+  - password-aging
+difficulty: intermediate
+estimated_time: 25m
+runtime:
+  type: vm
+  default: rhel
+  snapshot_required: false
+  targets:
+    - name: rhel
+      host: alma-rhcsa-1.lab
+      label_en: "AlmaLinux 10 (chage, login.defs, pwquality)"
+      label_fr: "AlmaLinux 10 (chage, login.defs, pwquality)"
+distros:
+  - rhel10
+  - almalinux10
+  - ubuntu24.04
+doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/securiser/utilisateurs-groupes/
+validation:
+  functional: true
+  security: true
+  persistence_after_reboot: false
+certification_tags:
+  - rhcsa
+  - lfcs

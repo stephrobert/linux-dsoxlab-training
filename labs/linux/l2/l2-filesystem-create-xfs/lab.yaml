@@ -1,0 +1,38 @@
+id: l2-filesystem-create-xfs
+title: "Create and label an XFS filesystem, then mount it"
+description: "Format a prepared partition as XFS with a label, create a mount point and mount it — proven by the filesystem type, its label and the active mount."
+section: linux
+type: lab
+level: l2
+track:
+  - maintenir
+  - rhcsa
+  - lfcs
+skills:
+  - mkfs.xfs
+  - xfs
+  - filesystem-label
+  - mount
+difficulty: intermediate
+estimated_time: 25m
+runtime:
+  type: vm
+  default: rhel
+  snapshot_required: false
+  targets:
+    - name: rhel
+      host: alma-rhcsa-1.lab
+      label_en: "AlmaLinux 10 (mkfs.xfs, label, mount)"
+      label_fr: "AlmaLinux 10 (mkfs.xfs, label, mount)"
+distros:
+  - rhel10
+  - almalinux10
+  - ubuntu24.04
+doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/xfs/
+validation:
+  functional: true
+  security: false
+  persistence_after_reboot: false
+certification_tags:
+  - rhcsa
+  - lfcs

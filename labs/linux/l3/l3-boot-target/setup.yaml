@@ -1,0 +1,18 @@
+---
+# État initial : la cible par défaut est graphical.target (inadaptée à un
+# serveur). L'apprenant la remet sur multi-user.target. Joué par dsoxlab run.
+- name: Setup boot-target lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Set the default target to graphical (wrong for a server)
+      ansible.builtin.command: systemctl set-default graphical.target
+      changed_when: true
+
+    - name: Brief the learner
+      ansible.builtin.debug:
+        msg: >-
+          La cible de démarrage par défaut est graphical.target. Un serveur doit
+          démarrer en multi-user.target (sans interface graphique). Change le
+          défaut et vérifie avec systemctl get-default.

@@ -1,0 +1,3 @@
+id: l2-user-lifecycle
+title: "Créer un compte local avec UID, shell et groupes exacts"
+description: "Intégrer un utilisateur avec un UID précis, un home, un shell de connexion, un groupe primaire et un groupe secondaire — l'exercice de création de compte RHCSA."

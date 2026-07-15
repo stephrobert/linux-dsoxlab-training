@@ -1,0 +1,3 @@
+id: l2-package-management
+title: "Installer, supprimer et interroger des paquets avec dnf"
+description: "Amener la machine à un état logiciel cible : installer un paquet nécessaire, retirer un paquet indésirable, et vérifier avec des requêtes dnf/rpm."

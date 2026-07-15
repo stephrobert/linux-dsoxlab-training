@@ -1,0 +1,42 @@
+---
+# Reset idempotent multi-hôte : démonte côté client, retire l'entrée fstab,
+# et retire l'export côté serveur. Joué par dsoxlab clean.
+- name: NFS client cleanup (lab_target)
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Unmount /mnt/nfs if mounted
+      ansible.builtin.command: umount /mnt/nfs
+      changed_when: false
+      failed_when: false
+
+    - name: Remove the /mnt/nfs fstab line
+      ansible.builtin.lineinfile:
+        path: /etc/fstab
+        regexp: '\s/mnt/nfs\s'
+        state: absent
+
+    - name: Remove the mount point and server info
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - /mnt/nfs
+        - /root/nfs-server.env
+
+- name: NFS server cleanup (lab_server)
+  hosts: lab_server
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Drop the export
+      ansible.builtin.copy:
+        dest: /etc/exports
+        content: ""
+        mode: "0644"
+
+    - name: Re-export (removes the share)
+      ansible.builtin.command: exportfs -ra
+      changed_when: false
+      failed_when: false

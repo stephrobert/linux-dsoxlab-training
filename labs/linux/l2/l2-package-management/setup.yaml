@@ -1,0 +1,24 @@
+---
+# État initial : 'zip' est installé (à retirer), 'tree' est absent (à installer).
+# Joué par dsoxlab run (ansible-runner).
+- name: Setup package-management lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Ensure zip is present (the learner must remove it)
+      ansible.builtin.package:
+        name: zip
+        state: present
+
+    - name: Ensure tree is absent (the learner must install it)
+      ansible.builtin.package:
+        name: tree
+        state: absent
+
+    - name: Brief the learner
+      ansible.builtin.debug:
+        msg: >-
+          Amène la machine à l'état logiciel cible : INSTALLE le paquet 'tree'
+          et RETIRE le paquet 'zip'. Vérifie avec rpm -q tree / rpm -q zip
+          ou dnf list installed.

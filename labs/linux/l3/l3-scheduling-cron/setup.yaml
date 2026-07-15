@@ -1,0 +1,42 @@
+---
+# État initial : un script /usr/local/bin/report.sh existe, mais AUCUNE
+# planification. L'apprenant crée l'entrée cron. Joué par dsoxlab run.
+- name: Setup scheduling-cron lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Ensure cron daemon (cronie) is installed and running
+      block:
+        - ansible.builtin.package:
+            name: cronie
+            state: present
+          failed_when: false
+        - ansible.builtin.systemd_service:
+            name: crond
+            enabled: true
+            state: started
+          failed_when: false
+
+    - name: Provide the script to schedule
+      ansible.builtin.copy:
+        dest: /usr/local/bin/report.sh
+        mode: "0755"
+        content: |
+          #!/bin/bash
+          echo "$(date) rapport généré" >> /var/log/report.log
+
+    - name: Remove any leftover schedule
+      ansible.builtin.shell:
+        cmd: |
+          rm -f /etc/cron.d/report
+          crontab -r 2>/dev/null || true
+        chdir: /
+      changed_when: false
+
+    - name: Brief the learner
+      ansible.builtin.debug:
+        msg: >-
+          Planifie /usr/local/bin/report.sh pour qu'il s'exécute CHAQUE JOUR à
+          02:30 (minute 30, heure 2). Utilise une entrée cron (ex.
+          /etc/cron.d/report ou crontab). Vérifie le format des 5 champs.

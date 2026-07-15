@@ -122,15 +122,38 @@ sections:
     description: "Scripts, services, paquets, réseau, sécurité de base — runtime: vm."
     labs:
       - linux/l2/l2-swap-management
+      - linux/l2/l2-fstab-persist-uuid
+      - linux/l2/l2-partition-gpt
+      - linux/l2/l2-filesystem-create-xfs
+      - linux/l2/l2-disk-space-troubleshoot
+      - linux/l2/l2-storage-performance
+      - linux/l2/l2-lvm-extend-persist
+      - linux/l2/l2-nfs-mount-persist
+      - linux/l2/l2-autofs-ondemand
       - linux/l2/l2-raid-mdadm
       - linux/l2/l2-luks-encryption
-      - linux/l2/l2-lvm-extend-persist
+      - linux/l2/l2-user-lifecycle
+      - linux/l2/l2-password-policy
+      - linux/l2/l2-sudo-delegation
+      - linux/l2/l2-acl-posix
+      - linux/l2/l2-package-management
+      - linux/l2/l2-repo-configure
 
-  - id: depanner
-    title: "Dépanner"
-    description: "Méthode + 7 sous-sections (services, logs, stockage, perfs, démarrage, config, capitaliser)."
+  - id: l3
+    title: "Services + Dépannage (l3)"
+    description: "systemd, planification, journaux, noyau, récupération — runtime: vm."
     labs:
-      - linux/depanner/services-processus/service-crash-loop
+      - linux/l3/l3-boot-target
+      - linux/l3/l3-service-create-unit
+      - linux/l3/l3-service-diagnose
+      - linux/l3/l3-journald-persist
+      - linux/l3/l3-scheduling-cron
+      - linux/l3/l3-app-constraints
+      - linux/l3/l3-sysctl-persist
+      - linux/l3/l3-process-signals-priority
+      - linux/l3/l3-tuned-profile
+      - linux/l3/l3-fs-readonly-recover
+      - linux/l3/l3-ssh-access-recovery
 
   - id: rhcsa
     title: "RHCSA EX200v10"
@@ -145,4 +168,5 @@ sections:
   - id: capstones
     title: "Capstones"
     description: "Synthèses transverses — projets de fin de bloc."
-    labs: []
+    labs:
+      - linux/capstones/rhcsa-mock-exam

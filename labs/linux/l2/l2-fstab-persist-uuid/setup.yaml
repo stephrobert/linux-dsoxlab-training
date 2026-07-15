@@ -1,0 +1,50 @@
+---
+# État initial : un disque additionnel formaté en ext4 mais NI monté NI dans
+# /etc/fstab. L'apprenant doit le monter durablement sur /srv/data par UUID.
+# Le disque est détecté dynamiquement (le seul disque qui ne porte pas la racine :
+# kvm /dev/vdb, incus /dev/sdb). Joué par dsoxlab run (ansible-runner).
+- name: Setup fstab-persist-uuid lab (formatted disk, not mounted)
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Ensure e2fsprogs (mkfs.ext4, blkid)
+      ansible.builtin.package:
+        name: e2fsprogs
+        state: present
+      failed_when: false
+
+    - name: Detect the additional block device (not the root disk)
+      ansible.builtin.shell: |
+        set -e
+        root_src=$(findmnt -no SOURCE /)
+        root_disk=$(lsblk -no pkname "$root_src" 2>/dev/null | head -1)
+        extra=$(lsblk -dno NAME,TYPE | awk '$2=="disk"{print $1}' \
+                | grep -v "^${root_disk}$" | head -1)
+        [ -n "$extra" ] || { echo "no additional disk found" >&2; exit 1; }
+        echo "DISK=/dev/${extra}" > /root/fstab-disk.env
+      args:
+        creates: /root/fstab-disk.env
+
+    - name: Clean state — unmount /srv/data, drop any leftover fstab line
+      ansible.builtin.shell: |
+        umount /srv/data 2>/dev/null || true
+        sed -i '\#[[:space:]]/srv/data[[:space:]]#d' /etc/fstab
+      changed_when: false
+
+    - name: Format the extra disk as ext4 (unmounted, no fstab entry)
+      ansible.builtin.shell: |
+        set -e
+        . /root/fstab-disk.env
+        blkid "$DISK" | grep -q ext4 || mkfs.ext4 -F "$DISK"
+        touch /root/.fstab-lab-ready
+      args:
+        creates: /root/.fstab-lab-ready
+
+    - name: Brief the learner
+      ansible.builtin.debug:
+        msg: >-
+          Un disque additionnel est formaté en ext4 mais n'est ni monté ni
+          déclaré. Objectif : le monter sur /srv/data de façon persistante via
+          /etc/fstab en le référençant par UUID (blkid), puis vérifier avec
+          mount -a. Ne l'écrivez pas par nom de périphérique.

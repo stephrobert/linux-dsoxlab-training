@@ -1,0 +1,3 @@
+id: l2-nfs-mount-persist
+title: "Monter un export NFS de façon persistante depuis un serveur"
+description: "Un second hôte exporte un partage NFS. Monte-le côté client sur /mnt/nfs, rends-le persistant dans /etc/fstab avec _netdev pour qu'il survive au reboot."

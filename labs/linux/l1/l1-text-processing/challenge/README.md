@@ -2,21 +2,21 @@
 
 ## Mission
 
-À partir de `ventes.csv` (dans `challenge/work/`, format `date;region;produit;montant`),
-produis quatre fichiers avec `cut`, `sort`, `uniq`, `awk` et `sed`.
+From `ventes.csv` (in `challenge/work/`, format `date;region;produit;montant`),
+produce four files with `cut`, `sort`, `uniq`, `awk` and `sed`.
 
-## Objectif (fichiers à produire)
+## Goal (files to produce)
 
-1. `regions.txt` — les régions **distinctes**, triées.
-2. `nb-par-region.txt` — le **nombre de ventes par région**.
-3. `total.txt` — la **somme** de la colonne montant.
-4. `en-csv.txt` — le fichier avec `;` remplacé par `,`.
+1. `regions.txt` — the **distinct** regions, sorted.
+2. `nb-par-region.txt` — the **number of sales per region**.
+3. `total.txt` — the **sum** of the amount column.
+4. `en-csv.txt` — the file with `;` replaced by `,`.
 
-## Contraintes
+## Constraints
 
-- Uniquement les outils texte : pas d'éditeur, pas de tableur.
-- La validation lit le **contenu réel** des fichiers et recalcule chaque attendu
-  depuis `ventes.csv`.
+- Only the text tools: no editor, no spreadsheet.
+- Validation reads the **actual content** of the files and recomputes each
+  expected result from `ventes.csv`.
 
 ## Validation
 

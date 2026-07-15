@@ -1,0 +1,3 @@
+id: l3-ssh-access-recovery
+title: "Réparer une config sshd cassée avant qu'elle ne te verrouille dehors"
+description: "Un drop-in a laissé une directive invalide : sshd -t échoue, donc le prochain reload ou reboot couperait l'accès distant. Corrige la config, garde le login root désactivé, et recharge proprement."

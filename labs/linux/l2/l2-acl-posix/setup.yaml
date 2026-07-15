@@ -1,0 +1,44 @@
+---
+# État initial : /srv/projet et un fichier report.txt en droits ugo restrictifs,
+# plus un user 'carol' et un groupe 'auditors' SANS accès. L'apprenant pose des
+# ACL. Joué par dsoxlab run (ansible-runner).
+- name: Setup acl-posix lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Ensure acl tooling (setfacl/getfacl)
+      ansible.builtin.package:
+        name: acl
+        state: present
+      failed_when: false
+
+    - name: User carol and group auditors (no access yet)
+      block:
+        - ansible.builtin.user:
+            name: carol
+            shell: /bin/bash
+            create_home: true
+        - ansible.builtin.group:
+            name: auditors
+            state: present
+
+    - name: Project directory + a report file, restrictive ugo
+      ansible.builtin.shell: |
+        rm -rf /srv/projet
+        mkdir -p /srv/projet
+        echo "rapport confidentiel" > /srv/projet/report.txt
+        chown -R root:root /srv/projet
+        chmod 0750 /srv/projet
+        chmod 0640 /srv/projet/report.txt
+        # Retire toute ACL résiduelle
+        setfacl -bR /srv/projet 2>/dev/null || true
+      changed_when: false
+
+    - name: Brief the learner
+      ansible.builtin.debug:
+        msg: >-
+          Sans changer le propriétaire ni les droits ugo, accorde par ACL :
+          l'utilisateur carol rw sur /srv/projet/report.txt ; le groupe auditors
+          rx sur /srv/projet ; et une ACL PAR DÉFAUT sur /srv/projet donnant r au
+          groupe auditors aux futurs fichiers. Vérifie avec getfacl.

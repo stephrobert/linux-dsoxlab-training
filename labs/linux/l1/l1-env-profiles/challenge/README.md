@@ -2,21 +2,21 @@
 
 ## Mission
 
-Écris `env.sh` dans `challenge/work/`. Une fois sourcé, il configure
-l'environnement du projet.
+Write `env.sh` in `challenge/work/`. Once sourced, it configures
+the project environment.
 
-## Contrat (après `source env.sh`)
+## Contract (after `source env.sh`)
 
-1. `PROJET` exporté = `dsoxlab`.
-2. `EDITOR` exporté = `vim`.
-3. `GREETING` = `Bienvenue sur dsoxlab` (construit à partir de `$PROJET`).
-4. `PATH` commence par `$PWD/bin`.
+1. `PROJET` exported = `dsoxlab`.
+2. `EDITOR` exported = `vim`.
+3. `GREETING` = `Bienvenue sur dsoxlab` (built from `$PROJET`).
+4. `PATH` starts with `$PWD/bin`.
 
-## Contraintes
+## Constraints
 
-- `export` pour publier les variables, `$PWD/bin` en tête de `PATH`.
-- La validation **source** ton fichier dans un sous-shell et lance un enfant pour
-  vérifier l'export réel. Ne touche pas à ton vrai `~/.bashrc`.
+- `export` to publish the variables, `$PWD/bin` at the head of `PATH`.
+- Validation **sources** your file in a subshell and launches a child to
+  verify the real export. Do not touch your actual `~/.bashrc`.
 
 ## Validation
 

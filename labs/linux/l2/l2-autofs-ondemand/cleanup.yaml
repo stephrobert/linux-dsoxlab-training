@@ -1,0 +1,22 @@
+---
+# Reset idempotent : retire les cartes autofs, arrête autofs, démonte, efface FS.
+# Joué par dsoxlab clean.
+- name: Cleanup autofs-ondemand lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Remove autofs maps and restart
+      ansible.builtin.shell: |
+        rm -f /etc/auto.master.d/lab.autofs /etc/auto.lab
+        systemctl restart autofs 2>/dev/null || true
+        umount /autofs/data 2>/dev/null || true
+      changed_when: false
+
+    - name: Wipe the filesystem + markers
+      ansible.builtin.shell: |
+        . /root/autofs-disk.env 2>/dev/null || exit 0
+        part="${DISK}1"; [ -b "$part" ] || part="${DISK}p1"
+        wipefs -a "$part" 2>/dev/null || true
+        rm -f /root/.autofs-lab-ready
+      changed_when: false

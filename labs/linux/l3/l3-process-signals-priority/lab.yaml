@@ -1,0 +1,36 @@
+id: l3-process-signals-priority
+title: "Lower a service's scheduling priority with Nice"
+description: "A batch worker hogs the CPU. Give its service a nice value of 10 so it yields to interactive work — proven by the live process priority and the unit config."
+section: linux
+type: lab
+level: l3
+track:
+  - maintenir
+  - lfcs
+skills:
+  - nice
+  - renice
+  - priority
+  - systemd
+difficulty: intermediate
+estimated_time: 25m
+runtime:
+  type: vm
+  default: rhel
+  snapshot_required: false
+  targets:
+    - name: rhel
+      host: alma-rhcsa-1.lab
+      label_en: "AlmaLinux 10 (Nice=, ps -o ni)"
+      label_fr: "AlmaLinux 10 (Nice=, ps -o ni)"
+distros:
+  - rhel10
+  - almalinux10
+  - ubuntu24.04
+doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/utilisateurs-droits-processus/comprendre-processus/
+validation:
+  functional: true
+  security: false
+  persistence_after_reboot: true
+certification_tags:
+  - lfcs

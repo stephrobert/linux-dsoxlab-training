@@ -1,0 +1,37 @@
+id: l3-scheduling-cron
+title: "Schedule a recurring job with cron"
+description: "Run /usr/local/bin/report.sh every day at 02:30 through a cron entry — proven by the actual schedule the cron daemon will honour."
+section: linux
+type: lab
+level: l3
+track:
+  - maintenir
+  - rhcsa
+  - lfcs
+skills:
+  - cron
+  - crontab
+  - scheduling
+difficulty: intermediate
+estimated_time: 20m
+runtime:
+  type: vm
+  default: rhel
+  snapshot_required: false
+  targets:
+    - name: rhel
+      host: alma-rhcsa-1.lab
+      label_en: "AlmaLinux 10 (cron.d / crontab)"
+      label_fr: "AlmaLinux 10 (cron.d / crontab)"
+distros:
+  - rhel10
+  - almalinux10
+  - ubuntu24.04
+doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/planification/cron/
+validation:
+  functional: true
+  security: false
+  persistence_after_reboot: true
+certification_tags:
+  - rhcsa
+  - lfcs

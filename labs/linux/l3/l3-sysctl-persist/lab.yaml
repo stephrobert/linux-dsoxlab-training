@@ -1,0 +1,36 @@
+id: l3-sysctl-persist
+title: "Harden kernel parameters persistently with sysctl.d"
+description: "Disable IP forwarding and ICMP redirects via /etc/sysctl.d, applied now and surviving reboot — proven by the live sysctl values."
+section: linux
+type: lab
+level: l3
+track:
+  - maintenir
+  - rhcsa
+skills:
+  - sysctl
+  - sysctl.d
+  - kernel-tuning
+  - hardening
+difficulty: intermediate
+estimated_time: 20m
+runtime:
+  type: vm
+  default: rhel
+  snapshot_required: false
+  targets:
+    - name: rhel
+      host: alma-rhcsa-1.lab
+      label_en: "AlmaLinux 10 (sysctl.d, sysctl --system)"
+      label_fr: "AlmaLinux 10 (sysctl.d, sysctl --system)"
+distros:
+  - rhel10
+  - almalinux10
+  - ubuntu24.04
+doc_url: https://blog.stephane-robert.info/docs/securiser/durcissement/sysctl/
+validation:
+  functional: true
+  security: true
+  persistence_after_reboot: true
+certification_tags:
+  - rhcsa

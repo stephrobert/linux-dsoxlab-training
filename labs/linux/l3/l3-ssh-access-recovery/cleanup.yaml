@@ -1,0 +1,18 @@
+---
+# Reset idempotent : retire le drop-in du lab et recharge sshd. Joué par dsoxlab clean.
+- name: Cleanup ssh-access-recovery lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Remove the lab drop-in
+      ansible.builtin.file:
+        path: /etc/ssh/sshd_config.d/99-lab.conf
+        state: absent
+
+    - name: Reload sshd if the config is valid (best-effort)
+      ansible.builtin.shell:
+        cmd: |
+          sshd -t 2>/dev/null && systemctl reload sshd 2>/dev/null || true
+        chdir: /
+      changed_when: false

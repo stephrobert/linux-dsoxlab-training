@@ -1,4 +1,4 @@
-# Challenge — l1-04 : Premiers pas dans le terminal
+# Challenge — l1-04: First steps in the terminal
 
 ## Mission
 

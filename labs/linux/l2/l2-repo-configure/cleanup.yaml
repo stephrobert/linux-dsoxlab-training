@@ -1,0 +1,16 @@
+---
+# Reset idempotent : retire la définition du dépôt. Joué par dsoxlab clean.
+- name: Cleanup repo-configure lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Remove the labrepo definition
+      ansible.builtin.file:
+        path: /etc/yum.repos.d/labrepo.repo
+        state: absent
+
+    - name: Refresh dnf cache (best-effort)
+      ansible.builtin.command: dnf clean all
+      changed_when: false
+      failed_when: false

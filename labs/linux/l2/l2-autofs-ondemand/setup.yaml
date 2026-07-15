@@ -1,0 +1,70 @@
+---
+# État initial : le disque supplémentaire est formaté en XFS (avec un fichier
+# temoin) mais NON monté, autofs installé, aucune carte pour /autofs. L'apprenant
+# configure l'automontage. Joué par dsoxlab run (ansible-runner).
+#
+# Les tâches shell utilisent la forme dict `cmd:` (et non `shell: |` free-form)
+# pour éviter le split_args d'Ansible sur les blocs longs à quotes/globs.
+- name: Setup autofs-ondemand lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Install autofs + xfsprogs + parted
+      ansible.builtin.package:
+        name:
+          - autofs
+          - xfsprogs
+          - parted
+          - util-linux
+        state: present
+      failed_when: false
+
+    - name: Detect the additional block device (not the root disk)
+      ansible.builtin.shell:
+        cmd: |
+          set -e
+          root_src=$(findmnt -no SOURCE /)
+          root_disk=$(lsblk -no pkname "$root_src" 2>/dev/null | head -1)
+          extra=$(lsblk -dno NAME,TYPE | awk '$2=="disk"{print $1}' \
+                  | grep -v "^${root_disk}$" | head -1)
+          [ -n "$extra" ] || { echo "no additional disk found" >&2; exit 1; }
+          echo "DISK=/dev/${extra}" > /root/autofs-disk.env
+        creates: /root/autofs-disk.env
+
+    - name: Prepare an XFS partition with a marker file, left UNMOUNTED
+      ansible.builtin.shell:
+        cmd: |
+          set -e
+          . /root/autofs-disk.env
+          umount /autofs/data 2>/dev/null || true
+          umount "${DISK}"* 2>/dev/null || true
+          wipefs -a "$DISK"
+          sgdisk --zap-all "$DISK" 2>/dev/null || true
+          parted -s "$DISK" mklabel gpt
+          parted -s "$DISK" mkpart primary 1MiB 1025MiB
+          partprobe "$DISK"
+          part="${DISK}1"; [ -b "$part" ] || part="${DISK}p1"
+          mkfs.xfs -f "$part"
+          mkdir -p /mnt/seed && mount "$part" /mnt/seed
+          echo "monte par autofs" > /mnt/seed/marker.txt
+          umount /mnt/seed && rmdir /mnt/seed
+          echo "PART=${part}" >> /root/autofs-disk.env
+          touch /root/.autofs-lab-ready
+        creates: /root/.autofs-lab-ready
+
+    - name: Clean any leftover autofs config for /autofs
+      ansible.builtin.shell:
+        cmd: |
+          rm -f /etc/auto.master.d/lab.autofs /etc/auto.lab
+          systemctl restart autofs 2>/dev/null || true
+      changed_when: false
+
+    - name: Brief the learner
+      ansible.builtin.debug:
+        msg: >-
+          Configure autofs pour qu'acceder a /autofs/data monte AUTOMATIQUEMENT
+          le disque (PART dans /root/autofs-disk.env, un XFS avec marker.txt).
+          Carte maitre /etc/auto.master.d/lab.autofs (/autofs vers /etc/auto.lab),
+          carte de montage /etc/auto.lab (data -fstype=xfs :/dev/...). Demarre
+          autofs, puis ls /autofs/data doit declencher le montage.

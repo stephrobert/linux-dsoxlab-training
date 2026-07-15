@@ -1,0 +1,14 @@
+points: 100
+hints:
+  - text_en: "dHVuZWQgZ3JvdXBzIHNldHRpbmdzIGludG8gcHJvZmlsZXMuIFNlZSB3aGF0IGV4aXN0czogdHVuZWQtYWRtIGxpc3QsIGFuZCB0aGUgY3VycmVudCBwcm9maWxlOiB0dW5lZC1hZG0gYWN0aXZlLg=="
+    text_fr: "dHVuZWQgcmVncm91cGUgZGVzIHLDqWdsYWdlcyBlbiBwcm9maWxzLiBWb2lzIGNlIHF1aSBleGlzdGUgOiB0dW5lZC1hZG0gbGlzdCwgZXQgbGUgcHJvZmlsIGNvdXJhbnQgOiB0dW5lZC1hZG0gYWN0aXZlLg=="
+    cost: 10
+  - text_en: "U3dpdGNoIHRoZSBwcm9maWxlOiBzdWRvIHR1bmVkLWFkbSBwcm9maWxlIHRocm91Z2hwdXQtcGVyZm9ybWFuY2Uu"
+    text_fr: "QmFzY3VsZSBsZSBwcm9maWwgOiBzdWRvIHR1bmVkLWFkbSBwcm9maWxlIHRocm91Z2hwdXQtcGVyZm9ybWFuY2Uu"
+    cost: 15
+  - text_en: "VmVyaWZ5OiB0dW5lZC1hZG0gYWN0aXZlIG11c3Qgc2hvdyB0aHJvdWdocHV0LXBlcmZvcm1hbmNlLiBUaGUgY2hvaWNlIGlzIHN0b3JlZCBpbiAvZXRjL3R1bmVkL2FjdGl2ZV9wcm9maWxlIChwZXJzaXN0ZW50KS4="
+    text_fr: "VsOpcmlmaWUgOiB0dW5lZC1hZG0gYWN0aXZlIGRvaXQgYWZmaWNoZXIgdGhyb3VnaHB1dC1wZXJmb3JtYW5jZS4gTGUgY2hvaXggZXN0IGVucmVnaXN0csOpIGRhbnMgL2V0Yy90dW5lZC9hY3RpdmVfcHJvZmlsZSAocGVyc2lzdGFudCku"
+    cost: 15
+  - text_en: "SWYgdHVuZWQtYWRtIGRvZXMgbm90IHJlc3BvbmQsIG1ha2Ugc3VyZSB0aGUgc2VydmljZSBpcyBydW5uaW5nOiBzdWRvIHN5c3RlbWN0bCBlbmFibGUgLS1ub3cgdHVuZWQu"
+    text_fr: "U2kgdHVuZWQtYWRtIG5lIHLDqXBvbmQgcGFzLCBhc3N1cmUtdG9pIHF1ZSBsZSBzZXJ2aWNlIHRvdXJuZSA6IHN1ZG8gc3lzdGVtY3RsIGVuYWJsZSAtLW5vdyB0dW5lZC4="
+    cost: 20

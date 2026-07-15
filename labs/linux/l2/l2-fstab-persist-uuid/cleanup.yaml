@@ -1,0 +1,23 @@
+---
+# Reset idempotent : démonte /srv/data et retire l'entrée fstab. Le disque reste
+# formaté (le setup le réutilise). Joué par dsoxlab clean.
+- name: Cleanup fstab-persist-uuid lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Unmount /srv/data if mounted
+      ansible.builtin.command: umount /srv/data
+      changed_when: false
+      failed_when: false
+
+    - name: Remove any /srv/data line from /etc/fstab
+      ansible.builtin.lineinfile:
+        path: /etc/fstab
+        regexp: '\s/srv/data\s'
+        state: absent
+
+    - name: Remove the mount point
+      ansible.builtin.file:
+        path: /srv/data
+        state: absent

@@ -1,0 +1,17 @@
+---
+# Reset idempotent : retire le drop-in et remet les valeurs par défaut du lab.
+# Joué par dsoxlab clean.
+- name: Cleanup sysctl-persist lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Remove hardening drop-in + restore loose values
+      ansible.builtin.shell:
+        cmd: |
+          rm -f /etc/sysctl.d/99-hardening.conf
+          sysctl -w net.ipv4.ip_forward=1 2>/dev/null || true
+          sysctl -w net.ipv4.conf.all.accept_redirects=1 2>/dev/null || true
+          sysctl --system >/dev/null 2>&1 || true
+        chdir: /
+      changed_when: false

@@ -1,0 +1,3 @@
+id: l3-boot-target
+title: "Régler la cible de démarrage systemd par défaut"
+description: "Un serveur n'a rien à faire à démarrer en cible graphique. Règle le défaut sur multi-user.target et vérifie-le."

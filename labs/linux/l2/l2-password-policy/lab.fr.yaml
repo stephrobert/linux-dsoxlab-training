@@ -1,0 +1,3 @@
+id: l2-password-policy
+title: "Appliquer une politique d'expiration et de complexité des mots de passe"
+description: "Régler l'expiration par compte avec chage, l'âge max par défaut du système dans login.defs, et une longueur minimale via pwquality."

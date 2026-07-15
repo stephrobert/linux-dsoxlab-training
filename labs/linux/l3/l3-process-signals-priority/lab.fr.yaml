@@ -1,0 +1,3 @@
+id: l3-process-signals-priority
+title: "Abaisser la priorité d'ordonnancement d'un service avec Nice"
+description: "Un worker batch monopolise le CPU. Donne à son service un nice de 10 pour qu'il cède la main au travail interactif — prouvé par la priorité live du processus et la config de l'unit."

@@ -1,0 +1,56 @@
+---
+# État initial : le disque additionnel porte une partition GPT VIERGE (non
+# formatée). L'apprenant doit la formater en XFS (avec label) et la monter.
+# Disque détecté dynamiquement (kvm /dev/vdb, incus /dev/sdb). La partition
+# cible est <disque>1. Joué par dsoxlab run (ansible-runner).
+- name: Setup filesystem-create-xfs lab (blank partition, unformatted)
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Ensure parted + xfsprogs
+      ansible.builtin.package:
+        name:
+          - parted
+          - xfsprogs
+          - util-linux
+        state: present
+      failed_when: false
+
+    - name: Detect the additional block device (not the root disk)
+      ansible.builtin.shell: |
+        set -e
+        root_src=$(findmnt -no SOURCE /)
+        root_disk=$(lsblk -no pkname "$root_src" 2>/dev/null | head -1)
+        extra=$(lsblk -dno NAME,TYPE | awk '$2=="disk"{print $1}' \
+                | grep -v "^${root_disk}$" | head -1)
+        [ -n "$extra" ] || { echo "no additional disk found" >&2; exit 1; }
+        echo "DISK=/dev/${extra}" > /root/xfs-disk.env
+      args:
+        creates: /root/xfs-disk.env
+
+    - name: Prepare one blank 2 GiB partition (GPT), unformatted, unmounted
+      ansible.builtin.shell: |
+        set -e
+        . /root/xfs-disk.env
+        umount "${DISK}"* 2>/dev/null || true
+        wipefs -a "$DISK"
+        sgdisk --zap-all "$DISK" 2>/dev/null || true
+        parted -s "$DISK" mklabel gpt
+        parted -s "$DISK" mkpart primary 1MiB 2049MiB
+        partprobe "$DISK"
+        # La partition cible = <disque>1 (sdb1 / vdb1)
+        part="${DISK}1"
+        [ -b "$part" ] || part="${DISK}p1"
+        # S'assurer qu'elle est vierge (pas de FS résiduel)
+        wipefs -a "$part" 2>/dev/null || true
+        echo "PART=${part}" >> /root/xfs-disk.env
+        touch /root/.xfs-lab-ready
+      args:
+        creates: /root/.xfs-lab-ready
+
+    - name: Brief the learner
+      ansible.builtin.debug:
+        msg: >-
+          Une partition vierge est prête (voir lsblk). Objectif : la formater en
+          XFS avec le label DATA (mkfs.xfs -L DATA), créer /srv/xfs et l'y monter.

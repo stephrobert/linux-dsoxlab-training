@@ -1,0 +1,38 @@
+id: l2-disk-space-troubleshoot
+title: "Diagnose a full filesystem and reclaim space"
+description: "A filesystem is full. Find the culprit with df/du, remove the junk without deleting the legitimate data, and bring usage back down."
+section: linux
+type: lab
+level: l2
+track:
+  - depanner
+  - rhcsa
+  - lfcs
+skills:
+  - df
+  - du
+  - disk-space
+  - troubleshooting
+difficulty: intermediate
+estimated_time: 25m
+runtime:
+  type: vm
+  default: rhel
+  snapshot_required: false
+  targets:
+    - name: rhel
+      host: alma-rhcsa-1.lab
+      label_en: "AlmaLinux 10 (df, du, reclaim space)"
+      label_fr: "AlmaLinux 10 (df, du, récupérer de l'espace)"
+distros:
+  - rhel10
+  - almalinux10
+  - ubuntu24.04
+doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/espace-disque/
+validation:
+  functional: true
+  security: false
+  persistence_after_reboot: false
+certification_tags:
+  - rhcsa
+  - lfcs

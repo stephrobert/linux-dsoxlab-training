@@ -1,0 +1,38 @@
+id: l3-service-create-unit
+title: "Create and enable a systemd service unit"
+description: "Wrap a program in a systemd .service unit, start it and enable it at boot — proven by the service being active, enabled and doing its job."
+section: linux
+type: lab
+level: l3
+track:
+  - maintenir
+  - rhcsa
+  - lfcs
+skills:
+  - systemd
+  - unit-file
+  - systemctl
+  - enable
+difficulty: intermediate
+estimated_time: 30m
+runtime:
+  type: vm
+  default: rhel
+  snapshot_required: false
+  targets:
+    - name: rhel
+      host: alma-rhcsa-1.lab
+      label_en: "AlmaLinux 10 (unit file, daemon-reload, enable --now)"
+      label_fr: "AlmaLinux 10 (unit file, daemon-reload, enable --now)"
+distros:
+  - rhel10
+  - almalinux10
+  - ubuntu24.04
+doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/systemd/services/
+validation:
+  functional: true
+  security: false
+  persistence_after_reboot: true
+certification_tags:
+  - rhcsa
+  - lfcs

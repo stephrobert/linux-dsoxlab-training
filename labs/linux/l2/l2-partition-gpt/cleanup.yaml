@@ -1,0 +1,22 @@
+---
+# Reset idempotent : efface la table de partition du disque additionnel.
+# Joué par dsoxlab clean.
+- name: Cleanup partition-gpt lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Read the detected extra disk
+      ansible.builtin.command: cat /root/part-disk.env
+      register: disk_env
+      changed_when: false
+      failed_when: false
+
+    - name: Wipe the partition table
+      ansible.builtin.shell: |
+        . /root/part-disk.env 2>/dev/null || exit 0
+        umount "${DISK}"* 2>/dev/null || true
+        wipefs -a "$DISK" 2>/dev/null || true
+        sgdisk --zap-all "$DISK" 2>/dev/null || true
+        partprobe "$DISK" 2>/dev/null || true
+      changed_when: false

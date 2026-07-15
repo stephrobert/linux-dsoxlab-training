@@ -1,0 +1,26 @@
+---
+# Reset idempotent : démonte /srv/data, retire l'entrée fstab, efface le FS.
+# Joué par dsoxlab clean.
+- name: Cleanup storage-performance lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Unmount /srv/data if mounted
+      ansible.builtin.command: umount /srv/data
+      changed_when: false
+      failed_when: false
+
+    - name: Remove any /srv/data line from /etc/fstab
+      ansible.builtin.lineinfile:
+        path: /etc/fstab
+        regexp: '\s/srv/data\s'
+        state: absent
+
+    - name: Wipe the filesystem + remove mount point and marker
+      ansible.builtin.shell: |
+        . /root/perf-disk.env 2>/dev/null || exit 0
+        part="${DISK}1"; [ -b "$part" ] || part="${DISK}p1"
+        wipefs -a "$part" 2>/dev/null || true
+        rm -rf /srv/data /root/.perf-lab-ready
+      changed_when: false

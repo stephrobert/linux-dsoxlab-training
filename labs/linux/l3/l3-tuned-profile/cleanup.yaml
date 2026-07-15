@@ -1,0 +1,11 @@
+---
+# Reset idempotent : remet le profil balanced. Joué par dsoxlab clean.
+- name: Cleanup tuned-profile lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Restore balanced profile
+      ansible.builtin.command: tuned-adm profile balanced
+      changed_when: false
+      failed_when: false

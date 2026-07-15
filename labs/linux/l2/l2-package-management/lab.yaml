@@ -1,0 +1,35 @@
+id: l2-package-management
+title: "Install, remove and query packages with dnf"
+description: "Bring the machine to a target software state: install a needed package, remove an unwanted one, and confirm with dnf/rpm queries."
+section: linux
+type: lab
+level: l2
+track:
+  - maintenir
+  - rhcsa
+  - lfcs
+skills:
+  - dnf
+  - rpm
+  - packages
+difficulty: intermediate
+estimated_time: 20m
+runtime:
+  type: vm
+  default: rhel
+  snapshot_required: false
+  targets:
+    - name: rhel
+      host: alma-rhcsa-1.lab
+      label_en: "AlmaLinux 10 (dnf install/remove, rpm -q)"
+      label_fr: "AlmaLinux 10 (dnf install/remove, rpm -q)"
+distros:
+  - rhel10
+  - almalinux10
+doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/maintenir/paquets/dnf/
+validation:
+  functional: true
+  security: false
+  persistence_after_reboot: false
+certification_tags:
+  - rhcsa
