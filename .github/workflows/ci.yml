@@ -40,38 +40,45 @@ jobs:
           version: "1.26.1"
           advanced-security: false
 
-  # Validate the declarative contract + lint the lab Python (tests, conftest).
-  validate:
-    name: Validate labs (contract + lint)
+  # Parity gate — run EVERY pre-commit hook (commit AND push stages) exactly as
+  # a contributor's local pre-commit would. Nothing enforced locally (hygiene,
+  # ruff, trufflehog, validate-structure, catalog freshness) can then be slipped
+  # past with `git commit --no-verify`: any failing hook refuses the PR. This is
+  # the single source of truth — the CI runs the .pre-commit-config.yaml, not a
+  # hand-maintained copy of its steps.
+  pre-commit:
+    name: Pre-commit parity (all hooks)
     needs: zizmor
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 15
     permissions:
       contents: read
     env:
-      # This repo declares several providers; validate-structure needs one
-      # active even though CI provisions nothing.
+      # This repo declares several providers; the pre-push validate-structure
+      # hook needs one active even though CI provisions nothing.
       DSOXLAB_PROVIDER: kvm
     steps:
       - name: Checkout
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           persist-credentials: false
+          fetch-depth: 0 # trufflehog walks git history
 
       - name: Set up uv
         uses: astral-sh/setup-uv@11f9893b081a58869d3b5fccaea48c9e9e46f990 # v8.3.2
 
-      - name: Validate the meta.yml + lab.yaml contract
-        run: uvx dsoxlab validate-structure
+      - name: Install trufflehog (version-pinned; the hook runs with --no-update)
+        # Official installer, pinned to the same version as the local pre-commit
+        # toolchain so CI and developer machines scan identically.
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/trufflesecurity/trufflehog/v3.95.2/scripts/install.sh \
+            | sh -s -- -b /usr/local/bin v3.95.2
 
-      - name: README catalog is up to date (all labs + guide URLs)
-        # --no-project: run in an ephemeral env with only pyyaml. Without it, uv
-        # resolves this repo's pyproject, which pins dsoxlab to a local path
-        # (../dsoxlab) absent on the runner — the resolve would fail.
-        run: uv run --no-project --with pyyaml python scripts/gen_catalog.py --check
+      - name: Run every hook (commit stage)
+        run: uvx pre-commit@4.6.0 run --all-files --show-diff-on-failure --color always
 
-      - name: Lint lab Python (ruff)
-        run: uvx ruff check .
+      - name: Run every hook (push stage)
+        run: uvx pre-commit@4.6.0 run --all-files --hook-stage pre-push --show-diff-on-failure --color always
 
   # Static analysis of the repo's Python (lab tests, conftest). Findings post to
   # the Security tab — no artifact is published.
