@@ -1,0 +1,7 @@
+# First terminal session
+# Fill in each field with the actual value from your system.
+
+USER: VOTRE_RÉPONSE_ICI
+MACHINE: VOTRE_RÉPONSE_ICI
+HOME: VOTRE_RÉPONSE_ICI
+DATE: VOTRE_RÉPONSE_ICI

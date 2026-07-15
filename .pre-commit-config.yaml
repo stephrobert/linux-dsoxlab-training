@@ -1,0 +1,57 @@
+# Pre-commit hooks for a CONTENT repo (lab catalog). Hard stop against leaking
+# secrets / private keys and against committing generated files. No mypy (there
+# is no package source); the declarative contract is validated with
+# `dsoxlab validate-structure`.
+#
+# Install once:  pre-commit install --install-hooks
+# Run on everything:  pre-commit run --all-files
+
+minimum_pre_commit_version: "3.5.0"
+default_install_hook_types: [pre-commit, pre-push]
+
+repos:
+  # General hygiene + a hard stop on committing secrets and private keys.
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+        exclude: '(^LICENSE$|\.md$)'
+      - id: end-of-file-fixer
+        exclude: '^LICENSE$'
+      - id: check-yaml # validates every lab.yaml / meta.yml
+      - id: check-json
+      - id: check-toml
+      - id: check-merge-conflict
+      - id: check-case-conflict
+      - id: check-added-large-files
+        args: ['--maxkb=2048']
+      - id: detect-private-key # blocks committed SSH private keys
+      - id: mixed-line-ending
+        args: ['--fix=lf']
+
+  # Lab toolchain — lint the lab Python, scan for secrets, validate the contract.
+  - repo: local
+    hooks:
+      - id: ruff
+        name: ruff (lint lab python)
+        entry: uvx ruff check --fix
+        language: system
+        types_or: [python, pyi]
+        require_serial: true
+
+      - id: trufflehog
+        name: trufflehog (secret scan)
+        # --no-update: never auto-fetch a new binary at hook time (supply-chain hardening).
+        entry: trufflehog git file://. --since-commit HEAD --results=verified --fail --no-update
+        language: system
+        pass_filenames: false
+
+      # The declarative contract is validated on push (kept off the per-commit
+      # path for speed). A provider must be selected even though nothing is
+      # provisioned here.
+      - id: validate-structure
+        name: dsoxlab validate-structure
+        entry: env DSOXLAB_PROVIDER=kvm uvx dsoxlab validate-structure
+        language: system
+        pass_filenames: false
+        stages: [pre-push]

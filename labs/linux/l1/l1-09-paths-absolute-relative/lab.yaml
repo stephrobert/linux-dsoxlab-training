@@ -1,0 +1,32 @@
+id: l1-09-paths-absolute-relative
+title: Absolute and relative paths
+description: Copy a file using an absolute path and a relative path, then solve 5
+  path navigation puzzles.
+section: linux
+type: lab
+level: l1
+bloc: 1
+bloc_order: 3
+difficulty: beginner
+estimated_time: 25m
+runtime:
+  type: shell
+  workdir: challenge/work
+  fixtures:
+  - puzzles.txt
+  - source.txt
+distros:
+- debian12
+- ubuntu24.04
+- rhel10
+skills:
+- filesystem-navigation
+- absolute-paths
+- relative-paths
+doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/se-reperer-fichiers/chemins-linux/
+track:
+- fundamentals
+validation:
+  functional: true
+  security: false
+  persistence_after_reboot: false

@@ -1,0 +1,31 @@
+id: l1-07-linux-filesystem
+title: Linux filesystem hierarchy (FHS)
+description: Match the standard Linux directories to their roles and classify files
+  by location.
+section: linux
+type: lab
+level: l1
+bloc: 1
+bloc_order: 1
+difficulty: beginner
+estimated_time: 20m
+runtime:
+  type: shell
+  workdir: challenge/work
+  fixtures:
+  - fhs.txt
+distros:
+- debian12
+- ubuntu24.04
+- rhel10
+skills:
+- fhs
+- filesystem-structure
+- linux-concepts
+doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/se-reperer-fichiers/arborescence-fhs/
+track:
+- fundamentals
+validation:
+  functional: true
+  security: false
+  persistence_after_reboot: false

@@ -1,0 +1,2 @@
+title: "Chiffrer un disque avec LUKS"
+description: "Chiffrer un périphérique bloc avec LUKS2, l'ouvrir, y poser un système de fichiers, le monter et le déverrouiller au boot via crypttab."

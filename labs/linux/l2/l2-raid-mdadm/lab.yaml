@@ -1,0 +1,36 @@
+id: l2-raid-mdadm
+title: "Build a software RAID 1 with mdadm"
+description: "Assemble two disks into a redundant RAID 1 array with mdadm, format and mount it, and make it persistent."
+section: linux
+type: lab
+level: l2
+track:
+  - maintenir
+  - lfcs
+skills:
+  - raid
+  - mdadm
+  - mkfs
+  - storage-redundancy
+difficulty: intermediate
+estimated_time: 30m
+runtime:
+  type: vm
+  default: rhel
+  snapshot_required: false
+  targets:
+    - name: rhel
+      host: alma-rhcsa-1.lab
+      label_en: "AlmaLinux 10 (mdadm, /proc/mdstat, dracut)"
+      label_fr: "AlmaLinux 10 (mdadm, /proc/mdstat, dracut)"
+distros:
+  - rhel10
+  - almalinux10
+  - ubuntu24.04
+doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/raid-mdadm/
+validation:
+  functional: true
+  security: false
+  persistence_after_reboot: true
+certification_tags:
+  - lfcs

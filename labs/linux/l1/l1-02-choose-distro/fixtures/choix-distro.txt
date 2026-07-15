@@ -1,0 +1,16 @@
+# Écosystème de ta distribution — l1-02
+#
+# Identifie l'écosystème RÉEL de ta machine avec les commandes indiquées, puis
+# renseigne chaque champ. La validation compare tes réponses à ce que ta
+# machine expose vraiment.
+
+# grep -E '^ID=|^ID_LIKE=' /etc/os-release
+# → famille : debian, rhel, suse, arch ou alpine
+FAMILY: VOTRE_RÉPONSE_ICI
+
+# which apt ; which dnf ; which zypper ; which pacman ; which apk
+# → le gestionnaire de paquets réellement présent
+PACKAGE_MANAGER: VOTRE_RÉPONSE_ICI
+
+# la commande pour installer un paquet avec CE gestionnaire (ex. : apt install <paquet>)
+INSTALL_CMD: VOTRE_RÉPONSE_ICI

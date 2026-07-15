@@ -1,0 +1,77 @@
+---
+# Capstone RHCSA — met en place l'ETAT DE DEPART de l'examen sur les 2 VM.
+# Il POSE les prerequis (givens) que certaines taches supposent deja presents ;
+# il ne fait PAS les taches a la place du candidat.
+#
+# Rappel des givens couverts ici :
+#   - tache 8  : /var/log/myapp.log existe (root:root, 0600) — l'ACL est a poser
+#   - tache 13 : /var/www/html/index.html existe avec un MAUVAIS contexte SELinux
+#   - tache 20 : le mot de passe root de alma-rhcsa-2 est randomise (recovery)
+# Le disque /dev/vdb (10 GiB, taches 1-3) est fourni par Terraform (extra_disk_gb).
+
+# ── Serveur : alma-rhcsa-1 ────────────────────────────────────────────────────
+- name: RHCSA mock exam — server givens
+  hosts: alma-rhcsa-1.lab
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Paquets de base sur lesquels s'appuient les taches
+      ansible.builtin.package:
+        name:
+          - httpd
+          - nfs-utils
+          - chrony
+          - firewalld
+          - policycoreutils-python-utils
+        state: present
+      failed_when: false
+
+    - name: Tache 8 — fournir /var/log/myapp.log (root:root, 0600)
+      ansible.builtin.copy:
+        dest: /var/log/myapp.log
+        content: "myapp started\n"
+        owner: root
+        group: root
+        mode: "0600"
+
+    - name: Tache 13 — fournir /var/www/html/index.html
+      ansible.builtin.copy:
+        dest: /var/www/html/index.html
+        content: "<h1>RHCSA</h1>\n"
+        owner: root
+        group: root
+        mode: "0644"
+
+    - name: Tache 13 — lui donner un MAUVAIS contexte SELinux (a restaurer par le candidat)
+      ansible.builtin.command: chcon -t tmp_t /var/www/html/index.html
+      changed_when: false
+      failed_when: false
+
+    - name: Briefing candidat (serveur)
+      ansible.builtin.debug:
+        msg: >-
+          Examen blanc RHCSA pret sur le serveur. /dev/vdb (10 GiB) est attache ;
+          /var/log/myapp.log et /var/www/html/index.html (contexte a corriger)
+          sont en place. Mission complete : challenge/README.md.
+
+# ── Client : alma-rhcsa-2 ─────────────────────────────────────────────────────
+- name: RHCSA mock exam — client givens
+  hosts: alma-rhcsa-2.lab
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Paquets de base (client)
+      ansible.builtin.package:
+        name:
+          - nfs-utils
+          - openssh-server
+        state: present
+      failed_when: false
+
+    - name: Tache 20 — randomiser le mot de passe root (recovery via rd.break)
+      ansible.builtin.shell: |
+        set -e
+        echo "root:$(openssl rand -base64 24)" | chpasswd
+        touch /root/.exam-root-randomized
+      args:
+        creates: /root/.exam-root-randomized

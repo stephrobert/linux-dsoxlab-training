@@ -1,0 +1,71 @@
+# Publie une release GitHub avec un bundle tar.gz du catalogue de labs.
+# Pas de PyPI, pas de wheel : ce dépôt est du CONTENU. L'artefact publié est
+# une archive tar.gz du catalogue (labs + contrat), plus son empreinte SHA-256.
+# Déclenché par un tag `vX.Y.Z`.
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: Bundle tar.gz + release GitHub
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # créer la release et y attacher le tar.gz
+    steps:
+      - name: Checkout
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+
+      - name: Build tar.gz bundle
+        run: |
+          set -euo pipefail
+          VERSION="${GITHUB_REF_NAME#v}"
+          PKG="linux-dsoxlab-training-${VERSION}"
+          # Contenu publié : le catalogue de labs + le contrat + la gouvernance.
+          # Exclus : pilotage local, généré, clé SSH privée, VCS.
+          tar --exclude-vcs \
+              --exclude=".claude" \
+              --exclude="todo" \
+              --exclude="ROADMAP-*.md" \
+              --exclude="CLAUDE.md" \
+              --exclude=".venv" \
+              --exclude="__pycache__" \
+              --exclude="*.pyc" \
+              --exclude=".pytest_cache" \
+              --exclude=".mypy_cache" \
+              --exclude=".ruff_cache" \
+              --exclude="ssh/id_ed25519" \
+              --exclude="ssh/id_rsa" \
+              --exclude=".dsoxlab-context.json" \
+              --exclude=".dsoxlab.db" \
+              -czf "${PKG}.tar.gz" \
+              labs meta.yml conftest.py pyproject.toml \
+              README.md README.fr.md LICENSE \
+              CONTRIBUTING.md CONTRIBUTING.fr.md \
+              CODE_OF_CONDUCT.md CODE_OF_CONDUCT.fr.md \
+              SECURITY.md SECURITY.fr.md \
+              CHANGELOG.md CHANGELOG.fr.md \
+              solution ssh
+          sha256sum "${PKG}.tar.gz" > "${PKG}.tar.gz.sha256"
+          echo "PKG=${PKG}" >> "$GITHUB_ENV"
+
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          gh release create "${GITHUB_REF_NAME}" \
+            --title "${GITHUB_REF_NAME}" \
+            --generate-notes \
+            "${PKG}.tar.gz" \
+            "${PKG}.tar.gz.sha256"

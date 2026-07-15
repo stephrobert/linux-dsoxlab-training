@@ -1,0 +1,28 @@
+---
+- name: Cleanup raid-mdadm lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Unmount /mnt/raid
+      ansible.builtin.command: umount /mnt/raid
+      changed_when: false
+      failed_when: false
+    - name: Stop the array
+      ansible.builtin.command: mdadm --stop /dev/md0
+      changed_when: false
+      failed_when: false
+    - name: Detach loop devices, zero superblocks, remove files
+      ansible.builtin.shell: |
+        set +e
+        if [ -f /root/raid-disks.env ]; then . /root/raid-disks.env
+          for d in "$DISK1" "$DISK2"; do mdadm --zero-superblock "$d" 2>/dev/null; losetup -d "$d" 2>/dev/null; done
+        fi
+        rm -f /root/raid1.img /root/raid2.img /root/raid-disks.env
+      changed_when: false
+    - name: Remove ARRAY line from /etc/mdadm.conf
+      ansible.builtin.lineinfile:
+        path: /etc/mdadm.conf
+        regexp: '^ARRAY /dev/md0'
+        state: absent
+      failed_when: false

@@ -1,0 +1,3 @@
+# Surcharges FR — uniquement les champs traduisibles.
+title: "Examen blanc RHCSA EX200 — 20 tâches sur 2 VMs"
+description: "Examen blanc RHCSA performance-based couvrant les 10 domaines RHCSA : stockage (LVM, swap, NFS), réseau (IP statique, firewalld), utilisateurs/groupes, ACL, services (units systemd, timers, chrony), SELinux (modes, contextes, booléens, ports), logiciel (DNF, Flatpak), boot recovery (rd.break reset root). 20 tâches notées sur 100 points réparties sur 2 VMs (serveur + client). 70/100 pour réussir. Aucun indice."

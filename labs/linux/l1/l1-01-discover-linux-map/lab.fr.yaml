@@ -1,0 +1,4 @@
+# French overrides — translatable fields only.
+# The technical source of truth remains lab.yaml.
+title: "Cartographier Linux : noyau, distribution et répertoires clés"
+description: "Explorez les composants de Linux en exécutant de vraies commandes sur votre propre système : identifiez le noyau, votre distribution et le rôle de /etc, /var/log et /proc. Remplissez une carte des notions."

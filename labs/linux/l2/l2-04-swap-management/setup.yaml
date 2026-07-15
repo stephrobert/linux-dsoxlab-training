@@ -1,0 +1,32 @@
+---
+# Etat initial : aucun swap file ni entree fstab. L'apprenant part de zero.
+# Joue par dsoxlab run (via ansible-runner). hosts: lab_target est injecte
+# dynamiquement avec le host de la target choisie.
+- name: Setup swap-management lab (clean initial state)
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Deactivate any leftover /swapfile
+      ansible.builtin.command: swapoff /swapfile
+      changed_when: false
+      failed_when: false
+    - name: Remove any leftover /swapfile
+      ansible.builtin.file:
+        path: /swapfile
+        state: absent
+    - name: Remove any swap line for /swapfile from /etc/fstab
+      ansible.builtin.lineinfile:
+        path: /etc/fstab
+        regexp: '^\s*/swapfile\s'
+        state: absent
+    - name: Remove any leftover swappiness drop-in
+      ansible.builtin.file:
+        path: /etc/sysctl.d/99-swappiness.conf
+        state: absent
+    - name: Brief the learner
+      ansible.builtin.debug:
+        msg: >-
+          VM prete : aucun swap configure. Creez /swapfile (256 Mo, mode 0600),
+          activez-le, rendez-le persistant dans /etc/fstab et reglez
+          vm.swappiness=10 de facon durable.

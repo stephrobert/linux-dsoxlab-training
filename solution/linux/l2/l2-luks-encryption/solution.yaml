@@ -1,0 +1,42 @@
+---
+# Solution formateur — chiffre le disque (key-file), ouvre, formate, monte,
+# declare crypttab + fstab. Idempotent.
+- name: Solution luks-encryption
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Format the disk as LUKS2 (using the key file)
+      ansible.builtin.shell: |
+        set -e
+        . /root/luks-disk.env
+        if ! cryptsetup isLuks "$DISK"; then
+          cryptsetup luksFormat --type luks2 --batch-mode "$DISK" /root/luks.key
+        fi
+      changed_when: false
+    - name: Open the encrypted disk as /dev/mapper/coffre
+      ansible.builtin.shell: |
+        set -e
+        . /root/luks-disk.env
+        test -e /dev/mapper/coffre || cryptsetup open "$DISK" coffre --key-file /root/luks.key
+      changed_when: false
+    - name: Create xfs and mount
+      ansible.builtin.shell: |
+        set -e
+        blkid /dev/mapper/coffre | grep -q xfs || mkfs.xfs -f /dev/mapper/coffre
+        mkdir -p /mnt/coffre
+        mountpoint -q /mnt/coffre || mount /dev/mapper/coffre /mnt/coffre
+      changed_when: false
+    - name: Declare in /etc/crypttab
+      ansible.builtin.shell: |
+        set -e
+        . /root/luks-disk.env
+        uuid=$(cryptsetup luksUUID "$DISK")
+        grep -q '^coffre ' /etc/crypttab 2>/dev/null || echo "coffre UUID=$uuid /root/luks.key luks" >> /etc/crypttab
+      changed_when: false
+    - name: Declare in /etc/fstab
+      ansible.builtin.lineinfile:
+        path: /etc/fstab
+        line: "/dev/mapper/coffre /mnt/coffre xfs defaults,nofail 0 2"
+        regexp: '^/dev/mapper/coffre\s'
+        state: present

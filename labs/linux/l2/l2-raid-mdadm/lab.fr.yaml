@@ -1,0 +1,2 @@
+title: "Construire un RAID 1 logiciel avec mdadm"
+description: "Assembler deux disques en un RAID 1 redondant avec mdadm, le formater, le monter et le rendre persistant."

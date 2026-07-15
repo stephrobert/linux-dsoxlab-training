@@ -1,0 +1,17 @@
+# FHS — localiser de vrais éléments sur ta machine
+#
+# En t'appuyant sur la hiérarchie FHS, localise chaque élément sur TA machine et
+# donne son chemin absolu. La validation vérifie que le chemin existe réellement
+# à l'endroit attendu.
+
+# which ls        → le chemin absolu réel de la commande ls
+LS_PATH: VOTRE_RÉPONSE_ICI
+
+# le fichier qui liste les comptes utilisateurs locaux (indice FHS : /etc)
+USER_DB: VOTRE_RÉPONSE_ICI
+
+# le répertoire qui contient les journaux système (indice FHS : /var)
+LOG_DIR: VOTRE_RÉPONSE_ICI
+
+# le répertoire parent des dossiers personnels des utilisateurs standard
+HOME_PARENT: VOTRE_RÉPONSE_ICI

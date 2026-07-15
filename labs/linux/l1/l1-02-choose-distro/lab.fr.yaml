@@ -1,0 +1,4 @@
+# French overrides — translatable fields only.
+# The technical source of truth remains lab.yaml.
+title: "Choisir sa distribution Linux de référence"
+description: "Comparez Debian/Ubuntu et les distributions RHEL, comprenez les critères de choix, et documentez votre choix pour trois scénarios concrets."

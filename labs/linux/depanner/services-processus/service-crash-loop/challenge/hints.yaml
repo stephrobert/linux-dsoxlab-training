@@ -1,0 +1,46 @@
+---
+# Indices à coût croissant pour le challenge service-crash-loop.
+# Chaque demande d'indice via `dsoxlab hint` déduit `cost` points
+# du score final.
+
+hints:
+  - id: 1
+    cost: 5
+    text_en: |
+      `systemctl status demo-crashloop` shows `Active: activating
+      (auto-restart) (Result: exit-code)`. The Main PID changes each
+      time. Look at journalctl to find the FIRST error message of the
+      process — not the last.
+    text_fr: |
+      `systemctl status demo-crashloop` montre `Active: activating
+      (auto-restart) (Result: exit-code)`. Le Main PID change à chaque
+      lecture. Regardez journalctl pour trouver le PREMIER message
+      d'erreur du processus — pas le dernier.
+
+  - id: 2
+    cost: 10
+    text_en: |
+      The service expects a config file at /etc/demo-crashloop/config.yml.
+      Read /usr/local/bin/demo-crashloop to know what fields it expects
+      (look for `awk` patterns).
+    text_fr: |
+      Le service attend un fichier de config à
+      /etc/demo-crashloop/config.yml. Lisez /usr/local/bin/demo-crashloop
+      pour savoir quels champs il attend (cherchez les motifs `awk`).
+
+  - id: 3
+    cost: 15
+    text_en: |
+      Almost there. Required fix:
+      1. mkdir -p /etc/demo-crashloop
+      2. Write `port: 8080` (or any port) into config.yml
+      3. chmod 0644 + chown root:root the file
+      4. systemctl restart demo-crashloop
+      5. Verify is-active AND is-enabled both return success.
+    text_fr: |
+      Vous y êtes presque. Correction requise :
+      1. mkdir -p /etc/demo-crashloop
+      2. Écrire `port: 8080` (ou un autre port) dans config.yml
+      3. chmod 0644 + chown root:root sur le fichier
+      4. systemctl restart demo-crashloop
+      5. Vérifier que is-active ET is-enabled retournent succès.

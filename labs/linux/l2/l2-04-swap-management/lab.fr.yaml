@@ -1,0 +1,2 @@
+title: "Ajouter et gérer le swap"
+description: "Créer un swap file sécurisé, l'activer, le rendre persistant dans /etc/fstab et régler vm.swappiness."

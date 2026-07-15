@@ -1,0 +1,36 @@
+id: l2-luks-encryption
+title: "Encrypt a disk with LUKS"
+description: "Encrypt a block device with LUKS2, open it, put a filesystem on it, mount it and make it unlock at boot via crypttab."
+section: linux
+type: lab
+level: l2
+track:
+  - securiser
+  - rhcsa
+skills:
+  - luks
+  - cryptsetup
+  - crypttab
+  - encryption-at-rest
+difficulty: intermediate
+estimated_time: 30m
+runtime:
+  type: vm
+  default: rhel
+  snapshot_required: false
+  targets:
+    - name: rhel
+      host: alma-rhcsa-1.lab
+      label_en: "AlmaLinux 10 (cryptsetup, crypttab, dracut)"
+      label_fr: "AlmaLinux 10 (cryptsetup, crypttab, dracut)"
+distros:
+  - rhel10
+  - almalinux10
+  - ubuntu24.04
+doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/chiffrement-luks/
+validation:
+  functional: true
+  security: true
+  persistence_after_reboot: true
+certification_tags:
+  - rhcsa

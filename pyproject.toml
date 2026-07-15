@@ -1,0 +1,33 @@
+[project]
+name = "linux-training"
+version = "0.1.0"
+description = "Lab pédagogique Linux RHCSA + LFCS — fournisseur de labs pour la CLI dsoxlab"
+requires-python = ">=3.11"
+dependencies = []
+
+[tool.uv]
+# Ce dépôt n'est pas un package Python — juste un fournisseur de labs.
+# uv crée quand même un venv pour les dev-deps (pytest, dsoxlab editable)
+# mais ne tente pas de builder le projet.
+package = false
+
+# Ce dépôt fournit des labs (meta.yml + lab.yaml + setup/cleanup.yaml)
+# consommés par la CLI dsoxlab. La CLI est installée séparément en
+# outil global :
+#   uv tool install dsoxlab
+# ou
+#   pipx install dsoxlab
+
+[dependency-groups]
+# dsoxlab embarque pytest + pytest-testinfra et expose
+# dsoxlab.infra.inventory : aucun outil Python à installer côté repo
+# de labs. On garde dsoxlab en dev-dep uniquement pour les contributeurs
+# qui veulent un venv local (édition + IDE), mais l'apprenant utilise
+# le tool global installé via `uv tool install dsoxlab`.
+dev = [
+    "pyyaml>=6",
+    "dsoxlab",
+]
+
+[tool.uv.sources]
+dsoxlab = { path = "../dsoxlab", editable = true }

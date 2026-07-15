@@ -1,0 +1,91 @@
+---
+# Pose le service systemd "demo-crashloop" en crash loop sur la target
+# choisie. Joué par dsoxlab run (via ansible-runner).
+#
+# Convention dsoxlab : hosts: lab_target — ce groupe est injecté
+# dynamiquement par dsoxlab avec le seul host correspondant à la
+# target sélectionnée (--target rhel|ubuntu).
+
+- name: Setup demo-crashloop service in crash-loop state
+  hosts: lab_target
+  become: true
+  gather_facts: true
+  tasks:
+
+    - name: Deploy fake daemon /usr/local/bin/demo-crashloop
+      ansible.builtin.copy:
+        dest: /usr/local/bin/demo-crashloop
+        owner: root
+        group: root
+        mode: "0755"
+        content: |
+          #!/usr/bin/env bash
+          # demo-crashloop — faux démon qui simule un service mal configuré.
+          set -euo pipefail
+          CONFIG=/etc/demo-crashloop/config.yml
+          if [[ ! -f "${CONFIG}" ]]; then
+              echo "FATAL: Configuration file not found: ${CONFIG}" >&2
+              echo "       Service cannot start without configuration." >&2
+              exit 1
+          fi
+          PORT=$(awk -F: '/^port:/ {gsub(/^[ \t]+|[ \t]+$/, "", $2); print $2}' "${CONFIG}")
+          if [[ -z "${PORT}" ]]; then
+              echo "FATAL: 'port' missing in ${CONFIG}" >&2
+              exit 2
+          fi
+          echo "demo-crashloop ready on port ${PORT}, watching..."
+          exec sleep infinity
+
+    - name: Deploy systemd unit /etc/systemd/system/demo-crashloop.service
+      ansible.builtin.copy:
+        dest: /etc/systemd/system/demo-crashloop.service
+        owner: root
+        group: root
+        mode: "0644"
+        content: |
+          [Unit]
+          Description=Demo service stuck in crash loop (lab depanner/services-processus)
+          After=network.target
+
+          [Service]
+          Type=simple
+          ExecStart=/usr/local/bin/demo-crashloop
+          Restart=always
+          RestartSec=2s
+          StandardOutput=journal
+          StandardError=journal
+
+          [Install]
+          WantedBy=multi-user.target
+
+    - name: Ensure /etc/demo-crashloop is absent (initial state — config missing)
+      ansible.builtin.file:
+        path: /etc/demo-crashloop
+        state: absent
+
+    - name: Enable and start demo-crashloop (will crash-loop)
+      ansible.builtin.systemd:
+        name: demo-crashloop.service
+        daemon_reload: true
+        enabled: true
+        state: started
+      # Le service crash en boucle : systemd remonte un état failed
+      # entre deux redémarrages. C'est le comportement attendu.
+      failed_when: false
+
+    - name: Pause for the service to log a few crash cycles
+      ansible.builtin.pause:
+        seconds: 5
+
+    - name: Show recent journal entries (didactic)
+      ansible.builtin.command:
+        cmd: journalctl -u demo-crashloop.service --since '30 seconds ago' --no-pager
+      register: journal_tail
+      changed_when: false
+
+    - name: Display first failure to the learner
+      ansible.builtin.debug:
+        msg: |
+          Le service demo-crashloop est en crash loop sur ce host.
+          Premier extrait du journal :
+          {{ journal_tail.stdout_lines[:10] | join('\n') }}

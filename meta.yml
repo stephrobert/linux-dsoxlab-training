@@ -1,0 +1,137 @@
+---
+# Contrat déclaratif consommé par la CLI dsoxlab.
+# https://github.com/stephrobert/dsoxlab — schéma documenté dans le CLAUDE.md
+# du dépôt dsoxlab.
+
+repo:
+  id: linux-dsoxlab-training
+  category: linux
+  title: "Linux DSOXLab Training — RHCSA + LFCS 2026 (angle DevSecOps)"
+  blog_url: "https://blog.stephane-robert.info/docs/admin-serveurs/linux/"
+  description: |
+    Plateforme de labs pédagogiques pour la formation Linux du blog
+    Stéphane Robert. Couvre les certifications RHCSA EX200v10 (RHEL 10) et
+    LFCS 2026 (multi-distrib). Chaque lab est jumelé à une page MDX du site.
+
+# Topologie d'infrastructure. Le provider courant est sélectionné via
+# `infra.provider` ci-dessous, ou surchargé par DSOXLAB_PROVIDER=<name>.
+# Les IPs ne sont plus déclarées : Terraform les attribue dynamiquement
+# (DHCP statique pour kvm, IP privée auto pour les clouds).
+infra:
+  # Provider courant. Override par DSOXLAB_PROVIDER=<name>.
+  # Pour basculer définitivement entre providers : modifie cette
+  # ligne ou exporte DSOXLAB_PROVIDER dans ton shell.
+  # Liste des providers candidats. L'apprenant choisit via :
+  #   dsoxlab use --provider kvm        (persisté en session)
+  #   DSOXLAB_PROVIDER=outscale dsoxlab provision   (one-shot)
+  # Rétro-compat : valeur string pour single provider toujours acceptée.
+  provider:
+    - kvm
+    - incus
+    - outscale
+  network: lab-linux
+  cidr: 10.10.30.0/24
+  hosts:
+    - name: alma-rhcsa-1.lab
+      distro: alma10
+      role: rhcsa-primary
+      ram_mb: 2048
+      vcpu: 2
+      disk_gb: 20
+      # Disque additionnel pour le capstone RHCSA (tâches 1-3 :
+      # partitionnement GPT + LVM + mount /data). Apparaît dans la
+      # VM comme /dev/vdb (kvm/incus) ou /dev/xvdb (outscale).
+      extra_disk_gb: 10
+    - name: alma-rhcsa-2.lab
+      distro: alma10
+      role: rhcsa-secondary
+      ram_mb: 1536
+      vcpu: 1
+      disk_gb: 15
+    - name: ubuntu-lfcs-1.lab
+      distro: ubuntu24
+      role: lfcs-debian
+      ram_mb: 1536
+      vcpu: 1
+      disk_gb: 15
+
+  # Overrides spécifiques par provider (lus par le template Terraform
+  # correspondant côté dsoxlab/templates/terraform/<provider>/).
+  providers:
+    kvm:
+      libvirt_uri: "qemu:///system"
+      bridge_name: "virbr-linux"
+
+    outscale:
+      # Profil dans ~/.osc/config.json (lu par dsoxlab → access_key,
+      # secret_key, region passés à Terraform via env vars).
+      # Override : DSOXLAB_OUTSCALE_PROFILE=<name>
+      profile: default
+
+      # CIDR du Net Outscale (override de infra.cidr) : /22 minimum
+      # pour pouvoir y découper 2 subnets /24 (public + privé).
+      cidr: "10.20.0.0/22"
+
+      # Paramètres spécifiques au lab (les credentials et la région
+      # viennent du profil ci-dessus, pas d'ici).
+      vm_type_default: "tinav5.c2r4p1"
+      vm_type_bastion: "tinav5.c1r1p1"
+      bastion_user: "student"
+
+      # Images officielles Outscale eu-west-2, cycle 2026-04-14.
+      # Re-piner via :
+      #   oapi-cli --profile default ReadImages \
+      #     --Filters '{"ImageNames":["*AlmaLinux*"],"AccountAliases":["Outscale"]}' \
+      #     | jq -r '.Images[] | "\(.ImageId)\t\(.ImageName)"'
+      image_id_alma10: "ami-fc11420f"     # AlmaLinux-10-2026-04-14
+      image_id_ubuntu24: "ami-b29cea33"   # Ubuntu-24.04-2026-04-14
+      # image_id_bastion : défaut = image_id_ubuntu24 (cf. template)
+
+    # Providers à venir (Phase 9 du REFACTORING-PLAN) :
+    # aws, gcp, azure, proxmox, vagrant, incus
+
+# Sections pédagogiques. L'ordre des labs sous chaque section pilote
+# `dsoxlab list-labs` et `dsoxlab next`.
+sections:
+  - id: l1
+    title: "Fondamentaux (l1)"
+    description: "Découvrir Linux, le shell, les fichiers — runtime: shell."
+    labs:
+      - linux/l1/l1-01-discover-linux-map
+      - linux/l1/l1-02-choose-distro
+      - linux/l1/l1-03-prepare-vm
+      - linux/l1/l1-04-first-terminal
+      - linux/l1/l1-05-read-a-command
+      - linux/l1/l1-06-get-help
+      - linux/l1/l1-07-linux-filesystem
+      - linux/l1/l1-08-navigate-filesystem
+      - linux/l1/l1-09-paths-absolute-relative
+
+  - id: l2
+    title: "Exploiter + Maintenir (l2)"
+    description: "Scripts, services, paquets, réseau, sécurité de base — runtime: vm."
+    labs:
+      - linux/l2/l2-04-swap-management
+      - linux/l2/l2-raid-mdadm
+      - linux/l2/l2-luks-encryption
+
+  - id: depanner
+    title: "Dépanner"
+    description: "Méthode + 7 sous-sections (services, logs, stockage, perfs, démarrage, config, capitaliser)."
+    labs:
+      - linux/depanner/services-processus/service-crash-loop
+
+  - id: rhcsa
+    title: "RHCSA EX200v10"
+    description: "Préparation certification Red Hat — 12 exercices type examen + mock 2h30."
+    labs: []
+
+  - id: lfcs
+    title: "LFCS"
+    description: "Préparation certification Linux Foundation — multi-distrib (RHEL/Debian)."
+    labs: []
+
+  - id: capstones
+    title: "Capstones"
+    description: "Synthèses transverses — projets de fin de bloc."
+    labs: []

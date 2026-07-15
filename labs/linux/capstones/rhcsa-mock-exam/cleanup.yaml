@@ -1,0 +1,56 @@
+---
+# Capstone RHCSA — retire les givens du setup et les artefacts principaux des
+# taches, en best-effort (failed_when: false). Un reset COMPLET des 20 taches se
+# fait au mieux en reprovisionnant des VM fraiches :
+#   dsoxlab destroy && dsoxlab provision
+
+# ── Serveur : alma-rhcsa-1 ────────────────────────────────────────────────────
+- name: RHCSA mock exam — server cleanup
+  hosts: alma-rhcsa-1.lab
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Defaire les artefacts serveur (best-effort)
+      ansible.builtin.shell: |
+        set +e
+        swapoff /swapfile 2>/dev/null; rm -f /swapfile
+        umount /data/share 2>/dev/null; umount /data 2>/dev/null
+        exportfs -ua 2>/dev/null
+        rm -f /var/log/myapp.log /var/www/html/index.html
+        rm -f /usr/local/bin/myapp.sh /usr/local/bin/weekly-backup.sh
+        systemctl disable --now myapp.service weekly-backup.timer 2>/dev/null
+        rm -f /etc/systemd/system/myapp.service \
+              /etc/systemd/system/weekly-backup.service \
+              /etc/systemd/system/weekly-backup.timer
+        systemctl daemon-reload 2>/dev/null
+      changed_when: false
+
+    - name: Retirer les entrees fstab swap/data
+      ansible.builtin.lineinfile:
+        path: /etc/fstab
+        regexp: "{{ item }}"
+        state: absent
+      loop:
+        - '^/swapfile\s'
+        - '\s/data\s'
+      failed_when: false
+
+# ── Client : alma-rhcsa-2 ─────────────────────────────────────────────────────
+- name: RHCSA mock exam — client cleanup
+  hosts: alma-rhcsa-2.lab
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Defaire les artefacts client (best-effort)
+      ansible.builtin.shell: |
+        set +e
+        umount /mnt/share 2>/dev/null
+        rm -f /root/.exam-root-randomized
+      changed_when: false
+
+    - name: Retirer l'entree fstab NFS
+      ansible.builtin.lineinfile:
+        path: /etc/fstab
+        regexp: '\s/mnt/share\s'
+        state: absent
+      failed_when: false

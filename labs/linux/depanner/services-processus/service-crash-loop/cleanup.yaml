@@ -1,0 +1,35 @@
+---
+# Reset idempotent du lab : retire tout ce que setup.yaml a posé.
+# Joué par dsoxlab clean (via ansible-runner).
+
+- name: Cleanup demo-crashloop lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+
+    - name: Stop and disable demo-crashloop service
+      ansible.builtin.systemd:
+        name: demo-crashloop.service
+        state: stopped
+        enabled: false
+      failed_when: false  # tolère l'absence (idempotence)
+
+    - name: Reset failed state on demo-crashloop unit
+      ansible.builtin.command:
+        cmd: systemctl reset-failed demo-crashloop.service
+      changed_when: false
+      failed_when: false
+
+    - name: Remove unit file, daemon binary, config directory
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - /etc/systemd/system/demo-crashloop.service
+        - /usr/local/bin/demo-crashloop
+        - /etc/demo-crashloop
+
+    - name: Reload systemd to flush the removed unit
+      ansible.builtin.systemd:
+        daemon_reload: true

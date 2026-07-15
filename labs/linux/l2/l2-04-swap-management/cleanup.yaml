@@ -1,0 +1,29 @@
+---
+# Reset idempotent : retire tout ce que la solution a pu poser.
+# Joue par dsoxlab clean (via ansible-runner).
+- name: Cleanup swap-management lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Deactivate /swapfile
+      ansible.builtin.command: swapoff /swapfile
+      changed_when: false
+      failed_when: false
+    - name: Remove /swapfile
+      ansible.builtin.file:
+        path: /swapfile
+        state: absent
+    - name: Remove swap line from /etc/fstab
+      ansible.builtin.lineinfile:
+        path: /etc/fstab
+        regexp: '^\s*/swapfile\s'
+        state: absent
+    - name: Remove swappiness drop-in
+      ansible.builtin.file:
+        path: /etc/sysctl.d/99-swappiness.conf
+        state: absent
+    - name: Restore default swappiness
+      ansible.builtin.command: sysctl -w vm.swappiness=60
+      changed_when: false
+      failed_when: false

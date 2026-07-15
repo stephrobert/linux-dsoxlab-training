@@ -1,0 +1,26 @@
+---
+- name: Cleanup luks-encryption lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Unmount and close
+      ansible.builtin.shell: |
+        set +e
+        umount /mnt/coffre 2>/dev/null
+        cryptsetup close coffre 2>/dev/null
+        if [ -f /root/luks-disk.env ]; then . /root/luks-disk.env; losetup -d "$DISK" 2>/dev/null; fi
+        rm -f /root/luks.img /root/luks-disk.env /root/luks.key
+      changed_when: false
+    - name: Remove crypttab entry
+      ansible.builtin.lineinfile:
+        path: /etc/crypttab
+        regexp: '^coffre\s'
+        state: absent
+      failed_when: false
+    - name: Remove fstab entry
+      ansible.builtin.lineinfile:
+        path: /etc/fstab
+        regexp: '^/dev/mapper/coffre\s'
+        state: absent
+      failed_when: false

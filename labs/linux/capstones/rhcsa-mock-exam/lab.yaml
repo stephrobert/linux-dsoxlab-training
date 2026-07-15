@@ -1,0 +1,68 @@
+id: rhcsa-mock-exam
+title: "RHCSA EX200 mock exam — 20 tasks across 2 VMs"
+description: "Performance-based RHCSA mock exam covering 10 RHCSA domains: storage (LVM, swap, NFS), networking (static IP, firewalld), users/groups, ACLs, services (systemd units, timers, chrony), SELinux (modes, contexts, booleans, port labels), software (DNF, Flatpak), boot recovery (rd.break root reset). 20 tasks scored on 100 points across 2 VMs (server + client). 70/100 to pass. No hints."
+section: linux
+type: capstone
+level: l2
+track:
+  - capstones
+  - rhcsa
+skills:
+  - lvm
+  - filesystems-xfs
+  - swap
+  - nfs
+  - users-groups
+  - acl-posix
+  - networking-static
+  - firewalld
+  - systemd-units
+  - systemd-timers
+  - chrony
+  - selinux-contexts
+  - selinux-booleans
+  - selinux-ports
+  - dnf
+  - flatpak
+  - boot-recovery
+  - ssh-hardening
+difficulty: advanced
+estimated_time: 180m
+
+# 2 VMs requises : un serveur principal (alma-rhcsa-1.lab) qui porte
+# 16 des 20 tâches, et un client (alma-rhcsa-2.lab) qui porte les 4
+# tâches inter-dépendantes (mount NFS depuis srv-1, SSH vers srv-1,
+# reset root local, IP statique). Pas de target unique : le setup
+# Ansible et la solution officielle ciblent explicitement les 2
+# fqdns. L'apprenant ouvre une session sur srv-1 (target par défaut)
+# et SSH vers srv-2 selon les tâches.
+runtime:
+  type: vm
+  default: server
+  snapshot_required: false
+  hosts_required: 2
+  targets:
+    - name: server
+      host: alma-rhcsa-1.lab
+      label_en: "Server (srv-rhcsa-1.lab) — 16 tasks: storage, services, SELinux, NFS export"
+      label_fr: "Serveur (srv-rhcsa-1.lab) — 16 tâches : stockage, services, SELinux, export NFS"
+    - name: client
+      host: alma-rhcsa-2.lab
+      label_en: "Client (srv-rhcsa-2.lab) — 4 tasks: NFS mount, SSH key auth, root recovery"
+      label_fr: "Client (srv-rhcsa-2.lab) — 4 tâches : montage NFS, SSH clé, recovery root"
+
+distros:
+  - almalinux10
+  - rhel10
+doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/certifications/rhcsa/
+validation:
+  functional: true
+  security: true
+  persistence_after_reboot: true
+certification_tags:
+  - rhcsa
+
+# Capstone = pas de hints (mode examen). Le score affiché est binaire
+# par tâche (0 ou pondération). Le passing score est 70 conformément
+# à l'examen officiel EX200.
+exam_passing_score: 70

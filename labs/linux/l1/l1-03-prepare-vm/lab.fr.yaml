@@ -1,0 +1,2 @@
+title: "Identifier sa machine Linux"
+description: "Exécutez des commandes pour collecter le nom d'hôte, la distribution, la version du noyau et l'adresse IP de votre système. Produisez une fiche d'identité machine dans vm-info.txt."

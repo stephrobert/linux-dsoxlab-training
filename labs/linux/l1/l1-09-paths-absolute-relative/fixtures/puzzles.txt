@@ -1,0 +1,28 @@
+# Path Puzzles
+# For each puzzle: write the shortest relative path from START to TARGET.
+# Use .. to go up. Do not use absolute paths.
+
+## Puzzle 1
+# START:  /home/bob/projects/web/
+# TARGET: /home/bob/projects/docs/index.html
+ANSWER: VOTRE_RÉPONSE_ICI
+
+## Puzzle 2
+# START:  /var/log/nginx/
+# TARGET: /var/log/syslog
+ANSWER: VOTRE_RÉPONSE_ICI
+
+## Puzzle 3
+# START:  /home/alice/scripts/
+# TARGET: /home/alice/data/2024/report.csv
+ANSWER: VOTRE_RÉPONSE_ICI
+
+## Puzzle 4
+# START:  /etc/ssl/certs/
+# TARGET: /etc/nginx/nginx.conf
+ANSWER: VOTRE_RÉPONSE_ICI
+
+## Puzzle 5
+# START:  /home/bob/
+# TARGET: /home/bob/projects/web/index.html
+ANSWER: VOTRE_RÉPONSE_ICI

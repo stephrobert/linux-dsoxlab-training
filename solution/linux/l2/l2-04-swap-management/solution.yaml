@@ -1,0 +1,45 @@
+---
+# Solution formateur — swap file securise, active, persistant, swappiness=10.
+# Rejoue par la fixture autouse du conftest racine (mode CI) avant les tests.
+- name: Solution swap-management
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Create 256 MiB swap file
+      ansible.builtin.command:
+        cmd: dd if=/dev/zero of=/swapfile bs=1M count=256
+        creates: /swapfile
+    - name: Secure permissions (0600 root:root)
+      ansible.builtin.file:
+        path: /swapfile
+        owner: root
+        group: root
+        mode: "0600"
+    - name: Format the swap area
+      ansible.builtin.shell: |
+        if ! swaplabel /swapfile >/dev/null 2>&1; then
+          mkswap /swapfile
+        fi
+      register: mkswap_out
+      changed_when: "'Setting up swapspace' in mkswap_out.stdout"
+    - name: Activate swap (idempotent)
+      ansible.builtin.shell: |
+        swapon --show=NAME --noheadings | grep -qx /swapfile || swapon /swapfile
+      changed_when: false
+    - name: Persist in /etc/fstab
+      ansible.builtin.lineinfile:
+        path: /etc/fstab
+        line: "/swapfile none swap sw 0 0"
+        regexp: '^\s*/swapfile\s'
+        state: present
+    - name: Set vm.swappiness=10 durably
+      ansible.builtin.copy:
+        dest: /etc/sysctl.d/99-swappiness.conf
+        content: "vm.swappiness = 10\n"
+        owner: root
+        group: root
+        mode: "0644"
+    - name: Apply swappiness now
+      ansible.builtin.command: sysctl -w vm.swappiness=10
+      changed_when: false

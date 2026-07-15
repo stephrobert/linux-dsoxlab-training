@@ -1,0 +1,27 @@
+---
+# Prepare deux disques virtuels (loop) et expose leurs noms dans
+# /root/raid-disks.env. L'apprenant construit le RAID dessus.
+- name: Setup raid-mdadm lab (two backing disks)
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Create two 512 MiB backing files
+      ansible.builtin.command:
+        cmd: "dd if=/dev/zero of=/root/raid{{ item }}.img bs=1M count=512"
+        creates: "/root/raid{{ item }}.img"
+      loop: [1, 2]
+    - name: Attach backing files as loop devices and record their names
+      ansible.builtin.shell: |
+        set -e
+        d1=$(losetup -j /root/raid1.img | cut -d: -f1); [ -n "$d1" ] || d1=$(losetup -f --show /root/raid1.img)
+        d2=$(losetup -j /root/raid2.img | cut -d: -f1); [ -n "$d2" ] || d2=$(losetup -f --show /root/raid2.img)
+        printf 'DISK1=%s\nDISK2=%s\n' "$d1" "$d2" > /root/raid-disks.env
+      args:
+        creates: /root/raid-disks.env
+    - name: Brief the learner
+      ansible.builtin.debug:
+        msg: >-
+          Deux disques sont disponibles (voir /root/raid-disks.env).
+          Creez un RAID 1 /dev/md0 dessus, formatez-le en xfs, montez-le sur
+          /mnt/raid et rendez-le persistant (mdadm.conf).

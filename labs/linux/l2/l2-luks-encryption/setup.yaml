@@ -1,0 +1,35 @@
+---
+# Fournit un disque (loop) et un fichier-cle. L'apprenant chiffre le disque.
+- name: Setup luks-encryption lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Create a 512 MiB backing file
+      ansible.builtin.command:
+        cmd: dd if=/dev/zero of=/root/luks.img bs=1M count=512
+        creates: /root/luks.img
+    - name: Attach as a loop device and record its name
+      ansible.builtin.shell: |
+        set -e
+        d=$(losetup -j /root/luks.img | cut -d: -f1); [ -n "$d" ] || d=$(losetup -f --show /root/luks.img)
+        echo "DISK=$d" > /root/luks-disk.env
+      args:
+        creates: /root/luks-disk.env
+    - name: Provide a key file (0400)
+      ansible.builtin.shell: |
+        test -f /root/luks.key || dd if=/dev/urandom of=/root/luks.key bs=512 count=4
+        chmod 0400 /root/luks.key
+      args:
+        creates: /root/luks.key
+    - name: Ensure cryptsetup is installed
+      ansible.builtin.package:
+        name: cryptsetup
+        state: present
+    - name: Brief the learner
+      ansible.builtin.debug:
+        msg: >-
+          Un disque est disponible (voir /root/luks-disk.env) avec un
+          fichier-cle /root/luks.key. Chiffrez le disque en LUKS2, ouvrez-le
+          en 'coffre', formatez-le, montez-le sur /mnt/coffre et declarez-le
+          dans /etc/crypttab.

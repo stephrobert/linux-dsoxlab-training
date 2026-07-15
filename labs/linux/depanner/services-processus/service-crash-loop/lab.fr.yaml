@@ -1,0 +1,2 @@
+title: "Diagnostiquer et corriger un service systemd en crash loop"
+description: "Un service systemd redémarre en boucle à cause d'un fichier de configuration manquant. Utilisez systemctl + journalctl pour trouver la cause racine et corriger durablement."

@@ -1,0 +1,30 @@
+---
+# Solution formateur — RAID 1 sur les deux disques fournis, formate, monte,
+# persistant. Idempotent.
+- name: Solution raid-mdadm
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Create the RAID 1 array
+      ansible.builtin.shell: |
+        set -e
+        . /root/raid-disks.env
+        if [ ! -e /dev/md0 ]; then
+          mdadm --create /dev/md0 --level=1 --raid-devices=2 --run "$DISK1" "$DISK2"
+          sleep 2
+        fi
+      changed_when: false
+    - name: Create xfs filesystem on the array
+      ansible.builtin.command:
+        cmd: mkfs.xfs -f /dev/md0
+      changed_when: false
+    - name: Mount the array
+      ansible.builtin.shell: |
+        mkdir -p /mnt/raid
+        mountpoint -q /mnt/raid || mount /dev/md0 /mnt/raid
+      changed_when: false
+    - name: Persist the array in /etc/mdadm.conf
+      ansible.builtin.shell: |
+        grep -q '^ARRAY /dev/md0' /etc/mdadm.conf 2>/dev/null || mdadm --detail --scan >> /etc/mdadm.conf
+      changed_when: false
