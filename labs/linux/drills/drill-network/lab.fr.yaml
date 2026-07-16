@@ -1,0 +1,3 @@
+id: drill-network
+title: "Drill — réseau statique en conditions d'examen"
+description: "4 tâches, 100 points, 20 minutes, aucun indice : une adresse statique, une route statique et un MTU sur une interface dédiée, plus la résolution de noms locale. L'objectif est commun à RHCSA et LFCS — seul l'outil change (nmcli ou netplan)."

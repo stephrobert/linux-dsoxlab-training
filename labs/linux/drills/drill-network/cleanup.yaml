@@ -1,0 +1,34 @@
+---
+- name: Cleanup drill-network
+  hosts: lab_target
+  become: true
+  gather_facts: true
+  tasks:
+    - name: Debian — remove the drill netplan file
+      ansible.builtin.shell:
+        cmd: |
+          set +e
+          rm -f /etc/netplan/99-drill.yaml
+          netplan apply 2>/dev/null
+          ip link del lab0 2>/dev/null
+          exit 0
+        chdir: /
+      when: ansible_os_family == "Debian"
+      changed_when: false
+
+    - name: RHEL — remove the drill connection
+      ansible.builtin.shell:
+        cmd: |
+          set +e
+          nmcli con delete lab0 2>/dev/null
+          ip link del lab0 2>/dev/null
+          exit 0
+        chdir: /
+      when: ansible_os_family == "RedHat"
+      changed_when: false
+
+    - name: Remove the declared name
+      ansible.builtin.lineinfile:
+        path: /etc/hosts
+        regexp: 'lab-net\.lab'
+        state: absent

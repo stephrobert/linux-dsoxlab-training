@@ -279,6 +279,7 @@ to refresh it.
 | `drill-firewall` | Drill — firewall under exam conditions | l4 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/securiser/reseaux/) |
 | `drill-selinux` | Drill — SELinux under exam conditions | l4 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/) |
 | `drill-apparmor` | Drill — AppArmor under exam conditions | l4 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/securiser/durcissement/apparmor/) |
+| `drill-network` | Drill — static networking under exam conditions | l4 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/reseau/netplan/) |
 
 ### Capstones
 
@@ -287,7 +288,7 @@ to refresh it.
 | `rhcsa-mock-exam` | RHCSA EX200 mock exam — 20 tasks across 2 VMs | l2 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/certifications/rhcsa/) |
 | `lfcs-mock-exam` | LFCS mock exam — 17 tasks on Ubuntu 24.04 | l2 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/certifications/lfcs/) |
 
-_83 labs — table générée par `scripts/gen_catalog.py`._
+_84 labs — table générée par `scripts/gen_catalog.py`._
 <!-- LABS:END -->
 
 ## Contributing & license

@@ -207,6 +207,7 @@ sections:
       - linux/drills/drill-firewall
       - linux/drills/drill-selinux
       - linux/drills/drill-apparmor
+      - linux/drills/drill-network
 
   - id: capstones
     title: "Capstones"

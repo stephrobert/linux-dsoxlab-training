@@ -1,0 +1,57 @@
+id: drill-network
+title: "Drill — static networking under exam conditions"
+description: "4 tasks, 100 points, 20 minutes, no hints: a static address, a static route and an MTU on a dedicated interface, plus local name resolution. The objective is shared by RHCSA and LFCS — only the tool changes (nmcli or netplan)."
+section: linux
+type: challenge
+level: l4
+track:
+  - reseau
+skills:
+  - static-ip
+  - routing
+  - mtu
+  - name-resolution
+  - nmcli
+  - netplan
+difficulty: advanced
+estimated_time: 20m
+
+# Drill BI-DISTRIB à outil variable : nmcli sur RHEL, netplan sur Debian.
+# Le sujet ne nomme pas l'outil — l'objectif est le même pour les deux certifs.
+#
+# TOUT se passe sur une interface DÉDIÉE (dummy lab0). On ne touche jamais à
+# l'interface de gestion : son nom varie selon le provider ET la distrib
+# (sondé : eth0 sur alma/KVM, enp1s0 sur ubuntu/KVM, enp5s0 sous incus), donc
+# aucun nom en dur ne serait juste — le sujet la désigne par sa fonction.
+#
+# La persistance n'est pas une tâche séparée : les tests RECHARGENT le réseau
+# avant de vérifier. Un `ip addr add` posé à la main meurt à ce moment-là.
+runtime:
+  type: vm
+  default: rhel
+  snapshot_required: false
+  targets:
+    - name: rhel
+      host: alma-rhcsa-1.lab
+      label_en: "AlmaLinux 10 — nmcli (RHCSA)"
+      label_fr: "AlmaLinux 10 — nmcli (RHCSA)"
+    - name: ubuntu
+      host: ubuntu-lfcs-1.lab
+      label_en: "Ubuntu 24.04 — netplan (LFCS)"
+      label_fr: "Ubuntu 24.04 — netplan (LFCS)"
+
+distros:
+  - almalinux10
+  - rhel10
+  - ubuntu24.04
+  - debian12
+doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/reseau/netplan/
+validation:
+  functional: true
+  security: false
+  persistence_after_reboot: true
+certification_tags:
+  - rhcsa
+  - lfcs
+
+exam_passing_score: 70
