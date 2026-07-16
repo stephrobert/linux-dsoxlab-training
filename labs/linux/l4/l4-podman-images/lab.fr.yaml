@@ -1,0 +1,3 @@
+id: l4-podman-images
+title: "Gérer les images de conteneurs : pull, tag, save et inspection"
+description: "Récupérer une image depuis un registre, l'étiqueter, la sauvegarder dans une archive et inspecter cette archive avec skopeo — les compétences de gestion d'images pour les conteneurs RHCSA."

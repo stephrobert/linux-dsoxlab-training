@@ -1,0 +1,13 @@
+---
+# Reset idempotent : vide la file at.
+- name: Cleanup scheduling-at lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Empty the at queue
+      ansible.builtin.shell:
+        cmd: |
+          for j in $(atq 2>/dev/null | cut -f1); do atrm "$j" 2>/dev/null || true; done
+        chdir: /
+      changed_when: false

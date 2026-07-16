@@ -1,0 +1,3 @@
+id: l3-scheduling-timers
+title: "Planifier une tâche récurrente avec un timer systemd"
+description: "Créer un .service et son .timer (OnCalendar), l'activer, et prouver qu'il est actif et persistant — la façon systemd de planifier du travail récurrent."

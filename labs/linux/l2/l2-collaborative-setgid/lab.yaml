@@ -1,0 +1,36 @@
+id: l2-collaborative-setgid
+title: "Set up a collaborative directory with the set-GID bit"
+description: "Give a shared directory the devteam group and the set-GID bit so files created inside inherit the group — proven by the directory mode and a member's new file."
+section: linux
+type: lab
+level: l2
+track:
+  - administration
+skills:
+  - permissions
+  - setgid
+  - collaboration
+  - chmod
+difficulty: intermediate
+estimated_time: 20m
+runtime:
+  type: vm
+  default: rhel
+  snapshot_required: false
+  targets:
+    - name: rhel
+      host: alma-rhcsa-1.lab
+      label_en: "AlmaLinux 10 (chmod, groups)"
+      label_fr: "AlmaLinux 10 (chmod, groupes)"
+distros:
+  - rhel10
+  - almalinux10
+  - ubuntu24.04
+doc_url: https://blog.stephane-robert.info/docs/securiser/durcissement/permissions-ownership/
+validation:
+  functional: true
+  security: true
+  persistence_after_reboot: false
+certification_tags:
+  - rhcsa
+  - lfcs

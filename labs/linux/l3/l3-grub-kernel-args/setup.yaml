@@ -1,0 +1,30 @@
+---
+# État initial : grubby installé, aucun paramètre panic=10. L'apprenant l'ajoute
+# de façon persistante (noyau courant + futurs). Joué par dsoxlab run.
+- name: Setup grub-kernel-args lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Ensure grubby is installed
+      ansible.builtin.dnf:
+        name: grubby
+        state: present
+
+    - name: Clean any prior panic=10 (kernels + /etc/default/grub)
+      ansible.builtin.shell:
+        cmd: |
+          grubby --update-kernel=ALL --remove-args="panic=10" 2>/dev/null || true
+          sed -i 's/ *panic=10//g' /etc/default/grub
+          sed -i '/^GRUB_CMDLINE_LINUX="\s*"$/d' /etc/default/grub
+        chdir: /
+      changed_when: false
+
+    - name: Brief the learner
+      ansible.builtin.debug:
+        msg: >-
+          Ajoute le paramètre noyau panic=10 (reboot 10 s après un panic) de façon
+          PERSISTANTE : sur les noyaux existants avec
+          grubby --update-kernel=ALL --args="panic=10", ET pour les futurs noyaux
+          en l'ajoutant à GRUB_CMDLINE_LINUX dans /etc/default/grub. Vérifie avec
+          grubby --info=DEFAULT.

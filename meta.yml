@@ -137,6 +137,7 @@ sections:
       - linux/l2/l2-password-policy
       - linux/l2/l2-sudo-delegation
       - linux/l2/l2-acl-posix
+      - linux/l2/l2-collaborative-setgid
       - linux/l2/l2-package-management
       - linux/l2/l2-repo-configure
 
@@ -145,10 +146,13 @@ sections:
     description: "systemd, planification, journaux, noyau, récupération — runtime: vm."
     labs:
       - linux/l3/l3-boot-target
+      - linux/l3/l3-grub-kernel-args
       - linux/l3/l3-service-create-unit
       - linux/l3/l3-service-diagnose
       - linux/l3/l3-journald-persist
       - linux/l3/l3-scheduling-cron
+      - linux/l3/l3-scheduling-at
+      - linux/l3/l3-scheduling-timers
       - linux/l3/l3-app-constraints
       - linux/l3/l3-sysctl-persist
       - linux/l3/l3-process-signals-priority
@@ -167,6 +171,7 @@ sections:
       - linux/l4/l4-ssh-key-auth-harden
       - linux/l4/l4-podman-basic
       - linux/l4/l4-podman-systemd-persist
+      - linux/l4/l4-podman-images
       - linux/l4/l4-selinux-boolean-port
       - linux/l4/l4-selinux-context-fix
       - linux/l4/l4-selinux-diagnose-avc

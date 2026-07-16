@@ -1,0 +1,15 @@
+---
+# Reset idempotent : retire panic=10 des noyaux et de /etc/default/grub.
+- name: Cleanup grub-kernel-args lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Remove panic=10 everywhere
+      ansible.builtin.shell:
+        cmd: |
+          grubby --update-kernel=ALL --remove-args="panic=10" 2>/dev/null || true
+          sed -i 's/ *panic=10//g' /etc/default/grub 2>/dev/null || true
+          sed -i '/^GRUB_CMDLINE_LINUX="\s*"$/d' /etc/default/grub 2>/dev/null || true
+        chdir: /
+      changed_when: false
