@@ -1,0 +1,62 @@
+id: lfcs-mock-exam
+title: "LFCS mock exam — 17 tasks on Ubuntu 24.04"
+description: "Performance-based LFCS mock exam covering the 5 official domains: Essential Commands (20%), Operations Deployment (25%), Users and Groups (10%), Networking (25%), Storage (20%). 17 tasks scored on 100 points on a single Ubuntu VM. 70/100 to pass. No hints."
+section: linux
+type: capstone
+level: l2
+track:
+  - capstones
+skills:
+  - find
+  - tar-archives
+  - grep-regex
+  - links
+  - permissions
+  - apt
+  - systemd-units
+  - systemd-timers
+  - cron
+  - users-groups
+  - sudo-delegation
+  - netplan
+  - static-ip
+  - routing
+  - ufw
+  - name-resolution
+  - lvm
+  - filesystems-xfs
+  - fstab
+  - quotas
+  - swap
+difficulty: advanced
+estimated_time: 120m
+
+# 1 seule VM : le LFCS est mono-distrib côté candidat (Ubuntu 24.04 ici).
+# Les 17 tâches tiennent sur ubuntu-lfcs-1.lab, qui porte /dev/vdb (5 Go)
+# pour le domaine Storage (LVM + XFS + quotas) et l'interface dédiée lab0
+# pour le domaine Networking (jamais enp5s0 = gestion).
+runtime:
+  type: vm
+  default: ubuntu
+  snapshot_required: false
+  targets:
+    - name: ubuntu
+      host: ubuntu-lfcs-1.lab
+      label_en: "Ubuntu 24.04 — 17 tasks across the 5 LFCS domains"
+      label_fr: "Ubuntu 24.04 — 17 tâches sur les 5 domaines LFCS"
+
+distros:
+  - ubuntu24.04
+  - debian12
+doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/certifications/lfcs/
+validation:
+  functional: true
+  security: true
+  persistence_after_reboot: true
+certification_tags:
+  - lfcs
+
+# Capstone = pas de hints (mode examen). Passing score aligné sur l'examen
+# officiel LFCS (66/100 chez la Linux Foundation, arrondi à 70 comme le mock
+# RHCSA pour rester exigeant).
+exam_passing_score: 70

@@ -122,6 +122,29 @@ def lab_host(name: str) -> testinfra.host.Host:
     )
 
 
+def lab_target_host(default: str) -> str:
+    """Retourne le FQDN de la target sur laquelle valider.
+
+    C'est le point d'entrée des labs MULTI-DISTRIB : au lieu de coder un
+    hôte en dur (ce qui rendrait une target Ubuntu déclarée mais jamais
+    testée — le contrat mentirait), le test demande ici l'hôte réellement
+    choisi.
+
+    Source : ``DSOXLAB_TARGET_HOST``, exporté par ``dsoxlab check`` depuis
+    la target résolue (``--target``, sinon la target de session, sinon la
+    target ``default`` du lab.yaml).
+
+    Args:
+        default: FQDN à utiliser hors dsoxlab (pytest lancé à la main, CI) —
+                 typiquement la target ``default`` du lab.
+
+    Usage dans un test::
+
+        TARGET_HOST = lab_target_host("alma-rhcsa-1.lab")
+    """
+    return os.environ.get("DSOXLAB_TARGET_HOST") or default
+
+
 # ----------------------------------------------------------------------
 # Fixture autouse : applique l'état du lab avant ses tests.
 # ----------------------------------------------------------------------
@@ -210,6 +233,13 @@ def _apply_lab_state(request) -> None:
         return  # test hors d'un lab
 
     runtime_type, host_name = _read_lab_runtime(lab_root)
+
+    # Labs multi-distrib : la solution doit se rejouer sur la MÊME target que
+    # celle où portent les tests, sinon on validerait un hôte et on
+    # provisionnerait l'autre.
+    host_name = lab_target_host(host_name) if host_name else os.environ.get(
+        "DSOXLAB_TARGET_HOST"
+    )
 
     # Atelier shell-local : pas de pré-jeu de solution.
     if runtime_type == "shell":

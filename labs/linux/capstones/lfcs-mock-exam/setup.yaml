@@ -1,0 +1,179 @@
+---
+# Capstone LFCS — état initial du candidat.
+#
+# Le setup fournit UNIQUEMENT les prérequis (fichiers à traiter, scripts à
+# lancer, groupe/utilisateur existants) et remet à zéro tout ce que les tâches
+# doivent produire — sinon un lab joué avant fausserait la note.
+#
+# Il ne fait AUCUNE des 17 tâches : c'est le travail du candidat.
+- name: LFCS mock exam — givens
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    # ------------------------------------------------------------------
+    # Outillage sur lequel s'appuient les tâches (pas les tâches elles-mêmes)
+    # ------------------------------------------------------------------
+    - name: Base tooling the tasks rely on
+      ansible.builtin.package:
+        name:
+          - xfsprogs
+          - quota
+          - lvm2
+          - ufw
+          - cron
+        state: present
+      failed_when: false
+
+    # ------------------------------------------------------------------
+    # Section A — matière à traiter
+    # ------------------------------------------------------------------
+    - name: Task 1 — scatter files under /srv/audit
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+        mode: "0755"
+      loop:
+        - /srv/audit
+        - /srv/audit/app
+        - /srv/audit/sys
+
+    - name: Task 1 — provide the .log files to find, plus decoys
+      ansible.builtin.copy:
+        dest: "{{ item.path }}"
+        content: "{{ item.content }}"
+        mode: "0644"
+      loop:
+        - path: /srv/audit/app/app.log
+          content: "app started\n"
+        - path: /srv/audit/sys/kernel.log
+          content: "kernel loaded\n"
+        - path: /srv/audit/app/notes.txt
+          content: "ceci n'est pas un .log\n"
+        - path: /srv/audit/README
+          content: "ni ceci\n"
+
+    - name: Task 2 — provide the mixed-level access.log
+      ansible.builtin.copy:
+        dest: /srv/audit/access.log
+        mode: "0644"
+        content: |
+          INFO service up
+          ERROR disk almost full
+          WARN high memory
+          ERROR permission denied
+          INFO heartbeat
+          ERROR timeout on backend
+
+    # ------------------------------------------------------------------
+    # Sections B/C — prérequis (scripts, groupe, utilisateur)
+    # ------------------------------------------------------------------
+    - name: Tasks 6/7/8 — provide the scripts the units must run
+      ansible.builtin.copy:
+        dest: "{{ item }}"
+        mode: "0755"
+        content: |
+          #!/bin/bash
+          # Script fourni par le sujet — ne pas modifier.
+          sleep infinity
+      loop:
+        - /usr/local/bin/labwatch.sh
+
+    - name: Task 7/8 — provide the report script (short-lived)
+      ansible.builtin.copy:
+        dest: /usr/local/bin/labreport.sh
+        mode: "0755"
+        content: |
+          #!/bin/bash
+          # Script fourni par le sujet — ne pas modifier.
+          echo "report $(date -Is)" >> /var/log/labreport.log
+
+    - name: Tasks 4/9/10 — the auditors group exists, the accounts do not
+      ansible.builtin.group:
+        name: auditors
+        state: present
+
+    - name: Tasks 8/16 — the devops user exists (quota + cron target)
+      ansible.builtin.user:
+        name: devops
+        create_home: true
+        shell: /bin/bash
+
+    # ------------------------------------------------------------------
+    # Remise à zéro : tout ce que les 17 tâches doivent produire
+    # ------------------------------------------------------------------
+    - name: Clean slate — Sections A/B/C artefacts
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - /root/logs.tar.gz
+        - /root/errors.txt
+        - /root/access.hard
+        - /root/access.soft
+        - /srv/shared
+        - /etc/systemd/system/labwatch.service
+        - /etc/systemd/system/labreport.service
+        - /etc/systemd/system/labreport.timer
+        - /etc/sudoers.d/auditors
+        - /etc/netplan/99-lab.yaml
+
+    - name: Clean slate — the account the candidate must create
+      ansible.builtin.user:
+        name: auditor1
+        state: absent
+        remove: true
+
+    - name: Clean slate — package hold, cron, units, ufw, hosts
+      ansible.builtin.shell:
+        cmd: |
+          set +e
+          apt-mark unhold tree 2>/dev/null
+          apt-get remove -y -qq tree 2>/dev/null
+          crontab -u devops -r 2>/dev/null
+          systemctl disable --now labwatch.service labreport.timer 2>/dev/null
+          systemctl daemon-reload
+          ufw --force reset 2>/dev/null
+          ufw allow OpenSSH 2>/dev/null
+          sed -i '/lab-target\.lab/d' /etc/hosts
+          netplan apply 2>/dev/null
+          exit 0
+        chdir: /
+      changed_when: false
+
+    - name: Clean slate — Section E storage (unmount, fstab, swap, LVM, disk)
+      ansible.builtin.shell:
+        cmd: |
+          set +e
+          swapoff /swapfile 2>/dev/null
+          rm -f /swapfile
+          sed -i '\#^/swapfile#d' /etc/fstab
+          umount /data /srv/quota /srv/data 2>/dev/null
+          sed -i '\#[[:space:]]/data[[:space:]]#d;\#[[:space:]]/srv/quota[[:space:]]#d;\#[[:space:]]/srv/data[[:space:]]#d' /etc/fstab
+          lvremove -f /dev/vgdata 2>/dev/null
+          vgremove -f vgdata 2>/dev/null
+          pvremove -f -y /dev/vdb1 2>/dev/null
+          wipefs -a /dev/vdb1 /dev/vdb2 /dev/vdb 2>/dev/null
+          dd if=/dev/zero of=/dev/vdb bs=1M count=10 2>/dev/null
+          partprobe /dev/vdb 2>/dev/null
+          exit 0
+        chdir: /
+      changed_when: false
+
+    - name: Create the mount points the candidate will use
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+        mode: "0755"
+      loop:
+        - /data
+        - /srv/quota
+
+    - name: Brief the candidate
+      ansible.builtin.debug:
+        msg: >-
+          Examen blanc LFCS : 17 tâches, 100 points, 120 minutes, 70/100 pour
+          réussir, aucun indice. Le sujet est dans challenge/README.md
+          (dsoxlab challenge lfcs-mock-exam). Tout doit être PERSISTANT au
+          reboot. Ne touche jamais à enp5s0 — les tâches réseau sont sur lab0.
+          /dev/vdb (5 Go) est vierge.

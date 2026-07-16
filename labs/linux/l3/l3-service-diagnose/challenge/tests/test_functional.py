@@ -12,9 +12,14 @@ from __future__ import annotations
 
 import pytest
 
-from conftest import lab_host
+from conftest import lab_host, lab_target_host
 
-TARGET_HOST = "alma-rhcsa-1.lab"
+# Lab MULTI-DISTRIB : le diagnostic d'un service en crash-loop est identique
+# sur RHEL et Debian (unité systemd + journal), d'où les deux targets du
+# lab.yaml. On demande donc l'hôte de la target CHOISIE (dsoxlab check
+# --target ubuntu) au lieu d'en coder un en dur — sinon la target Ubuntu
+# serait déclarée mais jamais testée.
+TARGET_HOST = lab_target_host("alma-rhcsa-1.lab")
 SERVICE_NAME = "demo-crashloop"
 CONFIG_FILE = "/etc/demo-crashloop/config.yml"
 

@@ -205,3 +205,4 @@ sections:
     description: "Synthèses transverses — projets de fin de bloc."
     labs:
       - linux/capstones/rhcsa-mock-exam
+      - linux/capstones/lfcs-mock-exam
