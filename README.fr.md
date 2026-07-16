@@ -1,4 +1,4 @@
-# linux-dsoxlab-training : labs de sécurité Linux (RHCSA + LFCS)
+# Linux DevSecOps Training — RHCSA + LFCS
 
 **Language:** [English](./README.md) · [Français](./README.fr.md)
 
