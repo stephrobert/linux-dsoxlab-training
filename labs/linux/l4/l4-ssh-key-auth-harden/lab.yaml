@@ -1,0 +1,35 @@
+id: l4-ssh-key-auth-harden
+title: "Set up hardened key-based SSH access for a service user"
+description: "Give the deploy user key-based SSH login with correct ownership and permissions (.ssh 700, authorized_keys 600, owned by the user) — the classic trap that silently breaks key auth."
+section: linux
+type: lab
+level: l4
+track:
+  - securiser
+  - rhcsa
+skills:
+  - ssh
+  - authorized_keys
+  - permissions
+  - key-based-auth
+difficulty: intermediate
+estimated_time: 20m
+runtime:
+  type: vm
+  default: rhel
+  snapshot_required: false
+  targets:
+    - name: rhel
+      host: alma-rhcsa-1.lab
+      label_en: "AlmaLinux 10 (sshd, authorized_keys)"
+      label_fr: "AlmaLinux 10 (sshd, authorized_keys)"
+distros:
+  - rhel10
+  - almalinux10
+doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/ssh/cle-ssh/
+validation:
+  functional: true
+  security: true
+  persistence_after_reboot: false
+certification_tags:
+  - rhcsa

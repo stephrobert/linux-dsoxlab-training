@@ -1,0 +1,33 @@
+---
+# État initial : httpd sert /var/www/html, mais index.html a été mal étiqueté
+# (admin_home_t) → SELinux refuse la lecture par httpd (403) et logge un AVC.
+# L'apprenant diagnostique via ausearch puis restaure le contexte.
+- name: Setup selinux-diagnose-avc lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Ensure httpd is installed
+      ansible.builtin.dnf:
+        name: httpd
+        state: present
+
+    - name: Create web content, mislabel it, start httpd and trigger the denial
+      ansible.builtin.shell:
+        cmd: |
+          echo '<h1>lab avc</h1>' > /var/www/html/index.html
+          chcon -t admin_home_t /var/www/html/index.html
+          systemctl enable --now httpd
+          # Provoque le refus une fois pour qu'il soit dans le journal d'audit.
+          curl -s -o /dev/null http://localhost/index.html || true
+        chdir: /
+      changed_when: false
+
+    - name: Brief the learner
+      ansible.builtin.debug:
+        msg: >-
+          http://localhost renvoie 403 : SELinux refuse à httpd la lecture de
+          /var/www/html/index.html (mauvais contexte). Diagnostique le refus
+          (sudo ausearch -m AVC -ts recent, ou sealert), puis restaure le bon
+          contexte avec restorecon (le type correct est déjà dans la policy pour
+          /var/www/html — pas besoin de règle semanage). Ne désactive pas SELinux.

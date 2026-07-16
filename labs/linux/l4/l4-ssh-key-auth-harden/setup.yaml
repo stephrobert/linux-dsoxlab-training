@@ -1,0 +1,32 @@
+---
+# État initial : l'utilisateur deploy existe, sa clé est bien présente MAIS avec
+# des permissions/propriétaire cassés (.ssh 0755 root, authorized_keys 0644 root)
+# → sshd refuse la clé silencieusement. L'apprenant corrige perms + ownership.
+- name: Setup ssh-key-auth-harden lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Create the deploy service user
+      ansible.builtin.user:
+        name: deploy
+        shell: /bin/bash
+        create_home: true
+
+    - name: Place the key with BROKEN ownership/permissions
+      ansible.builtin.shell:
+        cmd: |
+          install -d -m 0755 /home/deploy/.ssh
+          echo 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKLo0f6RPaHxkK8hieq9X35N92QlJIUqBNU1UsQc+ntg deploy@lab' > /home/deploy/.ssh/authorized_keys
+          chown -R root:root /home/deploy/.ssh
+          chmod 0644 /home/deploy/.ssh/authorized_keys
+        chdir: /
+      changed_when: false
+
+    - name: Brief the learner
+      ansible.builtin.debug:
+        msg: >-
+          L'utilisateur deploy a sa clé publique dans ~/.ssh/authorized_keys,
+          mais sshd la refuse à cause des permissions. Corrige :
+          ~deploy/.ssh en 0700 appartenant à deploy, authorized_keys en 0600
+          appartenant à deploy. Vérifie avec stat -c '%a %U:%G'.

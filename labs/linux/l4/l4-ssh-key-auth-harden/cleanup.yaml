@@ -1,0 +1,12 @@
+---
+# Reset idempotent : supprime l'utilisateur deploy et son home pour rejouabilité.
+- name: Cleanup ssh-key-auth-harden lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Remove the deploy user and its home
+      ansible.builtin.user:
+        name: deploy
+        state: absent
+        remove: true

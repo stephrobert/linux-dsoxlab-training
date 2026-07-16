@@ -1,0 +1,36 @@
+id: l4-selinux-boolean-port
+title: "Allow a service with SELinux: persistent boolean and labeled port"
+description: "Turn on an SELinux boolean persistently and label a non-standard port so a service is allowed under enforcing SELinux — proven by getsebool and semanage port."
+section: linux
+type: lab
+level: l4
+track:
+  - securiser
+  - rhcsa
+skills:
+  - selinux
+  - setsebool
+  - semanage
+  - booleans
+  - port-labeling
+difficulty: intermediate
+estimated_time: 25m
+runtime:
+  type: vm
+  default: rhel
+  snapshot_required: false
+  targets:
+    - name: rhel
+      host: alma-rhcsa-1.lab
+      label_en: "AlmaLinux 10 (SELinux enforcing, semanage)"
+      label_fr: "AlmaLinux 10 (SELinux enforcing, semanage)"
+distros:
+  - rhel10
+  - almalinux10
+doc_url: https://blog.stephane-robert.info/docs/securiser/durcissement/selinux/
+validation:
+  functional: true
+  security: true
+  persistence_after_reboot: true
+certification_tags:
+  - rhcsa

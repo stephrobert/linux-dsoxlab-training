@@ -1,0 +1,3 @@
+id: l4-ntp-sync
+title: "Synchroniser l'horloge avec chrony et fixer le fuseau, durablement"
+description: "Activer et démarrer chronyd, activer le NTP et régler le fuseau sur Europe/Paris — persistant au reboot, prouvé par l'état actif du service et timedatectl."

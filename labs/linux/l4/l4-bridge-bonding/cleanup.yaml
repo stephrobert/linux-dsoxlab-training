@@ -1,0 +1,13 @@
+---
+# Reset idempotent : retire l'agrégation de lab pour rejouabilité.
+- name: Cleanup bridge-bonding lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Remove the lab bond, bridge and slaves
+      ansible.builtin.shell:
+        cmd: |
+          nmcli con delete bond0 slave1 slave2 br0 2>/dev/null || true
+        chdir: /
+      changed_when: false

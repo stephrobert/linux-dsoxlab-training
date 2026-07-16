@@ -1,0 +1,24 @@
+---
+# État initial : pas d'agrégation. L'apprenant construit le bond + bridge sur des
+# interfaces dédiées (dummy1/dummy2/bond0/br0), sans toucher enp5s0 (gestion).
+- name: Setup bridge-bonding lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Clean slate — remove any prior lab aggregation
+      ansible.builtin.shell:
+        cmd: |
+          nmcli con delete bond0 slave1 slave2 br0 2>/dev/null || true
+        chdir: /
+      changed_when: false
+
+    - name: Brief the learner
+      ansible.builtin.debug:
+        msg: >-
+          Agrège deux liens : crée un bond « bond0 » en mode active-backup
+          (bond.options "mode=active-backup,miimon=100") avec deux esclaves sur les
+          interfaces dédiées dummy1 et dummy2, puis pose un bridge « br0 » par
+          dessus (bond0 devient port du bridge). Rends tout PERSISTANT (profils
+          NetworkManager). Ne touche pas à enp5s0. Vérifie avec
+          cat /proc/net/bonding/bond0 et ls /sys/class/net/br0/brif/.

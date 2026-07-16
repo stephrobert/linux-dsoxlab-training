@@ -1,0 +1,3 @@
+id: l4-reverse-proxy-lb
+title: "Répartir la charge d'un backend web avec HAProxy"
+description: "Configurer HAProxy sur l'hôte frontal pour faire reverse-proxy et répartir la charge vers un serveur web backend, de façon persistante — prouvé par une requête à travers le proxy qui renvoie la page du backend."

@@ -1,0 +1,3 @@
+id: l4-bridge-bonding
+title: "Agréger des liens : un bond active-backup sous un bridge avec nmcli"
+description: "Construire un bond active-backup sur deux interfaces esclaves et poser un bridge par-dessus, de façon persistante avec NetworkManager — prouvé par l'état du bonding et le port du bridge."

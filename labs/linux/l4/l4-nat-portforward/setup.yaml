@@ -1,0 +1,34 @@
+---
+# État initial : nftables installé, mais AUCUN routage ni règle NAT de lab.
+# L'apprenant active le forwarding et pose la redirection de port persistante.
+- name: Setup nat-portforward lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Ensure nftables is installed
+      ansible.builtin.dnf:
+        name: nftables
+        state: present
+
+    - name: Reset to a clean state — no IP forwarding, no lab NAT rules
+      ansible.builtin.shell:
+        cmd: |
+          rm -f /etc/sysctl.d/99-nat-forward.conf /etc/nftables/lab-nat.nft
+          sed -i '/lab-nat.nft/d' /etc/sysconfig/nftables.conf 2>/dev/null || true
+          sysctl -w net.ipv4.ip_forward=0
+          sysctl --system >/dev/null 2>&1 || true
+          nft delete table ip lab-nat 2>/dev/null || true
+          systemctl disable --now nftables 2>/dev/null || true
+        chdir: /
+      changed_when: false
+
+    - name: Brief the learner
+      ansible.builtin.debug:
+        msg: >-
+          Cette machine sert de passerelle. Active le routage IP de façon
+          PERSISTANTE (net.ipv4.ip_forward = 1 dans /etc/sysctl.d/), puis crée une
+          table nftables « lab-nat » qui redirige le tcp/8080 entrant vers le
+          backend 192.0.2.20:80 (DNAT en prerouting) avec masquerade en
+          postrouting. Rends le tout persistant (fichier .nft inclus dans
+          /etc/sysconfig/nftables.conf + systemctl enable nftables).

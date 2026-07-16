@@ -1,0 +1,36 @@
+id: l4-ntp-sync
+title: "Synchronize the clock with chrony and set the timezone, persistently"
+description: "Enable and start chronyd, turn NTP on and set the timezone to Europe/Paris — surviving reboot, proven by the live service state and timedatectl."
+section: linux
+type: lab
+level: l4
+track:
+  - securiser
+  - rhcsa
+skills:
+  - chrony
+  - chronyd
+  - timedatectl
+  - ntp
+  - timezone
+difficulty: beginner
+estimated_time: 15m
+runtime:
+  type: vm
+  default: rhel
+  snapshot_required: false
+  targets:
+    - name: rhel
+      host: alma-rhcsa-1.lab
+      label_en: "AlmaLinux 10 (chrony, timedatectl)"
+      label_fr: "AlmaLinux 10 (chrony, timedatectl)"
+distros:
+  - rhel10
+  - almalinux10
+doc_url: https://blog.stephane-robert.info/docs/services/reseau/chrony/
+validation:
+  functional: true
+  security: false
+  persistence_after_reboot: true
+certification_tags:
+  - rhcsa

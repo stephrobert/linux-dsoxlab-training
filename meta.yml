@@ -155,6 +155,25 @@ sections:
       - linux/l3/l3-fs-readonly-recover
       - linux/l3/l3-ssh-access-recovery
 
+  - id: l4
+    title: "Réseau, Sécurité & Conteneurs (l4)"
+    description: "chrony, NetworkManager, firewalld, SSH, SELinux, podman — runtime: vm."
+    labs:
+      - linux/l4/l4-ntp-sync
+      - linux/l4/l4-network-static-persist
+      - linux/l4/l4-network-troubleshoot
+      - linux/l4/l4-firewall-persist
+      - linux/l4/l4-ssh-key-auth-harden
+      - linux/l4/l4-podman-basic
+      - linux/l4/l4-podman-systemd-persist
+      - linux/l4/l4-selinux-boolean-port
+      - linux/l4/l4-selinux-context-fix
+      - linux/l4/l4-selinux-diagnose-avc
+      - linux/l4/l4-nat-portforward
+      - linux/l4/l4-ldap-integration
+      - linux/l4/l4-reverse-proxy-lb
+      - linux/l4/l4-bridge-bonding
+
   - id: rhcsa
     title: "RHCSA EX200v10"
     description: "Préparation certification Red Hat — 12 exercices type examen + mock 2h30."

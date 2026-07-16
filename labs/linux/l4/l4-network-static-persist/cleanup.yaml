@@ -1,0 +1,13 @@
+---
+# Reset idempotent : retire la connexion de lab pour rejouabilité.
+# Joué par dsoxlab clean.
+- name: Cleanup network-static-persist lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Remove the lab connection
+      ansible.builtin.shell:
+        cmd: nmcli con delete lab-static 2>/dev/null || true
+        chdir: /
+      changed_when: false

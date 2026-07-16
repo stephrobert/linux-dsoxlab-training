@@ -1,0 +1,11 @@
+---
+# Reset idempotent : retire le conteneur pour rejouabilité.
+- name: Cleanup podman-basic lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Remove the web container
+      ansible.builtin.command: podman rm -f web
+      changed_when: false
+      failed_when: false

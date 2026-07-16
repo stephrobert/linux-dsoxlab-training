@@ -1,0 +1,3 @@
+id: l4-podman-basic
+title: "Lancer un conteneur détaché avec Podman"
+description: "Récupérer une image et lancer un conteneur nommé en détaché, et prouver qu'il tourne — les bases de Podman pour les conteneurs RHCSA."

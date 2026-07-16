@@ -1,0 +1,35 @@
+id: l4-bridge-bonding
+title: "Aggregate links: an active-backup bond under a bridge with nmcli"
+description: "Build an active-backup bond over two slave interfaces and put a bridge on top, persistently with NetworkManager — proven by the bonding state and the bridge port."
+section: linux
+type: lab
+level: l4
+track:
+  - securiser
+  - rhce
+skills:
+  - nmcli
+  - bonding
+  - bridge
+  - networkmanager
+  - link-aggregation
+difficulty: advanced
+estimated_time: 30m
+runtime:
+  type: vm
+  default: rhel
+  snapshot_required: false
+  targets:
+    - name: rhel
+      host: alma-rhcsa-1.lab
+      label_en: "AlmaLinux 10 (nmcli bond + bridge)"
+      label_fr: "AlmaLinux 10 (nmcli bond + bridge)"
+distros:
+  - rhel10
+  - almalinux10
+doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/reseau/bond-bridge/
+validation:
+  functional: true
+  security: false
+  persistence_after_reboot: true
+certification_tags: []

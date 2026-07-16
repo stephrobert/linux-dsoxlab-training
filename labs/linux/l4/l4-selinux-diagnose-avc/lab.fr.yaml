@@ -1,0 +1,3 @@
+id: l4-selinux-diagnose-avc
+title: "Diagnostiquer un refus SELinux (AVC) et le corriger proprement"
+description: "Un fichier web a le mauvais label SELinux, donc httpd est refusé (403). Lis l'AVC dans le journal d'audit et restaure le contexte — sans désactiver SELinux. Prouvé par le contexte actif et une réponse 200."

@@ -1,0 +1,101 @@
+---
+# Lab MULTI-HÔTE (feature dsoxlab roles) :
+#   - lab_server (alma-rhcsa-2) : 389 Directory Server avec l'utilisateur posix
+#     alice (infra fournie — openldap-servers n'existe plus sur RHEL/alma10).
+#   - lab_target (alma-rhcsa-1) : client, l'apprenant configure SSSD.
+# Joué par dsoxlab run (ansible-runner) sur l'inventory serveur+client.
+
+- name: LDAP server — 389 Directory Server with a posix user (lab_server)
+  hosts: lab_server
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Install 389-ds + ldap clients
+      ansible.builtin.package:
+        name:
+          - 389-ds-base
+          - openldap-clients
+        state: present
+
+    - name: Create the directory instance (idempotent — guarded by its dir)
+      ansible.builtin.shell:
+        cmd: |
+          cat > /tmp/lab-389.inf <<'EOF'
+          [general]
+          config_version = 2
+          [slapd]
+          instance_name = lab
+          root_password = adminpw123
+          [backend-userroot]
+          suffix = dc=lab,dc=local
+          sample_entries = yes
+          EOF
+          dscreate from-file /tmp/lab-389.inf
+        creates: /etc/dirsrv/slapd-lab
+
+    - name: Add the posix user alice (idempotent)
+      ansible.builtin.shell:
+        cmd: |
+          ldapadd -x -H ldap://localhost -D "cn=Directory Manager" -w adminpw123 <<'EOF' 2>/dev/null || true
+          dn: uid=alice,ou=people,dc=lab,dc=local
+          objectClass: top
+          objectClass: inetOrgPerson
+          objectClass: posixAccount
+          objectClass: shadowAccount
+          uid: alice
+          cn: Alice Lab
+          sn: Lab
+          uidNumber: 10001
+          gidNumber: 10001
+          homeDirectory: /home/alice
+          loginShell: /bin/bash
+          userPassword: alicepw
+          EOF
+        chdir: /
+      changed_when: false
+
+- name: LDAP client — prepare SSSD tooling (lab_target)
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Install SSSD + tooling
+      ansible.builtin.package:
+        name:
+          - sssd
+          - sssd-ldap
+          - oddjob-mkhomedir
+          - authselect
+          - openldap-clients
+        state: present
+
+    - name: Record the LDAP server address for the learner
+      ansible.builtin.copy:
+        dest: /root/ldap-server.env
+        mode: "0644"
+        content: |
+          SERVER={{ hostvars[groups['lab_server'][0]]['ansible_host'] }}
+          BASE=dc=lab,dc=local
+
+    - name: Clean state — no lab SSSD config, sssd stopped, caches cleared, NSS reset
+      ansible.builtin.shell:
+        cmd: |
+          rm -f /etc/sssd/sssd.conf
+          systemctl stop sssd 2>/dev/null || true
+          # Le cache mémoire nss_sss (/var/lib/sss/mc) sert les entrées même
+          # sssd arrêté → sans purge, alice resterait résoluble (faux positif).
+          rm -rf /var/lib/sss/db/* /var/lib/sss/mc/* 2>/dev/null || true
+          # Retire sss de NSS/PAM tant que l'apprenant n'a pas basculé.
+          authselect select minimal --force 2>/dev/null || true
+        chdir: /
+      changed_when: false
+
+    - name: Brief the learner
+      ansible.builtin.debug:
+        msg: >-
+          Un annuaire 389-ds (base dc=lab,dc=local) tourne sur le serveur — son IP
+          est dans /root/ldap-server.env. Configure SSSD (/etc/sssd/sssd.conf,
+          id_provider ldap, ldap_uri vers ce serveur, ldap_search_base
+          dc=lab,dc=local, sans TLS en lab), bascule NSS/PAM avec
+          authselect select sssd with-mkhomedir, démarre sssd. Valide que
+          getent passwd alice et id alice résolvent l'utilisateur de l'annuaire.

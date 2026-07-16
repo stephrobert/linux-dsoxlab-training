@@ -1,0 +1,3 @@
+id: l4-nat-portforward
+title: "Mettre en place une redirection de port NAT persistante avec nftables"
+description: "Activer le routage IP et ajouter une table nat nftables (DNAT redirection de port + masquerade) qui survit au reboot — prouvé par le ruleset actif, sysctl et les fichiers de persistance."

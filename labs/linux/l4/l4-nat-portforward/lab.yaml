@@ -1,0 +1,37 @@
+id: l4-nat-portforward
+title: "Set up persistent NAT port forwarding with nftables"
+description: "Enable IP forwarding and add an nftables nat table (DNAT port forward + masquerade) that survives reboot — proven by the live ruleset, sysctl and persistence files."
+section: linux
+type: lab
+level: l4
+track:
+  - securiser
+  - rhcsa
+skills:
+  - nftables
+  - nat
+  - port-forwarding
+  - masquerade
+  - ip-forwarding
+  - persistence
+difficulty: advanced
+estimated_time: 35m
+runtime:
+  type: vm
+  default: rhel
+  snapshot_required: false
+  targets:
+    - name: rhel
+      host: alma-rhcsa-1.lab
+      label_en: "AlmaLinux 10 (nftables, sysctl)"
+      label_fr: "AlmaLinux 10 (nftables, sysctl)"
+distros:
+  - rhel10
+  - almalinux10
+doc_url: https://blog.stephane-robert.info/docs/securiser/reseaux/nat-port-forwarding/
+validation:
+  functional: true
+  security: true
+  persistence_after_reboot: true
+certification_tags:
+  - rhcsa

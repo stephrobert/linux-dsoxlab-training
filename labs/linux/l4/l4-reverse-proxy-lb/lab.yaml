@@ -1,0 +1,36 @@
+id: l4-reverse-proxy-lb
+title: "Load-balance a web backend with HAProxy"
+description: "Configure HAProxy on the front host to reverse-proxy and load-balance to a backend web server, persistently — proven by a request through the proxy returning the backend's page."
+section: linux
+type: lab
+level: l4
+track:
+  - securiser
+  - rhce
+skills:
+  - haproxy
+  - reverse-proxy
+  - load-balancing
+  - http
+difficulty: advanced
+estimated_time: 30m
+runtime:
+  type: vm
+  default: rhel
+  snapshot_required: false
+  targets:
+    - name: rhel
+      host: alma-rhcsa-1.lab
+      label_en: "AlmaLinux 10 HAProxy front + alma-rhcsa-2 backend"
+      label_fr: "HAProxy AlmaLinux 10 + backend alma-rhcsa-2"
+      roles:
+        server: alma-rhcsa-2.lab
+distros:
+  - rhel10
+  - almalinux10
+doc_url: https://blog.stephane-robert.info/docs/services/reseau/haproxy/
+validation:
+  functional: true
+  security: false
+  persistence_after_reboot: true
+certification_tags: []

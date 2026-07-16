@@ -1,0 +1,32 @@
+---
+# État initial : /srv/labweb existe avec un contenu au MAUVAIS type (var_t,
+# hérité de /srv) — un service web confiné ne peut pas le lire. L'apprenant pose
+# une règle fcontext persistante + restorecon.
+- name: Setup selinux-context-fix lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Ensure SELinux management tools
+      ansible.builtin.dnf:
+        name: policycoreutils-python-utils
+        state: present
+
+    - name: Create the web dir with the wrong (inherited) context
+      ansible.builtin.shell:
+        cmd: |
+          semanage fcontext -d "/srv/labweb(/.*)?" 2>/dev/null || true
+          rm -rf /srv/labweb
+          mkdir -p /srv/labweb
+          echo '<h1>lab</h1>' > /srv/labweb/index.html
+          restorecon -R /srv/labweb 2>/dev/null || true
+        chdir: /
+      changed_when: false
+
+    - name: Brief the learner
+      ansible.builtin.debug:
+        msg: >-
+          Les fichiers de /srv/labweb ont le mauvais type SELinux (var_t). Pose
+          une règle PERSISTANTE mappant /srv/labweb vers httpd_sys_content_t
+          (semanage fcontext -a -t httpd_sys_content_t "/srv/labweb(/.*)?") puis
+          applique (restorecon -Rv /srv/labweb). Vérifie avec ls -Z.

@@ -1,0 +1,16 @@
+---
+# Reset idempotent : côté client, retire la config SSSD ; côté serveur on laisse
+# l'annuaire (infra lourde, réutilisable). Joué par dsoxlab clean.
+- name: Cleanup ldap-integration — client (lab_target)
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Remove the SSSD config and stop the service
+      ansible.builtin.shell:
+        cmd: |
+          rm -f /etc/sssd/sssd.conf
+          systemctl stop sssd 2>/dev/null || true
+          sss_cache -E 2>/dev/null || true
+        chdir: /
+      changed_when: false

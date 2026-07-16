@@ -1,0 +1,38 @@
+id: l4-ldap-integration
+title: "Authenticate Linux against an LDAP directory with SSSD"
+description: "Configure SSSD on the client so a directory user (alice) resolves and can log in, against a 389 Directory Server — proven by getent, id and the active authselect profile."
+section: linux
+type: lab
+level: l4
+track:
+  - securiser
+  - rhcsa
+skills:
+  - sssd
+  - ldap
+  - authselect
+  - 389-ds
+  - nss-pam
+difficulty: advanced
+estimated_time: 40m
+runtime:
+  type: vm
+  default: rhel
+  snapshot_required: false
+  targets:
+    - name: rhel
+      host: alma-rhcsa-1.lab
+      label_en: "AlmaLinux 10 client (SSSD) + alma-rhcsa-2 (389-ds)"
+      label_fr: "Client AlmaLinux 10 (SSSD) + alma-rhcsa-2 (389-ds)"
+      roles:
+        server: alma-rhcsa-2.lab
+distros:
+  - rhel10
+  - almalinux10
+doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/securiser/authentifier-ldap-sssd/
+validation:
+  functional: true
+  security: true
+  persistence_after_reboot: false
+certification_tags:
+  - rhcsa

@@ -1,0 +1,34 @@
+---
+# État initial : firewalld actif, ssh autorisé (accès de gestion), mais http
+# FERMÉ. L'apprenant ouvre http de façon permanente. On ne retire jamais ssh.
+- name: Setup firewall-persist lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Ensure firewalld is installed
+      ansible.builtin.dnf:
+        name: firewalld
+        state: present
+
+    - name: Enable and start firewalld
+      ansible.builtin.systemd_service:
+        name: firewalld
+        enabled: true
+        state: started
+
+    - name: Ensure http is closed at start (clean initial state)
+      ansible.builtin.shell:
+        cmd: |
+          firewall-cmd --permanent --remove-service=http 2>/dev/null || true
+          firewall-cmd --reload
+        chdir: /
+      changed_when: false
+
+    - name: Brief the learner
+      ansible.builtin.debug:
+        msg: >-
+          Ouvre le service http à travers firewalld de façon PERMANENTE
+          (firewall-cmd --permanent --add-service=http) puis applique
+          (firewall-cmd --reload). Ne ferme jamais ssh. Vérifie avec
+          firewall-cmd --list-services et --permanent --list-services.

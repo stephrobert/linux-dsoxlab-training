@@ -1,0 +1,36 @@
+id: l4-podman-systemd-persist
+title: "Run a container as a systemd service with Quadlet (boot-persistent)"
+description: "Define a Quadlet .container unit so a container starts at boot under systemd — proven by the active service, the running container and the on-disk unit."
+section: linux
+type: lab
+level: l4
+track:
+  - securiser
+  - rhcsa
+skills:
+  - podman
+  - quadlet
+  - systemd
+  - containers
+  - persistence
+difficulty: advanced
+estimated_time: 30m
+runtime:
+  type: vm
+  default: rhel
+  snapshot_required: false
+  targets:
+    - name: rhel
+      host: alma-rhcsa-1.lab
+      label_en: "AlmaLinux 10 (podman, Quadlet, systemd)"
+      label_fr: "AlmaLinux 10 (podman, Quadlet, systemd)"
+distros:
+  - rhel10
+  - almalinux10
+doc_url: https://blog.stephane-robert.info/docs/conteneurs/moteurs-conteneurs/podman/quadlet/
+validation:
+  functional: true
+  security: false
+  persistence_after_reboot: true
+certification_tags:
+  - rhcsa

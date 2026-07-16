@@ -234,13 +234,32 @@ ci-dessous est générée à partir des vrais `lab.yaml` : lance
 | `l3-fs-readonly-recover` | Récupérer un montage en lecture seule dû à un fstab cassé | l3 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/depanner/systeme-fichiers-lecture-seule/) |
 | `l3-ssh-access-recovery` | Réparer une config sshd cassée avant qu'elle ne te verrouille dehors | l3 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/depanner/perte-acces-ssh/) |
 
+### Réseau, Sécurité & Conteneurs (l4)
+
+| Lab (id) | Titre | Niveau | Runtime | Guide compagnon |
+|---|---|---|---|---|
+| `l4-ntp-sync` | Synchroniser l'horloge avec chrony et fixer le fuseau, durablement | l4 | vm | [guide](https://blog.stephane-robert.info/docs/services/reseau/chrony/) |
+| `l4-network-static-persist` | Configurer une IPv4 statique persistante avec NetworkManager | l4 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/reseau/networkmanager/) |
+| `l4-network-troubleshoot` | Diagnostiquer et rétablir une connexion réseau tombée | l4 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/reseau/diagnostic/) |
+| `l4-firewall-persist` | Ouvrir un service firewalld de façon permanente | l4 | vm | [guide](https://blog.stephane-robert.info/docs/securiser/reseaux/firewalld/) |
+| `l4-ssh-key-auth-harden` | Mettre en place un accès SSH par clé durci pour un utilisateur de service | l4 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/ssh/cle-ssh/) |
+| `l4-podman-basic` | Lancer un conteneur détaché avec Podman | l4 | vm | [guide](https://blog.stephane-robert.info/docs/conteneurs/moteurs-conteneurs/podman/) |
+| `l4-podman-systemd-persist` | Faire tourner un conteneur en service systemd avec Quadlet (persistant au boot) | l4 | vm | [guide](https://blog.stephane-robert.info/docs/conteneurs/moteurs-conteneurs/podman/quadlet/) |
+| `l4-selinux-boolean-port` | Autoriser un service avec SELinux : booléen persistant et port étiqueté | l4 | vm | [guide](https://blog.stephane-robert.info/docs/securiser/durcissement/selinux/) |
+| `l4-selinux-context-fix` | Corriger le contexte SELinux d'un fichier, durablement | l4 | vm | [guide](https://blog.stephane-robert.info/docs/securiser/durcissement/selinux/) |
+| `l4-selinux-diagnose-avc` | Diagnostiquer un refus SELinux (AVC) et le corriger proprement | l4 | vm | [guide](https://blog.stephane-robert.info/docs/securiser/durcissement/selinux/) |
+| `l4-nat-portforward` | Mettre en place une redirection de port NAT persistante avec nftables | l4 | vm | [guide](https://blog.stephane-robert.info/docs/securiser/reseaux/nat-port-forwarding/) |
+| `l4-ldap-integration` | Authentifier Linux sur un annuaire LDAP avec SSSD | l4 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/securiser/authentifier-ldap-sssd/) |
+| `l4-reverse-proxy-lb` | Répartir la charge d'un backend web avec HAProxy | l4 | vm | [guide](https://blog.stephane-robert.info/docs/services/reseau/haproxy/) |
+| `l4-bridge-bonding` | Agréger des liens : un bond active-backup sous un bridge avec nmcli | l4 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/reseau/bond-bridge/) |
+
 ### Capstones
 
 | Lab (id) | Titre | Niveau | Runtime | Guide compagnon |
 |---|---|---|---|---|
 | `rhcsa-mock-exam` | Examen blanc RHCSA EX200 — 20 tâches sur 2 VMs | l2 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/certifications/rhcsa/) |
 
-_48 labs — table générée par `scripts/gen_catalog.py`._
+_62 labs — table générée par `scripts/gen_catalog.py`._
 <!-- LABS:END -->
 
 ## Contribuer et licence
