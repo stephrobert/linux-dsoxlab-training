@@ -1,0 +1,30 @@
+---
+# État initial : podman + skopeo installés, pas d'image de lab ni d'archive.
+# L'apprenant récupère, étiquette et sauvegarde une image. Joué par dsoxlab run.
+- name: Setup podman-images lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Ensure podman and skopeo are installed
+      ansible.builtin.dnf:
+        name:
+          - podman
+          - skopeo
+        state: present
+
+    - name: Clean slate — remove the lab image and archive
+      ansible.builtin.shell:
+        cmd: |
+          podman rmi -f localhost/rapport:v1 2>/dev/null || true
+          rm -f /root/rapport.tar
+        chdir: /
+      changed_when: false
+
+    - name: Brief the learner
+      ansible.builtin.debug:
+        msg: >-
+          Récupère l'image registry.access.redhat.com/ubi9/ubi-micro (podman pull),
+          étiquette-la en localhost/rapport:v1 (podman tag), puis sauvegarde-la
+          dans /root/rapport.tar (podman save -o). Vérifie l'archive avec
+          skopeo inspect docker-archive:/root/rapport.tar.

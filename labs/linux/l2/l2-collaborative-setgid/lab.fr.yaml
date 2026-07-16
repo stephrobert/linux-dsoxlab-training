@@ -1,0 +1,3 @@
+id: l2-collaborative-setgid
+title: "Mettre en place un répertoire collaboratif avec le bit set-GID"
+description: "Donner à un répertoire partagé le groupe devteam et le bit set-GID pour que les fichiers créés dedans héritent du groupe — prouvé par le mode du répertoire et un fichier créé par un membre."

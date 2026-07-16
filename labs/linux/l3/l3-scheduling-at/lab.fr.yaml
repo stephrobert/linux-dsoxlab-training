@@ -1,0 +1,3 @@
+id: l3-scheduling-at
+title: "Planifier une tâche ponctuelle avec at"
+description: "Mettre en file une commande à exécuter une seule fois plus tard avec at, et prouver qu'elle est planifiée — le pendant ponctuel de cron."

@@ -1,0 +1,15 @@
+---
+# Reset idempotent : remet /srv/partage en root:root 0755, retire le probe.
+- name: Cleanup collaborative-setgid lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Reset the shared directory
+      ansible.builtin.shell:
+        cmd: |
+          rm -f /srv/partage/probe
+          chown root:root /srv/partage 2>/dev/null || true
+          chmod 0755 /srv/partage 2>/dev/null || true
+        chdir: /
+      changed_when: false

@@ -1,0 +1,15 @@
+---
+# Reset idempotent : retire le timer/service de lab.
+- name: Cleanup scheduling-timers lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Remove the lab timer and service
+      ansible.builtin.shell:
+        cmd: |
+          systemctl disable --now labbackup.timer 2>/dev/null || true
+          rm -f /etc/systemd/system/labbackup.timer /etc/systemd/system/labbackup.service
+          systemctl daemon-reload
+        chdir: /
+      changed_when: false

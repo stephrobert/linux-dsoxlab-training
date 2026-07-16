@@ -1,0 +1,27 @@
+---
+# État initial : pas de timer de lab. L'apprenant crée le .service + .timer et
+# l'active. Joué par dsoxlab run.
+- name: Setup scheduling-timers lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Clean slate — remove any lab timer/service
+      ansible.builtin.shell:
+        cmd: |
+          systemctl disable --now labbackup.timer 2>/dev/null || true
+          rm -f /etc/systemd/system/labbackup.timer /etc/systemd/system/labbackup.service
+          systemctl daemon-reload
+        chdir: /
+      changed_when: false
+
+    - name: Brief the learner
+      ansible.builtin.debug:
+        msg: >-
+          Planifie une tâche RÉCURRENTE avec un timer systemd. Crée
+          /etc/systemd/system/labbackup.service (Type=oneshot, ExecStart qui fait
+          touch /run/labbackup.stamp) et /etc/systemd/system/labbackup.timer
+          (section [Timer] avec OnCalendar=, section [Install]
+          WantedBy=timers.target). Puis systemctl daemon-reload et
+          systemctl enable --now labbackup.timer. Vérifie avec
+          systemctl list-timers et systemctl status labbackup.timer.

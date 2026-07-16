@@ -1,0 +1,35 @@
+id: l3-scheduling-at
+title: "Schedule a one-shot job with at"
+description: "Queue a command to run once at a later time with at, and prove it is scheduled — the one-off counterpart to cron."
+section: linux
+type: lab
+level: l3
+track:
+  - exploiter
+skills:
+  - at
+  - atq
+  - scheduling
+difficulty: intermediate
+estimated_time: 15m
+runtime:
+  type: vm
+  default: rhel
+  snapshot_required: false
+  targets:
+    - name: rhel
+      host: alma-rhcsa-1.lab
+      label_en: "AlmaLinux 10 (at, atq)"
+      label_fr: "AlmaLinux 10 (at, atq)"
+distros:
+  - rhel10
+  - almalinux10
+  - ubuntu24.04
+doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/planification/at/
+validation:
+  functional: true
+  security: false
+  persistence_after_reboot: false
+certification_tags:
+  - rhcsa
+  - lfcs

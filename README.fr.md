@@ -216,6 +216,7 @@ ci-dessous est générée à partir des vrais `lab.yaml` : lance
 | `l2-password-policy` | Appliquer une politique d'expiration et de complexité des mots de passe | l2 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/securiser/utilisateurs-groupes/) |
 | `l2-sudo-delegation` | Déléguer des droits sudo limités via un drop-in sudoers | l2 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/securiser/sudo/) |
 | `l2-acl-posix` | Accorder un accès fin avec les ACL POSIX | l2 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/securiser/acl/) |
+| `l2-collaborative-setgid` | Mettre en place un répertoire collaboratif avec le bit set-GID | l2 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/securiser/durcissement/permissions-ownership/) |
 | `l2-package-management` | Installer, supprimer et interroger des paquets avec dnf | l2 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/maintenir/paquets/dnf/) |
 | `l2-repo-configure` | Configurer un dépôt dnf avec un fichier .repo | l2 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/maintenir/paquets/dnf/) |
 
@@ -224,10 +225,13 @@ ci-dessous est générée à partir des vrais `lab.yaml` : lance
 | Lab (id) | Titre | Niveau | Certif | Runtime | Guide compagnon |
 |---|---|---|---|---|---|
 | `l3-boot-target` | Régler la cible de démarrage systemd par défaut | l3 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/demarrage-reboot/) |
+| `l3-grub-kernel-args` | Ajouter un paramètre noyau persistant au démarrage | l3 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/securiser/durcissement/grub/) |
 | `l3-service-create-unit` | Créer et activer un service systemd | l3 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/systemd/services/) |
 | `l3-service-diagnose` | Diagnostiquer et corriger un service systemd en crash loop | l3 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/depanner/service-ne-demarre-pas/) |
 | `l3-journald-persist` | Rendre le journal systemd persistant au reboot | l3 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/systemd/journaux/) |
 | `l3-scheduling-cron` | Planifier une tâche récurrente avec cron | l3 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/planification/cron/) |
+| `l3-scheduling-at` | Planifier une tâche ponctuelle avec at | l3 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/planification/at/) |
+| `l3-scheduling-timers` | Planifier une tâche récurrente avec un timer systemd | l3 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/planification/timers/) |
 | `l3-app-constraints` | Régler les limites de ressources par utilisateur (fichiers ouverts) avec limits.d | l3 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/processus/limites-ressources/) |
 | `l3-sysctl-persist` | Durcir des paramètres noyau durablement avec sysctl.d | l3 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/securiser/durcissement/sysctl/) |
 | `l3-process-signals-priority` | Abaisser la priorité d'ordonnancement d'un service avec Nice | l3 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/utilisateurs-droits-processus/comprendre-processus/) |
@@ -246,6 +250,7 @@ ci-dessous est générée à partir des vrais `lab.yaml` : lance
 | `l4-ssh-key-auth-harden` | Mettre en place un accès SSH par clé durci pour un utilisateur de service | l4 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/ssh/cle-ssh/) |
 | `l4-podman-basic` | Lancer un conteneur détaché avec Podman | l4 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/conteneurs/moteurs-conteneurs/podman/) |
 | `l4-podman-systemd-persist` | Faire tourner un conteneur en service systemd avec Quadlet (persistant au boot) | l4 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/conteneurs/moteurs-conteneurs/podman/quadlet/) |
+| `l4-podman-images` | Gérer les images de conteneurs : pull, tag, save et inspection | l4 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/conteneurs/images-conteneurs/) |
 | `l4-selinux-boolean-port` | Autoriser un service avec SELinux : booléen persistant et port étiqueté | l4 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/securiser/durcissement/selinux/) |
 | `l4-selinux-context-fix` | Corriger le contexte SELinux d'un fichier, durablement | l4 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/securiser/durcissement/selinux/) |
 | `l4-selinux-diagnose-avc` | Diagnostiquer un refus SELinux (AVC) et le corriger proprement | l4 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/securiser/durcissement/selinux/) |
@@ -260,7 +265,7 @@ ci-dessous est générée à partir des vrais `lab.yaml` : lance
 |---|---|---|---|---|---|
 | `rhcsa-mock-exam` | Examen blanc RHCSA EX200 — 20 tâches sur 2 VMs | l2 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/certifications/rhcsa/) |
 
-_63 labs — table générée par `scripts/gen_catalog.py`._
+_68 labs — table générée par `scripts/gen_catalog.py`._
 <!-- LABS:END -->
 
 ## Contribuer et licence

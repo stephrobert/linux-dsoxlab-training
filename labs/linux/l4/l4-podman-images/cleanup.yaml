@@ -1,0 +1,14 @@
+---
+# Reset idempotent : retire l'image de lab et l'archive.
+- name: Cleanup podman-images lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Remove the lab image and archive
+      ansible.builtin.shell:
+        cmd: |
+          podman rmi -f localhost/rapport:v1 2>/dev/null || true
+          rm -f /root/rapport.tar
+        chdir: /
+      changed_when: false
