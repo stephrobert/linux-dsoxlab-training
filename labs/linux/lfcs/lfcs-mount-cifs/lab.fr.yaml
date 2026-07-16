@@ -1,0 +1,3 @@
+id: lfcs-mount-cifs
+title: "Monter un partage SMB/CIFS de façon persistante et sûre"
+description: "Un second hôte sert un partage SMB. Monte-le sur le client, rends-le persistant dans /etc/fstab avec _netdev, et garde le mot de passe hors du fstab lisible par tous grâce à un fichier credentials en 0600."

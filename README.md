@@ -1,4 +1,4 @@
-# linux-dsoxlab-training — Linux security labs (RHCSA + LFCS)
+# Linux DevSecOps Training — RHCSA + LFCS
 
 **Language:** [English](./README.md) · [Français](./README.fr.md)
 
@@ -256,13 +256,24 @@ to refresh it.
 | `l4-reverse-proxy-lb` | Load-balance a web backend with HAProxy | l4 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/services/reseau/haproxy/) |
 | `l4-bridge-bonding` | Aggregate links: an active-backup bond under a bridge with nmcli | l4 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/reseau/bond-bridge/) |
 
+### LFCS
+
+| Lab (id) | Title | Level | Certif | Runtime | Companion guide |
+|---|---|---|---|---|---|
+| `lfcs-package-apt` | Manage Debian packages with apt and dpkg | l2 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/maintenir/paquets/apt/) |
+| `lfcs-firewall-ufw` | Open a service through the firewall with ufw | l4 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/securiser/reseaux/ufw/) |
+| `lfcs-apparmor` | Manage an AppArmor profile: switch it to complain mode | l4 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/securiser/durcissement/apparmor/) |
+| `lfcs-netplan-static` | Configure a static IP and route with netplan | l4 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/reseau/netplan/) |
+| `lfcs-storage-quotas` | Enable XFS user quotas and enforce a limit | l2 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/references-complementaires/quotas/) |
+| `lfcs-mount-cifs` | Mount an SMB/CIFS share persistently and safely | l2 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/services/stockage/smb/) |
+
 ### Capstones
 
 | Lab (id) | Title | Level | Certif | Runtime | Companion guide |
 |---|---|---|---|---|---|
 | `rhcsa-mock-exam` | RHCSA EX200 mock exam — 20 tasks across 2 VMs | l2 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/certifications/rhcsa/) |
 
-_68 labs — table générée par `scripts/gen_catalog.py`._
+_74 labs — table générée par `scripts/gen_catalog.py`._
 <!-- LABS:END -->
 
 ## Contributing & license

@@ -1,0 +1,3 @@
+id: lfcs-firewall-ufw
+title: "Ouvrir un service dans le pare-feu avec ufw"
+description: "Autoriser le service http et activer ufw pour qu'il filtre au boot, sans jamais couper SSH — le pendant Debian de firewalld, prouvé par ufw status."

@@ -1,0 +1,3 @@
+id: lfcs-apparmor
+title: "Gérer un profil AppArmor : le passer en mode complain"
+description: "Passer un profil AppArmor chargé en mode complain (apprentissage) avec aa-complain et le prouver avec aa-status — le pendant Debian du contrôle d'accès obligatoire de SELinux."

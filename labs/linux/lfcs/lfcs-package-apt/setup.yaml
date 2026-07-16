@@ -1,0 +1,28 @@
+---
+# État initial (Ubuntu) : le paquet tree n'est pas installé, aucun hold.
+# L'apprenant l'installe puis le fige. Joué par dsoxlab run.
+- name: Setup lfcs-package-apt lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Clean state — remove any hold and the tree package
+      ansible.builtin.shell:
+        cmd: |
+          apt-mark unhold tree 2>/dev/null || true
+          DEBIAN_FRONTEND=noninteractive apt-get remove -y tree 2>/dev/null || true
+        chdir: /
+      changed_when: false
+
+    - name: Refresh the apt cache
+      ansible.builtin.apt:
+        update_cache: true
+
+    - name: Brief the learner
+      ansible.builtin.debug:
+        msg: >-
+          Installe le paquet « tree » avec apt (apt-get install -y tree), puis
+          FIGE-le avec un hold pour que les mises à jour l'ignorent
+          (apt-mark hold tree). Vérifie l'installation avec dpkg, le hold avec
+          apt-mark showhold, et identifie quel paquet possède /usr/bin/tree avec
+          dpkg -S.

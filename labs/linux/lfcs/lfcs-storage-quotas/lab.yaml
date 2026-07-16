@@ -1,0 +1,35 @@
+id: lfcs-storage-quotas
+title: "Enable XFS user quotas and enforce a limit"
+description: "Format a dedicated disk as XFS, mount it with user quotas enabled persistently, and enforce a block quota on a user — proven by the live quota state and the enforced limit."
+section: linux
+type: lab
+level: l2
+track:
+  - stockage
+skills:
+  - quotas
+  - xfs
+  - mount
+  - fstab
+difficulty: intermediate
+estimated_time: 30m
+runtime:
+  type: vm
+  default: ubuntu
+  snapshot_required: false
+  targets:
+    - name: ubuntu
+      host: ubuntu-lfcs-1.lab
+      label_en: "Ubuntu 24.04 (XFS quotas on /dev/vdb)"
+      label_fr: "Ubuntu 24.04 (quotas XFS sur /dev/vdb)"
+distros:
+  - ubuntu24.04
+  - debian12
+  - rhel10
+doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/references-complementaires/quotas/
+validation:
+  functional: true
+  security: false
+  persistence_after_reboot: true
+certification_tags:
+  - lfcs

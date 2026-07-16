@@ -1,0 +1,128 @@
+---
+# Lab MULTI-HÔTE (feature dsoxlab roles) :
+#   - lab_server (alma-rhcsa-2) : sert un partage SMB via Samba.
+#   - lab_target (ubuntu-lfcs-1) : client, prêt à monter (l'apprenant monte).
+# Joué par dsoxlab run (ansible-runner) sur l'inventory serveur+client.
+
+- name: SMB server — serve a share (lab_server)
+  hosts: lab_server
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Install samba
+      ansible.builtin.package:
+        name: samba
+        state: present
+      failed_when: false
+
+    - name: Create the shared directory
+      ansible.builtin.file:
+        path: /srv/share
+        state: directory
+        mode: "0777"
+
+    - name: Put a marker file in the share
+      ansible.builtin.copy:
+        dest: /srv/share/README.txt
+        content: "fichier servi par le serveur SMB\n"
+        mode: "0644"
+
+    - name: Declare the share
+      ansible.builtin.copy:
+        dest: /etc/samba/smb.conf
+        mode: "0644"
+        content: |
+          [global]
+             workgroup = LAB
+             security = user
+             map to guest = never
+          [labshare]
+             path = /srv/share
+             read only = no
+             valid users = smbuser
+      notify: Restart smb
+
+    - name: Create the SMB account (system side)
+      ansible.builtin.user:
+        name: smbuser
+        create_home: false
+        shell: /usr/sbin/nologin
+
+    - name: Set the Samba password for smbuser
+      ansible.builtin.shell:
+        cmd: |
+          set -o pipefail
+          (echo labpass123; echo labpass123) | smbpasswd -a -s smbuser
+        executable: /bin/bash
+      changed_when: false
+
+    - name: Let Samba serve content outside its default labels (SELinux)
+      ansible.builtin.command: setsebool -P samba_export_all_rw on
+      changed_when: false
+      failed_when: false
+
+    - name: Enable and start smb
+      ansible.builtin.systemd_service:
+        name: smb
+        enabled: true
+        state: started
+
+    - name: Open the firewall for Samba (best-effort)
+      ansible.builtin.shell:
+        cmd: |
+          firewall-cmd --add-service=samba --permanent
+          firewall-cmd --reload
+      failed_when: false
+      changed_when: false
+
+  handlers:
+    - name: Restart smb
+      ansible.builtin.systemd_service:
+        name: smb
+        state: restarted
+
+- name: SMB client — prepare mount point (lab_target)
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Install the CIFS client tooling
+      ansible.builtin.package:
+        name: cifs-utils
+        state: present
+      failed_when: false
+
+    - name: Record the SMB server details for the learner
+      ansible.builtin.copy:
+        dest: /root/smb-server.env
+        mode: "0600"
+        content: |
+          SERVER={{ hostvars[groups['lab_server'][0]]['ansible_host'] }}
+          SHARE=labshare
+          USERNAME=smbuser
+          PASSWORD=labpass123
+
+    - name: Clean state — no leftover mount, fstab line or credentials
+      ansible.builtin.shell:
+        cmd: |
+          umount /mnt/labshare 2>/dev/null || true
+          sed -i '\#[[:space:]]/mnt/labshare[[:space:]]#d' /etc/fstab
+          rm -f /etc/cifs-creds
+        chdir: /
+      changed_when: false
+
+    - name: Create the mount point
+      ansible.builtin.file:
+        path: /mnt/labshare
+        state: directory
+        mode: "0755"
+
+    - name: Brief the learner
+      ansible.builtin.debug:
+        msg: >-
+          Un serveur SMB sert le partage //<serveur>/labshare (adresse et
+          identifiants dans /root/smb-server.env). Monte-le sur /mnt/labshare de
+          façon PERSISTANTE (/etc/fstab, option _netdev). ATTENTION :
+          /etc/fstab est lisible par tous — le mot de passe ne doit PAS y
+          figurer. Utilise un fichier credentials en 0600 et l'option
+          credentials=<chemin>. Valide avec mount -a.

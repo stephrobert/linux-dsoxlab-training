@@ -1,0 +1,14 @@
+---
+# Reset idempotent : retire le hold et le paquet tree.
+- name: Cleanup lfcs-package-apt lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Remove hold and package
+      ansible.builtin.shell:
+        cmd: |
+          apt-mark unhold tree 2>/dev/null || true
+          DEBIAN_FRONTEND=noninteractive apt-get remove -y tree 2>/dev/null || true
+        chdir: /
+      changed_when: false

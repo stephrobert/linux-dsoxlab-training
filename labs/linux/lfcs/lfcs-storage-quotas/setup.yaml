@@ -1,0 +1,50 @@
+---
+# État initial : /dev/vdb est un disque VIERGE (5 Go), rien n'est monté sur
+# /srv/data, et l'utilisateur devops existe sans aucun quota. L'apprenant
+# formate, monte avec les quotas activés (persistant) et impose la limite.
+#
+# Les quotas exigent un vrai noyau : ce lab n'aboutit que sous KVM (le noyau
+# cloud minimal d'un conteneur n'a pas le support quota).
+- name: Setup lfcs-storage-quotas lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Install the quota tooling and XFS userspace
+      ansible.builtin.package:
+        name:
+          - quota
+          - xfsprogs
+        state: present
+      failed_when: false
+
+    - name: Clean slate — unmount, drop the fstab line, wipe the disk
+      ansible.builtin.shell:
+        cmd: |
+          umount /srv/data 2>/dev/null || true
+          sed -i '\#[[:space:]]/srv/data[[:space:]]#d' /etc/fstab
+          wipefs -a /dev/vdb 2>/dev/null || true
+        chdir: /
+      changed_when: false
+
+    - name: Create the mount point
+      ansible.builtin.file:
+        path: /srv/data
+        state: directory
+        mode: "0755"
+
+    - name: Create the user whose quota must be enforced
+      ansible.builtin.user:
+        name: devops
+        create_home: false
+        shell: /usr/sbin/nologin
+
+    - name: Brief the learner
+      ansible.builtin.debug:
+        msg: >-
+          Le disque /dev/vdb est vierge. Formate-le en XFS, monte-le sur
+          /srv/data avec les quotas UTILISATEUR activés (option uquota) et rends
+          le montage PERSISTANT dans /etc/fstab. Puis impose à l'utilisateur
+          devops un quota de blocs : 40M en souple (bsoft), 50M en dur (bhard).
+          Vérifie avec xfs_quota -x -c "state -u" /srv/data et
+          xfs_quota -x -c "report -u -b" /srv/data.

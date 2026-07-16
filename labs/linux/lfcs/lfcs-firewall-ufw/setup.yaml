@@ -1,0 +1,30 @@
+---
+# État initial (Ubuntu) : ufw installé, SSH pré-autorisé (filet de sécurité), mais
+# ufw DÉSACTIVÉ et http fermé. L'apprenant ouvre http et active ufw.
+- name: Setup lfcs-firewall-ufw lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Ensure ufw is installed
+      ansible.builtin.apt:
+        name: ufw
+        state: present
+        update_cache: true
+
+    - name: Reset ufw, pre-allow SSH (safety), keep it disabled
+      ansible.builtin.shell:
+        cmd: |
+          ufw --force reset
+          ufw allow OpenSSH
+          ufw --force disable
+        chdir: /
+      changed_when: false
+
+    - name: Brief the learner
+      ansible.builtin.debug:
+        msg: >-
+          Ouvre le service http (ufw allow http) puis ACTIVE le pare-feu
+          (ufw enable). SSH est déjà autorisé — ne le retire pas. Vérifie avec
+          ufw status : le pare-feu doit être « active », avec http (80/tcp) et
+          OpenSSH autorisés.

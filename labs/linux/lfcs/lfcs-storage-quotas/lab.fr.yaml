@@ -1,0 +1,3 @@
+id: lfcs-storage-quotas
+title: "Activer les quotas utilisateur XFS et imposer une limite"
+description: "Formater un disque dédié en XFS, le monter avec les quotas utilisateur activés de façon persistante, et imposer un quota de blocs à un utilisateur — prouvé par l'état des quotas et la limite appliquée."
