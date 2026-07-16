@@ -13,7 +13,7 @@ Configure a static IP and a static route with netplan on a dedicated interface.
 
 ## Constraints
 
-- **Never touch `enp5s0`** (management). Work on `lab0`.
+- **Never touch the management interface** — the one carrying your default route. Work on `lab0`.
 - Config file `0600`; apply with `netplan apply`.
 - Validation reads the netplan file, `ip addr` and `ip route`.
 

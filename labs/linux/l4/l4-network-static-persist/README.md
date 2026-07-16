@@ -11,7 +11,7 @@ connection profile; `ipv4.method manual` + `ipv4.addresses` sets a static
 address; the profile lands in `/etc/NetworkManager/system-connections/` so it
 survives reboot. `ip addr add` is volatile.
 
-Work on the dedicated interface `lab0`, never on `enp5s0` (management).
+Work on the dedicated interface `lab0`, never on the management interface.
 
 ## Objectives
 

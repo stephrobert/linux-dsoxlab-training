@@ -175,5 +175,5 @@
           Examen blanc LFCS : 17 tâches, 100 points, 120 minutes, 70/100 pour
           réussir, aucun indice. Le sujet est dans challenge/README.md
           (dsoxlab challenge lfcs-mock-exam). Tout doit être PERSISTANT au
-          reboot. Ne touche jamais à enp5s0 — les tâches réseau sont sur lab0.
+          reboot. Ne touche jamais à l'interface de gestion — les tâches réseau sont sur lab0.
           /dev/vdb (5 Go) est vierge.

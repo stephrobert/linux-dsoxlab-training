@@ -6,7 +6,7 @@ and brings them up — and they persist across reboots. You need a fixed address
 a static route on a dedicated interface.
 
 Your mission, on the Ubuntu VM (use the dedicated interface `lab0`, **never touch
-`enp5s0`** — that's management):
+the management interface** — the one carrying your default route):
 
 1. Create **`/etc/netplan/99-lab.yaml`** (mode `0600`) that declares, on a
    `dummy-devices` interface **`lab0`**:

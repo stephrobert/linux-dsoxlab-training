@@ -1,6 +1,6 @@
 ---
 # État initial : pas d'agrégation. L'apprenant construit le bond + bridge sur des
-# interfaces dédiées (dummy1/dummy2/bond0/br0), sans toucher enp5s0 (gestion).
+# interfaces dédiées (dummy1/dummy2/bond0/br0), sans toucher l'interface de gestion.
 - name: Setup bridge-bonding lab
   hosts: lab_target
   become: true
@@ -20,5 +20,5 @@
           (bond.options "mode=active-backup,miimon=100") avec deux esclaves sur les
           interfaces dédiées dummy1 et dummy2, puis pose un bridge « br0 » par
           dessus (bond0 devient port du bridge). Rends tout PERSISTANT (profils
-          NetworkManager). Ne touche pas à enp5s0. Vérifie avec
+          NetworkManager). Ne touche pas à l'interface de gestion. Vérifie avec
           cat /proc/net/bonding/bond0 et ls /sys/class/net/br0/brif/.

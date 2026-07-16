@@ -15,7 +15,7 @@ Les changements doivent être **persistants après reboot**. Une configuration q
 marche à l'instant mais n'a été appliquée qu'en commande live (sans persistance)
 ne compte pas.
 
-**Ne touche jamais à `enp5s0`** — c'est l'interface de gestion. Les tâches réseau
+**Ne touche jamais à l'interface de gestion** — celle qui porte ta route par défaut. Les tâches réseau
 utilisent l'interface dédiée `lab0`. Le disque `/dev/vdb` (5 Gio) est attaché et
 vierge.
 

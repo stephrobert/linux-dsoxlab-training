@@ -1,7 +1,7 @@
 ---
 # État initial : pas de connexion statique de lab. L'apprenant crée le profil
 # NetworkManager persistant. On travaille sur une interface dédiée (lab0) pour
-# ne jamais couper l'accès de gestion (enp5s0). Joué par dsoxlab run.
+# ne jamais couper l'interface de gestion. Joué par dsoxlab run.
 - name: Setup network-static-persist lab
   hosts: lab_target
   become: true
@@ -19,4 +19,4 @@
           Crée une connexion NetworkManager PERSISTANTE nommée « lab-static » sur
           l'interface dédiée lab0 (type dummy), avec l'IPv4 STATIQUE
           192.0.2.50/24 (ipv4.method manual), puis active-la. Ne touche pas à
-          enp5s0 (accès de gestion). Vérifie avec nmcli con show lab-static.
+          l'interface de gestion. Vérifie avec nmcli con show lab-static.

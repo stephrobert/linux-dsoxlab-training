@@ -13,7 +13,7 @@ and restore it.
 
 ## Constraints
 
-- **Never touch `enp5s0`** (management link). Work only on `lab1`.
+- **Never touch the management interface** (management link). Work only on `lab1`.
 - Validation reads NetworkManager state and the live interface, not history.
 
 ## Validation

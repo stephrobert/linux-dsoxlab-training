@@ -14,7 +14,7 @@ dédiée.
 
 ## Contraintes
 
-- **Ne touche jamais à `enp5s0`** (gestion). Travaille sur `lab0`.
+- **Ne touche jamais à l'interface de gestion** — celle qui porte ta route par défaut. Travaille sur `lab0`.
 - Fichier de config `0600` ; applique avec `netplan apply`.
 - On lit le fichier netplan, `ip addr` et `ip route`.
 

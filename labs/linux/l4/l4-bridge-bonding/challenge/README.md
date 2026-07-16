@@ -14,7 +14,7 @@ Aggregate two links: an `active-backup` bond with two slaves, under a bridge.
 
 ## Constraints
 
-- **Never touch `enp5s0`** (management). Work only on the dedicated interfaces.
+- **Never touch the management interface** — the one carrying your default route. Work only on the dedicated interfaces.
 - Validation reads the bonding state, the bridge ports and the on-disk profiles.
 
 ## Validation

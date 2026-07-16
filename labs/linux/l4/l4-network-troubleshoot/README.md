@@ -11,7 +11,7 @@
 `nmcli con up` activates it, and `connection.autoconnect yes` makes it return
 after a reboot. `ip addr` / `ip link` show the live interface.
 
-Work on `lab1`, never on `enp5s0` (management).
+Work on `lab1`, never on the management interface.
 
 ## Objectives
 
