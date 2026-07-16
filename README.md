@@ -272,8 +272,9 @@ to refresh it.
 | Lab (id) | Title | Level | Certif | Runtime | Companion guide |
 |---|---|---|---|---|---|
 | `rhcsa-mock-exam` | RHCSA EX200 mock exam — 20 tasks across 2 VMs | l2 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/certifications/rhcsa/) |
+| `lfcs-mock-exam` | LFCS mock exam — 17 tasks on Ubuntu 24.04 | l2 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/certifications/lfcs/) |
 
-_74 labs — table générée par `scripts/gen_catalog.py`._
+_75 labs — table générée par `scripts/gen_catalog.py`._
 <!-- LABS:END -->
 
 ## Contributing & license

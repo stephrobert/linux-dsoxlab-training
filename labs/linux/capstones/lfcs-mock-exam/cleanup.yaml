@@ -1,0 +1,35 @@
+---
+# Reset du capstone : le setup fait déjà la remise à zéro complète (il doit
+# pouvoir être rejoué sur une VM déjà utilisée). On délègue donc au setup et on
+# se contente ici de démonter/désactiver ce qui bloquerait un re-run.
+- name: Cleanup lfcs-mock-exam
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Release storage, swap and services put in place by the candidate
+      ansible.builtin.shell:
+        cmd: |
+          set +e
+          swapoff /swapfile 2>/dev/null; rm -f /swapfile
+          sed -i '\#^/swapfile#d' /etc/fstab
+          umount /data /srv/quota 2>/dev/null
+          sed -i '\#[[:space:]]/data[[:space:]]#d;\#[[:space:]]/srv/quota[[:space:]]#d' /etc/fstab
+          lvremove -f /dev/vgdata 2>/dev/null
+          vgremove -f vgdata 2>/dev/null
+          pvremove -f -y /dev/vdb1 2>/dev/null
+          wipefs -a /dev/vdb1 /dev/vdb2 /dev/vdb 2>/dev/null
+          systemctl disable --now labwatch.service labreport.timer 2>/dev/null
+          rm -f /etc/systemd/system/labwatch.service /etc/systemd/system/labreport.service /etc/systemd/system/labreport.timer
+          systemctl daemon-reload
+          crontab -u devops -r 2>/dev/null
+          apt-mark unhold tree 2>/dev/null
+          ufw --force reset 2>/dev/null; ufw allow OpenSSH 2>/dev/null
+          rm -f /etc/netplan/99-lab.yaml /etc/sudoers.d/auditors
+          netplan apply 2>/dev/null
+          sed -i '/lab-target\.lab/d' /etc/hosts
+          userdel -r auditor1 2>/dev/null
+          rm -rf /srv/shared /root/logs.tar.gz /root/errors.txt /root/access.hard /root/access.soft
+          exit 0
+        chdir: /
+      changed_when: false
