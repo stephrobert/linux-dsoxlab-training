@@ -1,0 +1,23 @@
+---
+- name: Cleanup drill-selinux
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Drop the drill's labels, contexts and booleans
+      ansible.builtin.shell:
+        cmd: |
+          set +e
+          semanage port -d -t http_port_t -p tcp 8888 2>/dev/null
+          semanage fcontext -d "/srv/web(/.*)?" 2>/dev/null
+          setsebool -P httpd_can_network_connect off 2>/dev/null
+          setenforce 1 2>/dev/null
+          sed -i 's/^SELINUX=.*/SELINUX=enforcing/' /etc/selinux/config
+          exit 0
+        chdir: /
+      changed_when: false
+
+    - name: Remove the content directory
+      ansible.builtin.file:
+        path: /srv/web
+        state: absent

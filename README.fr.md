@@ -259,7 +259,7 @@ ci-dessous est générée à partir des vrais `lab.yaml` : lance
 | `l4-reverse-proxy-lb` | Répartir la charge d'un backend web avec HAProxy | l4 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/services/reseau/haproxy/) |
 | `l4-bridge-bonding` | Agréger des liens : un bond active-backup sous un bridge avec nmcli | l4 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/reseau/bond-bridge/) |
 
-### LFCS
+### Variantes Debian/Ubuntu
 
 | Lab (id) | Titre | Niveau | Certif | Runtime | Guide compagnon |
 |---|---|---|---|---|---|
@@ -270,6 +270,19 @@ ci-dessous est générée à partir des vrais `lab.yaml` : lance
 | `lfcs-storage-quotas` | Activer les quotas utilisateur XFS et imposer une limite | l2 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/references-complementaires/quotas/) |
 | `lfcs-mount-cifs` | Monter un partage SMB/CIFS de façon persistante et sûre | l2 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/services/stockage/smb/) |
 
+### Drills — conditions d'examen
+
+| Lab (id) | Titre | Niveau | Certif | Runtime | Guide compagnon |
+|---|---|---|---|---|---|
+| `drill-essential-commands` | Drill — essential commands under exam conditions | l1 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/) |
+| `drill-users-groups` | Drill — utilisateurs, groupes et délégation en conditions d'examen | l2 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/) |
+| `drill-systemd` | Drill — unités systemd, timers et planification en conditions d'examen | l3 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/) |
+| `drill-storage` | Drill — partitions, LVM et swap en conditions d'examen | l2 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/lvm/) |
+| `drill-packages` | Drill — gestion des paquets en conditions d'examen | l2 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/) |
+| `drill-firewall` | Drill — pare-feu en conditions d'examen | l4 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/securiser/reseaux/) |
+| `drill-selinux` | Drill — SELinux en conditions d'examen | l4 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/) |
+| `drill-apparmor` | Drill — AppArmor en conditions d'examen | l4 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/securiser/durcissement/apparmor/) |
+
 ### Capstones
 
 | Lab (id) | Titre | Niveau | Certif | Runtime | Guide compagnon |
@@ -277,7 +290,7 @@ ci-dessous est générée à partir des vrais `lab.yaml` : lance
 | `rhcsa-mock-exam` | Examen blanc RHCSA EX200 — 20 tâches sur 2 VMs | l2 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/certifications/rhcsa/) |
 | `lfcs-mock-exam` | Examen blanc LFCS — 17 tâches sur Ubuntu 24.04 | l2 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/certifications/lfcs/) |
 
-_75 labs — table générée par `scripts/gen_catalog.py`._
+_83 labs — table générée par `scripts/gen_catalog.py`._
 <!-- LABS:END -->
 
 ## Contribuer et licence

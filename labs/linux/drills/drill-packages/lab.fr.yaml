@@ -1,0 +1,3 @@
+id: drill-packages
+title: "Drill — gestion des paquets en conditions d'examen"
+description: "5 tâches, 100 points, 20 minutes, aucun indice : installer un paquet, le geler contre les mises à jour, trouver quel paquet fournit un fichier, lister ce qu'un paquet a installé, et en supprimer un. L'objectif est commun à RHCSA et LFCS — seul l'outil change (dnf ou apt), et tu emploies celui de ta distribution."

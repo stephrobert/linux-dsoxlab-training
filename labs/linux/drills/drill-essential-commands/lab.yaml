@@ -1,0 +1,54 @@
+id: drill-essential-commands
+title: "Drill — essential commands under exam conditions"
+description: "5 tasks, 100 points, 20 minutes, no hints: find by size, build a frequency report, links, ownership and permissions, and split stdout from stderr. Playable on RHEL or Debian — the skills are identical."
+section: linux
+type: challenge
+level: l1
+track:
+  - fondamentaux
+skills:
+  - find
+  - tar-archives
+  - grep-regex
+  - text-processing
+  - links
+  - permissions
+  - redirections
+difficulty: intermediate
+estimated_time: 20m
+
+# Drill BI-DISTRIB : les commandes essentielles sont rigoureusement
+# identiques sur RHEL et Debian (coreutils), donc un seul drill sert les deux
+# certifications. Les tests suivent la target choisie via lab_target_host() —
+# `dsoxlab check drill-essential-commands --target ubuntu` valide vraiment
+# sur Ubuntu. Exige dsoxlab >= 0.1.7.
+runtime:
+  type: vm
+  default: rhel
+  snapshot_required: false
+  targets:
+    - name: rhel
+      host: alma-rhcsa-1.lab
+      label_en: "AlmaLinux 10 (RHCSA)"
+      label_fr: "AlmaLinux 10 (RHCSA)"
+    - name: ubuntu
+      host: ubuntu-lfcs-1.lab
+      label_en: "Ubuntu 24.04 (LFCS)"
+      label_fr: "Ubuntu 24.04 (LFCS)"
+
+distros:
+  - almalinux10
+  - rhel10
+  - ubuntu24.04
+  - debian12
+doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/
+validation:
+  functional: true
+  security: false
+  persistence_after_reboot: false
+certification_tags:
+  - rhcsa
+  - lfcs
+
+# Drill = conditions d'examen : pas de hints.yaml, score sur 100.
+exam_passing_score: 70

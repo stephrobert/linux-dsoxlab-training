@@ -1,0 +1,53 @@
+id: drill-systemd
+title: "Drill — systemd units, timers and scheduling under exam conditions"
+description: "5 tasks, 100 points, 25 minutes, no hints: write a service unit with a restart policy, schedule a weekly timer, add a cron job, fix the default boot target, and mask a service for good. Playable on RHEL or Debian — systemd is systemd."
+section: linux
+type: challenge
+level: l3
+track:
+  - exploiter
+skills:
+  - systemd-units
+  - systemd-timers
+  - cron
+  - boot-target
+  - service-masking
+difficulty: intermediate
+estimated_time: 25m
+
+# Drill BI-DISTRIB : systemd se comporte à l'identique sur RHEL et Debian.
+# Deux pièges sondés sur les deux VMs et neutralisés :
+#   - le SERVICE cron s'appelle crond (alma) ou cron (ubuntu) : on ne teste
+#     donc que la crontab elle-même, jamais le nom du service ;
+#   - get-default vaut multi-user (alma) mais graphical (ubuntu) par défaut :
+#     le setup force graphical sur les DEUX, sinon la tâche serait déjà faite
+#     sur alma et le candidat gagnerait 20 points sans rien toucher.
+runtime:
+  type: vm
+  default: rhel
+  snapshot_required: false
+  targets:
+    - name: rhel
+      host: alma-rhcsa-1.lab
+      label_en: "AlmaLinux 10 (RHCSA)"
+      label_fr: "AlmaLinux 10 (RHCSA)"
+    - name: ubuntu
+      host: ubuntu-lfcs-1.lab
+      label_en: "Ubuntu 24.04 (LFCS)"
+      label_fr: "Ubuntu 24.04 (LFCS)"
+
+distros:
+  - almalinux10
+  - rhel10
+  - ubuntu24.04
+  - debian12
+doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/
+validation:
+  functional: true
+  security: false
+  persistence_after_reboot: true
+certification_tags:
+  - rhcsa
+  - lfcs
+
+exam_passing_score: 70

@@ -1,0 +1,3 @@
+id: drill-systemd
+title: "Drill — unités systemd, timers et planification en conditions d'examen"
+description: "5 tâches, 100 points, 25 minutes, aucun indice : écrire une unité de service avec politique de redémarrage, planifier un timer hebdomadaire, ajouter une tâche cron, corriger la cible de démarrage, et masquer un service pour de bon. Jouable sur RHEL ou Debian — systemd est systemd."

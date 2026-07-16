@@ -1,0 +1,93 @@
+---
+# Drill BI-DISTRIB — état initial.
+- name: Drill systemd — givens
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    # Le paquet cron n'a pas le même nom selon la distrib. On tente les deux
+    # sans échouer : celui qui n'existe pas est simplement ignoré. Ça évite un
+    # gather_facts juste pour ça.
+    - name: cron tooling (cron on Debian, cronie on RHEL)
+      ansible.builtin.package:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - cron
+        - cronie
+      failed_when: false
+
+    - name: The account that must carry the cron job
+      ansible.builtin.user:
+        name: opsuser
+        shell: /bin/bash
+        create_home: true
+
+    - name: The scripts the units must run
+      ansible.builtin.copy:
+        dest: "{{ item.path }}"
+        mode: "0755"
+        content: "{{ item.body }}"
+      loop:
+        - path: /usr/local/bin/labapi.sh
+          body: |
+            #!/bin/bash
+            # Script fourni par le sujet — ne pas modifier.
+            sleep infinity
+        - path: /usr/local/bin/labclean.sh
+          body: |
+            #!/bin/bash
+            # Script fourni par le sujet — ne pas modifier.
+            echo "clean $(date -Is)" >> /var/log/labclean.log
+
+    # Tâche 5 — le service à masquer existe et n'est PAS masqué. Il vit dans
+    # le répertoire VENDOR (/usr/lib), comme une unité livrée par un paquet :
+    # `systemctl mask` pose un lien vers /dev/null dans /etc/systemd/system,
+    # qui l'occulte. Une unité posée directement dans /etc ne PEUT PAS être
+    # masquée — le lien s'y heurterait au fichier.
+    - name: Task 5 — the service that must end up masked (vendor-provided)
+      ansible.builtin.copy:
+        dest: /usr/lib/systemd/system/labdanger.service
+        mode: "0644"
+        content: |
+          [Unit]
+          Description=Service dangereux qui ne doit jamais demarrer
+
+          [Service]
+          Type=oneshot
+          ExecStart=/bin/true
+
+          [Install]
+          WantedBy=multi-user.target
+
+    - name: Clean slate — remove what the candidate must write
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - /etc/systemd/system/labapi.service
+        - /etc/systemd/system/labclean.service
+        - /etc/systemd/system/labclean.timer
+
+    - name: Clean slate — units, mask, crontab, and NORMALISE the boot target
+      ansible.builtin.shell:
+        cmd: |
+          set +e
+          systemctl disable --now labapi.service labclean.timer 2>/dev/null
+          systemctl unmask labdanger.service 2>/dev/null
+          crontab -u opsuser -r 2>/dev/null
+          systemctl daemon-reload
+          # alma démarre en multi-user, ubuntu en graphical : on force la même
+          # cible de départ sur les deux, sinon la tâche 4 serait offerte sur
+          # l'une des deux distribs.
+          systemctl set-default graphical.target
+          exit 0
+        chdir: /
+      changed_when: false
+
+    - name: Brief the candidate
+      ansible.builtin.debug:
+        msg: >-
+          Drill : 5 tâches, 100 points, 25 minutes, aucun indice. Sujet :
+          dsoxlab challenge drill-systemd. Jouable sur les deux distribs :
+          dsoxlab check drill-systemd --target ubuntu.

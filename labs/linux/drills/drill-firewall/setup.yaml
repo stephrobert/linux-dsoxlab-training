@@ -1,0 +1,63 @@
+---
+# Drill BI-DISTRIB à outil variable — état initial.
+- name: Drill firewall — givens
+  hosts: lab_target
+  become: true
+  gather_facts: true
+  tasks:
+    # Sondé : firewalld est absent de l'image alma. C'est de l'outillage, pas
+    # la tâche : sans lui le drill serait infaisable.
+    - name: RHEL — provide firewalld (absent from the image)
+      ansible.builtin.package:
+        name: firewalld
+        state: present
+      when: ansible_os_family == "RedHat"
+      failed_when: false
+
+    - name: Debian — provide ufw
+      ansible.builtin.package:
+        name: ufw
+        state: present
+      when: ansible_os_family == "Debian"
+      failed_when: false
+
+    # Remise à zéro : pare-feu ARRÊTÉ et sans règles de lab. SSH est
+    # pré-autorisé — si le candidat active le pare-feu sans y penser, il ne
+    # doit pas se verrouiller dehors et perdre les tâches restantes.
+    - name: Debian — reset ufw, keep SSH reachable
+      ansible.builtin.shell:
+        cmd: |
+          set +e
+          ufw --force reset
+          ufw allow OpenSSH
+          ufw --force disable
+          exit 0
+        chdir: /
+      when: ansible_os_family == "Debian"
+      changed_when: false
+
+    - name: RHEL — reset firewalld rules and stop it
+      ansible.builtin.shell:
+        cmd: |
+          set +e
+          systemctl start firewalld 2>/dev/null
+          firewall-cmd --permanent --remove-port=80/tcp 2>/dev/null
+          firewall-cmd --permanent --remove-port=8443/tcp 2>/dev/null
+          firewall-cmd --permanent --remove-service=http 2>/dev/null
+          firewall-cmd --permanent --remove-rich-rule='rule port port=23 protocol=tcp reject' 2>/dev/null
+          firewall-cmd --permanent --add-service=ssh 2>/dev/null
+          firewall-cmd --reload 2>/dev/null
+          systemctl stop firewalld 2>/dev/null
+          systemctl disable firewalld 2>/dev/null
+          exit 0
+        chdir: /
+      when: ansible_os_family == "RedHat"
+      changed_when: false
+
+    - name: Brief the candidate
+      ansible.builtin.debug:
+        msg: >-
+          Drill : 5 tâches, 100 points, 20 minutes, aucun indice. Le sujet ne
+          nomme pas l'outil : emploie celui de ta distribution. ATTENTION :
+          garde SSH ouvert, sinon tu perds la main. Sujet :
+          dsoxlab challenge drill-firewall.

@@ -1,0 +1,77 @@
+---
+# Drill BI-DISTRIB à outil variable — état initial.
+# gather_facts: true est nécessaire ici (contrairement aux autres drills) :
+# l'outillage à installer dépend de la famille de distribution.
+- name: Drill packages — givens
+  hosts: lab_target
+  become: true
+  gather_facts: true
+  tasks:
+    # Sondé : l'image alma n'embarque PAS le plugin versionlock, sans lequel
+    # la tâche « geler un paquet » serait infaisable. On le fournit, c'est de
+    # l'outillage, pas la tâche.
+    - name: RHEL — provide the versionlock plugin (absent from the image)
+      ansible.builtin.package:
+        name: python3-dnf-plugin-versionlock
+        state: present
+      when: ansible_os_family == "RedHat"
+      failed_when: false
+
+    - name: Task 5 — a package the candidate must remove
+      ansible.builtin.package:
+        name: nano
+        state: present
+      failed_when: false
+
+    # ORDRE CRITIQUE : dégeler AVANT de supprimer. Un paquet gelé ne peut pas
+    # être retiré (apt refuse de toucher un held package), et d'autres labs
+    # gèlent tree — lfcs-package-apt, ou un run précédent de ce drill. Si on
+    # supprime d'abord, l'échec est silencieux (failed_when: false) et tree
+    # reste installé : le candidat gagnerait la tâche 1 sans rien faire.
+    - name: Clean slate — release any leftover freeze FIRST (Debian)
+      ansible.builtin.command: apt-mark unhold tree
+      when: ansible_os_family == "Debian"
+      changed_when: false
+      failed_when: false
+
+    - name: Clean slate — release any leftover freeze FIRST (RHEL)
+      ansible.builtin.command: dnf versionlock delete tree
+      when: ansible_os_family == "RedHat"
+      changed_when: false
+      failed_when: false
+
+    - name: Clean slate — only now can the package be removed
+      ansible.builtin.package:
+        name: tree
+        state: absent
+      failed_when: false
+
+    - name: Clean slate — prove tree really is gone (a silent failure here
+        would hand the candidate task 1 for free)
+      ansible.builtin.command: rpm -q tree
+      register: _tree_check
+      changed_when: false
+      failed_when: _tree_check.rc == 0
+      when: ansible_os_family == "RedHat"
+
+    - name: Clean slate — prove tree really is gone (Debian)
+      ansible.builtin.shell:
+        cmd: "! dpkg -s tree >/dev/null 2>&1"
+        executable: /bin/bash
+      changed_when: false
+      when: ansible_os_family == "Debian"
+
+    - name: Clean slate — the answers the candidate must write
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - /root/owner.txt
+        - /root/tree-files.txt
+
+    - name: Brief the candidate
+      ansible.builtin.debug:
+        msg: >-
+          Drill : 5 tâches, 100 points, 20 minutes, aucun indice. Le sujet ne
+          nomme pas l'outil : emploie celui de ta distribution (dnf ou apt).
+          Sujet : dsoxlab challenge drill-packages.

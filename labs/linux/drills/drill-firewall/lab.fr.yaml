@@ -1,0 +1,3 @@
+id: drill-firewall
+title: "Drill — pare-feu en conditions d'examen"
+description: "5 tâches, 100 points, 20 minutes, aucun indice : activer le pare-feu, ouvrir deux ports qui survivent à un rechargement, garder SSH vivant, et rejeter explicitement un port. L'objectif est commun à RHCSA et LFCS — seul l'outil change (firewalld ou ufw)."

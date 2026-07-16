@@ -1,0 +1,31 @@
+---
+- name: Cleanup drill-firewall
+  hosts: lab_target
+  become: true
+  gather_facts: true
+  tasks:
+    - name: Debian — reset ufw and leave it off
+      ansible.builtin.shell:
+        cmd: |
+          set +e
+          ufw --force reset
+          ufw allow OpenSSH
+          ufw --force disable
+          exit 0
+        chdir: /
+      when: ansible_os_family == "Debian"
+      changed_when: false
+
+    - name: RHEL — drop the lab rules and stop firewalld
+      ansible.builtin.shell:
+        cmd: |
+          set +e
+          firewall-cmd --permanent --remove-port=80/tcp 2>/dev/null
+          firewall-cmd --permanent --remove-port=8443/tcp 2>/dev/null
+          firewall-cmd --permanent --remove-rich-rule='rule port port=23 protocol=tcp reject' 2>/dev/null
+          firewall-cmd --reload 2>/dev/null
+          systemctl disable --now firewalld 2>/dev/null
+          exit 0
+        chdir: /
+      when: ansible_os_family == "RedHat"
+      changed_when: false

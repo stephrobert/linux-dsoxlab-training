@@ -1,0 +1,40 @@
+---
+- name: Cleanup drill-systemd
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Stop and unmask everything the drill created
+      ansible.builtin.shell:
+        cmd: |
+          set +e
+          systemctl disable --now labapi.service labclean.timer 2>/dev/null
+          systemctl unmask labdanger.service 2>/dev/null
+          crontab -u opsuser -r 2>/dev/null
+          systemctl set-default multi-user.target 2>/dev/null
+          exit 0
+        chdir: /
+      changed_when: false
+
+    - name: Remove the units and scripts
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - /etc/systemd/system/labapi.service
+        - /etc/systemd/system/labclean.service
+        - /etc/systemd/system/labclean.timer
+        - /usr/lib/systemd/system/labdanger.service
+        - /usr/local/bin/labapi.sh
+        - /usr/local/bin/labclean.sh
+        - /var/log/labclean.log
+
+    - name: Reload systemd after removing the units
+      ansible.builtin.systemd_service:
+        daemon_reload: true
+
+    - name: Remove the drill account
+      ansible.builtin.user:
+        name: opsuser
+        state: absent
+        remove: true

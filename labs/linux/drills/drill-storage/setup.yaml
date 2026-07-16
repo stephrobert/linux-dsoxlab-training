@@ -1,0 +1,74 @@
+---
+# Drill BI-DISTRIB — état initial : /dev/vdb VIERGE.
+- name: Drill storage — givens
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: LVM and XFS tooling (same package names on both distros)
+      ansible.builtin.package:
+        name:
+          - lvm2
+          - xfsprogs
+          - parted
+        state: present
+      failed_when: false
+
+    # Remise à blanc complète : le drill doit être rejouable, et d'autres labs
+    # (capstones, quotas) utilisent le même /dev/vdb.
+    # /dev/vdb est PARTAGÉ avec d'autres labs (capstones, quotas). On ne libère
+    # donc pas « ce que ce drill a créé » mais TOUT ce qui occupe le disque, et
+    # dans cet ordre strict : démonter → désactiver le mapping → effacer.
+    #
+    # L'ordre n'est pas cosmétique : effacer les métadonnées LVM (qui vivent au
+    # début du PV, dans les premiers Mo de vdb) pendant qu'un LV est encore
+    # actif laisse le noyau avec un volume monté dont les métadonnées ont
+    # disparu — pvs devient muet et le disque est inutilisable.
+    - name: Clean slate — free the whole disk, whoever left something on it
+      ansible.builtin.shell:
+        cmd: |
+          set +e
+          swapoff /swapfile 2>/dev/null; rm -f /swapfile
+          sed -i '\#^/swapfile#d' /etc/fstab
+
+          # 1. Démonter tout point de montage de l'arbre vdb, LVM compris.
+          for mp in $(lsblk -nro MOUNTPOINTS /dev/vdb 2>/dev/null \
+                        | tr ',' '\n' | grep -v '^$'); do
+            umount -f "$mp" 2>/dev/null
+            sed -i "\#[[:space:]]${mp}[[:space:]]#d" /etc/fstab
+          done
+
+          # 2. Démonter/nettoyer les VG assis sur vdb, puis retirer les
+          #    mappings device-mapper qui en restent (ciblés sur l'arbre vdb :
+          #    on ne touche jamais à un dm hors de ce disque).
+          for vg in $(vgs --noheadings -o vg_name 2>/dev/null | tr -d ' ' | sort -u); do
+            vgchange -an "$vg" 2>/dev/null
+            vgremove -f "$vg" 2>/dev/null
+          done
+          for dm in $(lsblk -nro NAME,TYPE /dev/vdb 2>/dev/null \
+                        | awk '$2=="lvm" {print $1}'); do
+            dmsetup remove "$dm" 2>/dev/null
+          done
+          pvremove -f -y /dev/vdb1 /dev/vdb2 2>/dev/null
+
+          # 3. Le disque est libre : on peut effacer sans rien corrompre.
+          wipefs -a /dev/vdb1 /dev/vdb2 /dev/vdb 2>/dev/null
+          dd if=/dev/zero of=/dev/vdb bs=1M count=10 status=none 2>/dev/null
+          partprobe /dev/vdb 2>/dev/null
+          udevadm settle 2>/dev/null
+          exit 0
+        chdir: /
+      changed_when: false
+
+    - name: The mount point the candidate will use
+      ansible.builtin.file:
+        path: /mnt/data
+        state: directory
+        mode: "0755"
+
+    - name: Brief the candidate
+      ansible.builtin.debug:
+        msg: >-
+          Drill : 5 tâches, 100 points, 25 minutes, aucun indice. /dev/vdb est
+          VIERGE. Sujet : dsoxlab challenge drill-storage. Jouable sur les deux
+          distribs : dsoxlab check drill-storage --target ubuntu.

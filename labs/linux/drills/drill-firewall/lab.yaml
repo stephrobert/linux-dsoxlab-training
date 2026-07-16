@@ -1,0 +1,54 @@
+id: drill-firewall
+title: "Drill — firewall under exam conditions"
+description: "5 tasks, 100 points, 20 minutes, no hints: bring the firewall up, open two ports so they survive a reload, keep SSH alive, and explicitly reject a port. The objective is shared by RHCSA and LFCS — only the tool changes (firewalld or ufw)."
+section: linux
+type: challenge
+level: l4
+track:
+  - securiser
+skills:
+  - firewall
+  - firewalld
+  - ufw
+  - persistence
+difficulty: intermediate
+estimated_time: 20m
+
+# Drill BI-DISTRIB à outil variable : firewalld sur RHEL, ufw sur Debian.
+# Le sujet ne nomme pas l'outil — l'objectif est le même pour les deux certifs.
+#
+# Sondé : firewalld est ABSENT de l'image alma, le setup l'installe.
+#
+# La persistance n'est pas une tâche séparée (elle serait offerte sur ufw, qui
+# persiste par défaut) : les tests RECHARGENT le pare-feu avant de vérifier.
+# Une règle firewalld posée sans --permanent disparaît alors — c'est le piège
+# RHCSA, intégré au lieu d'être annoncé.
+runtime:
+  type: vm
+  default: rhel
+  snapshot_required: false
+  targets:
+    - name: rhel
+      host: alma-rhcsa-1.lab
+      label_en: "AlmaLinux 10 — firewalld (RHCSA)"
+      label_fr: "AlmaLinux 10 — firewalld (RHCSA)"
+    - name: ubuntu
+      host: ubuntu-lfcs-1.lab
+      label_en: "Ubuntu 24.04 — ufw (LFCS)"
+      label_fr: "Ubuntu 24.04 — ufw (LFCS)"
+
+distros:
+  - almalinux10
+  - rhel10
+  - ubuntu24.04
+  - debian12
+doc_url: https://blog.stephane-robert.info/docs/securiser/reseaux/
+validation:
+  functional: true
+  security: true
+  persistence_after_reboot: true
+certification_tags:
+  - rhcsa
+  - lfcs
+
+exam_passing_score: 70

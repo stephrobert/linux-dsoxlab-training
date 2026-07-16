@@ -1,0 +1,52 @@
+id: drill-users-groups
+title: "Drill — users, groups and delegation under exam conditions"
+description: "5 tasks, 100 points, 20 minutes, no hints: create an account to exact specs, enforce password aging, build a collaborative directory, delegate sudo narrowly, and lock a departing account. Playable on RHEL or Debian — user management is identical."
+section: linux
+type: challenge
+level: l2
+track:
+  - administration
+skills:
+  - users-groups
+  - password-policy
+  - sudo-delegation
+  - permissions
+  - account-lifecycle
+difficulty: intermediate
+estimated_time: 20m
+
+# Drill BI-DISTRIB : useradd/usermod/chage/sudoers se comportent à l'identique
+# sur RHEL et Debian (sondé sur les deux VMs : mêmes chemins nologin, même
+# champ passwd -S, même format chage -l). La règle sudo porte sur un script de
+# /usr/local/bin et non sur un binaire système, car les chemins de ceux-ci
+# diffèrent (journalctl = /bin/... sur alma, /usr/bin/... sur ubuntu) : une
+# règle sudo en chemin absolu ne serait pas portable.
+runtime:
+  type: vm
+  default: rhel
+  snapshot_required: false
+  targets:
+    - name: rhel
+      host: alma-rhcsa-1.lab
+      label_en: "AlmaLinux 10 (RHCSA)"
+      label_fr: "AlmaLinux 10 (RHCSA)"
+    - name: ubuntu
+      host: ubuntu-lfcs-1.lab
+      label_en: "Ubuntu 24.04 (LFCS)"
+      label_fr: "Ubuntu 24.04 (LFCS)"
+
+distros:
+  - almalinux10
+  - rhel10
+  - ubuntu24.04
+  - debian12
+doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/
+validation:
+  functional: true
+  security: true
+  persistence_after_reboot: false
+certification_tags:
+  - rhcsa
+  - lfcs
+
+exam_passing_score: 70

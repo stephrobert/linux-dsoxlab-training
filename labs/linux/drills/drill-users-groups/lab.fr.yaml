@@ -1,0 +1,3 @@
+id: drill-users-groups
+title: "Drill — utilisateurs, groupes et délégation en conditions d'examen"
+description: "5 tâches, 100 points, 20 minutes, aucun indice : créer un compte aux specs exactes, imposer le vieillissement du mot de passe, monter un répertoire collaboratif, déléguer sudo au plus juste, et verrouiller un compte qui part. Jouable sur RHEL ou Debian — la gestion des comptes est identique."
