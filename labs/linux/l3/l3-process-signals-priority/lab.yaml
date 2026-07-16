@@ -5,8 +5,7 @@ section: linux
 type: lab
 level: l3
 track:
-  - maintenir
-  - lfcs
+  - exploiter
 skills:
   - nice
   - renice

@@ -24,8 +24,11 @@ skills:
 - output-redirection
 doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/prompt-terminal/
 track:
-- fundamentals
+- fondamentaux
 validation:
   functional: true
   security: false
   persistence_after_reboot: false
+certification_tags:
+- rhcsa
+- lfcs

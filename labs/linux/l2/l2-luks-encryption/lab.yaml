@@ -5,8 +5,7 @@ section: linux
 type: lab
 level: l2
 track:
-  - securiser
-  - rhcsa
+  - stockage
 skills:
   - luks
   - cryptsetup

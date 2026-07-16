@@ -5,8 +5,7 @@ section: linux
 type: lab
 level: l4
 track:
-  - securiser
-  - rhcsa
+  - conteneurs
 skills:
   - podman
   - containers

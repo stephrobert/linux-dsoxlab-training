@@ -22,8 +22,8 @@ START, END = "<!-- LABS:START -->", "<!-- LABS:END -->"
 
 # En-têtes de colonnes par langue.
 HEAD = {
-    "en": ("Lab (id)", "Title", "Level", "Runtime", "Companion guide"),
-    "fr": ("Lab (id)", "Titre", "Niveau", "Runtime", "Guide compagnon"),
+    "en": ("Lab (id)", "Title", "Level", "Certif", "Runtime", "Companion guide"),
+    "fr": ("Lab (id)", "Titre", "Niveau", "Certif", "Runtime", "Guide compagnon"),
 }
 SECTION_LABEL = {"en": "Section", "fr": "Section"}
 
@@ -56,6 +56,14 @@ def _rows_by_section() -> list[tuple[str, str, list[dict]]]:
     return out
 
 
+def _certif_cell(lab: dict) -> str:
+    """Rend les certifications visées (certification_tags), ex. « RHCSA · LFCS »."""
+    tags = lab.get("certification_tags") or []
+    if not tags:
+        return "—"
+    return " · ".join(str(t).upper() for t in tags)
+
+
 def _guide_cell(lab: dict, lang: str) -> str:
     url = lab.get("doc_url", "")
     if not url:
@@ -75,10 +83,11 @@ def _table(lang: str) -> str:
         for lab in labs:
             title = lab["_title_fr"] if lang == "fr" else lab.get("title", "")
             lines.append(
-                "| `{id}` | {title} | {level} | {rt} | {guide} |".format(
+                "| `{id}` | {title} | {level} | {certif} | {rt} | {guide} |".format(
                     id=lab.get("id", ""),
                     title=title,
                     level=lab.get("level", ""),
+                    certif=_certif_cell(lab),
                     rt=_runtime_label(lab),
                     guide=_guide_cell(lab, lang),
                 )

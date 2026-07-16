@@ -5,8 +5,8 @@ section: linux
 type: lab
 level: l4
 track:
-  - securiser
-  - rhcsa
+  - reseau
+  - depanner
 skills:
   - nmcli
   - ip

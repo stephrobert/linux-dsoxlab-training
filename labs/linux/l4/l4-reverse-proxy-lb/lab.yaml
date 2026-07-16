@@ -5,8 +5,7 @@ section: linux
 type: lab
 level: l4
 track:
-  - securiser
-  - rhce
+  - reseau
 skills:
   - haproxy
   - reverse-proxy
@@ -33,4 +32,5 @@ validation:
   functional: true
   security: false
   persistence_after_reboot: true
-certification_tags: []
+certification_tags:
+  - lfcs

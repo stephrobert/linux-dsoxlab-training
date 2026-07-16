@@ -28,4 +28,5 @@ validation:
   functional: true
   security: true
   persistence_after_reboot: false
-certification_tags: []
+certification_tags:
+  - lfcs

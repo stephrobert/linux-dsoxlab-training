@@ -24,7 +24,7 @@ distros:
   - ubuntu24.04
   - rhel10
   - almalinux10
-doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/scripts-bash/premier-script/
+doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/efficace-shell/premier-script/
 validation:
   functional: true
   security: false

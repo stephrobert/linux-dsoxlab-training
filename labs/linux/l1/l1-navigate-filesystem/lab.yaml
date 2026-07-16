@@ -21,8 +21,11 @@ skills:
 - shell-commands
 doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/se-reperer-fichiers/navigation-fichiers/
 track:
-- fundamentals
+- fondamentaux
 validation:
   functional: true
   security: false
   persistence_after_reboot: false
+certification_tags:
+- rhcsa
+- lfcs
