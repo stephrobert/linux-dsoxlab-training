@@ -1,0 +1,44 @@
+---
+# Reset idempotent multi-hôte : démonte côté client, retire l'entrée fstab et
+# les credentials, et retire le partage côté serveur. Joué par dsoxlab clean.
+- name: SMB client cleanup (lab_target)
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Unmount /mnt/labshare if mounted
+      ansible.builtin.command: umount /mnt/labshare
+      changed_when: false
+      failed_when: false
+
+    - name: Remove the /mnt/labshare fstab line
+      ansible.builtin.lineinfile:
+        path: /etc/fstab
+        regexp: '\s/mnt/labshare\s'
+        state: absent
+
+    - name: Remove the mount point, credentials and server info
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - /mnt/labshare
+        - /root/smb-server.env
+        - /etc/cifs-creds
+
+- name: SMB server cleanup (lab_server)
+  hosts: lab_server
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Stop serving the share
+      ansible.builtin.systemd_service:
+        name: smb
+        state: stopped
+        enabled: false
+      failed_when: false
+
+    - name: Drop the shared content
+      ansible.builtin.file:
+        path: /srv/share
+        state: absent

@@ -1,0 +1,14 @@
+---
+# Reset idempotent : retire la config netplan de lab et réapplique.
+- name: Cleanup lfcs-netplan-static lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Remove the lab netplan file
+      ansible.builtin.shell:
+        cmd: |
+          rm -f /etc/netplan/99-lab.yaml
+          netplan apply 2>/dev/null || true
+        chdir: /
+      changed_when: false

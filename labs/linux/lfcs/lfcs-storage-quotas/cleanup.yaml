@@ -1,0 +1,34 @@
+---
+# Reset idempotent : démonte /srv/data, retire l'entrée fstab, efface la
+# signature du disque et supprime l'utilisateur. Joué par dsoxlab clean.
+- name: Cleanup lfcs-storage-quotas lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Unmount /srv/data if mounted
+      ansible.builtin.command: umount /srv/data
+      changed_when: false
+      failed_when: false
+
+    - name: Remove the /srv/data fstab line
+      ansible.builtin.lineinfile:
+        path: /etc/fstab
+        regexp: '\s/srv/data\s'
+        state: absent
+
+    - name: Wipe the disk signature so the lab is replayable from scratch
+      ansible.builtin.command: wipefs -a /dev/vdb
+      changed_when: false
+      failed_when: false
+
+    - name: Remove the mount point and the quota user
+      ansible.builtin.file:
+        path: /srv/data
+        state: absent
+
+    - name: Remove the devops user
+      ansible.builtin.user:
+        name: devops
+        state: absent
+        remove: false

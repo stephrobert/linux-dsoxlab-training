@@ -54,6 +54,10 @@ infra:
       ram_mb: 1536
       vcpu: 1
       disk_gb: 15
+      # Disque additionnel pour lfcs-storage-quotas (formatage + montage
+      # avec usrquota/grpquota + quotas utilisateur). Apparaît comme
+      # /dev/vdb (kvm/incus). Les quotas exigent un vrai noyau → KVM.
+      extra_disk_gb: 5
 
   # Overrides spécifiques par provider (lus par le template Terraform
   # correspondant côté dsoxlab/templates/terraform/<provider>/).
@@ -188,7 +192,13 @@ sections:
   - id: lfcs
     title: "LFCS"
     description: "Préparation certification Linux Foundation — multi-distrib (RHEL/Debian)."
-    labs: []
+    labs:
+      - linux/lfcs/lfcs-package-apt
+      - linux/lfcs/lfcs-firewall-ufw
+      - linux/lfcs/lfcs-apparmor
+      - linux/lfcs/lfcs-netplan-static
+      - linux/lfcs/lfcs-storage-quotas
+      - linux/lfcs/lfcs-mount-cifs
 
   - id: capstones
     title: "Capstones"

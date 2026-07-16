@@ -1,0 +1,12 @@
+---
+# Reset idempotent : remet le profil ping en enforce.
+- name: Cleanup lfcs-apparmor lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Re-enforce the ping profile
+      ansible.builtin.shell:
+        cmd: aa-enforce /etc/apparmor.d/bin.ping 2>/dev/null || true
+        chdir: /
+      changed_when: false

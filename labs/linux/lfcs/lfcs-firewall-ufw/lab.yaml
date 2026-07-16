@@ -1,0 +1,33 @@
+id: lfcs-firewall-ufw
+title: "Open a service through the firewall with ufw"
+description: "Allow the http service and enable ufw so it filters at boot, without ever locking out SSH — the Debian firewall counterpart to firewalld, proven by ufw status."
+section: linux
+type: lab
+level: l4
+track:
+  - securiser
+skills:
+  - ufw
+  - firewall
+  - ubuntu
+difficulty: intermediate
+estimated_time: 20m
+runtime:
+  type: vm
+  default: ubuntu
+  snapshot_required: false
+  targets:
+    - name: ubuntu
+      host: ubuntu-lfcs-1.lab
+      label_en: "Ubuntu 24.04 (ufw)"
+      label_fr: "Ubuntu 24.04 (ufw)"
+distros:
+  - ubuntu24.04
+  - debian12
+doc_url: https://blog.stephane-robert.info/docs/securiser/reseaux/ufw/
+validation:
+  functional: true
+  security: true
+  persistence_after_reboot: true
+certification_tags:
+  - lfcs

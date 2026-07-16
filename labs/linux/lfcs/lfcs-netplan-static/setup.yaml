@@ -1,0 +1,24 @@
+---
+# État initial (Ubuntu) : pas de config netplan de lab. L'apprenant en crée une
+# (interface dédiée lab0) pour ne jamais couper l'accès de gestion (enp5s0).
+- name: Setup lfcs-netplan-static lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Clean slate — remove any prior lab netplan file
+      ansible.builtin.shell:
+        cmd: |
+          rm -f /etc/netplan/99-lab.yaml
+          netplan apply 2>/dev/null || true
+        chdir: /
+      changed_when: false
+
+    - name: Brief the learner
+      ansible.builtin.debug:
+        msg: >-
+          Crée /etc/netplan/99-lab.yaml (mode 0600) qui déclare, sur une interface
+          DÉDIÉE lab0 (dummy-devices), l'IPv4 STATIQUE 192.0.2.50/24 ET une route
+          statique vers 198.51.100.0/24 via 192.0.2.1. Applique avec netplan apply.
+          Ne touche pas à enp5s0 (gestion). Vérifie avec ip addr show lab0 et
+          ip route.

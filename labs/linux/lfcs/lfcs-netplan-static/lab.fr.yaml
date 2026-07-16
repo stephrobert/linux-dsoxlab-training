@@ -1,0 +1,3 @@
+id: lfcs-netplan-static
+title: "Configurer une IP statique et une route avec netplan"
+description: "Déclarer une adresse IPv4 statique et une route statique dans un fichier netplan et l'appliquer sur une interface dédiée — la configuration réseau Debian/Ubuntu, prouvée par l'adresse et la route actives."

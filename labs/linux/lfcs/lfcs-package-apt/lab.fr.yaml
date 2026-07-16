@@ -1,0 +1,3 @@
+id: lfcs-package-apt
+title: "Gérer les paquets Debian avec apt et dpkg"
+description: "Installer un paquet avec apt, le figer avec un hold pour que les mises à jour l'ignorent, et identifier quel paquet possède un fichier — les compétences de gestion de paquets Debian pour LFCS."

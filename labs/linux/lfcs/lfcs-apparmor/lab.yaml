@@ -1,0 +1,34 @@
+id: lfcs-apparmor
+title: "Manage an AppArmor profile: switch it to complain mode"
+description: "Put a loaded AppArmor profile into complain (learning) mode with aa-complain and prove it with aa-status — the Debian mandatory-access-control counterpart to SELinux."
+section: linux
+type: lab
+level: l4
+track:
+  - securiser
+skills:
+  - apparmor
+  - aa-status
+  - aa-complain
+  - mac
+difficulty: intermediate
+estimated_time: 20m
+runtime:
+  type: vm
+  default: ubuntu
+  snapshot_required: false
+  targets:
+    - name: ubuntu
+      host: ubuntu-lfcs-1.lab
+      label_en: "Ubuntu 24.04 (AppArmor)"
+      label_fr: "Ubuntu 24.04 (AppArmor)"
+distros:
+  - ubuntu24.04
+  - debian12
+doc_url: https://blog.stephane-robert.info/docs/securiser/durcissement/apparmor/
+validation:
+  functional: true
+  security: true
+  persistence_after_reboot: false
+certification_tags:
+  - lfcs

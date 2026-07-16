@@ -1,0 +1,30 @@
+---
+# État initial (Ubuntu) : AppArmor actif, profil du binaire ping en mode enforce.
+# L'apprenant le passe en complain. Joué par dsoxlab run.
+- name: Setup lfcs-apparmor lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Ensure AppArmor tooling and profiles are installed
+      ansible.builtin.apt:
+        name:
+          - apparmor-utils
+          - apparmor-profiles
+        state: present
+        update_cache: true
+
+    - name: Ensure the ping profile is loaded and in enforce mode (clean start)
+      ansible.builtin.shell:
+        cmd: |
+          aa-enforce /etc/apparmor.d/bin.ping
+        chdir: /
+      changed_when: false
+
+    - name: Brief the learner
+      ansible.builtin.debug:
+        msg: >-
+          Passe le profil AppArmor du binaire ping (/etc/apparmor.d/bin.ping) en
+          mode COMPLAIN (mode apprentissage : les violations sont journalisées mais
+          pas bloquées) avec aa-complain. Vérifie avec aa-status : le profil « ping »
+          doit apparaître en complain mode.

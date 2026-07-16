@@ -1,0 +1,34 @@
+id: lfcs-package-apt
+title: "Manage Debian packages with apt and dpkg"
+description: "Install a package with apt, pin it with a hold so updates skip it, and identify which package owns a file — the Debian package-management skills for LFCS."
+section: linux
+type: lab
+level: l2
+track:
+  - administration
+skills:
+  - apt
+  - dpkg
+  - apt-mark
+  - packages
+difficulty: intermediate
+estimated_time: 20m
+runtime:
+  type: vm
+  default: ubuntu
+  snapshot_required: false
+  targets:
+    - name: ubuntu
+      host: ubuntu-lfcs-1.lab
+      label_en: "Ubuntu 24.04 (apt, dpkg)"
+      label_fr: "Ubuntu 24.04 (apt, dpkg)"
+distros:
+  - ubuntu24.04
+  - debian12
+doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/maintenir/paquets/apt/
+validation:
+  functional: true
+  security: false
+  persistence_after_reboot: false
+certification_tags:
+  - lfcs

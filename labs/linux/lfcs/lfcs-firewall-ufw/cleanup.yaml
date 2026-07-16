@@ -1,0 +1,15 @@
+---
+# Reset idempotent : désactive ufw (garde SSH autorisé), ferme http.
+- name: Cleanup lfcs-firewall-ufw lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Reset ufw to a disabled state (ssh allowed)
+      ansible.builtin.shell:
+        cmd: |
+          ufw --force reset
+          ufw allow OpenSSH
+          ufw --force disable
+        chdir: /
+      changed_when: false

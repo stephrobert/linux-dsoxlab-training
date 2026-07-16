@@ -259,13 +259,24 @@ ci-dessous est générée à partir des vrais `lab.yaml` : lance
 | `l4-reverse-proxy-lb` | Répartir la charge d'un backend web avec HAProxy | l4 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/services/reseau/haproxy/) |
 | `l4-bridge-bonding` | Agréger des liens : un bond active-backup sous un bridge avec nmcli | l4 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/reseau/bond-bridge/) |
 
+### LFCS
+
+| Lab (id) | Titre | Niveau | Certif | Runtime | Guide compagnon |
+|---|---|---|---|---|---|
+| `lfcs-package-apt` | Gérer les paquets Debian avec apt et dpkg | l2 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/maintenir/paquets/apt/) |
+| `lfcs-firewall-ufw` | Ouvrir un service dans le pare-feu avec ufw | l4 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/securiser/reseaux/ufw/) |
+| `lfcs-apparmor` | Gérer un profil AppArmor : le passer en mode complain | l4 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/securiser/durcissement/apparmor/) |
+| `lfcs-netplan-static` | Configurer une IP statique et une route avec netplan | l4 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/reseau/netplan/) |
+| `lfcs-storage-quotas` | Activer les quotas utilisateur XFS et imposer une limite | l2 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/references-complementaires/quotas/) |
+| `lfcs-mount-cifs` | Monter un partage SMB/CIFS de façon persistante et sûre | l2 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/services/stockage/smb/) |
+
 ### Capstones
 
 | Lab (id) | Titre | Niveau | Certif | Runtime | Guide compagnon |
 |---|---|---|---|---|---|
 | `rhcsa-mock-exam` | Examen blanc RHCSA EX200 — 20 tâches sur 2 VMs | l2 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/certifications/rhcsa/) |
 
-_68 labs — table générée par `scripts/gen_catalog.py`._
+_74 labs — table générée par `scripts/gen_catalog.py`._
 <!-- LABS:END -->
 
 ## Contribuer et licence

@@ -1,0 +1,38 @@
+id: lfcs-mount-cifs
+title: "Mount an SMB/CIFS share persistently and safely"
+description: "A second host serves an SMB share. Mount it on the client, make it persistent in /etc/fstab with _netdev, and keep the password out of the world-readable fstab by using a 0600 credentials file."
+section: linux
+type: lab
+level: l2
+track:
+  - stockage
+skills:
+  - cifs
+  - smb
+  - mount
+  - fstab
+  - network-storage
+difficulty: intermediate
+estimated_time: 30m
+runtime:
+  type: vm
+  default: ubuntu
+  snapshot_required: false
+  targets:
+    - name: ubuntu
+      host: ubuntu-lfcs-1.lab
+      label_en: "Ubuntu 24.04 client + alma-rhcsa-2 SMB server"
+      label_fr: "Client Ubuntu 24.04 + serveur SMB alma-rhcsa-2"
+      roles:
+        server: alma-rhcsa-2.lab
+distros:
+  - ubuntu24.04
+  - debian12
+  - rhel10
+doc_url: https://blog.stephane-robert.info/docs/services/stockage/smb/
+validation:
+  functional: true
+  security: true
+  persistence_after_reboot: true
+certification_tags:
+  - lfcs
