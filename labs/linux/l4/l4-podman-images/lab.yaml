@@ -1,0 +1,35 @@
+id: l4-podman-images
+title: "Manage container images: pull, tag, save and inspect"
+description: "Pull an image from a registry, tag it, save it to an archive and inspect that archive with skopeo — the image-management skills for RHCSA containers."
+section: linux
+type: lab
+level: l4
+track:
+  - conteneurs
+skills:
+  - podman
+  - images
+  - registry
+  - skopeo
+  - podman-save
+difficulty: intermediate
+estimated_time: 25m
+runtime:
+  type: vm
+  default: rhel
+  snapshot_required: false
+  targets:
+    - name: rhel
+      host: alma-rhcsa-1.lab
+      label_en: "AlmaLinux 10 (podman, skopeo)"
+      label_fr: "AlmaLinux 10 (podman, skopeo)"
+distros:
+  - rhel10
+  - almalinux10
+doc_url: https://blog.stephane-robert.info/docs/conteneurs/images-conteneurs/
+validation:
+  functional: true
+  security: false
+  persistence_after_reboot: false
+certification_tags:
+  - rhcsa

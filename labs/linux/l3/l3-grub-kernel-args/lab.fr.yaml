@@ -1,0 +1,3 @@
+id: l3-grub-kernel-args
+title: "Ajouter un paramètre noyau persistant au démarrage"
+description: "Ajouter un paramètre de ligne de commande noyau au noyau courant avec grubby et à /etc/default/grub pour les futurs noyaux, pour qu'il survive aux reboots et mises à jour — prouvé par grubby et la config grub."

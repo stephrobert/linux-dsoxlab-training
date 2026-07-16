@@ -1,0 +1,33 @@
+---
+# État initial : at installé + atd actif, file at vidée. L'apprenant planifie une
+# tâche ponctuelle. Joué par dsoxlab run.
+- name: Setup scheduling-at lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Ensure the at package is installed
+      ansible.builtin.dnf:
+        name: at
+        state: present
+
+    - name: Enable and start atd
+      ansible.builtin.systemd_service:
+        name: atd
+        enabled: true
+        state: started
+
+    - name: Empty the at queue (clean start)
+      ansible.builtin.shell:
+        cmd: |
+          for j in $(atq | cut -f1); do atrm "$j"; done
+        chdir: /
+      changed_when: false
+
+    - name: Brief the learner
+      ansible.builtin.debug:
+        msg: >-
+          Planifie une tâche PONCTUELLE avec at : la commande
+          « touch /run/rapport.done » doit s'exécuter plus tard (dans le futur,
+          par ex. now + 1 hour, ou une heure précise). Vérifie qu'elle est en file
+          avec atq, et son contenu avec at -c <numéro>.

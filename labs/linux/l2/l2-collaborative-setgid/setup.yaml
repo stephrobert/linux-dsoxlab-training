@@ -1,0 +1,44 @@
+---
+# État initial : le groupe devteam et ses membres existent, mais /srv/partage est
+# root:root 0755 — pas collaboratif. L'apprenant pose le groupe + le set-GID.
+- name: Setup collaborative-setgid lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Create the devteam group
+      ansible.builtin.group:
+        name: devteam
+        state: present
+
+    - name: Create members alice and bob (in devteam)
+      ansible.builtin.user:
+        name: "{{ item }}"
+        groups: devteam
+        append: true
+        create_home: true
+      loop:
+        - alice
+        - bob
+
+    - name: Create the shared dir with the wrong ownership/perms
+      ansible.builtin.file:
+        path: /srv/partage
+        state: directory
+        owner: root
+        group: root
+        mode: "0755"
+
+    - name: Remove any leftover probe file
+      ansible.builtin.file:
+        path: /srv/partage/probe
+        state: absent
+
+    - name: Brief the learner
+      ansible.builtin.debug:
+        msg: >-
+          /srv/partage doit être un espace collaboratif pour le groupe devteam
+          (membres : alice, bob). Donne-lui le groupe devteam et le bit set-GID
+          (chmod 2775) pour que tout fichier créé dedans HÉRITE du groupe devteam
+          — condition d'un partage qui marche vraiment. Vérifie avec
+          ls -ld /srv/partage (doit montrer un 's' dans les droits du groupe).

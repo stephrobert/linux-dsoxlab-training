@@ -213,6 +213,7 @@ to refresh it.
 | `l2-password-policy` | Enforce password aging and complexity policy | l2 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/securiser/utilisateurs-groupes/) |
 | `l2-sudo-delegation` | Delegate limited sudo rights with a sudoers drop-in | l2 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/securiser/sudo/) |
 | `l2-acl-posix` | Grant fine-grained access with POSIX ACLs | l2 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/securiser/acl/) |
+| `l2-collaborative-setgid` | Set up a collaborative directory with the set-GID bit | l2 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/securiser/durcissement/permissions-ownership/) |
 | `l2-package-management` | Install, remove and query packages with dnf | l2 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/maintenir/paquets/dnf/) |
 | `l2-repo-configure` | Configure a dnf repository with a .repo file | l2 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/maintenir/paquets/dnf/) |
 
@@ -221,10 +222,13 @@ to refresh it.
 | Lab (id) | Title | Level | Certif | Runtime | Companion guide |
 |---|---|---|---|---|---|
 | `l3-boot-target` | Set the default systemd boot target | l3 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/demarrage-reboot/) |
+| `l3-grub-kernel-args` | Add a persistent kernel boot parameter | l3 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/securiser/durcissement/grub/) |
 | `l3-service-create-unit` | Create and enable a systemd service unit | l3 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/systemd/services/) |
 | `l3-service-diagnose` | Diagnose and fix a systemd service stuck in a crash loop | l3 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/depanner/service-ne-demarre-pas/) |
 | `l3-journald-persist` | Make the systemd journal persistent across reboots | l3 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/systemd/journaux/) |
 | `l3-scheduling-cron` | Schedule a recurring job with cron | l3 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/planification/cron/) |
+| `l3-scheduling-at` | Schedule a one-shot job with at | l3 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/planification/at/) |
+| `l3-scheduling-timers` | Schedule a recurring job with a systemd timer | l3 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/planification/timers/) |
 | `l3-app-constraints` | Set per-user resource limits (open files) with limits.d | l3 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/processus/limites-ressources/) |
 | `l3-sysctl-persist` | Harden kernel parameters persistently with sysctl.d | l3 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/securiser/durcissement/sysctl/) |
 | `l3-process-signals-priority` | Lower a service's scheduling priority with Nice | l3 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/utilisateurs-droits-processus/comprendre-processus/) |
@@ -243,6 +247,7 @@ to refresh it.
 | `l4-ssh-key-auth-harden` | Set up hardened key-based SSH access for a service user | l4 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/ssh/cle-ssh/) |
 | `l4-podman-basic` | Run a detached container with Podman | l4 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/conteneurs/moteurs-conteneurs/podman/) |
 | `l4-podman-systemd-persist` | Run a container as a systemd service with Quadlet (boot-persistent) | l4 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/conteneurs/moteurs-conteneurs/podman/quadlet/) |
+| `l4-podman-images` | Manage container images: pull, tag, save and inspect | l4 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/conteneurs/images-conteneurs/) |
 | `l4-selinux-boolean-port` | Allow a service with SELinux: persistent boolean and labeled port | l4 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/securiser/durcissement/selinux/) |
 | `l4-selinux-context-fix` | Fix a file's SELinux context, persistently | l4 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/securiser/durcissement/selinux/) |
 | `l4-selinux-diagnose-avc` | Diagnose an SELinux denial (AVC) and fix it the right way | l4 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/securiser/durcissement/selinux/) |
@@ -257,7 +262,7 @@ to refresh it.
 |---|---|---|---|---|---|
 | `rhcsa-mock-exam` | RHCSA EX200 mock exam — 20 tasks across 2 VMs | l2 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/certifications/rhcsa/) |
 
-_63 labs — table générée par `scripts/gen_catalog.py`._
+_68 labs — table générée par `scripts/gen_catalog.py`._
 <!-- LABS:END -->
 
 ## Contributing & license
