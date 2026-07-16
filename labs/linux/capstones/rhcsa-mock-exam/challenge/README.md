@@ -88,7 +88,15 @@ The file `/var/log/myapp.log` exists (root:root, mode 0600). Grant `appuser` **r
 
 On `alma-rhcsa-1`:
 
-- Permanent static IP **`10.10.30.50/24`**, gateway **`10.10.30.1`**, DNS **`1.1.1.1`**
+- **Pin the network configuration**: the management connection is still on DHCP.
+  Convert it to a **permanent static** configuration (`manual`) — **keeping the
+  address the machine already has** — declaring its address, gateway
+  **`10.10.30.1`** and the network's DNS **`10.10.30.1`**. It must survive a reboot.
+
+  > Keep the address you have. Changing it cuts your own access — and the
+  > grader's. On a real server you pin what is already there; here it is the
+  > same gesture, and the same trap: a `nmcli con mod` never applied, or an
+  > `ip addr` typed by hand, does not survive.
 - Permanent hostname **`srv-rhcsa-1.lab`**
 - Open port **8080/tcp** in firewalld public zone, permanent
 
@@ -96,7 +104,8 @@ On `alma-rhcsa-1`:
 
 On `alma-rhcsa-2`:
 
-- Permanent static IP **`10.10.30.51/24`**, gateway **`10.10.30.1`**
+- **Pin the network configuration** to permanent static (`manual`), keeping the
+  address the machine already has, with gateway **`10.10.30.1`** and the network's DNS **`10.10.30.1`**
 - Permanent hostname **`srv-rhcsa-2.lab`**
 
 ---
@@ -129,7 +138,7 @@ On `alma-rhcsa-1`, create:
 Configure chrony on `alma-rhcsa-1` to:
 
 - Synchronize with **`pool.ntp.org` iburst**
-- **Allow `alma-rhcsa-2.lab` (10.10.30.51)** to query this server (`allow 10.10.30.51`)
+- **Allow `alma-rhcsa-2.lab`** to query this server (`allow <srv-2 address>`)
 - Service active and enabled at boot
 
 ---
@@ -156,7 +165,7 @@ On `alma-rhcsa-2`:
 
 - Generate an ed25519 key in `~/.ssh/id_ed25519` (NoPass) for `appuser` (the user already exists after task 6 if you also created it on `srv-2`, otherwise create it locally with UID 1500)
 - Place the public key in `appuser@alma-rhcsa-1.lab:~/.ssh/authorized_keys`
-- `ssh appuser@10.10.30.50 hostname` from `srv-2` must return `srv-rhcsa-1.lab` **without a password prompt**
+- `ssh appuser@<srv-1> hostname` from `srv-2` must return `srv-rhcsa-1.lab` **without a password prompt**
 - Disable **`PasswordAuthentication no`** in `/etc/ssh/sshd_config` on `alma-rhcsa-2` (permanent, reload sshd)
 
 ---

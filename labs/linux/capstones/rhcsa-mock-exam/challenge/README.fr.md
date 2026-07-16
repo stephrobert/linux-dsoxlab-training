@@ -88,7 +88,16 @@ Le fichier `/var/log/myapp.log` existe (root:root, mode 0600). Donnez à `appuse
 
 Sur `alma-rhcsa-1` :
 
-- IP statique permanente **`10.10.30.50/24`**, gateway **`10.10.30.1`**, DNS **`1.1.1.1`**
+- **Fige la configuration réseau** : la connexion de gestion est encore en DHCP.
+  Convertis-la en configuration **statique permanente** (`manual`) — **en
+  conservant l'adresse que la machine porte déjà** — en déclarant son adresse,
+  la passerelle **`10.10.30.1`** et le DNS du réseau **`10.10.30.1`**. Ça doit survivre à un
+  reboot.
+
+  > Garde l'adresse que tu as. La changer coupe ton propre accès — et celui du
+  > correcteur. Sur un vrai serveur, on fige ce qui est déjà là ; ici c'est le
+  > même geste, et le même piège : un `nmcli con mod` jamais appliqué, ou un
+  > `ip addr` tapé à la main, ne survit pas.
 - Hostname permanent **`srv-rhcsa-1.lab`**
 - Ouvrez le port **8080/tcp** dans firewalld zone publique, permanent
 
@@ -96,7 +105,8 @@ Sur `alma-rhcsa-1` :
 
 Sur `alma-rhcsa-2` :
 
-- IP statique permanente **`10.10.30.51/24`**, gateway **`10.10.30.1`**
+- **Fige la configuration réseau** en statique permanent (`manual`), en
+  conservant l'adresse que la machine porte déjà, avec la passerelle **`10.10.30.1`** et le DNS du réseau **`10.10.30.1`**
 - Hostname permanent **`srv-rhcsa-2.lab`**
 
 ---
@@ -129,7 +139,7 @@ Sur `alma-rhcsa-1`, créez :
 Configurez chrony sur `alma-rhcsa-1` pour :
 
 - Se synchroniser avec **`pool.ntp.org` iburst**
-- **Autoriser `alma-rhcsa-2.lab` (10.10.30.51)** à interroger ce serveur (`allow 10.10.30.51`)
+- **Autoriser `alma-rhcsa-2.lab`** à interroger ce serveur (`allow <adresse de srv-2>`)
 - Service actif et activé au boot
 
 ---
@@ -156,7 +166,7 @@ Sur `alma-rhcsa-2` :
 
 - Générez une clé ed25519 dans `~/.ssh/id_ed25519` (NoPass) pour `appuser` (le user existe déjà après tâche 6 si vous l'avez créé sur `srv-2` aussi, sinon créez-le localement avec UID 1500)
 - Déposez la clé publique dans `appuser@alma-rhcsa-1.lab:~/.ssh/authorized_keys`
-- `ssh appuser@10.10.30.50 hostname` depuis `srv-2` doit retourner `srv-rhcsa-1.lab` **sans password prompt**
+- `ssh appuser@<srv-1> hostname` depuis `srv-2` doit retourner `srv-rhcsa-1.lab` **sans password prompt**
 - Désactivez **`PasswordAuthentication no`** dans `/etc/ssh/sshd_config` sur `alma-rhcsa-2` (permanent, recharger sshd)
 
 ---

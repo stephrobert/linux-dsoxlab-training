@@ -23,6 +23,14 @@
           - chrony
           - firewalld
           - policycoreutils-python-utils
+          # Sans acl, la tâche 8 est IMPOSSIBLE : setfacl n'existe pas sur
+          # l'image, et getfacl non plus — le test lui-même ne pouvait pas
+          # tourner. C'est de l'outillage, pas la tâche.
+          - acl
+          # Le sujet parle de Flatpak (tâche 16) : idem, sans lui c'est mort.
+          - flatpak
+          - lvm2
+          - parted
         state: present
       failed_when: false
 
@@ -33,6 +41,18 @@
         owner: root
         group: root
         mode: "0600"
+
+    # Tâche 10 — le service que le candidat doit créer doit avoir quelque chose
+    # à lancer. Sans ce script, ExecStart=/usr/local/bin/myapp.sh échoue et la
+    # tâche est INFAISABLE : le service ne peut pas rester actif.
+    - name: Tache 10 — fournir le binaire que le service doit lancer
+      ansible.builtin.copy:
+        dest: /usr/local/bin/myapp.sh
+        mode: "0755"
+        content: |
+          #!/bin/bash
+          # Script fourni par le sujet — ne pas modifier.
+          while true; do sleep 30; done
 
     - name: Tache 13 — fournir /var/www/html/index.html
       ansible.builtin.copy:
@@ -46,6 +66,121 @@
       ansible.builtin.command: chcon -t tmp_t /var/www/html/index.html
       changed_when: false
       failed_when: false
+
+    # Tâche 9/17 — le réseau part en DHCP (auto), sinon la tâche serait offerte.
+    # On identifie la connexion de gestion par sa FONCTION (celle qui porte la
+    # route par défaut) : son nom varie selon l'image et le provider.
+    - name: Tache 9/17 — remettre la connexion de gestion en DHCP
+      ansible.builtin.shell:
+        cmd: |
+          set +e
+          DEV=$(ip route | awk '/^default/ {print $5; exit}')
+          CON=$(nmcli -t -f NAME,DEVICE con show --active \
+                  | awk -F: -v d="$DEV" '$2==d {print $1; exit}')
+          [ -z "$CON" ] && exit 0
+          nmcli con mod "$CON" ipv4.method auto ipv4.gateway "" ipv4.dns "" \
+                               ipv4.addresses ""
+          nmcli con up "$CON" >/dev/null 2>&1
+          exit 0
+        chdir: /
+      changed_when: false
+
+    # Tâche 9/17 — le hostname part à sa valeur d'origine, sinon un run
+    # précédent offrirait la tâche.
+    # /dev/vdb, le booléen et le label de port sont PARTAGÉS avec d'autres labs
+    # (drill-storage, drill-selinux, lfcs-*). On ne remet donc pas à zéro « ce
+    # que ce capstone crée » mais TOUT ce que ses tâches doivent produire —
+    # sinon un lab joué avant offre des points, ou fait échouer le sujet.
+    #
+    # L'ordre du nettoyage disque n'est pas cosmétique : effacer les
+    # métadonnées LVM pendant qu'un LV est monté laisse le noyau avec un volume
+    # fantôme et un disque inutilisable.
+    - name: Tache 1/2/3 — libérer et effacer /dev/vdb, quel qu'en soit l'occupant
+      ansible.builtin.shell:
+        cmd: |
+          set +e
+          swapoff /swapfile 2>/dev/null; rm -f /swapfile
+          sed -i '\#^/swapfile#d' /etc/fstab
+          for mp in $(lsblk -nro MOUNTPOINTS /dev/vdb 2>/dev/null \
+                        | tr ',' '\n' | grep -v '^$'); do
+            umount -f "$mp" 2>/dev/null
+            sed -i "\#[[:space:]]${mp}[[:space:]]#d" /etc/fstab
+          done
+          for vg in $(vgs --noheadings -o vg_name 2>/dev/null | tr -d ' ' | sort -u); do
+            vgchange -an "$vg" 2>/dev/null; vgremove -f "$vg" 2>/dev/null
+          done
+          for dm in $(lsblk -nro NAME,TYPE /dev/vdb 2>/dev/null \
+                        | awk '$2=="lvm" {print $1}'); do
+            dmsetup remove "$dm" 2>/dev/null
+          done
+          pvremove -f -y /dev/vdb1 /dev/vdb2 2>/dev/null
+          wipefs -a /dev/vdb1 /dev/vdb2 /dev/vdb 2>/dev/null
+          dd if=/dev/zero of=/dev/vdb bs=1M count=10 status=none 2>/dev/null
+          partprobe /dev/vdb 2>/dev/null; udevadm settle 2>/dev/null
+          exit 0
+        chdir: /
+      changed_when: false
+
+    - name: Tache 14/15 — remettre SELinux dans son etat initial
+      ansible.builtin.shell:
+        cmd: |
+          set +e
+          # Posés par drill-selinux, qui partage cette VM : sans ça les tâches
+          # 14 et 15 seraient déjà faites.
+          setsebool -P httpd_can_network_connect off 2>/dev/null
+          semanage port -d -t http_port_t -p tcp 8888 2>/dev/null
+          exit 0
+        chdir: /
+      changed_when: false
+
+    # ── Remise à zéro COMPLÈTE ────────────────────────────────────────────
+    # Le capstone doit être rejouable : sans ça, un run précédent laisse des
+    # tâches déjà faites et le candidat gagne des points sans rien toucher.
+    # On annule ici TOUT ce que les 20 tâches produisent.
+    - name: Clean slate — annuler les 16 taches du serveur
+      ansible.builtin.shell:
+        cmd: |
+          set +e
+          # Tâches 2/3 — toute ligne fstab de /data, quel que soit son UUID :
+          # le disque vient d'être effacé, l'ancien UUID n'existe plus et
+          # laisserait un mount -a en échec.
+          sed -i '\#[[:space:]]/data[[:space:]]#d' /etc/fstab
+          # Tâches 10/11 — services et timers du candidat
+          systemctl disable --now myapp.service weekly-backup.timer 2>/dev/null
+          rm -f /etc/systemd/system/myapp.service \
+                /etc/systemd/system/weekly-backup.service \
+                /etc/systemd/system/weekly-backup.timer \
+                /usr/local/bin/backup.sh
+          systemctl daemon-reload
+          # Tâche 5 — export NFS
+          systemctl disable --now nfs-server 2>/dev/null
+          : > /etc/exports; exportfs -ra 2>/dev/null
+          rm -rf /data/share
+          # Tâche 9 — port applicatif
+          firewall-cmd --permanent --remove-port=8080/tcp 2>/dev/null
+          firewall-cmd --permanent --remove-service=nfs 2>/dev/null
+          firewall-cmd --permanent --remove-service=rpc-bind 2>/dev/null
+          firewall-cmd --permanent --remove-service=mountd 2>/dev/null
+          firewall-cmd --reload 2>/dev/null
+          # Tâche 12 — chrony
+          sed -i '/^allow /d;/^pool pool.ntp.org/d' /etc/chrony.conf 2>/dev/null
+          # Tâche 16 — logiciels
+          dnf remove -y tree >/dev/null 2>&1
+          flatpak uninstall -y --system org.gnome.Calculator >/dev/null 2>&1
+          # Tâche 7 — répertoire collaboratif
+          rm -rf /srv/shared
+          # Tâche 8 — ACL posée par le candidat
+          setfacl -b /var/log/myapp.log 2>/dev/null
+          # Tâches 6/7/19 — comptes et groupe
+          userdel -r appuser 2>/dev/null; userdel -r devuser 2>/dev/null
+          groupdel developers 2>/dev/null
+          exit 0
+        chdir: /
+      changed_when: false
+
+    - name: Tache 9/17 — remettre le hostname d'origine
+      ansible.builtin.command: "hostnamectl set-hostname {{ inventory_hostname.split('.')[0] }}"
+      changed_when: false
 
     - name: Briefing candidat (serveur)
       ansible.builtin.debug:
@@ -67,6 +202,47 @@
           - openssh-server
         state: present
       failed_when: false
+
+    # Tâche 9/17 — le réseau part en DHCP (auto), sinon la tâche serait offerte.
+    # On identifie la connexion de gestion par sa FONCTION (celle qui porte la
+    # route par défaut) : son nom varie selon l'image et le provider.
+    - name: Tache 9/17 — remettre la connexion de gestion en DHCP
+      ansible.builtin.shell:
+        cmd: |
+          set +e
+          DEV=$(ip route | awk '/^default/ {print $5; exit}')
+          CON=$(nmcli -t -f NAME,DEVICE con show --active \
+                  | awk -F: -v d="$DEV" '$2==d {print $1; exit}')
+          [ -z "$CON" ] && exit 0
+          nmcli con mod "$CON" ipv4.method auto ipv4.gateway "" ipv4.dns "" \
+                               ipv4.addresses ""
+          nmcli con up "$CON" >/dev/null 2>&1
+          exit 0
+        chdir: /
+      changed_when: false
+
+    # Tâche 9/17 — le hostname part à sa valeur d'origine, sinon un run
+    # précédent offrirait la tâche.
+    # ── Remise à zéro COMPLÈTE (client) ───────────────────────────────────
+    - name: Clean slate — annuler les 4 taches du client
+      ansible.builtin.shell:
+        cmd: |
+          set +e
+          # Tâche 18 — montage NFS
+          umount -f /mnt/share 2>/dev/null
+          sed -i '\#[[:space:]]/mnt/share[[:space:]]#d' /etc/fstab
+          rm -rf /mnt/share
+          # Tâche 19 — durcissement sshd et compte
+          rm -f /etc/ssh/sshd_config.d/99-lab-hardening.conf
+          systemctl reload sshd 2>/dev/null
+          userdel -r appuser 2>/dev/null
+          exit 0
+        chdir: /
+      changed_when: false
+
+    - name: Tache 9/17 — remettre le hostname d'origine
+      ansible.builtin.command: "hostnamectl set-hostname {{ inventory_hostname.split('.')[0] }}"
+      changed_when: false
 
     - name: Tache 20 — randomiser le mot de passe root (recovery via rd.break)
       ansible.builtin.shell: |

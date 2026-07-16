@@ -18,11 +18,10 @@ OpenSSH généré par dsoxlab (cf. dsoxlab.infra.inventory.write_ssh_config).
 from __future__ import annotations
 
 import re
-import subprocess
 
 import pytest
 
-from conftest import lab_host
+from conftest import lab_host, lab_host_ip
 
 SRV1 = "alma-rhcsa-1.lab"
 SRV2 = "alma-rhcsa-2.lab"
@@ -110,8 +109,9 @@ def test_05_nfs_export_data_share(srv1):
     # Export visible
     exp = srv1.run("exportfs -v")
     assert "/data/share" in exp.stdout, "/data/share pas exporté"
-    assert "alma-rhcsa-2" in exp.stdout or "10.10.30.51" in exp.stdout, (
-        "Export non restreint à srv-2"
+    srv2_ip = lab_host_ip(SRV2)
+    assert "alma-rhcsa-2" in exp.stdout or srv2_ip in exp.stdout, (
+        f"Export non restreint à srv-2 ({srv2_ip} ou son nom) :\n{exp.stdout}"
     )
     # firewalld autorise nfs (et services associés)
     fw = srv1.run("firewall-cmd --list-services --permanent")
@@ -162,25 +162,84 @@ def test_08_acl_appuser_on_myapp_log(srv1):
 
 # ── Section C — Réseau ──────────────────────────────────────────────────────
 
+def _mgmt_connection(host) -> str:
+    """Nom de la connexion NetworkManager qui porte l'accès de gestion.
+
+    Jamais codé en dur : le nom du profil et du device varient selon l'image et
+    le provider (ici « cloud-init eth0 » sur eth0, mais rien ne le garantit).
+    On identifie la connexion par sa FONCTION : celle qui porte la route par
+    défaut.
+    """
+    dev = host.check_output("ip route | awk '/^default/ {print $5; exit}'")
+    return host.check_output(
+        "nmcli -t -f NAME,DEVICE con show --active "
+        "| awk -F: -v d=%s '$2==d {print $1; exit}'",
+        dev,
+    )
+
+
+def _assert_static_pinned(host, fqdn: str) -> None:
+    """Vérifie que la config réseau est FIGÉE en statique, sans avoir bougé.
+
+    C'est le vrai geste RHCSA : passer la connexion de DHCP (auto) à statique
+    (manual), en déclarant adresse, passerelle et DNS de façon permanente.
+
+    L'adresse attendue est celle de l'INVENTORY, et c'est délibéré : exiger une
+    adresse différente couperait la session SSH par laquelle testinfra note le
+    candidat — il perdrait les 20 tâches d'un coup. Le piège d'examen n'est pas
+    « quelle adresse », c'est la MÉTHODE et la PERSISTANCE.
+    """
+    con = _mgmt_connection(host)
+    assert con, "Aucune connexion NetworkManager ne porte la route par défaut."
+
+    methode = host.check_output("nmcli -g ipv4.method con show %s", con)
+    assert methode == "manual", (
+        "La connexion de gestion est encore en DHCP : elle doit être figée en "
+        f"statique (ipv4.method manual). Vu : {methode!r}."
+    )
+
+    attendu = lab_host_ip(fqdn)
+    adresses = host.check_output("nmcli -g ipv4.addresses con show %s", con)
+    assert attendu in adresses, (
+        f"La connexion doit déclarer l'adresse {attendu}/24 — celle de la "
+        f"machine, à conserver. Vu : {adresses!r}."
+    )
+
+    passerelle = host.check_output("nmcli -g ipv4.gateway con show %s", con)
+    assert passerelle == "10.10.30.1", (
+        f"La passerelle doit être déclarée (10.10.30.1). Vu : {passerelle!r}."
+    )
+
+    dns = host.check_output("nmcli -g ipv4.dns con show %s", con)
+    assert "10.10.30.1" in dns, (
+        "Le DNS du réseau (10.10.30.1) doit être déclaré : c'est lui qui "
+        "résout les noms .lab. Déclarer un résolveur public à sa place casse "
+        f"le montage NFS par nom de la tâche 18. Vu : {dns!r}."
+    )
+
+    # L'adresse doit être RÉELLEMENT portée : un profil modifié mais jamais
+    # appliqué ne compte pas.
+    live = host.check_output("ip -4 addr show")
+    assert attendu in live, (
+        f"L'adresse {attendu} n'est pas active : le profil a été modifié mais "
+        "pas appliqué (nmcli con up)."
+    )
+
+
 @pytest.mark.points(6)
 def test_09_srv1_static_ip_hostname_firewall_8080(srv1):
-    """Tâche 9 : srv-1 IP 10.10.30.50, hostname srv-rhcsa-1.lab, port 8080/tcp."""
-    # IP
-    ip = srv1.run("ip -4 addr show")
-    assert "10.10.30.50" in ip.stdout, "IP 10.10.30.50 non configurée"
-    # Hostname permanent
+    """Tâche 9 : srv-1 réseau figé en statique, hostname, port 8080/tcp."""
+    _assert_static_pinned(srv1, SRV1)
     hn = srv1.run("hostnamectl --static")
     assert "srv-rhcsa-1.lab" in hn.stdout.strip(), f"Hostname static : {hn.stdout}"
-    # 8080/tcp ouvert permanent
     fw = srv1.run("firewall-cmd --list-ports --permanent")
     assert "8080/tcp" in fw.stdout, "Port 8080/tcp pas ouvert permanent"
 
 
 @pytest.mark.points(4)
 def test_17_srv2_static_ip_hostname(srv2):
-    """Tâche 17 : srv-2 IP 10.10.30.51 + hostname srv-rhcsa-2.lab."""
-    ip = srv2.run("ip -4 addr show")
-    assert "10.10.30.51" in ip.stdout, "IP 10.10.30.51 non configurée sur srv-2"
+    """Tâche 17 : srv-2 réseau figé en statique + hostname srv-rhcsa-2.lab."""
+    _assert_static_pinned(srv2, SRV2)
     hn = srv2.run("hostnamectl --static")
     assert "srv-rhcsa-2.lab" in hn.stdout.strip(), f"Hostname static : {hn.stdout}"
 
@@ -219,8 +278,9 @@ def test_12_chrony_server_allows_srv2(srv1):
     assert "pool.ntp.org" in chrony or "pool 2.ntp.org" in chrony, (
         "Source pool.ntp.org absente"
     )
-    assert re.search(r"^allow\s+10\.10\.30\.51", chrony, re.MULTILINE), (
-        "Directive 'allow 10.10.30.51' absente"
+    srv2_ip = lab_host_ip(SRV2)
+    assert re.search(rf"^allow\s+{re.escape(srv2_ip)}", chrony, re.MULTILINE), (
+        f"Directive 'allow {srv2_ip}' absente de /etc/chrony.conf"
     )
     svc = srv1.service("chronyd")
     assert svc.is_running and svc.is_enabled, "chronyd pas actif/activé"
@@ -282,9 +342,11 @@ def test_18_srv2_nfs_mount(srv2):
 def test_19_ssh_key_auth_srv2_to_srv1(srv2):
     """Tâche 19 : SSH key-only srv-2 → srv-1 et password désactivé sur srv-2."""
     # Test login key-only depuis srv-2 vers srv-1 (BatchMode = échoue si prompt)
+    srv1_ip = lab_host_ip(SRV1)
     out = srv2.run(
         "sudo -u appuser ssh -o BatchMode=yes -o StrictHostKeyChecking=no "
-        "-o UserKnownHostsFile=/dev/null appuser@10.10.30.50 hostname"
+        "-o UserKnownHostsFile=/dev/null appuser@%s hostname",
+        srv1_ip,
     )
     assert out.rc == 0, f"SSH key auth échoue : {out.stderr}"
     assert "srv-rhcsa-1" in out.stdout, f"Hostname inattendu : {out.stdout}"
@@ -297,39 +359,29 @@ def test_19_ssh_key_auth_srv2_to_srv1(srv2):
 
 @pytest.mark.points(6)
 def test_20_root_password_reset_srv2(srv2):
-    """Tâche 20 : password root sur srv-2 = SecureP@ss2026!.
+    """Tâche 20 : le mot de passe root de srv-2 est bien SecureP@ss2026!.
 
-    Vérifie via sshpass qu'on peut authentifier root avec le nouveau mot
-    de passe. Suppose que sshd_config sur srv-2 autorise l'auth password
-    root pour ce test (PermitRootLogin yes, PasswordAuthentication yes
-    pour root). En réalité l'apprenant a désactivé PasswordAuthentication
-    en tâche 19 ; on contourne via su -c localement.
+    On recalcule le hash avec le MÊME sel ET le même algorithme, puis on
+    compare. `crypt.crypt(mdp, hash)` réutilise le préfixe du hash fourni, donc
+    ça marche pour $6$ comme pour $y$ (yescrypt, le défaut d'AlmaLinux 10).
+
+    L'ancienne version tentait `openssl passwd -6`, qui ne sait pas reproduire
+    un $y$, puis retombait sur `echo mdp | su - root -c whoami` — or les tests
+    tournent DÉJÀ en root : su ne demandait aucun mot de passe et le test
+    passait quel que soit le mot de passe. La tâche n'était pas vérifiée.
     """
-    # On vérifie le hash dans /etc/shadow correspond à SecureP@ss2026!
-    # via openssl : extraire le hash, le re-générer avec le sel, comparer.
-    out = srv2.run(
-        "getent shadow root | cut -d: -f2"
+    champ = srv2.check_output("getent shadow root | cut -d: -f2")
+    assert champ and not champ.startswith(("!", "*")), (
+        f"Le compte root est verrouillé ou sans mot de passe : {champ!r}"
     )
-    hash_field = out.stdout.strip()
-    assert hash_field and not hash_field.startswith("!") and not hash_field.startswith("*"), (
-        f"Compte root locké ou sans password : {hash_field}"
+    verdict = srv2.check_output(
+        "getent shadow root | cut -d: -f2 | python3 -c "
+        "'import crypt,sys; h=sys.stdin.read().strip(); "
+        "print(crypt.crypt(\"SecureP@ss2026!\", h) == h)'"
     )
-    # Le hash $6$ ou $y$ contient le sel, on regénère et compare
-    salt_match = re.match(r"(\$[0-9a-z]+\$[^\$]+\$)", hash_field)
-    assert salt_match, f"Format hash inattendu : {hash_field}"
-    salt = salt_match.group(1)
-    expected = subprocess.run(
-        ["openssl", "passwd", "-6", "-salt", salt.split("$")[2], "SecureP@ss2026!"],
-        capture_output=True, text=True, timeout=5,
-    )
-    # openssl passwd -6 retourne $6$<salt>$<hash>. Comparer la fin du hash.
-    if expected.returncode == 0 and expected.stdout.strip() == hash_field:
-        return  # OK
-    # Fallback : tester via su localement sur la VM
-    test_cmd = "echo 'SecureP@ss2026!' | su - root -c 'whoami' 2>&1"
-    res = srv2.run(test_cmd)
-    assert "root" in res.stdout, (
-        f"Le password root n'est pas SecureP@ss2026! :\n{res.stdout}\n{res.stderr}"
+    assert verdict.strip() == "True", (
+        "Le mot de passe root de srv-2 n'est pas SecureP@ss2026! "
+        f"(hash {champ[:12]}…)."
     )
 
 
