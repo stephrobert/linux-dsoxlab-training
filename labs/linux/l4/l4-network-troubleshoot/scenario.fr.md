@@ -5,7 +5,7 @@ statique correcte, pourtant l'interface ne porte aucune IP et elle ne reviendra
 pas après un reboot. Quelque chose cloche dans son état — trouve-le et ranime le
 lien.
 
-Ta mission, sur la VM (travaille sur `lab1`, **ne touche jamais à `enp5s0`** —
+Ta mission, sur la VM (travaille sur `lab1`, **ne touche jamais à l'interface de gestion** —
 gestion) :
 
 1. **Diagnostique** pourquoi `lab-net` est morte (`nmcli con show lab-net`,

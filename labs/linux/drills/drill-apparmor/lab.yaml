@@ -1,0 +1,46 @@
+id: drill-apparmor
+title: "Drill — AppArmor under exam conditions"
+description: "4 tasks, 100 points, 15 minutes, no hints: confirm AppArmor is up, put one profile in complain, and bring two others back to enforce. LFCS only — RHEL uses SELinux, see drill-selinux."
+section: linux
+type: challenge
+level: l4
+track:
+  - securiser
+skills:
+  - apparmor
+  - mac
+  - profiles
+difficulty: intermediate
+estimated_time: 15m
+
+# Drill MONO-DISTRIB, et c'est assumé : AppArmor et SELinux ne sont pas deux
+# outils pour le même geste, ce sont deux modèles. LFCS a celui-ci, RHCSA a
+# drill-selinux.
+#
+# Sondé sur la VM : les clés d'aa-status ne sont pas uniformes — 'ping' et
+# 'tcpdump' sont des noms courts, mais man est '/usr/bin/man'. Les tests
+# emploient donc les clés réelles. Ubuntu livre par ailleurs les profils
+# transmission-* en complain PAR DÉFAUT : une tâche « un seul profil en
+# complain » serait fausse, on cible donc des profils nommés.
+runtime:
+  type: vm
+  default: ubuntu
+  snapshot_required: false
+  targets:
+    - name: ubuntu
+      host: ubuntu-lfcs-1.lab
+      label_en: "Ubuntu 24.04 — AppArmor (LFCS)"
+      label_fr: "Ubuntu 24.04 — AppArmor (LFCS)"
+
+distros:
+  - ubuntu24.04
+  - debian12
+doc_url: https://blog.stephane-robert.info/docs/securiser/durcissement/apparmor/
+validation:
+  functional: true
+  security: true
+  persistence_after_reboot: false
+certification_tags:
+  - lfcs
+
+exam_passing_score: 70

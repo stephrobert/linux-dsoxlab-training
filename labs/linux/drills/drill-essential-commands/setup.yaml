@@ -1,0 +1,103 @@
+---
+# Drill BI-DISTRIB — état initial.
+#
+# Aucune tâche conditionnée par la distribution : tout est coreutils, donc ce
+# setup tourne à l'identique sur AlmaLinux et Ubuntu. C'est ce qui permet à UN
+# seul drill de servir RHCSA et LFCS (45 % des labs du dépôt servent déjà les
+# deux — les dupliquer par certif serait absurde).
+#
+# Le setup fournit la matière et remet à zéro ce que les 5 tâches doivent
+# produire. Il ne fait AUCUNE des tâches.
+- name: Drill essential commands — givens
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: The group and account used by the permissions task
+      ansible.builtin.group:
+        name: drillers
+        state: present
+
+    - name: The account that must own the report
+      ansible.builtin.user:
+        name: drilluser
+        create_home: false
+        group: drillers
+
+    - name: Working directories
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+        mode: "0755"
+      loop:
+        - /srv/drill
+        - /srv/drill/data
+
+    # Tâche 1 — deux fichiers > 1 Mio à trouver, deux leurres en dessous.
+    - name: Task 1 — files above and below the 1 MiB threshold
+      ansible.builtin.shell:
+        cmd: |
+          set -e
+          [ -f /srv/drill/data/big1.dat ] || dd if=/dev/zero of=/srv/drill/data/big1.dat bs=1M count=2 status=none
+          [ -f /srv/drill/data/big2.dat ] || dd if=/dev/zero of=/srv/drill/data/big2.dat bs=1M count=3 status=none
+          printf 'trop petit\n' > /srv/drill/data/small.txt
+          printf 'minuscule\n'  > /srv/drill/data/tiny.log
+          chmod 0644 /srv/drill/data/*
+        executable: /bin/bash
+        chdir: /
+      changed_when: true
+
+    # Tâche 2 — alice = 3 lignes, bob = 2, carol = 1.
+    - name: Task 2 — the CSV to aggregate
+      ansible.builtin.copy:
+        dest: /srv/drill/access.csv
+        mode: "0644"
+        content: |
+          2026-07-01,INFO,alice,login
+          2026-07-01,ERROR,bob,timeout
+          2026-07-02,INFO,alice,upload
+          2026-07-02,WARN,carol,retry
+          2026-07-03,INFO,alice,logout
+          2026-07-03,ERROR,bob,timeout
+
+    # Tâche 4 — le rapport part en root:root 0644 : à corriger.
+    - name: Task 4 — the report, with the wrong owner and mode
+      ansible.builtin.copy:
+        dest: /srv/drill/report.txt
+        owner: root
+        group: root
+        mode: "0644"
+        content: "rapport confidentiel du drill\n"
+
+    # Tâche 5 — un script bavard sur les deux flux.
+    - name: Task 5 — the script that writes to both stdout and stderr
+      ansible.builtin.copy:
+        dest: /usr/local/bin/noisy.sh
+        mode: "0755"
+        content: |
+          #!/bin/bash
+          # Script fourni par le sujet — ne pas modifier.
+          echo "ligne standard 1"
+          echo "erreur A" >&2
+          echo "ligne standard 2"
+          echo "erreur B" >&2
+
+    - name: Clean slate — everything the 5 tasks must produce
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - /root/big.tar.gz
+        - /root/top-user.txt
+        - /root/access.hard
+        - /root/access.soft
+        - /root/out.log
+        - /root/err.log
+
+    - name: Brief the candidate
+      ansible.builtin.debug:
+        msg: >-
+          Drill : 5 tâches, 100 points, 20 minutes, aucun indice. Le sujet est
+          dans challenge/README.md (dsoxlab challenge drill-essential-commands).
+          Ce drill est jouable sur RHEL comme sur Debian :
+          dsoxlab check drill-essential-commands --target ubuntu.

@@ -12,7 +12,7 @@ as standby, `miimon` polls link state. A **bridge** on top gives one L2 domain.
 wire it; each connection profile persists across reboot.
 `/proc/net/bonding/bond0` and `/sys/class/net/br0/brif/` show the result.
 
-Work on `dummy1`/`dummy2`/`bond0`/`br0`, never on `enp5s0`.
+Work on `dummy1`/`dummy2`/`bond0`/`br0`, never on the management interface.
 
 ## Objectives
 

@@ -14,7 +14,7 @@ Agrège deux liens : un bond `active-backup` avec deux esclaves, sous un bridge.
 
 ## Contraintes
 
-- **Ne touche jamais à `enp5s0`** (gestion). Travaille sur les interfaces dédiées.
+- **Ne touche jamais à l'interface de gestion** — celle qui porte ta route par défaut. Travaille sur les interfaces dédiées.
 - On lit l'état du bonding, les ports du bridge et les profils sur disque.
 
 ## Validation

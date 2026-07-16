@@ -184,14 +184,9 @@ sections:
       - linux/l4/l4-reverse-proxy-lb
       - linux/l4/l4-bridge-bonding
 
-  - id: rhcsa
-    title: "RHCSA EX200v10"
-    description: "Préparation certification Red Hat — 12 exercices type examen + mock 2h30."
-    labs: []
-
   - id: lfcs
-    title: "LFCS"
-    description: "Préparation certification Linux Foundation — multi-distrib (RHEL/Debian)."
+    title: "Variantes Debian/Ubuntu"
+    description: "Le delta Debian du LFCS : les objectifs que le curriculum RHEL de l1-l4 ne couvre pas (apt, ufw, AppArmor, netplan…). La vue LFCS complète passe par certification_tags, pas par cette section."
     labs:
       - linux/lfcs/lfcs-package-apt
       - linux/lfcs/lfcs-firewall-ufw
@@ -199,6 +194,20 @@ sections:
       - linux/lfcs/lfcs-netplan-static
       - linux/lfcs/lfcs-storage-quotas
       - linux/lfcs/lfcs-mount-cifs
+
+  - id: drills
+    title: "Drills — conditions d'examen"
+    description: "Exercices courts en conditions d'examen : plusieurs tâches, sans indices, chronométrés. Partagés entre RHCSA et LFCS via certification_tags et joués sur la distrib de ton choix (dsoxlab check --target rhel|ubuntu)."
+    labs:
+      - linux/drills/drill-essential-commands
+      - linux/drills/drill-users-groups
+      - linux/drills/drill-systemd
+      - linux/drills/drill-storage
+      - linux/drills/drill-packages
+      - linux/drills/drill-firewall
+      - linux/drills/drill-selinux
+      - linux/drills/drill-apparmor
+      - linux/drills/drill-network
 
   - id: capstones
     title: "Capstones"

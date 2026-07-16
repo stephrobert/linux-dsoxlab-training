@@ -1,0 +1,51 @@
+---
+# Drill SELinux — état initial DÉGRADÉ : SELinux en permissive, un contexte
+# faux, un booléen éteint, aucun label sur le port applicatif.
+- name: Drill selinux — givens
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    # Sondé : semanage est absent de l'image. Outillage, pas tâche.
+    - name: Provide the SELinux management tooling (absent from the image)
+      ansible.builtin.package:
+        name:
+          - policycoreutils-python-utils
+          - setools-console
+        state: present
+      failed_when: false
+
+    - name: Task 2 — the content directory to be served
+      ansible.builtin.file:
+        path: /srv/web
+        state: directory
+        mode: "0755"
+
+    - name: Task 2 — a file with a WRONG context (default var_t, not web content)
+      ansible.builtin.copy:
+        dest: /srv/web/index.html
+        mode: "0644"
+        content: "<h1>drill</h1>\n"
+
+    - name: Clean slate — drop any label/boolean/context left by a previous run
+      ansible.builtin.shell:
+        cmd: |
+          set +e
+          semanage port -d -t http_port_t -p tcp 8888 2>/dev/null
+          semanage fcontext -d "/srv/web(/.*)?" 2>/dev/null
+          restorecon -R /srv/web 2>/dev/null
+          setsebool -P httpd_can_network_connect off 2>/dev/null
+          # SELinux part en PERMISSIVE : sans ça la tâche 1 serait offerte.
+          setenforce 0 2>/dev/null
+          sed -i 's/^SELINUX=.*/SELINUX=permissive/' /etc/selinux/config
+          exit 0
+        chdir: /
+      changed_when: false
+
+    - name: Brief the candidate
+      ansible.builtin.debug:
+        msg: >-
+          Drill : 4 tâches, 100 points, 20 minutes, aucun indice. SELinux est en
+          permissive, un contexte est faux, un booléen est éteint. Sujet :
+          dsoxlab challenge drill-selinux. Tes contextes sont vérifiés APRÈS une
+          relabellisation.

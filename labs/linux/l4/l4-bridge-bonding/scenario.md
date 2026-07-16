@@ -6,7 +6,7 @@ other takes over. That's a **bond** in `active-backup` mode. On top of it sits a
 NetworkManager, on dedicated interfaces, and make it persistent.
 
 Your mission, on the VM (work on `dummy1`/`dummy2`/`bond0`/`br0`, **never touch
-`enp5s0`** — management):
+the management interface** — the one carrying your default route):
 
 1. Create a bond **`bond0`**, mode **`active-backup`** with `miimon=100`
    (`nmcli con add type bond ... bond.options "mode=active-backup,miimon=100"`).

@@ -1,0 +1,55 @@
+id: drill-packages
+title: "Drill — package management under exam conditions"
+description: "5 tasks, 100 points, 20 minutes, no hints: install a package, freeze it against upgrades, find which package owns a file, list what a package installed, and remove one. The objective is shared by RHCSA and LFCS — only the tool changes (dnf or apt), and you use your distribution's."
+section: linux
+type: challenge
+level: l2
+track:
+  - administration
+skills:
+  - package-management
+  - dnf
+  - apt
+  - package-query
+difficulty: intermediate
+estimated_time: 20m
+
+# Drill BI-DISTRIB à outil variable. L'OBJECTIF est le même pour les deux
+# certifications (installer, geler, interroger, supprimer) ; seul l'outil
+# diffère — dnf sur RHEL, apt sur Debian. Le sujet est donc formulé sans
+# nommer l'outil : au candidat d'employer celui de sa distribution.
+# Le setup et la solution se conditionnent sur ansible_os_family, les tests
+# sur host.system_info.distribution.
+#
+# Sondé : le plugin dnf versionlock est ABSENT de l'image alma (le setup
+# l'installe), et le paquet qui fournit /usr/bin/ssh s'appelle
+# openssh-clients sur RHEL contre openssh-client sur Debian.
+runtime:
+  type: vm
+  default: rhel
+  snapshot_required: false
+  targets:
+    - name: rhel
+      host: alma-rhcsa-1.lab
+      label_en: "AlmaLinux 10 — dnf (RHCSA)"
+      label_fr: "AlmaLinux 10 — dnf (RHCSA)"
+    - name: ubuntu
+      host: ubuntu-lfcs-1.lab
+      label_en: "Ubuntu 24.04 — apt (LFCS)"
+      label_fr: "Ubuntu 24.04 — apt (LFCS)"
+
+distros:
+  - almalinux10
+  - rhel10
+  - ubuntu24.04
+  - debian12
+doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/
+validation:
+  functional: true
+  security: false
+  persistence_after_reboot: false
+certification_tags:
+  - rhcsa
+  - lfcs
+
+exam_passing_score: 70

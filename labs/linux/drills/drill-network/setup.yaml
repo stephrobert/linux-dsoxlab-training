@@ -1,0 +1,48 @@
+---
+# Drill BI-DISTRIB à outil variable — état initial : lab0 sans configuration.
+- name: Drill network — givens
+  hosts: lab_target
+  become: true
+  gather_facts: true
+  tasks:
+    # Remise à zéro : on retire toute config lab0 laissée par un autre lab
+    # (lfcs-netplan-static, lfcs-mock-exam) ou un run précédent, sinon la
+    # tâche 1 pourrait être offerte.
+    - name: Debian — drop any lab netplan file and re-render
+      ansible.builtin.shell:
+        cmd: |
+          set +e
+          rm -f /etc/netplan/99-lab.yaml /etc/netplan/99-drill.yaml
+          netplan apply 2>/dev/null
+          ip link del lab0 2>/dev/null
+          exit 0
+        chdir: /
+      when: ansible_os_family == "Debian"
+      changed_when: false
+
+    - name: RHEL — drop any lab0 connection
+      ansible.builtin.shell:
+        cmd: |
+          set +e
+          nmcli con delete lab0 2>/dev/null
+          nmcli con delete lab-static 2>/dev/null
+          ip link del lab0 2>/dev/null
+          exit 0
+        chdir: /
+      when: ansible_os_family == "RedHat"
+      changed_when: false
+
+    - name: Clean slate — remove the name the candidate must declare
+      ansible.builtin.lineinfile:
+        path: /etc/hosts
+        regexp: 'lab-net\.lab'
+        state: absent
+
+    - name: Brief the candidate
+      ansible.builtin.debug:
+        msg: >-
+          Drill : 4 tâches, 100 points, 20 minutes, aucun indice. Tout se passe
+          sur l'interface DÉDIÉE lab0 (dummy) : ne touche JAMAIS à l'interface
+          de gestion, celle qui porte ta route par défaut — tu perdrais la
+          main. Le sujet ne nomme pas l'outil : emploie celui de ta distrib.
+          Sujet : dsoxlab challenge drill-network.

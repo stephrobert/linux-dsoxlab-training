@@ -1,0 +1,29 @@
+---
+- name: Cleanup drill-users-groups
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Remove what the candidate produced
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - /srv/ops
+        - /etc/sudoers.d/ops
+        - /usr/local/bin/ops-report.sh
+
+    - name: Remove the drill accounts
+      ansible.builtin.user:
+        name: "{{ item }}"
+        state: absent
+        remove: true
+      loop:
+        - deploy
+        - intern
+        - former
+
+    - name: Remove the ops group
+      ansible.builtin.group:
+        name: ops
+        state: absent

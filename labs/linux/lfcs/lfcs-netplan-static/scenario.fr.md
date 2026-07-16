@@ -6,7 +6,7 @@ NetworkManager) et les active — et ça persiste au reboot. Tu as besoin d'une
 adresse fixe et d'une route statique sur une interface dédiée.
 
 Ta mission, sur la VM Ubuntu (utilise l'interface dédiée `lab0`, **ne touche jamais
-à `enp5s0`** — c'est la gestion) :
+à l'interface de gestion** — celle qui porte ta route par défaut) :
 
 1. Crée **`/etc/netplan/99-lab.yaml`** (mode `0600`) qui déclare, sur une interface
    `dummy-devices` **`lab0`** :

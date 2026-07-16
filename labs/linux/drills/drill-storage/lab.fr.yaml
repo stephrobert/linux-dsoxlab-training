@@ -1,0 +1,3 @@
+id: drill-storage
+title: "Drill — partitions, LVM et swap en conditions d'examen"
+description: "5 tâches, 100 points, 25 minutes, aucun indice : partitionner un disque en GPT, monter une pile LVM, monter par UUID de façon persistante, ajouter du swap, et étendre un volume logique à chaud. Jouable sur RHEL ou Debian — parted, LVM et XFS sont identiques."

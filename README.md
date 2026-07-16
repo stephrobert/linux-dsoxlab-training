@@ -256,7 +256,7 @@ to refresh it.
 | `l4-reverse-proxy-lb` | Load-balance a web backend with HAProxy | l4 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/services/reseau/haproxy/) |
 | `l4-bridge-bonding` | Aggregate links: an active-backup bond under a bridge with nmcli | l4 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/reseau/bond-bridge/) |
 
-### LFCS
+### Variantes Debian/Ubuntu
 
 | Lab (id) | Title | Level | Certif | Runtime | Companion guide |
 |---|---|---|---|---|---|
@@ -267,6 +267,20 @@ to refresh it.
 | `lfcs-storage-quotas` | Enable XFS user quotas and enforce a limit | l2 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/references-complementaires/quotas/) |
 | `lfcs-mount-cifs` | Mount an SMB/CIFS share persistently and safely | l2 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/services/stockage/smb/) |
 
+### Drills — conditions d'examen
+
+| Lab (id) | Title | Level | Certif | Runtime | Companion guide |
+|---|---|---|---|---|---|
+| `drill-essential-commands` | Drill — essential commands under exam conditions | l1 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/) |
+| `drill-users-groups` | Drill — users, groups and delegation under exam conditions | l2 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/) |
+| `drill-systemd` | Drill — systemd units, timers and scheduling under exam conditions | l3 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/) |
+| `drill-storage` | Drill — partitions, LVM and swap under exam conditions | l2 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/lvm/) |
+| `drill-packages` | Drill — package management under exam conditions | l2 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/) |
+| `drill-firewall` | Drill — firewall under exam conditions | l4 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/securiser/reseaux/) |
+| `drill-selinux` | Drill — SELinux under exam conditions | l4 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/) |
+| `drill-apparmor` | Drill — AppArmor under exam conditions | l4 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/securiser/durcissement/apparmor/) |
+| `drill-network` | Drill — static networking under exam conditions | l4 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/reseau/netplan/) |
+
 ### Capstones
 
 | Lab (id) | Title | Level | Certif | Runtime | Companion guide |
@@ -274,7 +288,7 @@ to refresh it.
 | `rhcsa-mock-exam` | RHCSA EX200 mock exam — 20 tasks across 2 VMs | l2 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/certifications/rhcsa/) |
 | `lfcs-mock-exam` | LFCS mock exam — 17 tasks on Ubuntu 24.04 | l2 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/certifications/lfcs/) |
 
-_75 labs — table générée par `scripts/gen_catalog.py`._
+_84 labs — table générée par `scripts/gen_catalog.py`._
 <!-- LABS:END -->
 
 ## Contributing & license

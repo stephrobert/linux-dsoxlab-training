@@ -1,0 +1,31 @@
+---
+- name: Cleanup drill-packages
+  hosts: lab_target
+  become: true
+  gather_facts: true
+  tasks:
+    - name: Release the freeze (Debian)
+      ansible.builtin.command: apt-mark unhold tree
+      when: ansible_os_family == "Debian"
+      changed_when: false
+      failed_when: false
+
+    - name: Release the freeze (RHEL)
+      ansible.builtin.command: dnf versionlock delete tree
+      when: ansible_os_family == "RedHat"
+      changed_when: false
+      failed_when: false
+
+    - name: Remove the drill packages
+      ansible.builtin.package:
+        name: tree
+        state: absent
+      failed_when: false
+
+    - name: Remove the answers
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - /root/owner.txt
+        - /root/tree-files.txt

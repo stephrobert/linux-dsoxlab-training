@@ -1,0 +1,3 @@
+id: drill-selinux
+title: "Drill — SELinux en conditions d'examen"
+description: "4 tâches, 100 points, 20 minutes, aucun indice : remettre SELinux en enforcing pour de bon, corriger un contexte de fichier qui survit à une relabellisation, basculer un booléen de façon persistante, et étiqueter un port non standard. RHCSA uniquement — Debian utilise AppArmor, voir drill-apparmor."

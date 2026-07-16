@@ -34,7 +34,7 @@ estimated_time: 120m
 # 1 seule VM : le LFCS est mono-distrib côté candidat (Ubuntu 24.04 ici).
 # Les 17 tâches tiennent sur ubuntu-lfcs-1.lab, qui porte /dev/vdb (5 Go)
 # pour le domaine Storage (LVM + XFS + quotas) et l'interface dédiée lab0
-# pour le domaine Networking (jamais enp5s0 = gestion).
+# pour le domaine Networking (jamais l'interface de gestion = gestion).
 runtime:
   type: vm
   default: ubuntu

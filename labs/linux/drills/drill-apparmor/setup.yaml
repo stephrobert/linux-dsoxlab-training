@@ -1,0 +1,56 @@
+---
+# Drill AppArmor — état initial INVERSÉ : chaque profil est dans le mauvais
+# mode, sinon les tâches seraient offertes (sondé : ping est déjà en complain
+# sur la VM, résidu du lab lfcs-apparmor, et man/tcpdump sont en enforce).
+- name: Drill apparmor — givens
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Provide the AppArmor tooling
+      ansible.builtin.package:
+        name:
+          - apparmor-utils
+          - apparmor-profiles
+        state: present
+      failed_when: false
+
+    # AppArmor doit tourner ICI pour que aa-complain/aa-enforce écrivent les
+    # modes dans les fichiers de profil. Il sera coupé juste après.
+    - name: Temporarily ensure AppArmor runs so the profile modes can be written
+      ansible.builtin.systemd_service:
+        name: apparmor
+        state: started
+      failed_when: false
+
+    - name: Clean slate — put every profile in the WRONG mode
+      ansible.builtin.shell:
+        cmd: |
+          set +e
+          # ping doit finir en complain -> on le met en enforce.
+          aa-enforce /etc/apparmor.d/bin.ping 2>/dev/null
+          # man et tcpdump doivent finir en enforce -> on les met en complain.
+          aa-complain /etc/apparmor.d/usr.bin.man 2>/dev/null
+          aa-complain /etc/apparmor.d/usr.bin.tcpdump 2>/dev/null
+          exit 0
+        chdir: /
+      changed_when: false
+
+    # AppArmor part COUPÉ, sinon la tâche 1 serait un prérequis déguisé en
+    # tâche : le candidat gagnerait 25 points sans rien faire. Les modes (faux)
+    # sont déjà écrits dans les fichiers : au rechargement, les profils
+    # reviendront tels quels, et c'est au candidat de les corriger.
+    - name: Clean slate — AppArmor starts DOWN, the candidate must bring it up
+      ansible.builtin.shell:
+        cmd: |
+          set +e
+          systemctl disable --now apparmor 2>/dev/null
+          exit 0
+        chdir: /
+      changed_when: false
+
+    - name: Brief the candidate
+      ansible.builtin.debug:
+        msg: >-
+          Drill : 4 tâches, 100 points, 15 minutes, aucun indice. Trois profils
+          sont dans le mauvais mode. Sujet : dsoxlab challenge drill-apparmor.

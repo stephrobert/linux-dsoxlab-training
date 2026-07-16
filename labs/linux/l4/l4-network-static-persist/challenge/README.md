@@ -13,7 +13,7 @@ Give this host a static IPv4 on a dedicated interface, the persistent way.
 
 ## Constraints
 
-- **Never touch `enp5s0`** — that's the management link; changing it locks you
+- **Never touch the management interface** — that's the management link; changing it locks you
   out. Work only on `lab0`.
 - Validation reads NetworkManager and the live interface, not your shell history.
 

@@ -14,7 +14,7 @@ persistante.
 
 ## Contraintes
 
-- **Ne touche jamais à `enp5s0`** — c'est le lien de gestion ; le modifier te
+- **Ne touche jamais à l'interface de gestion** — c'est le lien de gestion ; le modifier te
   verrouille dehors. Travaille uniquement sur `lab0`.
 - On lit NetworkManager et l'interface active, pas ton historique shell.
 

@@ -1,0 +1,16 @@
+---
+- name: Cleanup drill-apparmor
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Put the profiles back to their distribution default (enforce)
+      ansible.builtin.shell:
+        cmd: |
+          set +e
+          aa-enforce /etc/apparmor.d/bin.ping 2>/dev/null
+          aa-enforce /etc/apparmor.d/usr.bin.man 2>/dev/null
+          aa-enforce /etc/apparmor.d/usr.bin.tcpdump 2>/dev/null
+          exit 0
+        chdir: /
+      changed_when: false

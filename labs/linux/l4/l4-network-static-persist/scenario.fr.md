@@ -6,7 +6,7 @@ que jusqu'au prochain reboot ; la façon durable sur RHEL est un **profil de
 connexion NetworkManager**.
 
 Ta mission, sur la VM (travaille sur l'interface dédiée `lab0`, **ne touche
-jamais à `enp5s0`** — c'est ton lien de gestion) :
+jamais à l'interface de gestion** — c'est ton lien de gestion) :
 
 1. Crée une connexion NetworkManager nommée **`lab-static`** sur l'interface
    `lab0` (type `dummy`).

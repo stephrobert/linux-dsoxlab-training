@@ -11,7 +11,7 @@ drapeau `connection.autoconnect`. Une connexion peut être configurée mais
 **inactive** ; `nmcli con up` l'active, et `connection.autoconnect yes` la fait
 revenir après un reboot. `ip addr` / `ip link` montrent l'interface active.
 
-Travaille sur `lab1`, jamais sur `enp5s0` (gestion).
+Travaille sur `lab1`, jamais sur l'interface de gestion.
 
 ## Objectifs
 

@@ -1,0 +1,27 @@
+---
+- name: Cleanup drill-storage
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Release everything and wipe the disk
+      ansible.builtin.shell:
+        cmd: |
+          set +e
+          swapoff /swapfile 2>/dev/null; rm -f /swapfile
+          sed -i '\#^/swapfile#d' /etc/fstab
+          umount /mnt/data 2>/dev/null
+          sed -i '\#[[:space:]]/mnt/data[[:space:]]#d' /etc/fstab
+          vgchange -an vgdrill 2>/dev/null
+          vgremove -f vgdrill 2>/dev/null
+          pvremove -f -y /dev/vdb1 2>/dev/null
+          wipefs -a /dev/vdb1 /dev/vdb2 /dev/vdb 2>/dev/null
+          partprobe /dev/vdb 2>/dev/null
+          exit 0
+        chdir: /
+      changed_when: false
+
+    - name: Remove the mount point
+      ansible.builtin.file:
+        path: /mnt/data
+        state: absent

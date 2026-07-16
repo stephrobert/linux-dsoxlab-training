@@ -7,7 +7,7 @@ Construis les deux avec NetworkManager, sur des interfaces dédiées, et rends-l
 persistant.
 
 Ta mission, sur la VM (travaille sur `dummy1`/`dummy2`/`bond0`/`br0`, **ne touche
-jamais à `enp5s0`** — gestion) :
+jamais à l'interface de gestion** — gestion) :
 
 1. Crée un bond **`bond0`**, mode **`active-backup`** avec `miimon=100`
    (`nmcli con add type bond ... bond.options "mode=active-backup,miimon=100"`).

@@ -14,7 +14,7 @@ Connect via `dsoxlab ssh ubuntu-lfcs-1.lab`. You are `student` with sudo NOPASSW
 Changes must be **persistent after reboot**. A configuration that works right now
 but was applied only with a live command (no persistence) does not count.
 
-**Never touch `enp5s0`** — it is the management interface. Network tasks use the
+**Never touch the management interface** — it is the management interface. Network tasks use the
 dedicated `lab0` interface. The disk `/dev/vdb` (5 GiB) is attached and blank.
 
 ---

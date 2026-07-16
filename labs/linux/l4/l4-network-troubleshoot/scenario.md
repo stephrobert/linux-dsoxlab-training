@@ -4,7 +4,7 @@ A connection called `lab-net` exists on interface `lab1` with a correct static
 address, yet the interface carries no IP and it won't come back after a reboot.
 Something's off with its state — find it and bring the link back to life.
 
-Your mission, on the VM (work on `lab1`, **never touch `enp5s0`** — management):
+Your mission, on the VM (work on `lab1`, **never touch the management interface** — the one carrying your default route):
 
 1. **Diagnose** why `lab-net` is dead (`nmcli con show lab-net`, `nmcli device`,
    `ip addr show lab1`). It's configured but inactive.

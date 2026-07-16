@@ -1,0 +1,72 @@
+---
+# Drill BI-DISTRIB — état initial. Aucune tâche conditionnée par la distrib.
+- name: Drill users groups — givens
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: The group the candidate will delegate to
+      ansible.builtin.group:
+        name: ops
+        state: present
+
+    # Tâche 4 — la règle sudo portera sur CE script : /usr/local/bin est le
+    # même chemin sur les deux distribs, contrairement aux binaires système.
+    - name: Task 4 — the script that ops members must be able to run as root
+      ansible.builtin.copy:
+        dest: /usr/local/bin/ops-report.sh
+        mode: "0755"
+        content: |
+          #!/bin/bash
+          # Script fourni par le sujet — ne pas modifier.
+          echo "ops-report ok (uid=$(id -u))"
+
+    # Tâche 2 — intern existe SANS politique de vieillissement.
+    - name: Task 2 — the intern account, with no aging policy yet
+      ansible.builtin.user:
+        name: intern
+        shell: /bin/bash
+        create_home: true
+        password: "!"
+
+    - name: Task 2 — clear any aging left by a previous run
+      ansible.builtin.command: chage -M -1 -W -1 -E -1 intern
+      changed_when: false
+
+    # Tâche 5 — former est ACTIF : au candidat de le verrouiller.
+    - name: Task 5 — the departing account, still active and unlocked
+      ansible.builtin.user:
+        name: former
+        shell: /bin/bash
+        create_home: true
+        # Hash de « lab » — le compte doit partir DÉVERROUILLÉ (passwd -S = P).
+        password: "$6$labsalt$hHqZ1XxYPQ7hJ9Zq0dGH2p2sYQNqK1kZ6qJmXvA3rXWn7yQ0mBcLZ8oT5vE1fG4hJ6kL9nP2sR5tU8wY0xZ1."
+
+    - name: Task 5 — make sure former starts UNLOCKED and with a real shell
+      ansible.builtin.shell:
+        cmd: |
+          usermod -U former 2>/dev/null || true
+          usermod -s /bin/bash former
+        chdir: /
+      changed_when: false
+
+    - name: Clean slate — what the candidate must produce
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - /srv/ops
+        - /etc/sudoers.d/ops
+
+    - name: Clean slate — the account the candidate must create
+      ansible.builtin.user:
+        name: deploy
+        state: absent
+        remove: true
+
+    - name: Brief the candidate
+      ansible.builtin.debug:
+        msg: >-
+          Drill : 5 tâches, 100 points, 20 minutes, aucun indice. Sujet :
+          dsoxlab challenge drill-users-groups. Jouable sur les deux distribs :
+          dsoxlab check drill-users-groups --target ubuntu.

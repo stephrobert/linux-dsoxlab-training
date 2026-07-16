@@ -11,7 +11,7 @@ netplan describes the network in `/etc/netplan/*.yaml`. A device gets
 `netplan generate` validates, `netplan apply` renders and brings it up (persistent
 at boot). Config files should be `0600`.
 
-Work on `lab0`, never on `enp5s0` (management).
+Work on `lab0`, never on the management interface.
 
 ## Objectives
 

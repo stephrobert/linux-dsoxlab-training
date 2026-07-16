@@ -1,7 +1,7 @@
 ---
 # État initial : la connexion lab-net (interface dédiée lab1) est correctement
 # adressée MAIS inactive et autoconnect=no → elle ne remonte pas, y compris au
-# reboot. L'apprenant diagnostique et rétablit. On ne touche jamais à enp5s0.
+# reboot. L'apprenant diagnostique et rétablit. On ne touche jamais à l'interface de gestion.
 - name: Setup network-troubleshoot lab
   hosts: lab_target
   become: true
@@ -24,4 +24,4 @@
           inactive et ne redémarrera pas au boot. Diagnostique (nmcli con show,
           ip addr/link) puis rétablis-la : active-la ET rends-la auto-connectable
           (connection.autoconnect yes) pour qu'elle survive au reboot. Ne touche
-          pas à enp5s0 (gestion).
+          pas à l'interface de gestion.

@@ -5,7 +5,7 @@ come back after a reboot, not vanish. An `ip addr add` lasts until the next
 reboot; the durable way on RHEL is a **NetworkManager connection profile**.
 
 Your mission, on the VM (work on the dedicated interface `lab0`, **never touch
-`enp5s0`** — that's your management link):
+the management interface** — that's your management link):
 
 1. Create a NetworkManager connection named **`lab-static`** on interface
    `lab0` (type `dummy`).

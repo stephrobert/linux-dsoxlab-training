@@ -1,0 +1,33 @@
+---
+# Reset idempotent : le setup refait déjà l'état initial complet (il doit
+# pouvoir être rejoué sur une VM déjà utilisée). On retire ici ce que le
+# candidat a produit, plus la matière du drill.
+- name: Cleanup drill-essential-commands
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Remove what the candidate produced and the drill material
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - /root/big.tar.gz
+        - /root/top-user.txt
+        - /root/access.hard
+        - /root/access.soft
+        - /root/out.log
+        - /root/err.log
+        - /srv/drill
+        - /usr/local/bin/noisy.sh
+
+    - name: Remove the drill account and group
+      ansible.builtin.user:
+        name: drilluser
+        state: absent
+        remove: false
+
+    - name: Remove the drill group
+      ansible.builtin.group:
+        name: drillers
+        state: absent

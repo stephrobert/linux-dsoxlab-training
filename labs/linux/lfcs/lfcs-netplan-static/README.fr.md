@@ -11,7 +11,7 @@ netplan décrit le réseau dans `/etc/netplan/*.yaml`. Un device reçoit
 statiques. `netplan generate` valide, `netplan apply` rend et active (persistant
 au boot). Les fichiers de config doivent être en `0600`.
 
-Travaille sur `lab0`, jamais sur `enp5s0` (gestion).
+Travaille sur `lab0`, jamais sur l'interface de gestion.
 
 ## Objectifs
 

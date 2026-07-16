@@ -13,7 +13,7 @@ Diagnostique et rétablis-la.
 
 ## Contraintes
 
-- **Ne touche jamais à `enp5s0`** (lien de gestion). Travaille uniquement sur `lab1`.
+- **Ne touche jamais à l'interface de gestion** (lien de gestion). Travaille uniquement sur `lab1`.
 - On lit l'état NetworkManager et l'interface active, pas ton historique.
 
 ## Validation

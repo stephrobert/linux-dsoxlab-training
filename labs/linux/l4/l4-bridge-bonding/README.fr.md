@@ -13,7 +13,7 @@ L2 unique. `nmcli con add type bond|dummy|bridge` + `bond.options` +
 reboot. `/proc/net/bonding/bond0` et `/sys/class/net/br0/brif/` montrent le
 résultat.
 
-Travaille sur `dummy1`/`dummy2`/`bond0`/`br0`, jamais sur `enp5s0`.
+Travaille sur `dummy1`/`dummy2`/`bond0`/`br0`, jamais sur l'interface de gestion.
 
 ## Objectifs
 

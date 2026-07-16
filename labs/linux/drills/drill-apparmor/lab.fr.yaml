@@ -1,0 +1,3 @@
+id: drill-apparmor
+title: "Drill — AppArmor en conditions d'examen"
+description: "4 tâches, 100 points, 15 minutes, aucun indice : confirmer qu'AppArmor tourne, mettre un profil en mode plainte, et ramener deux autres en mode application. LFCS uniquement — RHEL utilise SELinux, voir drill-selinux."
