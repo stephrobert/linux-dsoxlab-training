@@ -228,6 +228,59 @@ def _read_lab_runtime(lab_root: Path) -> tuple[str, str | None]:
     return str(runtime.get("type", "shell")), host
 
 
+def _replay_shell_solution(lab_root: Path, rel_path: Path) -> None:
+    """Joue la solution d'un lab shell dans son workdir.
+
+    Un lab shell n'a rien à provisionner : sa solution est un script bash joué
+    dans ``challenge/work/``, exactement là où l'apprenant travaille (le
+    conftest local de chaque lab y fait un chdir par test).
+
+    Le script est chiffré ansible-vault comme les solutions VM — l'apprenant ne
+    doit pas pouvoir le lire dans le dépôt. On le déchiffre en mémoire, jamais
+    sur disque.
+
+    Solution absente → no-op : les tests tournent sur l'état du workdir tel
+    quel, ce qui reste le comportement voulu en ``dsoxlab check``.
+    """
+    solution_sh = REPO_ROOT / "solution" / rel_path / "solution.sh"
+    if not solution_sh.is_file():
+        return
+
+    script = solution_sh.read_text()
+    if script.lstrip().startswith("$ANSIBLE_VAULT"):
+        vault_pass = REPO_ROOT / ".vault-pass"
+        if not vault_pass.is_file():
+            pytest.skip(
+                f"[{lab_root.name}] solution.sh chiffrée mais .vault-pass "
+                "absent : impossible de la rejouer."
+            )
+        # _run impose capture_output/text et lève si la commande échoue.
+        script = _run([
+            "ansible-vault", "view", str(solution_sh),
+            "--vault-password-file", str(vault_pass),
+        ]).stdout
+
+    workdir = lab_root / "challenge" / "work"
+    workdir.mkdir(parents=True, exist_ok=True)
+    # subprocess.run direct (pas _run) : on veut le script sur stdin et un
+    # message d'erreur qui nomme le lab. bash -e arrête la solution au premier
+    # échec — sinon un test pourrait passer alors qu'une étape a silencieusement
+    # échoué, et la solution "prouverait" un test qu'elle n'honore pas.
+    res = subprocess.run(
+        ["bash", "-e"],
+        input=script,
+        cwd=workdir,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if res.returncode != 0:
+        raise RuntimeError(
+            f"solution.sh a échoué pour {lab_root.name} "
+            f"(rc={res.returncode}).\n{res.stdout}\n{res.stderr}"
+        )
+
+
 @pytest.fixture(scope="module", autouse=True)
 def _apply_lab_state(request) -> None:
     """Applique la solution officielle du formateur avant les tests.
@@ -265,12 +318,18 @@ def _apply_lab_state(request) -> None:
         "DSOXLAB_TARGET_HOST"
     )
 
-    # Atelier shell-local : pas de pré-jeu de solution.
+    rel_path = lab_root.relative_to(REPO_ROOT / "labs")
+
+    # Atelier shell-local : la solution est un SCRIPT joué dans le workdir.
+    # Ansible ne sert à rien ici (rien à provisionner, tout est local), mais
+    # une solution reste indispensable : sans elle, les tests d'un lab shell ne
+    # sont JAMAIS prouvés passables — c'est exactement le trou qui rendait le
+    # capstone RHCSA injouable sans que personne le sache.
     if runtime_type == "shell":
+        _replay_shell_solution(lab_root, rel_path)
         return
 
     # Runtime VM : cherche solution.yaml côté formateur (solution/...)
-    rel_path = lab_root.relative_to(REPO_ROOT / "labs")
     solution_yaml = REPO_ROOT / "solution" / rel_path / "solution.yaml"
     if not solution_yaml.is_file():
         # Solution absente : log puis skip soft (les tests tournent sur
