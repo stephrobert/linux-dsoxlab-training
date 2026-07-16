@@ -122,6 +122,30 @@ def lab_host(name: str) -> testinfra.host.Host:
     )
 
 
+def lab_host_ip(name: str) -> str:
+    """Retourne l'adresse IP d'un hôte du lab, telle que l'inventory la connaît.
+
+    Les IP ne sont PAS déclarées dans meta.yml : Terraform les attribue (DHCP
+    réservé en KVM/incus, IP privée auto dans les clouds). Un test qui code une
+    adresse en dur est donc faux dès qu'on change de provider — et un sujet qui
+    demande une adresse différente de celle-là coupe la notation, puisque
+    testinfra se connecte via l'inventory.
+
+    Args:
+        name: FQDN de l'hôte tel que déclaré dans ``meta.yml: infra.hosts``.
+
+    Raises:
+        ValueError: si l'hôte est inconnu de l'inventory.
+    """
+    hote = _LABENV_HOSTS.get(name)
+    if not hote or not hote.get("ansible_host"):
+        raise ValueError(
+            f"Pas d'IP pour {name} dans l'inventory. "
+            f"Hôtes disponibles : {sorted(_LABENV_HOSTS)}"
+        )
+    return str(hote["ansible_host"])
+
+
 def lab_target_host(default: str) -> str:
     """Retourne le FQDN de la target sur laquelle valider.
 
