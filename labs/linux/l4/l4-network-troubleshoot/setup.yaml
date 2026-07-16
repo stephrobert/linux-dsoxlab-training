@@ -1,0 +1,27 @@
+---
+# État initial : la connexion lab-net (interface dédiée lab1) est correctement
+# adressée MAIS inactive et autoconnect=no → elle ne remonte pas, y compris au
+# reboot. L'apprenant diagnostique et rétablit. On ne touche jamais à enp5s0.
+- name: Setup network-troubleshoot lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Create a down, non-autoconnect connection on the dedicated iface
+      ansible.builtin.shell:
+        cmd: |
+          nmcli con delete lab-net 2>/dev/null || true
+          nmcli con add type dummy con-name lab-net ifname lab1 \
+            ipv4.method manual ipv4.addresses 198.51.100.10/24 autoconnect no
+          nmcli con down lab-net 2>/dev/null || true
+        chdir: /
+      changed_when: false
+
+    - name: Brief the learner
+      ansible.builtin.debug:
+        msg: >-
+          La connexion « lab-net » (interface lab1) est configurée mais reste
+          inactive et ne redémarrera pas au boot. Diagnostique (nmcli con show,
+          ip addr/link) puis rétablis-la : active-la ET rends-la auto-connectable
+          (connection.autoconnect yes) pour qu'elle survive au reboot. Ne touche
+          pas à enp5s0 (gestion).

@@ -1,0 +1,16 @@
+---
+# Reset idempotent : arrête le service, retire l'unité Quadlet et le conteneur.
+- name: Cleanup podman-systemd-persist lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Remove the Quadlet unit and container
+      ansible.builtin.shell:
+        cmd: |
+          systemctl stop weblab.service 2>/dev/null || true
+          rm -f /etc/containers/systemd/weblab.container
+          systemctl daemon-reload
+          podman rm -f weblab 2>/dev/null || true
+        chdir: /
+      changed_when: false

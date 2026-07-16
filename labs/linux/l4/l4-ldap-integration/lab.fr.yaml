@@ -1,0 +1,3 @@
+id: l4-ldap-integration
+title: "Authentifier Linux sur un annuaire LDAP avec SSSD"
+description: "Configurer SSSD sur le client pour qu'un utilisateur de l'annuaire (alice) soit résolu et puisse se connecter, contre un 389 Directory Server — prouvé par getent, id et le profil authselect actif."

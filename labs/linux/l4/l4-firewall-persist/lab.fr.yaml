@@ -1,0 +1,3 @@
+id: l4-firewall-persist
+title: "Ouvrir un service firewalld de façon permanente"
+description: "Autoriser le service http à travers firewalld pour que ça tienne maintenant et après reload/reboot — prouvé par les listes de services runtime et permanent, sans jamais fermer ssh."

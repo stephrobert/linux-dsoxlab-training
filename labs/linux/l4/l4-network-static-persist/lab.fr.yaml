@@ -1,0 +1,3 @@
+id: l4-network-static-persist
+title: "Configurer une IPv4 statique persistante avec NetworkManager"
+description: "Créer une connexion NetworkManager avec une IPv4 statique (méthode manual) qui survit au reboot — prouvé par le profil sur disque et l'adresse active."

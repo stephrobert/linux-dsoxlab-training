@@ -1,0 +1,28 @@
+---
+# État initial : podman installé, image pré-tirée (pour se concentrer sur le run),
+# aucun conteneur « web ». L'apprenant lance le conteneur détaché.
+- name: Setup podman-basic lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Ensure podman is installed
+      ansible.builtin.dnf:
+        name: podman
+        state: present
+
+    - name: Pre-pull the image so the learner focuses on running it
+      ansible.builtin.command: podman pull -q registry.access.redhat.com/ubi9/ubi-micro
+      changed_when: false
+
+    - name: Ensure no leftover web container
+      ansible.builtin.command: podman rm -f web
+      changed_when: false
+      failed_when: false
+
+    - name: Brief the learner
+      ansible.builtin.debug:
+        msg: >-
+          Lance un conteneur DÉTACHÉ nommé « web » à partir de l'image
+          registry.access.redhat.com/ubi9/ubi-micro qui reste actif
+          (commande : sleep infinity). Vérifie avec podman ps.

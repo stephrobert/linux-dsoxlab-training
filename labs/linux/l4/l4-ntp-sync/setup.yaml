@@ -1,0 +1,30 @@
+---
+# État initial : horloge dérégée — mauvais fuseau, NTP désactivé, chronyd arrêté
+# et non activé. L'apprenant resynchronise. Joué par dsoxlab run (ansible-runner).
+- name: Setup ntp-sync lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Ensure chrony is installed (RHEL NTP client)
+      ansible.builtin.dnf:
+        name: chrony
+        state: present
+
+    - name: Desync at start — wrong timezone, NTP off, chronyd stopped/disabled
+      ansible.builtin.shell:
+        cmd: |
+          timedatectl set-timezone America/New_York
+          timedatectl set-ntp false
+          systemctl disable --now chronyd
+        chdir: /
+      changed_when: false
+      failed_when: false
+
+    - name: Brief the learner
+      ansible.builtin.debug:
+        msg: >-
+          Resynchronise l'horloge : règle le fuseau sur Europe/Paris
+          (timedatectl set-timezone), active le NTP (timedatectl set-ntp true) et
+          active + démarre chronyd de façon PERSISTANTE (systemctl enable --now).
+          Vérifie avec timedatectl et systemctl is-enabled chronyd.

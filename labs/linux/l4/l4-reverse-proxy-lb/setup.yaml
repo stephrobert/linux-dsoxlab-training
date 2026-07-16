@@ -1,0 +1,69 @@
+---
+# Lab MULTI-HÔTE (feature dsoxlab roles) :
+#   - lab_server (alma-rhcsa-2) : backend web (httpd) qui sert une page repère.
+#   - lab_target (alma-rhcsa-1) : hôte frontal, l'apprenant configure HAProxy.
+- name: Backend web server (lab_server)
+  hosts: lab_server
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Install httpd
+      ansible.builtin.package:
+        name: httpd
+        state: present
+
+    - name: Serve a marker page
+      ansible.builtin.copy:
+        dest: /var/www/html/index.html
+        mode: "0644"
+        content: "backend-ok\n"
+
+    - name: Enable and start httpd
+      ansible.builtin.systemd_service:
+        name: httpd
+        enabled: true
+        state: started
+
+- name: Front host — prepare HAProxy (lab_target)
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Install HAProxy
+      ansible.builtin.package:
+        name: haproxy
+        state: present
+
+    - name: Record the backend address for the learner
+      ansible.builtin.copy:
+        dest: /root/lb-backend.env
+        mode: "0644"
+        content: |
+          SERVER={{ hostvars[groups['lab_server'][0]]['ansible_host'] }}
+          PORT=80
+
+    - name: Clean state — a config with no frontend, HAProxy stopped
+      ansible.builtin.shell:
+        cmd: |
+          cat > /etc/haproxy/haproxy.cfg <<'EOF'
+          global
+              log /dev/log local0
+          defaults
+              mode http
+              timeout connect 5s
+              timeout client 30s
+              timeout server 30s
+          EOF
+          systemctl disable --now haproxy 2>/dev/null || true
+        chdir: /
+      changed_when: false
+
+    - name: Brief the learner
+      ansible.builtin.debug:
+        msg: >-
+          Un backend web sert la page « backend-ok » (son IP est dans
+          /root/lb-backend.env). Configure HAProxy (/etc/haproxy/haproxy.cfg) :
+          un frontend qui écoute sur *:80 et un backend qui pointe le serveur
+          backend:80 (balance roundrobin). Valide la conf (haproxy -c) puis
+          active et démarre haproxy. curl http://localhost/ doit renvoyer
+          backend-ok.

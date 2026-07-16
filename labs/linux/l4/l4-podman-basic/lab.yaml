@@ -1,0 +1,34 @@
+id: l4-podman-basic
+title: "Run a detached container with Podman"
+description: "Pull an image and run a named container detached, and prove it is up — the Podman basics for RHCSA containers."
+section: linux
+type: lab
+level: l4
+track:
+  - securiser
+  - rhcsa
+skills:
+  - podman
+  - containers
+  - images
+difficulty: intermediate
+estimated_time: 20m
+runtime:
+  type: vm
+  default: rhel
+  snapshot_required: false
+  targets:
+    - name: rhel
+      host: alma-rhcsa-1.lab
+      label_en: "AlmaLinux 10 (podman)"
+      label_fr: "AlmaLinux 10 (podman)"
+distros:
+  - rhel10
+  - almalinux10
+doc_url: https://blog.stephane-robert.info/docs/conteneurs/moteurs-conteneurs/podman/
+validation:
+  functional: true
+  security: false
+  persistence_after_reboot: false
+certification_tags:
+  - rhcsa

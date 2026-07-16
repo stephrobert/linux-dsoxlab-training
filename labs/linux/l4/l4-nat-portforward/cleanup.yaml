@@ -1,0 +1,18 @@
+---
+# Reset idempotent : retire le forwarding, la table NAT et la persistance.
+- name: Cleanup nat-portforward lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Remove forwarding, lab NAT rules and persistence
+      ansible.builtin.shell:
+        cmd: |
+          rm -f /etc/sysctl.d/99-nat-forward.conf /etc/nftables/lab-nat.nft
+          sed -i '/lab-nat.nft/d' /etc/sysconfig/nftables.conf 2>/dev/null || true
+          sysctl -w net.ipv4.ip_forward=0 2>/dev/null || true
+          sysctl --system >/dev/null 2>&1 || true
+          nft delete table ip lab-nat 2>/dev/null || true
+          systemctl disable --now nftables 2>/dev/null || true
+        chdir: /
+      changed_when: false

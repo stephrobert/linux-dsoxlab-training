@@ -1,0 +1,3 @@
+id: l4-network-troubleshoot
+title: "Diagnostiquer et rétablir une connexion réseau tombée"
+description: "Une connexion NetworkManager est configurée mais reste inactive et ne démarre pas automatiquement. Diagnostique-la, active-la, et rends-la auto-connectable — prouvé par l'état actif et le drapeau autoconnect."

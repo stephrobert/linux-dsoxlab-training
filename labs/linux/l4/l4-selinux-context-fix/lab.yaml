@@ -1,0 +1,36 @@
+id: l4-selinux-context-fix
+title: "Fix a file's SELinux context, persistently"
+description: "Give a custom web directory the httpd_sys_content_t type with semanage fcontext + restorecon so it survives a relabel/reboot — proven by ls -Z and the fcontext rule."
+section: linux
+type: lab
+level: l4
+track:
+  - securiser
+  - rhcsa
+skills:
+  - selinux
+  - semanage
+  - fcontext
+  - restorecon
+  - file-contexts
+difficulty: intermediate
+estimated_time: 25m
+runtime:
+  type: vm
+  default: rhel
+  snapshot_required: false
+  targets:
+    - name: rhel
+      host: alma-rhcsa-1.lab
+      label_en: "AlmaLinux 10 (SELinux enforcing, semanage fcontext)"
+      label_fr: "AlmaLinux 10 (SELinux enforcing, semanage fcontext)"
+distros:
+  - rhel10
+  - almalinux10
+doc_url: https://blog.stephane-robert.info/docs/securiser/durcissement/selinux/
+validation:
+  functional: true
+  security: true
+  persistence_after_reboot: true
+certification_tags:
+  - rhcsa

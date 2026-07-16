@@ -1,0 +1,17 @@
+---
+# Reset idempotent : remet l'état dérégé initial pour que le lab soit rejouable.
+# Joué par dsoxlab clean.
+- name: Cleanup ntp-sync lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Restore the desynced initial state
+      ansible.builtin.shell:
+        cmd: |
+          timedatectl set-timezone America/New_York
+          timedatectl set-ntp false
+          systemctl disable --now chronyd
+        chdir: /
+      changed_when: false
+      failed_when: false

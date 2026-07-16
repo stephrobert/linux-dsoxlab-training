@@ -1,0 +1,35 @@
+---
+# État initial : podman installé, image pré-tirée, aucune unité Quadlet weblab.
+# L'apprenant écrit le .container et le démarre via systemd.
+- name: Setup podman-systemd-persist lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Ensure podman is installed
+      ansible.builtin.dnf:
+        name: podman
+        state: present
+
+    - name: Pre-pull the image
+      ansible.builtin.command: podman pull -q registry.access.redhat.com/ubi9/ubi-micro
+      changed_when: false
+
+    - name: Clean slate — remove any Quadlet unit and container
+      ansible.builtin.shell:
+        cmd: |
+          systemctl stop weblab.service 2>/dev/null || true
+          rm -f /etc/containers/systemd/weblab.container
+          systemctl daemon-reload
+          podman rm -f weblab 2>/dev/null || true
+        chdir: /
+      changed_when: false
+
+    - name: Brief the learner
+      ansible.builtin.debug:
+        msg: >-
+          Fais tourner un conteneur « weblab » (image ubi9/ubi-micro, commande
+          sleep infinity) en SERVICE systemd persistant, via une unité Quadlet
+          /etc/containers/systemd/weblab.container avec une section [Install]
+          WantedBy=. Puis systemctl daemon-reload et démarre weblab.service.
+          Vérifie avec systemctl is-active weblab.service et podman ps.

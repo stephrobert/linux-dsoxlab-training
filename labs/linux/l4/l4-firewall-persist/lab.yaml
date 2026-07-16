@@ -1,0 +1,35 @@
+id: l4-firewall-persist
+title: "Open a firewalld service permanently"
+description: "Allow the http service through firewalld so it holds now and after reload/reboot — proven by the runtime and permanent service lists, without ever closing ssh."
+section: linux
+type: lab
+level: l4
+track:
+  - securiser
+  - rhcsa
+skills:
+  - firewalld
+  - firewall-cmd
+  - zones
+  - persistence
+difficulty: intermediate
+estimated_time: 20m
+runtime:
+  type: vm
+  default: rhel
+  snapshot_required: false
+  targets:
+    - name: rhel
+      host: alma-rhcsa-1.lab
+      label_en: "AlmaLinux 10 (firewalld, firewall-cmd)"
+      label_fr: "AlmaLinux 10 (firewalld, firewall-cmd)"
+distros:
+  - rhel10
+  - almalinux10
+doc_url: https://blog.stephane-robert.info/docs/securiser/reseaux/firewalld/
+validation:
+  functional: true
+  security: true
+  persistence_after_reboot: true
+certification_tags:
+  - rhcsa

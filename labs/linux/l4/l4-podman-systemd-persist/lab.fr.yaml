@@ -1,0 +1,3 @@
+id: l4-podman-systemd-persist
+title: "Faire tourner un conteneur en service systemd avec Quadlet (persistant au boot)"
+description: "Définir une unité Quadlet .container pour qu'un conteneur démarre au boot sous systemd — prouvé par le service actif, le conteneur qui tourne et l'unité sur disque."

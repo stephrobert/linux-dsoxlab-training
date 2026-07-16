@@ -1,0 +1,30 @@
+---
+# État initial : SELinux enforcing, outils semanage installés, booléen OFF et
+# port 8404 NON étiqueté. L'apprenant accorde les deux, durablement.
+- name: Setup selinux-boolean-port lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Ensure SELinux management tools
+      ansible.builtin.dnf:
+        name:
+          - policycoreutils-python-utils
+          - setools-console
+        state: present
+
+    - name: Reset to clean initial state (boolean off, port unlabeled)
+      ansible.builtin.shell:
+        cmd: |
+          setsebool -P httpd_can_network_connect off
+          semanage port -d -t http_port_t -p tcp 8404 2>/dev/null || true
+        chdir: /
+      changed_when: false
+
+    - name: Brief the learner
+      ansible.builtin.debug:
+        msg: >-
+          SELinux est enforcing. Active le booléen httpd_can_network_connect de
+          façon PERSISTANTE (setsebool -P) et étiquette le port 8404/tcp en
+          http_port_t (semanage port -a -t http_port_t -p tcp 8404). Ne désactive
+          pas SELinux. Vérifie avec getsebool et semanage port -l.

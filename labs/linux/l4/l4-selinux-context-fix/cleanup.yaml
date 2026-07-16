@@ -1,0 +1,14 @@
+---
+# Reset idempotent : retire la règle fcontext et le répertoire, pour rejouabilité.
+- name: Cleanup selinux-context-fix lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Remove the fcontext rule and the directory
+      ansible.builtin.shell:
+        cmd: |
+          semanage fcontext -d "/srv/labweb(/.*)?" 2>/dev/null || true
+          rm -rf /srv/labweb
+        chdir: /
+      changed_when: false

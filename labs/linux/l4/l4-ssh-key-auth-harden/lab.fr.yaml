@@ -1,0 +1,3 @@
+id: l4-ssh-key-auth-harden
+title: "Mettre en place un accès SSH par clé durci pour un utilisateur de service"
+description: "Donner à l'utilisateur deploy un accès SSH par clé avec le bon propriétaire et les bonnes permissions (.ssh 700, authorized_keys 600, appartenant à l'utilisateur) — le piège classique qui casse silencieusement l'auth par clé."

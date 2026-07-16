@@ -1,0 +1,14 @@
+---
+# Reset idempotent : stoppe httpd et retire le fichier de lab, pour rejouabilité.
+- name: Cleanup selinux-diagnose-avc lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Stop httpd and remove the lab content
+      ansible.builtin.shell:
+        cmd: |
+          systemctl disable --now httpd 2>/dev/null || true
+          rm -f /var/www/html/index.html
+        chdir: /
+      changed_when: false

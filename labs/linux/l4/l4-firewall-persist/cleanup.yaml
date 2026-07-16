@@ -1,0 +1,14 @@
+---
+# Reset idempotent : referme http pour rejouabilité (ssh reste ouvert).
+- name: Cleanup firewall-persist lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Close http again (keep ssh)
+      ansible.builtin.shell:
+        cmd: |
+          firewall-cmd --permanent --remove-service=http 2>/dev/null || true
+          firewall-cmd --reload 2>/dev/null || true
+        chdir: /
+      changed_when: false

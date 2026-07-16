@@ -1,0 +1,3 @@
+id: l4-selinux-context-fix
+title: "Corriger le contexte SELinux d'un fichier, durablement"
+description: "Donner à un répertoire web personnalisé le type httpd_sys_content_t avec semanage fcontext + restorecon pour que ça survive à un relabel/reboot — prouvé par ls -Z et la règle fcontext."

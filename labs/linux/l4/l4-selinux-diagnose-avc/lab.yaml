@@ -1,0 +1,36 @@
+id: l4-selinux-diagnose-avc
+title: "Diagnose an SELinux denial (AVC) and fix it the right way"
+description: "A web file has the wrong SELinux label so httpd is denied (403). Read the AVC in the audit log and restore the context — without disabling SELinux. Proven by the live context and a 200 response."
+section: linux
+type: lab
+level: l4
+track:
+  - securiser
+  - rhcsa
+skills:
+  - selinux
+  - ausearch
+  - avc
+  - restorecon
+  - troubleshooting
+difficulty: advanced
+estimated_time: 30m
+runtime:
+  type: vm
+  default: rhel
+  snapshot_required: false
+  targets:
+    - name: rhel
+      host: alma-rhcsa-1.lab
+      label_en: "AlmaLinux 10 (SELinux enforcing, httpd, ausearch)"
+      label_fr: "AlmaLinux 10 (SELinux enforcing, httpd, ausearch)"
+distros:
+  - rhel10
+  - almalinux10
+doc_url: https://blog.stephane-robert.info/docs/securiser/durcissement/selinux/
+validation:
+  functional: true
+  security: true
+  persistence_after_reboot: false
+certification_tags:
+  - rhcsa

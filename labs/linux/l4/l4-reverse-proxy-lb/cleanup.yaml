@@ -1,0 +1,22 @@
+---
+# Reset idempotent : côté frontal, remet une conf sans frontend + arrête HAProxy.
+- name: Cleanup reverse-proxy-lb — front host (lab_target)
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Reset HAProxy to a non-proxying state
+      ansible.builtin.shell:
+        cmd: |
+          cat > /etc/haproxy/haproxy.cfg <<'EOF'
+          global
+              log /dev/log local0
+          defaults
+              mode http
+              timeout connect 5s
+              timeout client 30s
+              timeout server 30s
+          EOF
+          systemctl disable --now haproxy 2>/dev/null || true
+        chdir: /
+      changed_when: false
