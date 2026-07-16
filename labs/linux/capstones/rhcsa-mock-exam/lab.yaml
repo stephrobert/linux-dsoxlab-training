@@ -6,7 +6,6 @@ type: capstone
 level: l2
 track:
   - capstones
-  - rhcsa
 skills:
   - lvm
   - filesystems-xfs

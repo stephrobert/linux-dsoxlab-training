@@ -6,7 +6,6 @@ type: lab
 level: l3
 track:
   - depanner
-  - rhcsa
 skills:
   - systemd
   - journalctl

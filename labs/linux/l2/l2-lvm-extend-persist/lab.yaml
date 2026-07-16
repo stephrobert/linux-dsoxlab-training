@@ -6,8 +6,6 @@ type: lab
 level: l2
 track:
   - stockage
-  - rhcsa
-  - lfcs
 skills:
   - lvm
   - lvextend

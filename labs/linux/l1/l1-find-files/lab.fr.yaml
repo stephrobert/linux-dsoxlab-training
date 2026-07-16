@@ -1,0 +1,3 @@
+id: l1-find-files
+title: "Localiser des fichiers avec find par nom, taille et permissions"
+description: "Extraire une arborescence de projet et utiliser find pour lister les fichiers par motif de nom, par taille et par permissions exactes — en produisant les résultats dans des fichiers vérifiés contre l'arbre réel."

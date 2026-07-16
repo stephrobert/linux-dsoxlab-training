@@ -8,7 +8,7 @@ lab_type: lab
 bloc: 0
 bloc_order: 3
 track:
-- fundamentals
+- fondamentaux
 skills:
 - linux-concepts
 - terminal-basics
@@ -29,4 +29,6 @@ validation:
   functional: true
   security: false
   persistence_after_reboot: false
-certification_tags: []
+certification_tags:
+- rhcsa
+- lfcs

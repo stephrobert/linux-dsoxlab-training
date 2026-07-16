@@ -171,92 +171,93 @@ to refresh it.
 <!-- LABS:START -->
 ### Fondamentaux (l1)
 
-| Lab (id) | Title | Level | Runtime | Companion guide |
-|---|---|---|---|---|
-| `l1-discover-linux-map` | Map Linux: kernel, distribution and key directories | l1 | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/notions/) |
-| `l1-choose-distro` | Choose your reference Linux distribution | l1 | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/distributions-serveur/) |
-| `l1-prepare-vm` | Identify your Linux machine | l1 | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/installer-vm/) |
-| `l1-first-terminal` | First steps in the terminal | l1 | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/prompt-terminal/) |
-| `l1-read-a-command` | Read and decode a command | l1 | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/anatomie-commande/) |
-| `l1-get-help` | Get help from the command line | l1 | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/obtenir-aide/) |
-| `l1-linux-filesystem` | Linux filesystem hierarchy (FHS) | l1 | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/se-reperer-fichiers/arborescence-fhs/) |
-| `l1-navigate-filesystem` | Navigate the filesystem | l1 | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/se-reperer-fichiers/navigation-fichiers/) |
-| `l1-paths-absolute-relative` | Absolute and relative paths | l1 | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/se-reperer-fichiers/chemins-linux/) |
-| `l1-redirections-pipes` | Redirect streams and chain commands with pipes | l1 | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/manipuler-fichiers-texte/redirections-pipes/) |
-| `l1-grep-regex` | Filter a log with grep and regular expressions | l1 | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/manipuler-fichiers-texte/filtrer-texte/) |
-| `l1-text-processing` | Transform and aggregate text with cut, sort, uniq, sed and awk | l1 | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/traiter-texte/cut-tr-paste/) |
-| `l1-tar-archives` | Archive, compress and selectively extract with tar, gzip and bzip2 | l1 | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/manipuler-fichiers-texte/archives-compression/) |
-| `l1-permissions-ugo` | Set exact file permissions with chmod (octal and symbolic) | l1 | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/utilisateurs-droits-processus/modifier-droits/) |
-| `l1-links-hard-sym` | Create hard and symbolic links and tell them apart | l1 | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/se-reperer-fichiers/navigation-fichiers/) |
-| `l1-bash-script` | Write a first Bash script: variables, a loop and a condition | l1 | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/scripts-bash/premier-script/) |
-| `l1-git-basics` | Initialize a Git repo: commit, history and a branch | l1 | shell | [guide](https://blog.stephane-robert.info/docs/developper/version/git/bases-git/) |
-| `l1-env-profiles` | Environment variables: export, PATH and a sourced env file | l1 | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/efficace-shell/variables-environnement/) |
-| `l1-ssl-certificates` | Inspect a TLS certificate with openssl | l1 | shell | [guide](https://blog.stephane-robert.info/docs/reseaux/fondamentaux/tls-diagnostic/) |
+| Lab (id) | Title | Level | Certif | Runtime | Companion guide |
+|---|---|---|---|---|---|
+| `l1-discover-linux-map` | Map Linux: kernel, distribution and key directories | l1 | RHCSA · LFCS | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/notions/) |
+| `l1-choose-distro` | Choose your reference Linux distribution | l1 | RHCSA · LFCS | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/distributions-serveur/) |
+| `l1-prepare-vm` | Identify your Linux machine | l1 | RHCSA · LFCS | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/installer-vm/) |
+| `l1-first-terminal` | First steps in the terminal | l1 | RHCSA · LFCS | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/prompt-terminal/) |
+| `l1-read-a-command` | Read and decode a command | l1 | RHCSA · LFCS | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/anatomie-commande/) |
+| `l1-get-help` | Get help from the command line | l1 | RHCSA · LFCS | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/obtenir-aide/) |
+| `l1-linux-filesystem` | Linux filesystem hierarchy (FHS) | l1 | RHCSA · LFCS | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/se-reperer-fichiers/arborescence-fhs/) |
+| `l1-navigate-filesystem` | Navigate the filesystem | l1 | RHCSA · LFCS | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/se-reperer-fichiers/navigation-fichiers/) |
+| `l1-paths-absolute-relative` | Absolute and relative paths | l1 | RHCSA · LFCS | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/se-reperer-fichiers/chemins-linux/) |
+| `l1-redirections-pipes` | Redirect streams and chain commands with pipes | l1 | RHCSA | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/manipuler-fichiers-texte/redirections-pipes/) |
+| `l1-grep-regex` | Filter a log with grep and regular expressions | l1 | RHCSA · LFCS | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/manipuler-fichiers-texte/filtrer-texte/) |
+| `l1-text-processing` | Transform and aggregate text with cut, sort, uniq, sed and awk | l1 | RHCSA · LFCS | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/transformer-texte/) |
+| `l1-find-files` | Locate files with find by name, size and permissions | l1 | RHCSA · LFCS | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/manipuler-fichiers-texte/rechercher-fichiers/) |
+| `l1-tar-archives` | Archive, compress and selectively extract with tar, gzip and bzip2 | l1 | RHCSA | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/manipuler-fichiers-texte/archives-compression/) |
+| `l1-permissions-ugo` | Set exact file permissions with chmod (octal and symbolic) | l1 | RHCSA · LFCS | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/utilisateurs-droits-processus/modifier-droits/) |
+| `l1-links-hard-sym` | Create hard and symbolic links and tell them apart | l1 | RHCSA | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/se-reperer-fichiers/navigation-fichiers/) |
+| `l1-bash-script` | Write a first Bash script: variables, a loop and a condition | l1 | RHCSA · LFCS | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/efficace-shell/premier-script/) |
+| `l1-git-basics` | Initialize a Git repo: commit, history and a branch | l1 | LFCS | shell | [guide](https://blog.stephane-robert.info/docs/developper/version/git/bases-git/) |
+| `l1-env-profiles` | Environment variables: export, PATH and a sourced env file | l1 | LFCS | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/efficace-shell/variables-environnement/) |
+| `l1-ssl-certificates` | Inspect a TLS certificate with openssl | l1 | LFCS | shell | [guide](https://blog.stephane-robert.info/docs/reseaux/fondamentaux/tls-diagnostic/) |
 
 ### Exploiter + Maintenir (l2)
 
-| Lab (id) | Title | Level | Runtime | Companion guide |
-|---|---|---|---|---|
-| `l2-swap-management` | Add and manage swap space | l2 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/swap/) |
-| `l2-fstab-persist-uuid` | Mount a filesystem persistently by UUID in /etc/fstab | l2 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/montage-persistance/) |
-| `l2-partition-gpt` | Create GPT partitions on a disk with parted | l2 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/partitions/) |
-| `l2-filesystem-create-xfs` | Create and label an XFS filesystem, then mount it | l2 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/xfs/) |
-| `l2-disk-space-troubleshoot` | Diagnose a full filesystem and reclaim space | l2 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/espace-disque/) |
-| `l2-storage-performance` | Tune a mount for performance with noatime (persistently) | l2 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/performances-disques/) |
-| `l2-lvm-extend-persist` | Extend a logical volume and prove the mount survives a reboot | l2 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/lvm/) |
-| `l2-nfs-mount-persist` | Mount an NFS export persistently from a server | l2 | vm | [guide](https://blog.stephane-robert.info/docs/services/stockage/nfs/) |
-| `l2-autofs-ondemand` | Mount a filesystem on demand with autofs | l2 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/autofs/) |
-| `l2-raid-mdadm` | Build a software RAID 1 with mdadm | l2 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/raid-mdadm/) |
-| `l2-luks-encryption` | Encrypt a disk with LUKS | l2 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/chiffrement-luks/) |
-| `l2-user-lifecycle` | Create a local account with exact UID, shell and groups | l2 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/securiser/utilisateurs-groupes/) |
-| `l2-password-policy` | Enforce password aging and complexity policy | l2 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/securiser/utilisateurs-groupes/) |
-| `l2-sudo-delegation` | Delegate limited sudo rights with a sudoers drop-in | l2 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/securiser/sudo/) |
-| `l2-acl-posix` | Grant fine-grained access with POSIX ACLs | l2 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/securiser/acl/) |
-| `l2-package-management` | Install, remove and query packages with dnf | l2 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/maintenir/paquets/dnf/) |
-| `l2-repo-configure` | Configure a dnf repository with a .repo file | l2 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/maintenir/paquets/dnf/) |
+| Lab (id) | Title | Level | Certif | Runtime | Companion guide |
+|---|---|---|---|---|---|
+| `l2-swap-management` | Add and manage swap space | l2 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/swap/) |
+| `l2-fstab-persist-uuid` | Mount a filesystem persistently by UUID in /etc/fstab | l2 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/montage-persistance/) |
+| `l2-partition-gpt` | Create GPT partitions on a disk with parted | l2 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/partitions/) |
+| `l2-filesystem-create-xfs` | Create and label an XFS filesystem, then mount it | l2 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/xfs/) |
+| `l2-disk-space-troubleshoot` | Diagnose a full filesystem and reclaim space | l2 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/espace-disque/) |
+| `l2-storage-performance` | Tune a mount for performance with noatime (persistently) | l2 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/performances-disques/) |
+| `l2-lvm-extend-persist` | Extend a logical volume and prove the mount survives a reboot | l2 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/lvm/) |
+| `l2-nfs-mount-persist` | Mount an NFS export persistently from a server | l2 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/services/stockage/nfs/) |
+| `l2-autofs-ondemand` | Mount a filesystem on demand with autofs | l2 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/autofs/) |
+| `l2-raid-mdadm` | Build a software RAID 1 with mdadm | l2 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/raid-mdadm/) |
+| `l2-luks-encryption` | Encrypt a disk with LUKS | l2 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/chiffrement-luks/) |
+| `l2-user-lifecycle` | Create a local account with exact UID, shell and groups | l2 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/securiser/utilisateurs-groupes/) |
+| `l2-password-policy` | Enforce password aging and complexity policy | l2 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/securiser/utilisateurs-groupes/) |
+| `l2-sudo-delegation` | Delegate limited sudo rights with a sudoers drop-in | l2 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/securiser/sudo/) |
+| `l2-acl-posix` | Grant fine-grained access with POSIX ACLs | l2 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/securiser/acl/) |
+| `l2-package-management` | Install, remove and query packages with dnf | l2 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/maintenir/paquets/dnf/) |
+| `l2-repo-configure` | Configure a dnf repository with a .repo file | l2 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/maintenir/paquets/dnf/) |
 
 ### Services + Dépannage (l3)
 
-| Lab (id) | Title | Level | Runtime | Companion guide |
-|---|---|---|---|---|
-| `l3-boot-target` | Set the default systemd boot target | l3 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/demarrage-reboot/) |
-| `l3-service-create-unit` | Create and enable a systemd service unit | l3 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/systemd/services/) |
-| `l3-service-diagnose` | Diagnose and fix a systemd service stuck in a crash loop | l3 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/depanner/service-ne-demarre-pas/) |
-| `l3-journald-persist` | Make the systemd journal persistent across reboots | l3 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/systemd/journaux/) |
-| `l3-scheduling-cron` | Schedule a recurring job with cron | l3 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/planification/cron/) |
-| `l3-app-constraints` | Set per-user resource limits (open files) with limits.d | l3 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/processus/limites-ressources/) |
-| `l3-sysctl-persist` | Harden kernel parameters persistently with sysctl.d | l3 | vm | [guide](https://blog.stephane-robert.info/docs/securiser/durcissement/sysctl/) |
-| `l3-process-signals-priority` | Lower a service's scheduling priority with Nice | l3 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/utilisateurs-droits-processus/comprendre-processus/) |
-| `l3-tuned-profile` | Apply a tuned performance profile | l3 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/tuned/) |
-| `l3-fs-readonly-recover` | Recover a read-only mount caused by a broken fstab | l3 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/depanner/systeme-fichiers-lecture-seule/) |
-| `l3-ssh-access-recovery` | Repair a broken sshd config before it locks you out | l3 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/depanner/perte-acces-ssh/) |
+| Lab (id) | Title | Level | Certif | Runtime | Companion guide |
+|---|---|---|---|---|---|
+| `l3-boot-target` | Set the default systemd boot target | l3 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/demarrage-reboot/) |
+| `l3-service-create-unit` | Create and enable a systemd service unit | l3 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/systemd/services/) |
+| `l3-service-diagnose` | Diagnose and fix a systemd service stuck in a crash loop | l3 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/depanner/service-ne-demarre-pas/) |
+| `l3-journald-persist` | Make the systemd journal persistent across reboots | l3 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/systemd/journaux/) |
+| `l3-scheduling-cron` | Schedule a recurring job with cron | l3 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/planification/cron/) |
+| `l3-app-constraints` | Set per-user resource limits (open files) with limits.d | l3 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/processus/limites-ressources/) |
+| `l3-sysctl-persist` | Harden kernel parameters persistently with sysctl.d | l3 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/securiser/durcissement/sysctl/) |
+| `l3-process-signals-priority` | Lower a service's scheduling priority with Nice | l3 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/utilisateurs-droits-processus/comprendre-processus/) |
+| `l3-tuned-profile` | Apply a tuned performance profile | l3 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/tuned/) |
+| `l3-fs-readonly-recover` | Recover a read-only mount caused by a broken fstab | l3 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/depanner/systeme-fichiers-lecture-seule/) |
+| `l3-ssh-access-recovery` | Repair a broken sshd config before it locks you out | l3 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/depanner/perte-acces-ssh/) |
 
 ### Réseau, Sécurité & Conteneurs (l4)
 
-| Lab (id) | Title | Level | Runtime | Companion guide |
-|---|---|---|---|---|
-| `l4-ntp-sync` | Synchronize the clock with chrony and set the timezone, persistently | l4 | vm | [guide](https://blog.stephane-robert.info/docs/services/reseau/chrony/) |
-| `l4-network-static-persist` | Configure a persistent static IPv4 with NetworkManager | l4 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/reseau/networkmanager/) |
-| `l4-network-troubleshoot` | Diagnose and restore a down network connection | l4 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/reseau/diagnostic/) |
-| `l4-firewall-persist` | Open a firewalld service permanently | l4 | vm | [guide](https://blog.stephane-robert.info/docs/securiser/reseaux/firewalld/) |
-| `l4-ssh-key-auth-harden` | Set up hardened key-based SSH access for a service user | l4 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/ssh/cle-ssh/) |
-| `l4-podman-basic` | Run a detached container with Podman | l4 | vm | [guide](https://blog.stephane-robert.info/docs/conteneurs/moteurs-conteneurs/podman/) |
-| `l4-podman-systemd-persist` | Run a container as a systemd service with Quadlet (boot-persistent) | l4 | vm | [guide](https://blog.stephane-robert.info/docs/conteneurs/moteurs-conteneurs/podman/quadlet/) |
-| `l4-selinux-boolean-port` | Allow a service with SELinux: persistent boolean and labeled port | l4 | vm | [guide](https://blog.stephane-robert.info/docs/securiser/durcissement/selinux/) |
-| `l4-selinux-context-fix` | Fix a file's SELinux context, persistently | l4 | vm | [guide](https://blog.stephane-robert.info/docs/securiser/durcissement/selinux/) |
-| `l4-selinux-diagnose-avc` | Diagnose an SELinux denial (AVC) and fix it the right way | l4 | vm | [guide](https://blog.stephane-robert.info/docs/securiser/durcissement/selinux/) |
-| `l4-nat-portforward` | Set up persistent NAT port forwarding with nftables | l4 | vm | [guide](https://blog.stephane-robert.info/docs/securiser/reseaux/nat-port-forwarding/) |
-| `l4-ldap-integration` | Authenticate Linux against an LDAP directory with SSSD | l4 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/securiser/authentifier-ldap-sssd/) |
-| `l4-reverse-proxy-lb` | Load-balance a web backend with HAProxy | l4 | vm | [guide](https://blog.stephane-robert.info/docs/services/reseau/haproxy/) |
-| `l4-bridge-bonding` | Aggregate links: an active-backup bond under a bridge with nmcli | l4 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/reseau/bond-bridge/) |
+| Lab (id) | Title | Level | Certif | Runtime | Companion guide |
+|---|---|---|---|---|---|
+| `l4-ntp-sync` | Synchronize the clock with chrony and set the timezone, persistently | l4 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/services/reseau/chrony/) |
+| `l4-network-static-persist` | Configure a persistent static IPv4 with NetworkManager | l4 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/reseau/networkmanager/) |
+| `l4-network-troubleshoot` | Diagnose and restore a down network connection | l4 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/reseau/diagnostic/) |
+| `l4-firewall-persist` | Open a firewalld service permanently | l4 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/securiser/reseaux/firewalld/) |
+| `l4-ssh-key-auth-harden` | Set up hardened key-based SSH access for a service user | l4 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/ssh/cle-ssh/) |
+| `l4-podman-basic` | Run a detached container with Podman | l4 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/conteneurs/moteurs-conteneurs/podman/) |
+| `l4-podman-systemd-persist` | Run a container as a systemd service with Quadlet (boot-persistent) | l4 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/conteneurs/moteurs-conteneurs/podman/quadlet/) |
+| `l4-selinux-boolean-port` | Allow a service with SELinux: persistent boolean and labeled port | l4 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/securiser/durcissement/selinux/) |
+| `l4-selinux-context-fix` | Fix a file's SELinux context, persistently | l4 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/securiser/durcissement/selinux/) |
+| `l4-selinux-diagnose-avc` | Diagnose an SELinux denial (AVC) and fix it the right way | l4 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/securiser/durcissement/selinux/) |
+| `l4-nat-portforward` | Set up persistent NAT port forwarding with nftables | l4 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/securiser/reseaux/nat-port-forwarding/) |
+| `l4-ldap-integration` | Authenticate Linux against an LDAP directory with SSSD | l4 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/securiser/authentifier-ldap-sssd/) |
+| `l4-reverse-proxy-lb` | Load-balance a web backend with HAProxy | l4 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/services/reseau/haproxy/) |
+| `l4-bridge-bonding` | Aggregate links: an active-backup bond under a bridge with nmcli | l4 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/reseau/bond-bridge/) |
 
 ### Capstones
 
-| Lab (id) | Title | Level | Runtime | Companion guide |
-|---|---|---|---|---|
-| `rhcsa-mock-exam` | RHCSA EX200 mock exam — 20 tasks across 2 VMs | l2 | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/certifications/rhcsa/) |
+| Lab (id) | Title | Level | Certif | Runtime | Companion guide |
+|---|---|---|---|---|---|
+| `rhcsa-mock-exam` | RHCSA EX200 mock exam — 20 tasks across 2 VMs | l2 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/certifications/rhcsa/) |
 
-_62 labs — table générée par `scripts/gen_catalog.py`._
+_63 labs — table générée par `scripts/gen_catalog.py`._
 <!-- LABS:END -->
 
 ## Contributing & license

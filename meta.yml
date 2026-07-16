@@ -109,6 +109,7 @@ sections:
       - linux/l1/l1-redirections-pipes
       - linux/l1/l1-grep-regex
       - linux/l1/l1-text-processing
+      - linux/l1/l1-find-files
       - linux/l1/l1-tar-archives
       - linux/l1/l1-permissions-ugo
       - linux/l1/l1-links-hard-sym

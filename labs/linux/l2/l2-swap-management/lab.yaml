@@ -5,9 +5,7 @@ section: linux
 type: lab
 level: l2
 track:
-  - maintenir
-  - rhcsa
-  - lfcs
+  - stockage
 skills:
   - swap
   - mkswap-swapon

@@ -1,0 +1,33 @@
+id: l1-find-files
+title: "Locate files with find by name, size and permissions"
+description: "Extract a project tree and use find to list files by name pattern, by size and by exact permissions — producing the results into files that are checked against the real tree."
+section: linux
+type: lab
+level: l1
+track:
+  - fondamentaux
+skills:
+  - find
+  - search
+  - permissions
+  - file-size
+difficulty: beginner
+estimated_time: 25m
+runtime:
+  type: shell
+  workdir: challenge/work
+  fixtures:
+    - projet.tar.gz
+distros:
+  - debian12
+  - ubuntu24.04
+  - rhel10
+  - almalinux10
+doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/manipuler-fichiers-texte/rechercher-fichiers/
+validation:
+  functional: true
+  security: false
+  persistence_after_reboot: false
+certification_tags:
+  - rhcsa
+  - lfcs

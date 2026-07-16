@@ -5,9 +5,7 @@ section: linux
 type: lab
 level: l3
 track:
-  - maintenir
-  - rhcsa
-  - lfcs
+  - exploiter
 skills:
   - cron
   - crontab

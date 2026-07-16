@@ -5,8 +5,7 @@ section: linux
 type: lab
 level: l2
 track:
-  - maintenir
-  - rhcsa
+  - administration
 skills:
   - dnf
   - yum.repos.d

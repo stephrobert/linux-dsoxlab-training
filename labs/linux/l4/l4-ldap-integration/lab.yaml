@@ -6,7 +6,6 @@ type: lab
 level: l4
 track:
   - securiser
-  - rhcsa
 skills:
   - sssd
   - ldap
