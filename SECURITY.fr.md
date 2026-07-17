@@ -30,9 +30,27 @@ Merci d'inclure :
 - les étapes pour la reproduire (commande, environnement, `dsoxlab --version`),
 - tout log ou preuve de concept pertinent.
 
-Nous accuserons réception de votre signalement dès que possible, vous tiendrons
-informé de l'avancement du correctif, et vous créditerons dans les notes de
-version si vous le souhaitez.
+Nous vous tiendrons informé de l'avancement du correctif et vous créditerons dans
+les notes de version si vous le souhaitez.
+
+## Politique de divulgation
+
+Nous pratiquons la divulgation coordonnée et nous engageons sur les délais
+suivants, décomptés à partir de la réception de votre signalement :
+
+| Étape | Délai visé |
+| --- | --- |
+| Accusé de réception de votre signalement | sous **48 heures** |
+| Évaluation initiale et qualification de la sévérité | sous **5 jours** |
+| Correctif publié, ou plan de remédiation écrit | sous **30 jours** |
+| Divulgation publique de la vulnérabilité | sous **90 jours** |
+
+Nous publions l'avis de sécurité dès qu'un correctif est disponible, ou au plus
+tard à l'échéance des **90 jours**, selon ce qui arrive en premier. Si une
+vulnérabilité est activement exploitée, nous pouvons la divulguer plus tôt pour
+protéger les utilisateurs. Si un correctif complexe demande plus de temps, nous
+vous prévenons avant l'échéance et convenons d'une nouvelle date avec vous,
+plutôt que de la laisser expirer sans rien dire.
 
 ## Périmètre
 

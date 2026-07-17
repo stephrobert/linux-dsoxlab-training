@@ -10,8 +10,13 @@ updates:
       prefix: "chore(ci)"
     # Laisser décanter une nouvelle release : un paquet compromis est
     # généralement retiré en quelques jours, un cooldown réduit la fenêtre.
+    # Quarantaine graduée : plus le saut de version est large, plus le risque
+    # d'une release compromise ou régressive est élevé, plus on attend.
     cooldown:
       default-days: 7
+      semver-major-days: 14
+      semver-minor-days: 7
+      semver-patch-days: 3
 
   # Pas d'écosystème "uv" ici : ce dépôt de contenu n'a aucune dépendance
   # Python à builder (pyproject.toml : package = false, dependencies = []).

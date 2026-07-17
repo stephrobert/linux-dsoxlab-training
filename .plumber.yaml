@@ -610,6 +610,9 @@ github:
       trustedGithubActions:
         - getplumber/plumber # Plumber's own GitHub Action
         - zizmorcore/zizmor-action # GitHub Actions static analysis (zizmor)
+        - boostsecurityio/poutine-action # CI/CD exploit-chain analysis (poutine)
+        - step-security/harden-runner # egress monitoring, first step of every job
+        - sigstore/cosign-installer # keyless signing of the release bundle
         - astral-sh/setup-uv # uv installer (Astral, maintainer of ruff/uv)
         - pypa/gh-action-pypi-publish # official PyPA publisher (Trusted Publishing)
         - ossf/scorecard-action
