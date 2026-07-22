@@ -21,6 +21,9 @@ estimated_time: 25m
 # les deux) et remet /dev/vdb à blanc, LVM compris.
 runtime:
   type: vm
+  # On reste sur le poste : c'est à l'apprenant de taper son ssh vers
+  # la machine du lab, et dsoxlab n'est installé que sur le poste.
+  session: local
   default: rhel
   snapshot_required: false
   targets:

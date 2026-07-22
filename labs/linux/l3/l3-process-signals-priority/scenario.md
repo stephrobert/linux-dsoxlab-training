@@ -16,4 +16,4 @@ one, and signals (`kill -TERM`, `-HUP`, `-9`) control processes. For a service,
 the durable way is `Nice=` in the unit. `ps -o ni -p <pid>` shows the live value.
 
 Method in the companion guide:
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/utilisateurs-droits-processus/comprendre-processus/
+https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/processus/

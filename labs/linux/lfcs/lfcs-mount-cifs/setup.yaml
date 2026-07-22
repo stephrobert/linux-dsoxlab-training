@@ -13,7 +13,6 @@
       ansible.builtin.package:
         name: samba
         state: present
-      failed_when: false
 
     - name: Create the shared directory
       ansible.builtin.file:
@@ -90,7 +89,6 @@
       ansible.builtin.package:
         name: cifs-utils
         state: present
-      failed_when: false
 
     - name: Record the SMB server details for the learner
       ansible.builtin.copy:

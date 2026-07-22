@@ -6,8 +6,10 @@
   become: true
   gather_facts: false
   tasks:
+    # package (and not dnf) so the same playbook works on the Debian family:
+    # lab.yaml declares ubuntu24.04 in distros. The package name is the same.
     - name: Ensure the at package is installed
-      ansible.builtin.dnf:
+      ansible.builtin.package:
         name: at
         state: present
 

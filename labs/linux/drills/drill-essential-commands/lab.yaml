@@ -24,6 +24,9 @@ estimated_time: 20m
 # sur Ubuntu. Exige dsoxlab >= 0.1.7.
 runtime:
   type: vm
+  # On reste sur le poste : c'est à l'apprenant de taper son ssh vers
+  # la machine du lab, et dsoxlab n'est installé que sur le poste.
+  session: local
   default: rhel
   snapshot_required: false
   targets:

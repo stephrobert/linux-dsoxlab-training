@@ -13,7 +13,6 @@
           - policycoreutils-python-utils
           - setools-console
         state: present
-      failed_when: false
 
     - name: Task 2 — the content directory to be served
       ansible.builtin.file:

@@ -10,13 +10,25 @@
   become: true
   gather_facts: false
   tasks:
+    # Pas de failed_when: false ici. Si l'outillage ne s'installe pas, le lab
+    # est injouable et il vaut mieux le dire tout de suite que laisser
+    # l'apprenant buter sur un « command not found » sans explication.
+    #
+    # Le paquet `quota` sert aux quotas ext4 ; `xfsprogs` fournit xfs_quota,
+    # dont ce challenge a réellement besoin. Mesuré le 2026-07-22 sur l'image
+    # cloud Ubuntu 24.04 : xfsprogs est déjà présent, `quota` non.
+    #
+    # À savoir si ce lab passe un jour à ext4 : le support quota d'XFS est
+    # compilé en dur (CONFIG_XFS_QUOTA=y), mais celui d'ext4 est un module
+    # (CONFIG_QFMT_V2=m) que l'image cloud ne livre pas. `quotaon` échoue alors
+    # sur « Quota format not supported in kernel » et il faut en plus
+    # linux-modules-extra-$(uname -r).
     - name: Install the quota tooling and XFS userspace
       ansible.builtin.package:
         name:
           - quota
           - xfsprogs
         state: present
-      failed_when: false
 
     - name: Clean slate — unmount, drop the fstab line, wipe the disk
       ansible.builtin.shell:

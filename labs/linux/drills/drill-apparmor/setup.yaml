@@ -13,7 +13,6 @@
           - apparmor-utils
           - apparmor-profiles
         state: present
-      failed_when: false
 
     # AppArmor doit tourner ICI pour que aa-complain/aa-enforce écrivent les
     # modes dans les fichiers de profil. Il sera coupé juste après.

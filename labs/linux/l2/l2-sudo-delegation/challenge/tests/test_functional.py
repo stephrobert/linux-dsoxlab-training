@@ -34,8 +34,10 @@ def test_sudoers_syntax_valid(host):
     """L'ensemble sudoers (drop-in inclus) doit être syntaxiquement valide."""
     rc = host.run("visudo -c").rc
     assert rc == 0, (
-        "visudo -c échoue : la syntaxe sudoers est invalide (un drop-in "
-        "cassé peut bloquer TOUT sudo). Édite via visudo -f et vérifie -cf."
+        "visudo -c échoue. Deux causes possibles : une syntaxe invalide (un "
+        "drop-in cassé peut bloquer TOUT sudo), ou de mauvais droits sur le "
+        "drop-in. visudo -f laisse le fichier en 0640 et visudo -c exige 0440 : "
+        "vérifie ls -l /etc/sudoers.d/ avant de chercher une faute de frappe."
     )
 
 

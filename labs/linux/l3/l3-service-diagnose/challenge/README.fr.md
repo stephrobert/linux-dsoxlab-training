@@ -7,10 +7,10 @@ Faire passer le service `demo-crashloop` de l'état `failed`/`activating`
 défaut), de manière à ce que la correction **survive à un reboot**
 (critère RHCSA `persistence_after_reboot`).
 
-Tu travailles directement sur la VM via la session SSH ouverte par
-`dsoxlab run`. Tape les commandes de diagnostic et de correction en
-direct — pas de script à écrire. La validation se fera par
-`dsoxlab check` qui lance des tests pytest+testinfra.
+Tu travailles directement sur la VM cible, où tu ouvres une session avec
+`dsoxlab ssh`. Tape les commandes de diagnostic et de correction en
+direct : il n'y a pas de script à écrire. La validation se fera par
+`dsoxlab check`, qui lance des tests pytest+testinfra.
 
 ## 🧪 Méthode de diagnostic attendue
 

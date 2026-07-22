@@ -18,4 +18,4 @@ Chaque outil fait une chose : `cut` découpe une colonne, `sort -u` dédoublonne
 séparateur.
 
 Méthode dans les guides compagnons :
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/traiter-texte/cut-tr-paste/
+https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/transformer-texte/

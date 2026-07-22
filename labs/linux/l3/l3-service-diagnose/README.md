@@ -1,246 +1,307 @@
 # Lab — Diagnose a systemd service stuck in a crash loop
 
-> 💡 **Coming directly to this lab?** Each lab is **self-contained**.
-> Single requirement: the 3 lab VMs must be running and accessible via
-> SSH+sudo.
->
-> ```bash
-> cd /home/bob/Projets/linux-training
-> make verify-conn   # → 3 hosts respond on SSH+sudo
-> ```
->
-> If KO, run `make bootstrap && make provision` from the repo root.
+## Reminder
 
-## 🧠 Reminder
+[**Troubleshoot a Linux service that does not start with systemd**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/depanner/service-ne-demarre-pas/)
 
-🔗 [**Diagnose a crashed systemd service**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/depanner/services-processus/service-crash-loop/)
+A service whose `ExecStart` always fails for the same reason, and which a
+`Restart=` directive restarts endlessly, goes into a restart loop. The guide
+reduces troubleshooting to five steps: read the state, read the logs, check the
+configuration, fix, restart and verify. Two commands answer the vast majority of
+cases, `systemctl status` and `journalctl`. The exit code guides the diagnosis:
+below 125 it comes from the program itself, from 200 upwards it is systemd that
+failed to prepare the execution environment, and the error is then in the unit,
+not in the program.
 
-A `Restart=always` service can enter a **crash loop** when its
-`ExecStart` fails reproducibly: missing config, missing binary,
-unsatisfied dependency, port already taken. Diagnosis always follows the
-same chain:
+## The course
 
-1. `systemctl status <svc>` → state + last journal lines + ExecStart
-   exit code.
-2. `journalctl -u <svc> --since '1h ago'` → full logs, scroll up to the
-   **first** failure.
-3. Hypothesis → targeted check → fix → `daemon-reload` if the unit was
-   modified → `restart` → `is-active` + `is-enabled`.
+The examples below are about a demonstration service, `releve-metriques`, built
+for the occasion on a workshop machine: the challenge hands you another service,
+under another name, with another failure. What transposes is not a repair
+command, it is an order of reading.
 
-The **method** matters, not the specific fix command.
+### Three readings, always in the same order
 
-## 🎯 Objectives
+This lab teaches a method. It fits in three gestures, and the order matters as
+much as the commands:
 
-By the end of this lab, you will know how to:
+1. `systemctl status <unit>` gives the state, the exit code and the last ten
+   journal lines;
+2. `journalctl -u <unit> -b --no-pager` gives the complete journal of that unit
+   for the current boot;
+3. in that journal, you look for the **first** error message, not the last.
 
-- Identify a service in a **crash loop** (vs simply stopped or
-  permanently failed).
-- Read `systemctl status` to distinguish **PID exit code**, **journal
-  tail**, and **restart counter**.
-- Find the **root cause** via `journalctl -u <svc>` (`-b`, `--since`,
-  `--no-pager`).
-- Distinguish a **temporary** fix (`systemctl restart`) from a
-  **durable** one that survives a reboot (the RHCSA
-  `persistence_after_reboot` criterion).
-- Apply the rule: **`daemon-reload`** every time you touch a unit file.
-
-## 🔧 Setup
-
-The broken service must already be in place on the target VM. On the
-trainer side, that's done by `runtime/kvm.sh` (run by `dsoxlab run` or
-`make setup`).
-
-On the learner side — `dsoxlab run` already opens your SSH session
-on the target VM. To reconnect later:
-
-```bash
-dsoxlab ssh alma-rhcsa-1
-```
-
-Once on the VM, confirm the service is actually crash-looping:
-
-```bash
-systemctl is-active demo-crashloop.service
-# Expected: "activating" or "failed" (the loop runs ~ every 2s).
-```
-
-## 📚 Exercise 1 — Confirm the crash loop
-
-Run:
-
-```bash
-sudo systemctl status demo-crashloop.service
-```
-
-**Expected** (excerpt):
+That third rule is the one that separates the beginner from the practitioner.
+Here is why, measured on the workshop machine. The `releve-metriques` service is
+looping, and here is the end of its journal:
 
 ```text
-● demo-crashloop.service - Demo service stuck in crash loop (lab depanner/services-processus)
-     Loaded: loaded (/etc/systemd/system/demo-crashloop.service; enabled; preset: disabled)
-     Active: activating (auto-restart) (Result: exit-code) since ...; 1s ago
-   Main PID: ... (code=exited, status=1/FAILURE)
-   ...
+Jul 22 15:47:16 atelier systemd[1]: releve-metriques.service: Scheduled restart job, restart counter is at 4.
+Jul 22 15:47:18 atelier systemd[1]: releve-metriques.service: Scheduled restart job, restart counter is at 5.
+Jul 22 15:47:18 atelier systemd[1]: releve-metriques.service: Start request repeated too quickly.
+Jul 22 15:47:18 atelier systemd[1]: Failed to start releve-metriques.service - Releve de metriques (atelier).
 ```
 
-### 🔍 Observation
-
-Three converging hints:
-
-- **`Active: activating (auto-restart)`** — the service is **not
-  stable**; systemd is between two attempts.
-- **`Result: exit-code`** with **`status=1/FAILURE`** — the binary dies
-  with non-zero exit code. Not a system kill.
-- The **`Main PID`** changes between runs (re-run twice to see).
-
-That's the classic crash-loop signature. Now find **why** the binary
-fails.
-
-## 📚 Exercise 2 — Root cause via journalctl
-
-`systemctl status` only shows the last 10 journal lines. For the
-**first** cause, scroll up with `journalctl`:
-
-```bash
-sudo journalctl -u demo-crashloop.service -b --no-pager | head -30
-```
-
-**Expected** (excerpt):
+Those four lines say nothing about the failure. They describe the end of a loop,
+that is, a symptom of the fifth attempt. The cause is at the top of the same
+journal:
 
 ```text
-... demo-crashloop[...]: FATAL: Configuration file not found: /etc/demo-crashloop/config.yml
-... demo-crashloop[...]:        Service cannot start without configuration.
-... systemd[1]: demo-crashloop.service: Main process exited, code=exited, status=1/FAILURE
-... systemd[1]: demo-crashloop.service: Failed with result 'exit-code'.
-... systemd[1]: demo-crashloop.service: Scheduled restart job, restart counter is at N.
+Jul 22 15:47:12 atelier systemd[1]: Started releve-metriques.service - Releve de metriques (atelier).
+Jul 22 15:47:12 atelier releve-metriques[1338]: erreur: fichier de configuration illisible: /etc/releve-metriques.conf
+Jul 22 15:47:12 atelier systemd[1]: releve-metriques.service: Main process exited, code=exited, status=78/CONFIG
 ```
 
-### 🔍 Observation
+Hence the reflex: `journalctl -u <unit> -b --no-pager | head -20`, never `tail`.
 
-The **first** message says it all: the daemon is looking for
-`/etc/demo-crashloop/config.yml`, which doesn't exist. No need to
-investigate further before clearing this cause.
+> **The journal is not necessarily kept from one boot to the next.** On the
+> workshop machine, `/var/log/journal` does not exist: the journal lives in
+> memory and `journalctl --list-boots` knows only one boot. Concretely,
+> rebooting the machine erases the evidence. You diagnose **before** rebooting,
+> and you check the situation with `ls -d /var/log/journal`.
 
-Verify:
+### Signature 1: the binary could not be started (`203/EXEC`)
+
+First failure: the unit points at an `ExecStart` that does not exist.
 
 ```bash
-ls -la /etc/demo-crashloop/ 2>&1
-# Output: "ls: cannot access '/etc/demo-crashloop/': No such file or directory"
+systemctl status releve-metriques.service
 ```
 
-## 📚 Exercise 3 — Read the unit file to understand the contract
+```text
+● releve-metriques.service - Releve de metriques (atelier)
+     Loaded: loaded (/etc/systemd/system/releve-metriques.service; disabled; preset: disabled)
+     Active: activating (auto-restart) (Result: exit-code) since Wed 2026-07-22 15:43:22 UTC; 809ms ago
+    Process: 3530 ExecStart=/usr/local/sbin/releve-metriques (code=exited, status=203/EXEC)
+   Main PID: 3530 (code=exited, status=203/EXEC)
+```
 
-Before creating the config file, see what the binary expects exactly.
-The unit tells you where the binary is:
+Three hints can be read at once: `activating (auto-restart)` (the service is not
+stable, systemd is between two attempts), `Result: exit-code` (the process died
+by itself, it was not killed) and `status=203/EXEC`. The journal names the
+cause:
+
+```text
+(etriques)[3527]: releve-metriques.service: Unable to locate executable '/usr/local/sbin/releve-metriques': No such file or directory
+(etriques)[3527]: releve-metriques.service: Failed at step EXEC spawning /usr/local/sbin/releve-metriques: No such file or directory
+```
+
+Beware of the trap: the same `203/EXEC` code covers two distinct causes. By
+dropping the script without giving it the execute bit (`-rw-r--r--`), the code
+does not change, but the message does:
+
+```text
+(etriques)[3720]: releve-metriques.service: Unable to locate executable '/usr/local/sbin/releve-metriques': Permission denied
+```
+
+`No such file or directory` points at the path, `Permission denied` at the mode.
+The code alone is therefore not enough, it is the pair code plus message that
+decides.
+
+### Signature 2: the program refuses its configuration
+
+Once the script is made executable, the loop continues, but the signature
+changes completely:
+
+```text
+    Process: 3798 ExecStart=/usr/local/sbin/releve-metriques (code=exited, status=78)
+   Main PID: 3798 (code=exited, status=78)
+```
+
+```text
+releve-metriques[3795]: erreur: fichier de configuration illisible: /etc/releve-metriques.conf
+systemd[1]: releve-metriques.service: Main process exited, code=exited, status=78/CONFIG
+```
+
+Here the code is **below 125**, so it comes from the program and not from
+systemd. The message that comes with it is emitted by the program itself (note
+the `releve-metriques[3795]` prefix instead of `systemd[1]`): it is the one that
+says which file it is missing. A useful nuance: `systemctl status` displays a
+raw `78`, while the journal translates `78/CONFIG`, because systemd knows the
+`sysexits.h` convention.
+
+A file that is present but incorrect gives the same code and another message.
+With a misspelled key in `/etc/releve-metriques.conf`:
+
+```text
+releve-metriques[3835]: erreur: cle intervalle absente ou non numerique dans /etc/releve-metriques.conf (lu: '')
+```
+
+In other words, as soon as the code is an application code, the program's
+journal is the only useful source, and you have to go and read what the program
+expects (`systemctl cat <unit>` gives the path of the `ExecStart`, which you can
+then open).
+
+### Signature 3: systemd could not prepare the execution (`217/USER`, `200/CHDIR`)
+
+Third family: the program never started, systemd failed before that. By adding
+to the unit a working directory that does not exist:
+
+```text
+    Process: 3960 ExecStart=/usr/local/sbin/releve-metriques (code=exited, status=200/CHDIR)
+```
+
+```text
+(etriques)[3957]: releve-metriques.service: Changing to the requested working directory failed: No such file or directory
+(etriques)[3957]: releve-metriques.service: Failed at step CHDIR spawning /usr/local/sbin/releve-metriques: No such file or directory
+```
+
+By additionally adding a `User=` that does not exist on the machine:
+
+```text
+    Process: 4066 ExecStart=/usr/local/sbin/releve-metriques (code=exited, status=217/USER)
+```
+
+```text
+(etriques)[4064]: releve-metriques.service: Failed to determine user credentials: No such process
+(etriques)[4064]: releve-metriques.service: Failed at step USER spawning /usr/local/sbin/releve-metriques: No such process
+```
+
+Two lessons. First, the name of the step (`Failed at step USER`, `step CHDIR`,
+`step EXEC`) directly designates the faulty directive: `User=`,
+`WorkingDirectory=`, `ExecStart=`. Second, on the workshop machine both faults
+were present at the same time and only `217/USER` came up: systemd stops at the
+first step that fails. Fixing one cause can therefore reveal another, and you
+have to read the status again after each fix.
+
+Another detail to know so as not to get lost: in those lines, the sender is not
+`systemd[1]` but `(etriques)[3957]`. That is the child process systemd has just
+forked, whose name is truncated. It is not another program.
+
+### Two tools that save time
+
+**`systemctl show -p <property>` queries the effective state**, not the file on
+disk. The difference is far from theoretical: a fragment dropped in
+`/etc/systemd/system/<unit>.service.d/` changes the behaviour without modifying
+the main file. On the workshop machine, the main file contains `RestartSec=2s`
+and yet:
 
 ```bash
-sudo systemctl cat demo-crashloop.service
+systemctl show releve-metriques.service -p Restart -p RestartUSec -p FragmentPath -p DropInPaths
 ```
 
-You'll see `ExecStart=/usr/local/bin/demo-crashloop`. Read that binary:
+```text
+Restart=always
+RestartUSec=1s
+FragmentPath=/etc/systemd/system/releve-metriques.service
+DropInPaths=/etc/systemd/system/releve-metriques.service.d/10-atelier.conf
+```
+
+Two traps in that output: the property being queried does not always carry the
+name of the directive (`RestartSec=` in the file becomes `RestartUSec=` in
+`show`), and `DropInPaths` is the only quick way to know that an override
+exists. `systemctl cat <unit>` displays the fragments one after the other,
+`show` gives the result of their merge. The `--value` option returns only the
+value, which makes the call scriptable:
 
 ```bash
-sudo cat /usr/local/bin/demo-crashloop
+for p in ActiveState SubState ExecMainStatus NRestarts; do
+    printf "%-15s %s\n" "$p" "$(systemctl show releve-metriques.service -p "$p" --value)"
+done
 ```
 
-The script expects:
+```text
+ActiveState     failed
+SubState        failed
+ExecMainStatus  78
+NRestarts       5
+```
 
-- A file `/etc/demo-crashloop/config.yml`
-- A line `port: <number>` inside (parsed by awk)
-- Otherwise it exits with code 1 or 2.
+**`journalctl -u <unit> -b --no-pager -o short-precise` timestamps to the
+millisecond**, which makes the pace of the loop visible:
 
-### 🔍 Observation
+```text
+15:47:15.696923 releve-metriques[1343]: erreur: fichier de configuration illisible: /etc/releve-metriques.conf
+15:47:16.957531 releve-metriques[1345]: erreur: fichier de configuration illisible: /etc/releve-metriques.conf
+15:47:18.208049 systemd[1]: releve-metriques.service: Scheduled restart job, restart counter is at 5.
+15:47:18.208454 systemd[1]: releve-metriques.service: Start request repeated too quickly.
+15:47:18.208506 systemd[1]: Failed to start releve-metriques.service - Releve de metriques (atelier).
+```
 
-Typical of poorly documented apps: the error doc is in the code. Always
-read the `ExecStart` binary/script when `journalctl` mentions a missing
-file.
+One cycle roughly every 1.25 second, and above all an end. By default, systemd
+tolerates `StartLimitBurst=5` starts per `StartLimitIntervalSec=10s` window;
+beyond that, it gives up, says so explicitly (`Start request repeated too
+quickly`) and switches the unit to `failed`. A service that is no longer looping
+is therefore not necessarily repaired: it may simply have given up. Always check
+`NRestarts` and the actual state.
 
-## 📚 Exercise 4 — Durable fix
+> **A loop that is too slow never reaches the limit.** With the `RestartSec=2s`
+> of the original file, the workshop machine counted 21 restarts without ever
+> triggering the safeguard: a 2.25 second cycle just fits inside the 10 seconds
+> of the window. The service then goes round in circles indefinitely, without
+> ever going `failed`, and does not appear in `systemctl list-units --failed`.
 
-Three steps for a **persistent** fix:
+### `active` is not `enabled`: proof by reboot
 
-### 4.1 Create the directory and config file
+A fix is only finished if it survives the reboot. After putting the expected
+configuration in place, the service starts again:
 
 ```bash
-sudo mkdir -p /etc/demo-crashloop
-sudo tee /etc/demo-crashloop/config.yml >/dev/null <<'EOF'
-port: 8080
-EOF
-sudo chmod 0644 /etc/demo-crashloop/config.yml
-sudo chown root:root /etc/demo-crashloop/config.yml
+systemctl is-active releve-metriques.service   # active
+systemctl is-enabled releve-metriques.service  # disabled
 ```
 
-> **Security**: `chmod 0644` quoted, `chown root:root` explicit. This
-> aligns with the repo's "security by default" rule — a config file
-> must never inherit the current user.
+The two answers coexist without contradiction: `is-active` describes now,
+`is-enabled` describes the next boot. The `Loaded:` line of `systemctl status`
+already says it, by the way, in parentheses after the path of the unit. A
+`systemctl reboot` settles the matter:
 
-### 4.2 Restart the service
+```text
+$ systemctl is-active releve-metriques.service
+inactive
+$ systemctl is-enabled releve-metriques.service
+disabled
+```
+
+The service repaired the day before is dead on waking. `enable` creates the
+missing symbolic link, in the directory designated by the `[Install]` section of
+the unit:
 
 ```bash
-sudo systemctl restart demo-crashloop.service
+sudo systemctl enable --now releve-metriques.service
 ```
 
-No `daemon-reload` needed (we did **not** touch the unit file — only
-created the config it was waiting for).
+```text
+Created symlink '/etc/systemd/system/multi-user.target.wants/releve-metriques.service' → '/etc/systemd/system/releve-metriques.service'.
+```
 
-### 4.3 Verify persistence
+Second reboot, same check:
+
+```text
+$ systemctl is-active releve-metriques.service
+active
+$ systemctl is-enabled releve-metriques.service
+enabled
+```
+
+`enable --now` combines `enable` and `start`. Note finally that `is-active` and
+`is-enabled` also return an exit code usable in a script: `0` when the answer is
+positive, `3` for `inactive` and `1` for `disabled`.
+
+### Troubleshooting
+
+| What you see | What to look at |
+|---|---|
+| `Active: activating (auto-restart)` | the loop is running, go back up to the first journal message |
+| `status=203/EXEC` + `No such file or directory` | the path of `ExecStart=` is wrong |
+| `status=203/EXEC` + `Permission denied` | the execute bit is missing on the binary |
+| `status=200/CHDIR` | `WorkingDirectory=` designates a directory that is absent |
+| `status=217/USER` | the `User=` of the unit does not exist on the machine |
+| code below 125 | the program stopped itself, read its own journal lines |
+| `Start request repeated too quickly` | the start limit is reached, the service gave up |
+| The journal shows nothing before the reboot | volatile journal, `/var/log/journal` is absent |
+| The modified unit changes nothing | `daemon-reload` forgotten, or a drop-in wins (`systemctl show -p DropInPaths`) |
+
+To remove a demonstration service and start from a clean machine:
 
 ```bash
-sudo systemctl is-active demo-crashloop.service   # → active
-sudo systemctl is-enabled demo-crashloop.service  # → enabled
-sudo systemctl status demo-crashloop.service | head -5
+sudo systemctl disable --now <unit>
+sudo rm -f /etc/systemd/system/<unit>.service
+sudo rm -rf /etc/systemd/system/<unit>.service.d
+sudo systemctl daemon-reload
+sudo systemctl reset-failed
+systemctl list-units --failed        # must list 0 units
 ```
 
-### 🔍 Observation
-
-- `is-active` must return **`active`** (not `activating` or `failed`).
-- `is-enabled` must return **`enabled`** — that's what guarantees the
-  service comes back after reboot. This is the
-  `persistence_after_reboot: true` criterion validated by the tests.
-
-## 🔍 Things to notice
-
-- **`Restart=always` hides real errors**: a hurried operator just sees
-  "the service is UP some of the time" and moves on. The
-  `journalctl --since '1h ago'` method is non-negotiable.
-- **Root cause is always in the FIRST error message** — scroll up, not
-  down.
-- **`daemon-reload` after editing a unit, not after editing the
-  application config** — RHCSA-relevant distinction.
-- **`is-active` + `is-enabled`**: both are needed for reboot
-  persistence. Missing `is-enabled` is the classic RHCSA junior
-  mistake.
-
-## 🤔 Reflection questions
-
-1. If the service restarted properly but exited after 30 minutes (vs
-   instantly), how would you adapt your diagnosis? Which extra tools
-   (e.g. `coredumpctl`, `systemd-analyze blame`)?
-
-2. You find the service crash-looping on **3 identical servers** in
-   parallel. What remediation strategy (local vs Ansible automation)?
-   What should be documented before touching anything?
-
-3. How could this crash loop have been **prevented**? (Hints:
-   `validate=` in Ansible, `systemd-analyze verify`, declared
-   dependency `Requires=` or `ConditionPathExists=` in the unit.)
-
-## 🚀 Final challenge
-
-See [`challenge/README.md`](challenge/README.md). The challenge asks
-you to **diagnose and fix** the crash-looping service directly on
-the VM, in your interactive session — no script to write. Validation
-via `dsoxlab check` runs pytest+testinfra against the VM's final
-state.
-
-## 💡 Going further
-
-- **`coredumpctl list`** + `coredumpctl info <pid>`: for services that
-  crash with a signal (SIGSEGV, SIGABRT) instead of an exit code.
-- **`systemd-analyze blame`** + `critical-chain`: identify services
-  that slow down boot (useful for the `depanner/demarrage/`
-  subsection).
-- **Drop-in override** in `/etc/systemd/system/<svc>.d/override.conf`
-  to change `Restart`, `RestartSec`, or `ExecStartPre` without
-  modifying the main unit.
-- **`journalctl -p err -b -u <svc>`** filters by priority (warning,
-  err, alert, crit) — saves time when the service is verbose.
+`reset-failed` clears the `failed` state and resets the restart counter to zero.
+Without it, a unit that has been fixed can still be shown as failed.

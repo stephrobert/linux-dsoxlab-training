@@ -234,7 +234,7 @@ ci-dessous est générée à partir des vrais `lab.yaml` : lance
 | `l3-scheduling-timers` | Planifier une tâche récurrente avec un timer systemd | l3 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/planification/timers/) |
 | `l3-app-constraints` | Régler les limites de ressources par utilisateur (fichiers ouverts) avec limits.d | l3 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/processus/limites-ressources/) |
 | `l3-sysctl-persist` | Durcir des paramètres noyau durablement avec sysctl.d | l3 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/securiser/durcissement/sysctl/) |
-| `l3-process-signals-priority` | Abaisser la priorité d'ordonnancement d'un service avec Nice | l3 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/utilisateurs-droits-processus/comprendre-processus/) |
+| `l3-process-signals-priority` | Abaisser la priorité d'ordonnancement d'un service avec Nice | l3 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/processus/) |
 | `l3-tuned-profile` | Appliquer un profil de performance tuned | l3 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/tuned/) |
 | `l3-fs-readonly-recover` | Récupérer un montage en lecture seule dû à un fstab cassé | l3 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/depanner/systeme-fichiers-lecture-seule/) |
 | `l3-ssh-access-recovery` | Réparer une config sshd cassée avant qu'elle ne te verrouille dehors | l3 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/depanner/perte-acces-ssh/) |

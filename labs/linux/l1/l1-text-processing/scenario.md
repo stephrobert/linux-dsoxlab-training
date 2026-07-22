@@ -16,4 +16,4 @@ Each tool does one job: `cut` slices a column, `sort -u` deduplicates,
 `uniq -c` counts runs, `awk` sums a field, `sed` rewrites a delimiter.
 
 Method in the companion guides:
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/traiter-texte/cut-tr-paste/
+https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/transformer-texte/

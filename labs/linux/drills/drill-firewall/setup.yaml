@@ -12,14 +12,12 @@
         name: firewalld
         state: present
       when: ansible_os_family == "RedHat"
-      failed_when: false
 
     - name: Debian — provide ufw
       ansible.builtin.package:
         name: ufw
         state: present
       when: ansible_os_family == "Debian"
-      failed_when: false
 
     # Remise à zéro : pare-feu ARRÊTÉ et sans règles de lab. SSH est
     # pré-autorisé — si le candidat active le pare-feu sans y penser, il ne

@@ -12,7 +12,6 @@
           - xfsprogs
           - parted
         state: present
-      failed_when: false
 
     # Remise à blanc complète : le drill doit être rejouable, et d'autres labs
     # (capstones, quotas) utilisent le même /dev/vdb.
