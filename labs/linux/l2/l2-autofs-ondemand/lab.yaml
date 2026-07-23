@@ -2,7 +2,6 @@ id: l2-autofs-ondemand
 title: "Mount a filesystem on demand with autofs"
 description: "Configure autofs so that accessing /autofs/data mounts the spare disk automatically, and unmounts it after idle — a master map plus a mount map."
 section: l2
-bloc_order: 9
 lab_type: lab
 level: l2
 track:

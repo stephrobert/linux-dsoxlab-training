@@ -2,7 +2,6 @@ id: l2-partition-gpt
 title: "Create GPT partitions on a disk with parted"
 description: "Put a GPT label on the spare disk and carve two partitions (512 MiB and 1 GiB), then make the kernel re-read the table."
 section: l2
-bloc_order: 3
 lab_type: lab
 level: l2
 track:

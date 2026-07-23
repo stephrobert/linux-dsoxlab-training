@@ -2,7 +2,6 @@ id: l2-acl-posix
 title: "Grant fine-grained access with POSIX ACLs"
 description: "Go beyond ugo: give one user rw on a file and a group rx on a directory, with a default ACL so new files inherit it — using setfacl/getfacl."
 section: l2
-bloc_order: 15
 lab_type: lab
 level: l2
 track:

@@ -2,7 +2,6 @@ id: l3-scheduling-at
 title: "Schedule a one-shot job with at"
 description: "Queue a command to run once at a later time with at, and prove it is scheduled — the one-off counterpart to cron."
 section: l3
-bloc_order: 7
 lab_type: lab
 level: l3
 track:

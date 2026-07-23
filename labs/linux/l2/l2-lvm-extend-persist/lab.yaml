@@ -2,7 +2,6 @@ id: l2-lvm-extend-persist
 title: "Extend a logical volume and prove the mount survives a reboot"
 description: "Extend an LVM logical volume, grow the XFS filesystem, and make the mount persistent via /etc/fstab by UUID."
 section: l2
-bloc_order: 7
 lab_type: lab
 level: l2
 track:

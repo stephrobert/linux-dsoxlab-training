@@ -2,7 +2,6 @@ id: l4-podman-basic
 title: "Run a detached container with Podman"
 description: "Pull an image and run a named container detached, and prove it is up — the Podman basics for RHCSA containers."
 section: l4
-bloc_order: 6
 lab_type: lab
 level: l4
 track:

@@ -2,7 +2,6 @@ id: l3-fs-readonly-recover
 title: "Recover a read-only mount caused by a broken fstab"
 description: "A bad /etc/fstab option left /srv/data mounted read-only. Fix the entry, remount read-write, and make mount -a clean again."
 section: l3
-bloc_order: 13
 lab_type: lab
 level: l3
 track:

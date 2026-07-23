@@ -2,7 +2,6 @@ id: lfcs-mount-cifs
 title: "Mount an SMB/CIFS share persistently and safely"
 description: "A second host serves an SMB share. Mount it on the client, make it persistent in /etc/fstab with _netdev, and keep the password out of the world-readable fstab by using a 0600 credentials file."
 section: lfcs
-bloc_order: 6
 lab_type: lab
 level: l2
 track:

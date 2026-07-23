@@ -2,7 +2,6 @@ id: l4-ntp-sync
 title: "Synchronize the clock with chrony and set the timezone, persistently"
 description: "Enable and start chronyd, turn NTP on and set the timezone to Europe/Paris — surviving reboot, proven by the live service state and timedatectl."
 section: l4
-bloc_order: 1
 lab_type: lab
 level: l4
 track:

@@ -2,7 +2,6 @@ id: rhcsa-mock-exam
 title: "RHCSA EX200 mock exam — 20 tasks across 2 VMs"
 description: "Performance-based RHCSA mock exam covering 10 RHCSA domains: storage (LVM, swap, NFS), networking (static IP, firewalld), users/groups, ACLs, services (systemd units, timers, chrony), SELinux (modes, contexts, booleans, port labels), software (DNF, Flatpak), boot recovery (rd.break root reset). 20 tasks scored on 100 points across 2 VMs (server + client). 70/100 to pass. No hints."
 section: capstones
-bloc_order: 1
 lab_type: capstone
 level: l2
 track:

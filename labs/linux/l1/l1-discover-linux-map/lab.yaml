@@ -7,7 +7,6 @@ section: l1
 level: l1
 lab_type: lab
 bloc: 0
-bloc_order: 1
 track:
 - fondamentaux
 skills:

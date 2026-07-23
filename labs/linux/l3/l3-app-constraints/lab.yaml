@@ -2,7 +2,6 @@ id: l3-app-constraints
 title: "Set per-user resource limits (open files) with limits.d"
 description: "Give the appuser account a higher open-files limit via /etc/security/limits.d — proven by the effective ulimit in a real login session."
 section: l3
-bloc_order: 9
 lab_type: lab
 level: l3
 track:

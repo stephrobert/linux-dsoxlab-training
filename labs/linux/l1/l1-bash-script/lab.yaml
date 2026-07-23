@@ -2,7 +2,6 @@ id: l1-bash-script
 title: "Write a first Bash script: variables, a loop and a condition"
 description: "Write rapport.sh that reads a status file passed as an argument, counts UP/DOWN with a loop, prints them, and exits non-zero when any host is down."
 section: l1
-bloc_order: 17
 lab_type: lab
 level: l1
 track:

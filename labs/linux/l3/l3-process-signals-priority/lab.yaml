@@ -2,7 +2,6 @@ id: l3-process-signals-priority
 title: "Lower a service's scheduling priority with Nice"
 description: "A batch worker hogs the CPU. Give its service a nice value of 10 so it yields to interactive work — proven by the live process priority and the unit config."
 section: l3
-bloc_order: 11
 lab_type: lab
 level: l3
 track:
