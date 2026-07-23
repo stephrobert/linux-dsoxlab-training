@@ -150,11 +150,11 @@ Configurez chrony sur `alma-rhcsa-1` pour :
 
 Sur `alma-rhcsa-1`, le fichier `/var/www/html/index.html` existe mais a un contexte SELinux incorrect. Restaurez-le au contexte standard pour qu'`httpd_t` puisse le lire (`httpd_sys_content_t`).
 
-### Tâche 14 — Boolean SELinux `httpd_can_network_connect` (3 pts)
+### Tâche 14 — Boolean SELinux `httpd_can_network_connect` (5 pts)
 
 Activez le boolean SELinux `httpd_can_network_connect` de manière **permanente** (persistant après reboot).
 
-### Tâche 15 — Étiquette de port SELinux 8888/tcp (3 pts)
+### Tâche 15 — Étiquette de port SELinux 8888/tcp (5 pts)
 
 Ajoutez l'étiquette SELinux **`http_port_t`** sur le port **8888/tcp**, permanent.
 

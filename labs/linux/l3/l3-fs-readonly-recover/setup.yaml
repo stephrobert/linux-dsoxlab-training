@@ -14,7 +14,6 @@
           - parted
           - util-linux
         state: present
-      failed_when: false
 
     - name: Detect the additional block device (not the root disk)
       ansible.builtin.shell:

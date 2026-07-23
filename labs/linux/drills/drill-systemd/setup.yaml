@@ -3,19 +3,26 @@
 - name: Drill systemd — givens
   hosts: lab_target
   become: true
-  gather_facts: false
+  # gather_facts activé pour disposer d'ansible_os_family : le paquet cron n'a
+  # pas le même nom selon la famille, et la boucle « on tente les deux sans
+  # échouer » qui figurait ici masquait toute vraie panne d'installation.
+  #
+  # Mesuré le 2026-07-22 : `cronie` est aussi installable sur Ubuntu 24.04
+  # (universe). L'ancienne boucle y installait donc les DEUX implémentations,
+  # alors que Debian n'attend que `cron`.
+  gather_facts: true
   tasks:
-    # Le paquet cron n'a pas le même nom selon la distrib. On tente les deux
-    # sans échouer : celui qui n'existe pas est simplement ignoré. Ça évite un
-    # gather_facts juste pour ça.
-    - name: cron tooling (cron on Debian, cronie on RHEL)
+    - name: Debian — cron tooling
       ansible.builtin.package:
-        name: "{{ item }}"
+        name: cron
         state: present
-      loop:
-        - cron
-        - cronie
-      failed_when: false
+      when: ansible_os_family == "Debian"
+
+    - name: RHEL — cron tooling
+      ansible.builtin.package:
+        name: cronie
+        state: present
+      when: ansible_os_family == "RedHat"
 
     - name: The account that must carry the cron job
       ansible.builtin.user:

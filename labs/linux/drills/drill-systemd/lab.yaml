@@ -24,6 +24,9 @@ estimated_time: 25m
 #     sur alma et le candidat gagnerait 20 points sans rien toucher.
 runtime:
   type: vm
+  # On reste sur le poste : c'est à l'apprenant de taper son ssh vers
+  # la machine du lab, et dsoxlab n'est installé que sur le poste.
+  session: local
   default: rhel
   snapshot_required: false
   targets:

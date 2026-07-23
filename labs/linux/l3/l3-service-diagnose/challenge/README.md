@@ -7,10 +7,10 @@ to `active` AND `enabled` on the target VM (`alma-rhcsa-1.lab` by
 default), so that the fix **survives a reboot**
 (RHCSA `persistence_after_reboot` criterion).
 
-You work directly on the VM through the SSH session opened by
-`dsoxlab run`. Type the diagnostic and fix commands
-live — no script to write. Validation is done by
-`dsoxlab check`, which runs pytest+testinfra tests.
+You work directly on the target VM, where you open a session with
+`dsoxlab ssh`. Type the diagnostic and fix commands live: there is no
+script to write. Validation is done by `dsoxlab check`, which runs
+pytest+testinfra tests.
 
 ## 🧪 Expected diagnostic method
 

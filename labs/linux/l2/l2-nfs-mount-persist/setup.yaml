@@ -13,7 +13,6 @@
       ansible.builtin.package:
         name: nfs-utils
         state: present
-      failed_when: false
 
     - name: Create the export directory and a served file
       ansible.builtin.file:
@@ -61,7 +60,6 @@
       ansible.builtin.package:
         name: nfs-utils
         state: present
-      failed_when: false
 
     - name: Record the NFS server address for the learner
       ansible.builtin.copy:

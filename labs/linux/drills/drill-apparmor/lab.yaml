@@ -24,6 +24,9 @@ estimated_time: 15m
 # complain » serait fausse, on cible donc des profils nommés.
 runtime:
   type: vm
+  # On reste sur le poste : c'est à l'apprenant de taper son ssh vers
+  # la machine du lab, et dsoxlab n'est installé que sur le poste.
+  session: local
   default: ubuntu
   snapshot_required: false
   targets:

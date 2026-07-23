@@ -23,7 +23,6 @@
           - ufw
           - cron
         state: present
-      failed_when: false
 
     # ------------------------------------------------------------------
     # Section A — matière à traiter

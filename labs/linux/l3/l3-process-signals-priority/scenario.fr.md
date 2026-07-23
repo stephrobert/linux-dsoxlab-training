@@ -19,4 +19,4 @@ processus. Pour un service, la façon durable est `Nice=` dans l'unit.
 `ps -o ni -p <pid>` montre la valeur live.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/utilisateurs-droits-processus/comprendre-processus/
+https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/processus/

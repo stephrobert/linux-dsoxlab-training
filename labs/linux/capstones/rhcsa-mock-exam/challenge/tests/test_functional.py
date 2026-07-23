@@ -297,7 +297,7 @@ def test_13_restorecon_index_html(srv1):
     )
 
 
-@pytest.mark.points(3)
+@pytest.mark.points(5)
 def test_14_selinux_boolean_httpd_can_network_connect(srv1):
     """Tâche 14 : boolean httpd_can_network_connect=on permanent."""
     out = srv1.run("getsebool httpd_can_network_connect")
@@ -310,7 +310,7 @@ def test_14_selinux_boolean_httpd_can_network_connect(srv1):
     )
 
 
-@pytest.mark.points(3)
+@pytest.mark.points(5)
 def test_15_selinux_port_label_8888_http(srv1):
     """Tâche 15 : port 8888/tcp étiqueté http_port_t."""
     out = srv1.run("semanage port -l")

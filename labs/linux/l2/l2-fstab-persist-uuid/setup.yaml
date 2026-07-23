@@ -12,7 +12,6 @@
       ansible.builtin.package:
         name: e2fsprogs
         state: present
-      failed_when: false
 
     - name: Detect the additional block device (not the root disk)
       ansible.builtin.shell: |

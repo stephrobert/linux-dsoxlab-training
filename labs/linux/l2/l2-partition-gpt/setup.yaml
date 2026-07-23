@@ -14,7 +14,6 @@
           - parted
           - util-linux
         state: present
-      failed_when: false
 
     - name: Detect the additional block device (not the root disk)
       ansible.builtin.shell: |
@@ -33,9 +32,15 @@
         set -e
         . /root/part-disk.env
         umount "${DISK}"* 2>/dev/null || true
+        # Wipe the signatures INSIDE the partitions first: a filesystem header
+        # sitting at an offset the disk-level wipefs never reads would survive
+        # and resurface the moment a new partition covers it again.
+        for part in $(lsblk -lno NAME "$DISK" | tail -n +2); do
+          wipefs -a "/dev/${part}" 2>/dev/null || true
+        done
+        # Then the disk itself: this clears the PMBR plus both GPT copies
+        # (primary at 0x200, backup at the end of the device).
         wipefs -a "$DISK"
-        # Zap any GPT/MBR structures so the disk starts truly blank.
-        sgdisk --zap-all "$DISK" 2>/dev/null || true
         partprobe "$DISK" 2>/dev/null || true
       changed_when: false
 

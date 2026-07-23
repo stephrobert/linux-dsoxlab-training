@@ -28,6 +28,9 @@ estimated_time: 20m
 # avant de vérifier. Un `ip addr add` posé à la main meurt à ce moment-là.
 runtime:
   type: vm
+  # On reste sur le poste : c'est à l'apprenant de taper son ssh vers
+  # la machine du lab, et dsoxlab n'est installé que sur le poste.
+  session: local
   default: rhel
   snapshot_required: false
   targets:

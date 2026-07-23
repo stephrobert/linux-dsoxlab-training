@@ -15,13 +15,11 @@
         name: python3-dnf-plugin-versionlock
         state: present
       when: ansible_os_family == "RedHat"
-      failed_when: false
 
     - name: Task 5 — a package the candidate must remove
       ansible.builtin.package:
         name: nano
         state: present
-      failed_when: false
 
     # ORDRE CRITIQUE : dégeler AVANT de supprimer. Un paquet gelé ne peut pas
     # être retiré (apt refuse de toucher un held package), et d'autres labs
@@ -44,7 +42,6 @@
       ansible.builtin.package:
         name: tree
         state: absent
-      failed_when: false
 
     - name: Clean slate — prove tree really is gone (a silent failure here
         would hand the candidate task 1 for free)
