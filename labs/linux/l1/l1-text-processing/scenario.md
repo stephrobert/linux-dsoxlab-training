@@ -1,19 +1,12 @@
 # Context — turn a raw record file into facts
 
 You have `ventes.csv`, eight `;`-separated records of the shape
-`date;region;product;amount`. With the text toolbox — `cut`, `sort`, `uniq`,
-`awk`, `sed` — turn it into four exact artifacts: the distinct regions, the count
-of sales per region, the grand total, and a comma-separated version.
+`date;region;product;amount`. With the shell's text toolbox alone, turn it into
+four exact artifacts: the distinct regions, the count of sales per region, the
+grand total, and a comma-separated version.
 
-Your mission — produce, in the work directory:
-
-1. `regions.txt` — the **distinct** regions, sorted.
-2. `nb-par-region.txt` — the **count of sales per region**.
-3. `total.txt` — the **sum** of the amount column.
-4. `en-csv.txt` — the same file with `;` replaced by `,`.
-
-Each tool does one job: `cut` slices a column, `sort -u` deduplicates,
-`uniq -c` counts runs, `awk` sums a field, `sed` rewrites a delimiter.
+The point: every tool in the chain does exactly one job. The whole difficulty is
+picking the right one for each question, and chaining them in the right order.
 
 Method in the companion guides:
 https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/transformer-texte/

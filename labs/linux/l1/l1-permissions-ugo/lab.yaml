@@ -2,7 +2,7 @@ id: l1-permissions-ugo
 title: "Set exact file permissions with chmod (octal and symbolic)"
 description: "Give each file the right owner/group/other bits: a private secret, an executable script, a group-readable note and a private directory."
 section: linux
-type: lab
+lab_type: lab
 level: l1
 track:
   - fondamentaux

@@ -52,6 +52,13 @@ def _build_inventory_cached() -> tuple[dict, Path | None]:
     via ``ssh://<host>?ssh_config=...``, plus fiable que de bourrer
     ``ssh_extra_args`` dans une URL (espaces et quotes du ProxyCommand
     cassent le parser, d'où "Connection to UNKNOWN port 65535").
+
+    L'inventaire ne sert qu'aux labs ``runtime: vm``. Un lab ``shell`` se
+    joue sur le poste, sans la moindre VM : il ne doit donc jamais échouer
+    parce que l'infra n'est pas provisionnée, ni parce qu'aucun provider
+    n'a encore été choisi. Toute erreur est donc rattrapée ici et rend un
+    inventaire vide ; ce sont les labs ``vm`` qui échoueront plus tard,
+    dans ``lab_host()``, avec un message qui dit quoi faire.
     """
     empty = {"all": {"children": {"labenv": {"hosts": {}}}}}
     try:
@@ -64,13 +71,20 @@ def _build_inventory_cached() -> tuple[dict, Path | None]:
     except ImportError:
         return empty, None
 
-    repo_meta = read_repo_metadata(REPO_ROOT)
-    if repo_meta is None:
+    # Volontairement large : provider non résolu (ProviderUnresolved), état
+    # Terraform absent, meta.yml sans section infra, terraform introuvable...
+    # Aucun de ces cas ne concerne un lab shell, et aucun ne justifie de faire
+    # échouer le chargement de conftest.py pour TOUS les labs du dépôt.
+    try:
+        repo_meta = read_repo_metadata(REPO_ROOT)
+        if repo_meta is None:
+            return empty, None
+        tf_outputs = read_terraform_outputs(repo_meta)
+        inventory = build_inventory(repo_meta, terraform_outputs=tf_outputs)
+        ssh_cfg = write_ssh_config(inventory, repo_meta)
+        return inventory, ssh_cfg
+    except Exception:  # noqa: BLE001 - degradation voulue, cf. docstring
         return empty, None
-    tf_outputs = read_terraform_outputs(repo_meta)
-    inventory = build_inventory(repo_meta, terraform_outputs=tf_outputs)
-    ssh_cfg = write_ssh_config(inventory, repo_meta)
-    return inventory, ssh_cfg
 
 
 _INVENTORY, _SSH_CONFIG = _build_inventory_cached()

@@ -2,7 +2,7 @@ id: drill-users-groups
 title: "Drill — users, groups and delegation under exam conditions"
 description: "5 tasks, 100 points, 20 minutes, no hints: create an account to exact specs, enforce password aging, build a collaborative directory, delegate sudo narrowly, and lock a departing account. Playable on RHEL or Debian — user management is identical."
 section: linux
-type: challenge
+lab_type: challenge
 level: l2
 track:
   - administration

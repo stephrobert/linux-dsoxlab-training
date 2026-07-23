@@ -1,6 +1,8 @@
 """Tests pytest+testinfra — l2-raid-mdadm."""
 from __future__ import annotations
 
+import re
+
 import pytest
 
 from conftest import lab_host
@@ -31,6 +33,14 @@ def test_array_mounted(host):
 def test_array_persistent(host):
     """L'array doit etre declare dans /etc/mdadm.conf (persistance)."""
     conf = host.file("/etc/mdadm.conf")
-    assert conf.exists and "ARRAY /dev/md0" in conf.content_string, (
+    # mdadm --detail --scan ecrit "/dev/md0" ou "/dev/md/0" selon la facon dont
+    # la grappe a ete nommee, et "/dev/md127" si elle a ete reassemblee sans
+    # mdadm.conf. On accepte les trois : ce qui compte est qu'une ligne ARRAY
+    # declare la grappe, pas la forme exacte de son nom.
+    assert conf.exists, (
         "Ajoutez l'array a /etc/mdadm.conf : mdadm --detail --scan >> /etc/mdadm.conf"
+    )
+    assert re.search(r"^ARRAY\s+/dev/md/?\d+", conf.content_string, re.M), (
+        "Aucune ligne ARRAY dans /etc/mdadm.conf. "
+        "Ajoutez-la : mdadm --detail --scan >> /etc/mdadm.conf"
     )

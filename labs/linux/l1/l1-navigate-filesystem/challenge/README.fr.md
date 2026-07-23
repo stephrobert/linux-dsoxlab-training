@@ -1,9 +1,9 @@
-# Challenge — l1-08 : Build a directory tree
+# Challenge — l1-08 : Construire une arborescence
 
 ## Mission
 
-Build the following structure inside `challenge/work/` using only shell commands
-(`mkdir`, `touch`, `cp`, `mv`):
+Construis l'arborescence suivante dans `challenge/work/` en n'utilisant que des
+commandes shell (`mkdir`, `touch`, `cp`, `mv`) :
 
 ```
 projet/
@@ -18,12 +18,12 @@ projet/
     └── settings.conf
 ```
 
-## Constraints
+## Contraintes
 
-- Work only inside `challenge/work/`.
-- All five files must exist at their exact paths.
-- All four directories must exist.
-- Do not add extra files — only the required ones.
+- Travaille uniquement dans `challenge/work/`.
+- Les cinq fichiers doivent exister à leur chemin exact.
+- Les quatre répertoires doivent exister.
+- N'ajoute pas de fichiers supplémentaires : seulement ceux demandés.
 
 ## Validation
 

@@ -2,7 +2,7 @@ id: l4-reverse-proxy-lb
 title: "Load-balance a web backend with HAProxy"
 description: "Configure HAProxy on the front host to reverse-proxy and load-balance to a backend web server, persistently — proven by a request through the proxy returning the backend's page."
 section: linux
-type: lab
+lab_type: lab
 level: l4
 track:
   - reseau

@@ -2,7 +2,10 @@
 
 ## Mission
 
-Fill in the file `challenge/work/premiers-pas.txt` with the four real values from your machine.
+The file `challenge/work/premiers-pas.txt` **already exists**: it holds the four
+keys and their placeholders. **Edit it** (with `nano`, `vim` or your editor) to
+fill in the four real values from your machine. Do not recreate it with a `>`
+redirection, you would wipe the keys the validation looks for.
 
 Do not invent or guess — run the commands and put the actual output.
 

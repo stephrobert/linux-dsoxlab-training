@@ -160,10 +160,32 @@ seulement qu'une commande a été tapée est rejeté.
 
 `check` enregistre un score (tests réussis/total, moins le coût des indices
 utilisés). Les indices sont **à coût variable** : en révéler un déduit des
-points, d'où leur caractère opt-in. L'historique vit dans une base SQLite locale
-(`~/.local/share/dsoxlab/progress.db`, surchargeable via XDG) ; `dsoxlab scores`
-et `dsoxlab progress` la lisent. La session active (contexte, provider) est
+points, d'où leur caractère opt-in. L'historique vit dans une base SQLite **propre à ce dépôt**
+(`.dsoxlab.db`, à la racine, gitignorée) ; `dsoxlab scores` et
+`dsoxlab progress` la lisent. La session active (contexte, provider) est
 stockée par dépôt dans `.dsoxlab-context.json`.
+
+### Récupérer une machine devenue inaccessible
+
+Un lab qui casse volontairement SSH, le réseau ou le montage racine peut laisser
+une VM injoignable, et c'est parfois le but de l'exercice. Quand la machine ne
+répond plus et que la console ne suffit pas, la voie fiable est de reconstruire
+le parc :
+
+```bash
+dsoxlab destroy --yes     # environ 6 s
+dsoxlab provision         # environ 4 min, les 3 hôtes reviennent prêts
+```
+
+Les IP sont réattribuées à l'identique (`10.10.30.11` à `.13`) : le fragment
+`ssh_config` et l'inventaire sont régénérés, rien d'autre n'est à retoucher. La
+progression n'est pas touchée : elle vit dans `.dsoxlab.db`, pas dans les VM.
+
+`dsoxlab destroy --host <fqdn>` existe, mais **ne récupère pas une seule
+machine** : Terraform détruit aussi tout ce qui dépend de la cible, si bien que
+demander un hôte en emporte d'autres (mesuré : 7 ressources planifiées pour une
+seule demandée). Ne s'en servir que pour restreindre un plan, jamais comme
+procédure de récupération.
 
 ## Catalogue
 

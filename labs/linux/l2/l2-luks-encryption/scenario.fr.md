@@ -5,11 +5,8 @@ Si le disque quitte les locaux, son contenu doit rester illisible. Vous le
 chiffrez avec **LUKS2** et le faites déverrouiller automatiquement au démarrage
 via un fichier-clé.
 
-Votre mission :
-
-1. Chiffrer le disque (LUKS2) et l'ouvrir.
-2. Y poser un système de fichiers et le monter.
-3. Le faire déverrouiller au boot via `/etc/crypttab`.
+Le disque libre à traiter est désigné dans `/root/luks-disk.env`, et la clé qui
+servira à l'ouvrir est déjà déposée sur la machine.
 
 Méthode dans le guide associé :
 https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/chiffrement-luks/

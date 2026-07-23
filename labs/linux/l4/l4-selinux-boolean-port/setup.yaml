@@ -24,7 +24,10 @@
     - name: Brief the learner
       ansible.builtin.debug:
         msg: >-
-          SELinux est enforcing. Active le booléen httpd_can_network_connect de
-          façon PERSISTANTE (setsebool -P) et étiquette le port 8404/tcp en
-          http_port_t (semanage port -a -t http_port_t -p tcp 8404). Ne désactive
-          pas SELinux. Vérifie avec getsebool et semanage port -l.
+          SELinux est en mode enforcing et les outils d'administration de la
+          policy sont installés. La policy a été remise à son état de départ.
+          SELinux doit rester enforcing du début à la fin. L'état attendu est
+          décrit par « dsoxlab challenge l4-selinux-boolean-port », la méthode
+          par « dsoxlab course l4-selinux-boolean-port ». Aucune commande n'est
+          donnée ici : les indices sont dans
+          « dsoxlab hint l4-selinux-boolean-port ».

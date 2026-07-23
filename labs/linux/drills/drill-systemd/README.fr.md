@@ -35,11 +35,11 @@ lab correspondant **avant** : vous y trouverez le cours, les indices et le droit
 | Timer `OnCalendar`, et le couple timer plus service | `l3-scheduling-timers` |
 | Table cron d'un utilisateur et syntaxe des cinq champs | `l3-scheduling-cron` |
 | Retrouver dans le journal une exécution passée | `l3-journald-persist` |
+| Cible de démarrage par défaut, et le lien symbolique qu'elle est | `l3-boot-target` |
 
-Deux sujets du drill n'ont pas encore de cours sur place. La **cible de démarrage
-par défaut** est traitée par le lab `l3-boot-target`, dont le README renvoie au
-guide en ligne. Le **masquage définitif d'un service** n'a de lab dédié nulle
-part : révisez-le dans le guide avant de vous lancer.
+Un seul sujet du drill n'a de lab nulle part : le **masquage définitif d'un
+service**. Révisez-le dans le guide avant de vous lancer, en retenant la
+différence entre désactiver et masquer.
 
 ## Se mettre en conditions
 

@@ -6,9 +6,14 @@
 
 `grubby --update-kernel=ALL --args="param"` adds a kernel argument to the
 installed kernels; `--remove-args` removes it; `--info=DEFAULT` shows the
-default kernel's args. For **future** kernels, add the parameter to
-`GRUB_CMDLINE_LINUX` in `/etc/default/grub` (the template for
-`grub2-mkconfig`). Both are needed for true persistence.
+default kernel's args. The template for **future** kernels is
+`GRUB_CMDLINE_LINUX` in `/etc/default/grub`.
+
+The state to reach is the same in every case: the parameter present in **both**
+places. How many moves it takes depends on the machine: on the AlmaLinux 10
+measured in this course, `--update-kernel=ALL` writes both; when targeting a
+specific kernel or `DEFAULT`, it only writes the entry you aimed at. Hence the
+one rule that holds everywhere: **read both locations back**, never assume them.
 
 ## The course
 

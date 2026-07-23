@@ -14,15 +14,6 @@ Three tasks:
 - Puzzle answers must be relative paths (no leading `/`).
 - No placeholder left in `puzzles.txt`.
 
-## Hints
-
-```bash
-# Absolute copy (from challenge/work/):
-cp $(pwd)/source.txt $(pwd)/backup/absolute/source.txt
-
-# Relative copy (from challenge/work/):
-cp source.txt backup/relative/source.txt
-```
 
 ## Validation
 

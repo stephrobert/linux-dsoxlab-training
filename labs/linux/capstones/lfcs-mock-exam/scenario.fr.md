@@ -14,12 +14,11 @@ officiels du LFCS** dans leurs poids réels :
 
 **17 tâches, 100 points, 120 minutes, 70/100 pour réussir.**
 
-Tout se passe sur une seule VM Ubuntu 24.04 — le LFCS est multi-distrib, et
-cette session en est le versant Debian.
+Tout se passe sur une seule VM Ubuntu 24.04 : le LFCS est multi-distrib, et cette
+session en est le versant Debian.
 
-La règle qui fait échouer les candidats : la **persistance**. Une règle de
-pare-feu qui disparaît au reboot, un montage absent de `/etc/fstab`, un service
-démarré mais pas `enabled` — tout ça vaut zéro. Les tests lisent l'état du
-système, pas les commandes que tu as tapées.
+La règle qui fait échouer les candidats : la **persistance**. Ce qui disparaît au
+reboot vaut zéro. Les tests lisent l'état du système, pas les commandes que tu as
+tapées.
 
 Lis le sujet : `dsoxlab challenge lfcs-mock-exam`.

@@ -4,7 +4,6 @@ description: 'Explore what Linux is made of: run real commands on your own syste
   to discover the kernel, your distribution and the role of /etc, /var/log and /proc.
   Fill in a knowledge map.'
 section: linux
-type: lab
 level: l1
 lab_type: lab
 bloc: 0

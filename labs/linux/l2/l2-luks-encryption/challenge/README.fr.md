@@ -1,31 +1,27 @@
-# Challenge — l2 : Encrypt a disk with LUKS
+# Challenge — l2 : Chiffrer un disque avec LUKS
 
 ## Mission
 
-A spare disk is available on **alma-rhcsa-1.lab** (its name is in
-`/root/luks-disk.env`), with a key file `/root/luks.key`. Encrypt it so its
-data is unreadable if the disk is stolen.
+Un disque libre est disponible sur **alma-rhcsa-1.lab** (son nom est dans
+`/root/luks-disk.env`), avec un fichier de clé `/root/luks.key`. Chiffre-le pour
+que ses données soient illisibles en cas de vol du disque.
 
-1. Format the disk as **LUKS2** (use the key file).
-2. **Open** it as `/dev/mapper/coffre`.
-3. Put an **xfs** filesystem on it and mount it on `/mnt/coffre`.
-4. Declare it in **`/etc/crypttab`** so it unlocks at boot.
+1. Formate le disque en **LUKS2** (utilise le fichier de clé).
+2. **Ouvre**-le sous `/dev/mapper/coffre`.
+3. Pose un système de fichiers **xfs** dessus et monte-le sur `/mnt/coffre`.
+4. Déclare-le dans **`/etc/crypttab`** pour qu'il se déverrouille au démarrage.
 
-## Constraints
+## Contraintes
 
-- The disk must be **LUKS version 2**.
-- `/dev/mapper/coffre` must be open and mounted on `/mnt/coffre`.
-- `/etc/crypttab` must contain the `coffre` entry.
+- Le disque doit être en **LUKS version 2**.
+- `/dev/mapper/coffre` doit être ouvert et monté sur `/mnt/coffre`.
+- `/etc/crypttab` doit contenir l'entrée `coffre`.
 
-## Useful approach
+## Approche utile
 
-```bash
-. /root/luks-disk.env       # DISK=...
-sudo cryptsetup luksFormat --type luks2 "$DISK" /root/luks.key
-sudo cryptsetup open "$DISK" coffre --key-file /root/luks.key
-sudo mkfs.xfs /dev/mapper/coffre && sudo mkdir -p /mnt/coffre && sudo mount /dev/mapper/coffre /mnt/coffre
-echo "coffre UUID=$(sudo cryptsetup luksUUID "$DISK") /root/luks.key luks" | sudo tee -a /etc/crypttab
-```
+Les gestes se déduisent du guide compagnon, dont le lien figure dans le
+`## Rappel` du cours. Si tu bloques, `dsoxlab hint` les donne, au prix
+annoncé.
 
 ## Validation
 

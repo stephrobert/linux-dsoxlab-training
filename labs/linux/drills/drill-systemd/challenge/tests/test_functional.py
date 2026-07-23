@@ -52,11 +52,19 @@ def test_task2_weekly_timer(host):
     assert timer.is_enabled, "labclean.timer n'est pas enabled."
     assert timer.is_running, "labclean.timer n'est pas actif."
     cal = _show(host, "labclean.timer", "TimersCalendar")
-    assert "04:00" in cal, (
-        f"Le timer doit se déclencher à 04:00. Vu : {cal!r}"
+    # TimersCalendar vaut « { OnCalendar=... ; next_elapse=Mon 2026-... } » :
+    # chercher « Mon » dans la chaîne entière donnerait un faux positif un jour
+    # sur sept, un timer QUOTIDIEN à 04:00 ayant sa prochaine échéance un lundi.
+    # On n'analyse donc que les expressions OnCalendar.
+    oncal = " ; ".join(
+        bloc.split(";", 1)[0].strip() for bloc in cal.split("OnCalendar=")[1:]
     )
-    assert "Mon" in cal, (
-        f"Le timer doit se déclencher le lundi (Mon). Vu : {cal!r}"
+    assert "04:00" in oncal, (
+        f"Le timer doit se déclencher à 04:00. Vu : {oncal!r} (brut : {cal!r})"
+    )
+    assert "Mon" in oncal, (
+        f"Le timer doit se déclencher le lundi (Mon). Vu : {oncal!r} "
+        f"(brut : {cal!r})"
     )
     unit = host.file("/etc/systemd/system/labclean.service")
     assert unit.exists, "L'unité labclean.service est absente."

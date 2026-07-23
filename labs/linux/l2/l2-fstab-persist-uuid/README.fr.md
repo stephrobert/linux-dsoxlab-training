@@ -6,9 +6,10 @@
 
 `blkid` et `lsblk -f` montrent l'UUID d'un filesystem. Une ligne `/etc/fstab`
 (`<quoi> <où> <type> <options> <dump> <pass>`) le monte au démarrage. Référence
-le disque par `UUID=` — les noms comme `/dev/vdb` peuvent changer d'un reboot à
-l'autre. `mount -a` monte tout ce que déclare fstab et valide ton entrée sans
-redémarrer.
+le disque par `UUID=` : les noms comme `/dev/vdb` peuvent changer d'un reboot à
+l'autre. Pour contrôler ta ligne sans redémarrer, il faut **deux** commandes :
+`mount -a`, qui monte réellement ce que déclare fstab, et `findmnt --verify`,
+qui relit le fichier et signale ce que `mount -a` laisse passer en silence.
 
 ## Le cours
 
@@ -345,8 +346,22 @@ findmnt: /etc/fstab: parse error at line 15 -- ignored
 
 Retenez la lecture du résumé de `findmnt --verify` : `parse errors` pour la
 syntaxe, `errors` pour ce qui empêchera le montage, `warnings` pour ce qui
-mérite un second regard. Seul `Success, no errors or warnings detected` autorise
-un redémarrage serein.
+mérite un second regard. Le seuil à atteindre est `0 parse errors, 0 errors` :
+tant qu'un de ces deux compteurs n'est pas à zéro, redémarrer est un pari.
+
+Un `warning` résiduel, en revanche, n'est pas toujours de votre fait. Une
+machine où un autre exercice a laissé un fichier d'échange en affiche déjà un,
+sans que votre ligne soit en cause :
+
+```text
+none
+   [W] non-bind mount source /swapfile is a directory or regular file
+
+0 parse errors, 0 errors, 1 warning
+```
+
+Lisez donc le détail, pas seulement le total : ce qui compte est de savoir si
+l'avertissement porte sur **votre** point de montage.
 
 ### Pourquoi un UUID plutôt qu'un `/dev/vdX`
 
@@ -487,6 +502,5 @@ sudo findmnt --verify
 sudo rmdir /mnt/depot
 ```
 
-Un dernier `sudo findmnt --verify` renvoyant `Success, no errors or warnings
-detected` est la seule preuve acceptable qu'aucune ligne fautive ne reste
-derrière vous.
+Un dernier `sudo findmnt --verify` annonçant `0 parse errors, 0 errors` est la
+seule preuve acceptable qu'aucune ligne fautive ne reste derrière vous.

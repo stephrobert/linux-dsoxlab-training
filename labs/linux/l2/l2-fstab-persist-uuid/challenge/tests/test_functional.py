@@ -6,8 +6,14 @@ La fixture autouse `_apply_lab_state` (conftest.py racine) joue le
 travail manuel de l'apprenant.
 
 On prouve l'ÉTAT réel : montage actif, type ext4, et surtout entrée fstab
-par UUID (pas par nom de périphérique) dont l'UUID correspond au disque —
+par UUID (pas par nom de périphérique) dont l'UUID correspond au disque :
 c'est ce qui garantit la persistance après reboot.
+
+Le montage actif ne prouve rien à lui seul : il peut venir d'un `mount`
+tapé à la main. Et `mount -a` non plus, puisqu'il sort en 0 sur une ligne
+fautive déjà montée ou couverte par `nofail`. D'où les deux contrôles
+supplémentaires sur la ligne elle-même : son champ type, et le verdict de
+`findmnt --verify`, qui relit fstab sans rien monter.
 """
 from __future__ import annotations
 
@@ -81,4 +87,52 @@ def test_fstab_uuid_matches_device(host):
     assert fstab_uuid == real_uuid, (
         f"L'UUID de fstab ({fstab_uuid}) ne correspond pas au disque monté "
         f"({real_uuid}). L'entrée doit pointer le bon filesystem."
+    )
+
+
+def test_fstab_type_matches_filesystem(host):
+    """Le 3e champ de l'entrée fstab doit déclarer le bon type.
+
+    Un type erroné passe inaperçu tant que le point de montage est déjà
+    actif : `mount -a` ne retouche pas un montage en place et sort en 0.
+    Au démarrage, machine froide, le montage échoue.
+    """
+    line = _fstab_line(host)
+    assert line is not None, "Entrée fstab pour /srv/data absente."
+    fields = line.split()
+    assert len(fields) >= 3, (
+        f"Entrée fstab incomplète : {line!r}. Six champs sont attendus "
+        "(quoi, où, type, options, dump, passe)."
+    )
+    fstype = fields[2]
+    assert fstype in ("ext4", "auto"), (
+        f"Le champ type de l'entrée fstab vaut {fstype!r} alors que le disque "
+        "est en ext4. Un type erroné ne se voit pas avec mount -a quand le "
+        "point de montage est déjà actif, mais casse le montage au démarrage."
+    )
+
+
+def test_fstab_verify_reports_no_error(host):
+    """`findmnt --verify` ne doit signaler ni parse error ni error.
+
+    C'est le contrôle que `mount -a` ne sait pas faire : il relit
+    /etc/fstab sans rien monter et dit ce qui casserait au démarrage.
+    Les `warnings` sont tolérés (un autre exercice peut en avoir laissé
+    un, par exemple sur un /swapfile) ; les erreurs, non.
+    """
+    res = host.run("findmnt --verify")
+    out = f"{res.stdout}\n{res.stderr}".strip()
+
+    if "Success, no errors or warnings detected" in out:
+        return
+
+    m = re.search(r"(\d+)\s+parse errors?,\s*(\d+)\s+errors?", out)
+    assert m, (
+        "Résumé de 'findmnt --verify' illisible. Sortie brute :\n" + out
+    )
+    parse_errors, errors = int(m.group(1)), int(m.group(2))
+    assert parse_errors == 0 and errors == 0, (
+        "'sudo findmnt --verify' signale des erreurs dans /etc/fstab : la "
+        "machine ne remontera pas correctement au démarrage. Corrigez la "
+        f"ligne, puis 'sudo systemctl daemon-reload'.\n{out}"
     )

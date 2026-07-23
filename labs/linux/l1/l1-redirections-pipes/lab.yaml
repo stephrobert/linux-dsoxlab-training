@@ -2,7 +2,7 @@ id: l1-redirections-pipes
 title: "Redirect streams and chain commands with pipes"
 description: "Redirect stdout and stderr, merge them, and chain commands with pipes to produce exact artifacts."
 section: linux
-type: lab
+lab_type: lab
 level: l1
 track:
   - fondamentaux

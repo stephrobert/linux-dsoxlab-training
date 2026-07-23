@@ -18,14 +18,9 @@ one disk.
 
 ## Useful approach
 
-```bash
-cat /root/raid-disks.env        # DISK1=... DISK2=...
-. /root/raid-disks.env
-sudo mdadm --create /dev/md0 --level=1 --raid-devices=2 "$DISK1" "$DISK2"
-cat /proc/mdstat
-sudo mkfs.xfs /dev/md0 && sudo mkdir -p /mnt/raid && sudo mount /dev/md0 /mnt/raid
-sudo mdadm --detail --scan | sudo tee -a /etc/mdadm.conf
-```
+The steps follow from the companion guide linked in the course's
+`## Reminder`. If you get stuck, `dsoxlab hint` spells them out, at the
+stated cost.
 
 ## Validation
 

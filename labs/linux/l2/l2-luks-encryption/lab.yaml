@@ -2,7 +2,7 @@ id: l2-luks-encryption
 title: "Encrypt a disk with LUKS"
 description: "Encrypt a block device with LUKS2, open it, put a filesystem on it, mount it and make it unlock at boot via crypttab."
 section: linux
-type: lab
+lab_type: lab
 level: l2
 track:
   - stockage

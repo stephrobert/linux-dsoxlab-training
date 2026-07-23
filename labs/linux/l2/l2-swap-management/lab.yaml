@@ -2,7 +2,7 @@ id: l2-swap-management
 title: "Add and manage swap space"
 description: "Create a secure swap file, activate it, make it persistent in /etc/fstab and tune vm.swappiness."
 section: linux
-type: lab
+lab_type: lab
 level: l2
 track:
   - stockage

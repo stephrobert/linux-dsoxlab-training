@@ -41,7 +41,7 @@ def test_task1_account_to_spec(host):
 
 @pytest.mark.points(20)
 def test_task2_password_aging(host):
-    """intern : 30 jours max, 7 jours d'avertissement, compte expirant fin 2026."""
+    """intern : 30 jours max, 7 jours d'avertissement, compte expirant au 2027-01-01."""
     aging = host.check_output("chage -l intern")
     lignes = {
         ligne.split(":", 1)[0].strip().lower(): ligne.split(":", 1)[1].strip()

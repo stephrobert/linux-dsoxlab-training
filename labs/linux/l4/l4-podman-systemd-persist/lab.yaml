@@ -2,7 +2,7 @@ id: l4-podman-systemd-persist
 title: "Run a container as a systemd service with Quadlet (boot-persistent)"
 description: "Define a Quadlet .container unit so a container starts at boot under systemd — proven by the active service, the running container and the on-disk unit."
 section: linux
-type: lab
+lab_type: lab
 level: l4
 track:
   - conteneurs

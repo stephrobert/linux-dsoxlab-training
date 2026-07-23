@@ -157,10 +157,32 @@ typed" is rejected.
 
 `check` records a score (passed/total minus the cost of any hints used). Hints
 are **cost-weighted** — revealing one deducts points, which is why they are
-opt-in. History lives in a local SQLite database
-(`~/.local/share/dsoxlab/progress.db`, XDG-overridable); `dsoxlab scores` and
+opt-in. History lives in a SQLite database **local to this repository**
+(`.dsoxlab.db` at the root, gitignored); `dsoxlab scores` and
 `dsoxlab progress` read it. The active session (context, provider) is stored per
 repo in `.dsoxlab-context.json`.
+
+### Recovering an unreachable machine
+
+A lab that deliberately breaks SSH, networking or the root mount can leave a VM
+unreachable, and that is sometimes the point of the exercise. When the machine
+stops answering and the console is not enough, the reliable route is to rebuild
+the park:
+
+```bash
+dsoxlab destroy --yes     # about 6 s
+dsoxlab provision         # about 4 min, all 3 hosts come back ready
+```
+
+The IPs are reassigned identically (`10.10.30.11` to `.13`): the `ssh_config`
+fragment and the inventory are regenerated, nothing else needs touching. Your
+progress is unaffected: it lives in `.dsoxlab.db`, not in the VMs.
+
+`dsoxlab destroy --host <fqdn>` exists, but it does **not** recover a single
+machine: Terraform also destroys everything that depends on the target, so
+asking for one host takes others down with it (measured: 7 resources planned
+for a single one requested). Use it only to narrow a plan, never as a recovery
+procedure.
 
 ## Catalog
 

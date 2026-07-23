@@ -34,11 +34,11 @@ wrong that the drill will not give you.
 | `OnCalendar` timer, and the timer plus service pair | `l3-scheduling-timers` |
 | A user's cron table and the five-field syntax | `l3-scheduling-cron` |
 | Finding a past run in the journal | `l3-journald-persist` |
+| Default boot target, and the symbolic link it really is | `l3-boot-target` |
 
-Two subjects of the drill have no course here yet. The **default boot target**
-is covered by the `l3-boot-target` lab, whose README points to the online
-guide. **Permanently masking a service** has a dedicated lab nowhere: revise it
-in the guide before starting.
+A single subject of the drill has no lab anywhere: **permanently masking a
+service**. Revise it in the guide before starting, keeping in mind the
+difference between disabling and masking.
 
 ## Getting into exam conditions
 

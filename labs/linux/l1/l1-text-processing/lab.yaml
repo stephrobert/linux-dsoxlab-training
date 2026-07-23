@@ -2,7 +2,7 @@ id: l1-text-processing
 title: "Transform and aggregate text with cut, sort, uniq, sed and awk"
 description: "Slice columns, deduplicate, count occurrences, sum a field and rewrite a delimiter to turn a raw record file into exact facts."
 section: linux
-type: lab
+lab_type: lab
 level: l1
 track:
   - fondamentaux

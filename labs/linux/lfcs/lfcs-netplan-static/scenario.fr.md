@@ -1,23 +1,16 @@
 # Contexte — le réseau statique façon Ubuntu : netplan
 
-Debian/Ubuntu décrivent le réseau dans des fichiers YAML **netplan** sous
-`/etc/netplan/` ; `netplan apply` les rend vers le backend (systemd-networkd ou
-NetworkManager) et les active — et ça persiste au reboot. Tu as besoin d'une
-adresse fixe et d'une route statique sur une interface dédiée.
+Debian et Ubuntu décrivent le réseau dans des fichiers YAML **netplan** sous
+`/etc/netplan/`. Tu as besoin d'une adresse fixe et d'une route statique sur une
+interface dédiée, et il faut que les deux reviennent après un reboot.
 
-Ta mission, sur la VM Ubuntu (utilise l'interface dédiée `lab0`, **ne touche jamais
-à l'interface de gestion** — celle qui porte ta route par défaut) :
+Tu travailles sur l'interface dédiée `lab0`. **Ne touche jamais à l'interface de
+gestion**, celle qui porte ta route par défaut : c'est ton lien vers la machine.
 
-1. Crée **`/etc/netplan/99-lab.yaml`** (mode `0600`) qui déclare, sur une interface
-   `dummy-devices` **`lab0`** :
-   - l'adresse statique **`192.0.2.50/24`** ;
-   - une **route** statique vers **`198.51.100.0/24` via `192.0.2.1`**.
-2. **Applique** : `sudo netplan apply` (vérifie d'abord avec
-   `sudo netplan generate`).
-
-L'idée : netplan est déclaratif — tu édites du YAML, pas des commandes `ip`, et
-`netplan apply` rend le tout actif et persistant. `netplan generate` valide la
-syntaxe avant d'appliquer. `ip addr` / `ip route` montrent le résultat.
+L'idée : netplan est déclaratif, on décrit l'état voulu en YAML au lieu
+d'enchaîner des commandes `ip`. Écrire le fichier ne suffit pas : tant qu'il n'a
+pas été rendu vers le backend réseau, rien ne change sur la machine. Et se
+tromper de contenu sur une machine distante, c'est perdre la main dessus.
 
 Méthode dans le guide compagnon :
 https://blog.stephane-robert.info/docs/admin-serveurs/linux/reseau/netplan/

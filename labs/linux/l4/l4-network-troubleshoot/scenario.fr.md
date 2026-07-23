@@ -2,21 +2,16 @@
 
 Une connexion nommée `lab-net` existe sur l'interface `lab1` avec une adresse
 statique correcte, pourtant l'interface ne porte aucune IP et elle ne reviendra
-pas après un reboot. Quelque chose cloche dans son état — trouve-le et ranime le
+pas après un reboot. Quelque chose cloche dans son état : trouve-le et ranime le
 lien.
 
-Ta mission, sur la VM (travaille sur `lab1`, **ne touche jamais à l'interface de gestion** —
-gestion) :
+Tu travailles sur `lab1`. **Ne touche jamais à l'interface de gestion**, celle
+qui porte ta route par défaut : c'est ton lien vers la machine.
 
-1. **Diagnostique** pourquoi `lab-net` est morte (`nmcli con show lab-net`,
-   `nmcli device`, `ip addr show lab1`). Elle est configurée mais inactive.
-2. **Active-la** (`nmcli con up lab-net`).
-3. Rends-la **auto-connectable** pour qu'elle survive au reboot
-   (`nmcli con mod lab-net connection.autoconnect yes`).
-
-L'idée : une connexion peut être entièrement configurée et pourtant **inactive**,
-et une avec `autoconnect no` ne reviendra pas au boot — les deux pannes que tu
-dois lire dans la sortie de `nmcli`, pas deviner.
+L'idée : une connexion peut être entièrement configurée et pourtant ne rien
+porter, et une connexion qui remonte aujourd'hui ne remontera pas forcément au
+prochain boot. Ce sont deux états distincts, tous deux lisibles dans ce que
+rapporte NetworkManager : à lire, pas à deviner.
 
 Méthode dans le guide compagnon :
 https://blog.stephane-robert.info/docs/admin-serveurs/linux/reseau/diagnostic/

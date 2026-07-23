@@ -1,3 +1,3 @@
 id: l2-fstab-persist-uuid
 title: "Monter un filesystem de façon persistante par UUID dans /etc/fstab"
-description: "Monter un disque additionnel déjà formaté sur /srv/data via /etc/fstab, référencé par UUID (pas par nom de périphérique) pour survivre à un reboot et passer mount -a."
+description: "Monter un disque additionnel déjà formaté sur /srv/data via /etc/fstab, référencé par UUID (pas par nom de périphérique) pour survivre à un reboot, et prouver la ligne avec mount -a ET findmnt --verify."
