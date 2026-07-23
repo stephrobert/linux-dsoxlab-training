@@ -26,8 +26,12 @@
     - name: Brief the learner
       ansible.builtin.debug:
         msg: >-
-          http://localhost renvoie 403 : SELinux refuse à httpd la lecture de
-          /var/www/html/index.html (mauvais contexte). Diagnostique le refus
-          (sudo ausearch -m AVC -ts recent, ou sealert), puis restaure le bon
-          contexte avec restorecon (le type correct est déjà dans la policy pour
-          /var/www/html — pas besoin de règle semanage). Ne désactive pas SELinux.
+          httpd est installé, démarré et activé au démarrage, le contenu web est
+          en place, et http://localhost renvoie 403. Une requête a déjà été jouée
+          au moment de la préparation : la trace de l'incident est donc déjà dans
+          le journal du système. SELinux doit rester enforcing du début à la fin.
+          L'état attendu est décrit par
+          « dsoxlab challenge l4-selinux-diagnose-avc », la méthode par
+          « dsoxlab course l4-selinux-diagnose-avc ». Aucune commande n'est
+          donnée ici : les indices sont dans
+          « dsoxlab hint l4-selinux-diagnose-avc ».

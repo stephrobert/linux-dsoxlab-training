@@ -18,10 +18,8 @@
     - name: Brief the learner
       ansible.builtin.debug:
         msg: >-
-          Planifie une tâche RÉCURRENTE avec un timer systemd. Crée
-          /etc/systemd/system/labbackup.service (Type=oneshot, ExecStart qui fait
-          touch /run/labbackup.stamp) et /etc/systemd/system/labbackup.timer
-          (section [Timer] avec OnCalendar=, section [Install]
-          WantedBy=timers.target). Puis systemctl daemon-reload et
-          systemctl enable --now labbackup.timer. Vérifie avec
-          systemctl list-timers et systemctl status labbackup.timer.
+          La machine part d'un état vierge : aucune unité de lab ne subsiste et
+          systemd a été rechargé. L'état attendu est décrit par
+          « dsoxlab challenge l3-scheduling-timers », la méthode par
+          « dsoxlab course l3-scheduling-timers ». Aucune commande n'est donnée
+          ici : les indices sont dans « dsoxlab hint l3-scheduling-timers ».

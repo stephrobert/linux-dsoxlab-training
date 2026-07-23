@@ -6,9 +6,14 @@
 
 `grubby --update-kernel=ALL --args="param"` ajoute un argument noyau aux noyaux
 installés ; `--remove-args` le retire ; `--info=DEFAULT` montre les arguments du
-noyau par défaut. Pour les **futurs** noyaux, ajoute le paramètre à
-`GRUB_CMDLINE_LINUX` dans `/etc/default/grub` (le modèle de `grub2-mkconfig`). Les
-deux sont nécessaires pour une vraie persistance.
+noyau par défaut. Le modèle des **futurs** noyaux, lui, est `GRUB_CMDLINE_LINUX`
+dans `/etc/default/grub`.
+
+L'état à obtenir est le même dans tous les cas : le paramètre présent aux **deux**
+endroits. Le nombre de gestes, lui, dépend de la machine : sur l'AlmaLinux 10
+mesurée dans ce cours, `--update-kernel=ALL` écrit les deux ; en ciblant un noyau
+précis ou `DEFAULT`, il n'écrit que l'entrée visée. D'où la seule règle qui tienne
+partout : on **relit** les deux emplacements, on ne les suppose pas.
 
 ## Le cours
 

@@ -1,7 +1,11 @@
 ---
 # État initial : /srv/data (XFS sur le disque additionnel) monté en LECTURE
-# SEULE, et son entrée /etc/fstab contient une option INVALIDE (« defalts ») qui
-# fait échouer mount -a. L'apprenant diagnostique et répare. Joué par dsoxlab run.
+# SEULE, et son entrée /etc/fstab est fautive. L'apprenant diagnostique et
+# répare. Joué par dsoxlab run.
+#
+# La nature exacte de la faute n'est PAS décrite ici : la trouver est l'exercice,
+# et ce fichier est sous les yeux de l'apprenant. Elle se lit dans les tâches
+# ci-dessous, ce qui est inévitable, mais rien ne doit la nommer en clair.
 - name: Setup fs-readonly-recover lab
   hosts: lab_target
   become: true
@@ -53,7 +57,11 @@
     - name: Brief the learner
       ansible.builtin.debug:
         msg: >-
-          /srv/data est monté en LECTURE SEULE et son entrée /etc/fstab a une
-          option invalide (« defalts ») qui casse mount -a. Corrige l'entrée
-          fstab (defaults), remonte /srv/data en lecture-écriture (mount -o
-          remount,rw), et vérifie que mount -a ne renvoie plus d'erreur.
+          Un système de fichiers XFS a été créé sur le disque additionnel de
+          cette machine et monté sur /srv/data, en lecture seule, avec une
+          déclaration /etc/fstab qui n'est pas fonctionnelle. Le disque système
+          n'est pas concerné. L'état attendu est décrit par
+          « dsoxlab challenge l3-fs-readonly-recover », la méthode par
+          « dsoxlab course l3-fs-readonly-recover ». Aucune commande n'est
+          donnée ici : les indices sont dans
+          « dsoxlab hint l3-fs-readonly-recover ».

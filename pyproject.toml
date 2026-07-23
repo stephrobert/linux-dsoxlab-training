@@ -5,6 +5,40 @@ description = "Lab pédagogique Linux RHCSA + LFCS — fournisseur de labs pour 
 requires-python = ">=3.11"
 dependencies = []
 
+[tool.pytest.ini_options]
+# Le contrat dsoxlab impose que chaque lab nomme son test
+# challenge/tests/test_functional.py. Les 84 fichiers partagent donc le même
+# basename, dans des répertoires sans __init__.py : le mode d'import
+# « prepend » historique les prend alors pour un seul et même module et échoue
+# en « import file mismatch ». importlib les isole par leur chemin.
+#
+# Sans ce réglage, `pytest` à la racine sortait en « Interrupted: 83 errors
+# during collection » et ne collectait plus que le premier lab (dsoxlab, lui,
+# lance un lab à la fois et ne voit pas le problème).
+addopts = "--import-mode=importlib"
+
+# Ne collecter QUE les tests des challenges. Le contrat dsoxlab impose leur
+# emplacement (challenge/tests/test_functional.py) : tout ce qui porte
+# `test_*.py` ailleurs est autre chose.
+#
+# Deux conséquences voulues :
+#
+# 1. `tests/` (les vérificateurs de CATALOGUE : doc_url, liens internes,
+#    solutions chiffrées, cohérence de l'outillage) reste hors de la suite
+#    normale. Ils ne valident pas un lab, ils valident le dépôt, et l'un
+#    d'eux fait 72 requêtes réseau. On les lance explicitement :
+#      pytest tests/ -v                    (les trois locaux, instantanés)
+#      pytest tests/test_doc_urls.py -v    (celui qui a besoin du réseau)
+#    Un chemin passé en argument prime sur testpaths : ces commandes
+#    fonctionnent malgré cette exclusion.
+# 2. `solution/` ne contient QUE des corrections de formateur, chiffrées par
+#    ansible-vault. Un fichier de référence à y poser chez l'apprenant est un
+#    ARTEFACT, pas un test à jouer : pytest sortirait sur le chiffré.
+testpaths = ["labs"]
+norecursedirs = [
+    "solution", "deps", "*.egg", ".git", ".venv",
+]
+
 [tool.uv]
 # Ce dépôt n'est pas un package Python — juste un fournisseur de labs.
 # uv crée quand même un venv pour les dev-deps (pytest, dsoxlab editable)

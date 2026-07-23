@@ -3,7 +3,7 @@ title: Absolute and relative paths
 description: Copy a file using an absolute path and a relative path, then solve 5
   path navigation puzzles.
 section: linux
-type: lab
+lab_type: lab
 level: l1
 bloc: 1
 bloc_order: 3

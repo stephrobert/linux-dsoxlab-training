@@ -2,7 +2,7 @@ id: l4-ldap-integration
 title: "Authenticate Linux against an LDAP directory with SSSD"
 description: "Configure SSSD on the client so a directory user (alice) resolves and can log in, against a 389 Directory Server — proven by getent, id and the active authselect profile."
 section: linux
-type: lab
+lab_type: lab
 level: l4
 track:
   - securiser

@@ -1,5 +1,5 @@
 ---
-# Reset idempotent : remet l'état dérégé initial pour que le lab soit rejouable.
+# Reset idempotent : remet l'état déréglé initial pour que le lab soit rejouable.
 # Joué par dsoxlab clean.
 - name: Cleanup ntp-sync lab
   hosts: lab_target
@@ -14,4 +14,3 @@
           systemctl disable --now chronyd
         chdir: /
       changed_when: false
-      failed_when: false

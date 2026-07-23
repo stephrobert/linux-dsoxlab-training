@@ -1,68 +1,14 @@
-# Lab l1-08 — Naviguer dans le système de fichiers
+# Contexte — construire une arborescence à la main
 
-| | |
-|---|---|
-| **Niveau** | L1 — Fondamentaux (B1) |
-| **Runtime** | `shell` — aucune VM requise |
-| **Durée estimée** | 30 min |
-| **Référence** | [Système de fichiers Linux](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/filesystem/) |
+Un projet qui démarre, c'est d'abord une structure de répertoires : les sources
+d'un côté, les tests, la documentation, la configuration. Personne ne la fabrique
+en cliquant. On la pose au clavier, en quelques commandes, et on vérifie ensuite
+qu'elle est exactement conforme à ce qui était demandé.
 
----
+Ce lab te donne l'arborescence cible et te laisse la construire dans ton
+répertoire de travail, avec le shell seul. La validation vérifie chaque chemin :
+un fichier au bon nom mais au mauvais endroit ne compte pas, et un fichier en
+trop non plus.
 
-## Ce que vous allez apprendre
-
-- Naviguer dans les répertoires avec `cd`, `pwd` et `ls`
-- Créer une arborescence avec `mkdir -p`
-- Copier des fichiers avec `cp` et des répertoires avec `cp -r`
-- Déplacer et renommer des fichiers avec `mv`
-- Supprimer des fichiers et répertoires avec `rm` et `rm -r`
-- Vérifier l'arborescence construite avec `tree` ou `find`
-
----
-
-## Référence des commandes
-
-| Commande | Ce qu'elle fait |
-|----------|----------------|
-| `pwd` | Affiche le répertoire courant |
-| `cd <rép>` | Change de répertoire |
-| `cd ..` | Monte d'un niveau |
-| `cd -` | Retourne au répertoire précédent |
-| `ls -la` | Liste les fichiers avec détails et fichiers cachés |
-| `mkdir rép` | Crée un répertoire |
-| `mkdir -p a/b/c` | Crée une arborescence imbriquée d'un coup |
-| `cp fichier dest` | Copie un fichier |
-| `cp -r rép dest` | Copie un répertoire récursivement |
-| `mv src dest` | Déplace ou renomme |
-| `rm fichier` | Supprime un fichier |
-| `rm -r rép` | Supprime un répertoire et son contenu |
-| `rmdir rép` | Supprime un répertoire vide |
-| `tree` | Affiche l'arborescence (si installé) |
-| `find . -type f` | Liste tous les fichiers récursivement |
-
----
-
-## Structure cible
-
-Votre objectif : construire cette arborescence dans `challenge/work/projet/` :
-
-```
-projet/
-├── src/
-│   ├── app.py
-│   └── utils.py
-├── tests/
-│   └── test_app.py
-├── docs/
-│   └── README.txt
-└── config/
-    └── settings.conf
-```
-
----
-
-## Validation
-
-```bash
-dsoxlab check l1-navigate-filesystem
-```
+Méthode dans le guide compagnon :
+https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/se-reperer-fichiers/navigation-fichiers/

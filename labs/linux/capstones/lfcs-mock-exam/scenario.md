@@ -17,9 +17,7 @@ real weights:
 Everything happens on a single Ubuntu 24.04 VM — the LFCS is multi-distro, and
 this run is the Debian side of it.
 
-The rule that fails candidates: **persistence**. A firewall rule that vanishes at
-reboot, a mount absent from `/etc/fstab`, a service that is running but not
-`enabled` — all score zero. The tests read the state of the system, not the
-commands you typed.
+The rule that fails candidates: **persistence**. Whatever vanishes at reboot
+scores zero. The tests read the state of the system, not the commands you typed.
 
 Read the subject: `dsoxlab challenge lfcs-mock-exam`.

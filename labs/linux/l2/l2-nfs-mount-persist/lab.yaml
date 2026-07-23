@@ -2,7 +2,7 @@ id: l2-nfs-mount-persist
 title: "Mount an NFS export persistently from a server"
 description: "A second host exports an NFS share. Mount it on the client at /mnt/nfs, make it persistent in /etc/fstab with _netdev so it survives a reboot."
 section: linux
-type: lab
+lab_type: lab
 level: l2
 track:
   - stockage

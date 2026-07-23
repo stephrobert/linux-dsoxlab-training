@@ -2,18 +2,21 @@
 
 ## Mission
 
-Fill in the file `challenge/work/premiers-pas.txt` with the four real values from your machine.
+Le fichier `challenge/work/premiers-pas.txt` **existe déjà** : il contient les
+quatre clés et leurs placeholders. **Édite-le** (avec `nano`, `vim` ou ton
+éditeur) pour y reporter les quatre valeurs réelles de ta machine. Ne le recrée
+pas avec une redirection `>`, tu effacerais les clés que la validation cherche.
 
-Do not invent or guess — run the commands and put the actual output.
+N'invente rien, ne devine pas : lance les commandes et reporte la sortie réelle.
 
-## Constraints
+## Contraintes
 
-- **All four fields must be filled**: `USER`, `MACHINE`, `HOME`, `DATE`.
-- **No placeholder left**: every `VOTRE_RÉPONSE_ICI` must be replaced.
-- `DATE` must be the output of the `date` command (any reasonable format).
-- `HOME` must be a path starting with `/`.
+- **Les quatre champs doivent être remplis** : `USER`, `MACHINE`, `HOME`, `DATE`.
+- **Aucun placeholder ne doit subsister** : chaque `VOTRE_RÉPONSE_ICI` doit être remplacé.
+- `DATE` doit être la sortie de la commande `date` (n'importe quel format raisonnable).
+- `HOME` doit être un chemin commençant par `/`.
 
-## Expected file structure
+## Structure attendue du fichier
 
 ```
 USER: <value>
@@ -22,12 +25,12 @@ HOME: <value>
 DATE: <value>
 ```
 
-## Useful commands
+## Commandes utiles
 
-- `whoami` → current username
-- `hostname` → machine name
-- `echo $HOME` → home directory
-- `date` → current date and time
+- `whoami` → nom de l'utilisateur courant
+- `hostname` → nom de la machine
+- `echo $HOME` → répertoire personnel
+- `date` → date et heure courantes
 
 ## Validation
 

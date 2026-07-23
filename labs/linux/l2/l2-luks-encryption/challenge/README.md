@@ -19,13 +19,9 @@ data is unreadable if the disk is stolen.
 
 ## Useful approach
 
-```bash
-. /root/luks-disk.env       # DISK=...
-sudo cryptsetup luksFormat --type luks2 "$DISK" /root/luks.key
-sudo cryptsetup open "$DISK" coffre --key-file /root/luks.key
-sudo mkfs.xfs /dev/mapper/coffre && sudo mkdir -p /mnt/coffre && sudo mount /dev/mapper/coffre /mnt/coffre
-echo "coffre UUID=$(sudo cryptsetup luksUUID "$DISK") /root/luks.key luks" | sudo tee -a /etc/crypttab
-```
+The steps follow from the companion guide linked in the course's
+`## Reminder`. If you get stuck, `dsoxlab hint` spells them out, at the
+stated cost.
 
 ## Validation
 

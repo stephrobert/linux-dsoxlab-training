@@ -6,8 +6,10 @@
 
 `blkid` and `lsblk -f` show a filesystem's UUID. An `/etc/fstab` line
 (`<what> <where> <fstype> <options> <dump> <pass>`) mounts it at boot. Reference
-the disk by `UUID=` — device names like `/dev/vdb` can shift across reboots.
-`mount -a` mounts everything in fstab and validates your entry without rebooting.
+the disk by `UUID=`: device names like `/dev/vdb` can shift across reboots.
+Checking your line without rebooting takes **two** commands: `mount -a`, which
+actually mounts what fstab declares, and `findmnt --verify`, which re-reads the
+file and reports what `mount -a` silently lets through.
 
 ## The course
 
@@ -342,7 +344,22 @@ findmnt: /etc/fstab: parse error at line 15 -- ignored
 
 Learn to read the summary of `findmnt --verify`: `parse errors` for syntax,
 `errors` for what will prevent the mount, `warnings` for what deserves a second
-look. Only `Success, no errors or warnings detected` allows a calm reboot.
+look. The bar to clear is `0 parse errors, 0 errors`: as long as either counter
+is not zero, rebooting is a gamble.
+
+A leftover `warning`, on the other hand, is not always your doing. A machine
+where another exercise left a swap file already shows one, with your line having
+nothing to do with it:
+
+```text
+none
+   [W] non-bind mount source /swapfile is a directory or regular file
+
+0 parse errors, 0 errors, 1 warning
+```
+
+So read the detail, not only the total: what matters is whether the warning is
+about **your** mount point.
 
 ### Why a UUID rather than a `/dev/vdX`
 
@@ -481,5 +498,5 @@ sudo findmnt --verify
 sudo rmdir /mnt/depot
 ```
 
-A final `sudo findmnt --verify` returning `Success, no errors or warnings
-detected` is the only acceptable proof that no faulty line is left behind you.
+A final `sudo findmnt --verify` reporting `0 parse errors, 0 errors` is the only
+acceptable proof that no faulty line is left behind you.

@@ -27,11 +27,21 @@ from __future__ import annotations
 import os
 import subprocess
 import sys
+from typing import TYPE_CHECKING
 from pathlib import Path
 
 import pytest
-import testinfra
 import yaml
+
+# testinfra n'est importé que dans lab_host(), à l'usage. Il ne sert qu'aux
+# labs vm, alors qu'un import en tête de fichier casse le chargement de ce
+# conftest pour TOUS les tests du dépôt, y compris les validateurs de
+# contenu de tests/ qui ne touchent jamais une machine. C'est le même
+# défaut que celui corrigé pour ProviderUnresolved (issue #21).
+# Sous TYPE_CHECKING uniquement : l'annotation de lab_host() a besoin du
+# nom, pas du module (from __future__ import annotations les diffère).
+if TYPE_CHECKING:
+    import testinfra
 
 REPO_ROOT = Path(__file__).parent.resolve()
 SSH_KEY = REPO_ROOT / "ssh" / "id_ed25519"
@@ -52,6 +62,13 @@ def _build_inventory_cached() -> tuple[dict, Path | None]:
     via ``ssh://<host>?ssh_config=...``, plus fiable que de bourrer
     ``ssh_extra_args`` dans une URL (espaces et quotes du ProxyCommand
     cassent le parser, d'où "Connection to UNKNOWN port 65535").
+
+    L'inventaire ne sert qu'aux labs ``runtime: vm``. Un lab ``shell`` se
+    joue sur le poste, sans la moindre VM : il ne doit donc jamais échouer
+    parce que l'infra n'est pas provisionnée, ni parce qu'aucun provider
+    n'a encore été choisi. Toute erreur est donc rattrapée ici et rend un
+    inventaire vide ; ce sont les labs ``vm`` qui échoueront plus tard,
+    dans ``lab_host()``, avec un message qui dit quoi faire.
     """
     empty = {"all": {"children": {"labenv": {"hosts": {}}}}}
     try:
@@ -64,13 +81,20 @@ def _build_inventory_cached() -> tuple[dict, Path | None]:
     except ImportError:
         return empty, None
 
-    repo_meta = read_repo_metadata(REPO_ROOT)
-    if repo_meta is None:
+    # Volontairement large : provider non résolu (ProviderUnresolved), état
+    # Terraform absent, meta.yml sans section infra, terraform introuvable...
+    # Aucun de ces cas ne concerne un lab shell, et aucun ne justifie de faire
+    # échouer le chargement de conftest.py pour TOUS les labs du dépôt.
+    try:
+        repo_meta = read_repo_metadata(REPO_ROOT)
+        if repo_meta is None:
+            return empty, None
+        tf_outputs = read_terraform_outputs(repo_meta)
+        inventory = build_inventory(repo_meta, terraform_outputs=tf_outputs)
+        ssh_cfg = write_ssh_config(inventory, repo_meta)
+        return inventory, ssh_cfg
+    except Exception:  # noqa: BLE001 - degradation voulue, cf. docstring
         return empty, None
-    tf_outputs = read_terraform_outputs(repo_meta)
-    inventory = build_inventory(repo_meta, terraform_outputs=tf_outputs)
-    ssh_cfg = write_ssh_config(inventory, repo_meta)
-    return inventory, ssh_cfg
 
 
 _INVENTORY, _SSH_CONFIG = _build_inventory_cached()
@@ -97,8 +121,19 @@ def lab_host(name: str) -> testinfra.host.Host:
     Raises:
         ValueError: si le nom n'est pas trouvé dans l'inventory.
         RuntimeError: si l'infra n'est pas provisionnée
-            (``dsoxlab provision`` à lancer d'abord).
+            (``dsoxlab provision`` à lancer d'abord), ou si testinfra
+            n'est pas installé.
     """
+    try:
+        import testinfra
+    except ModuleNotFoundError as exc:  # pragma: no cover - dépend de l'env
+        raise RuntimeError(
+            "testinfra est absent : les labs vm ont besoin de "
+            "pytest-testinfra. Installe-le avec "
+            "'uv pip install pytest-testinfra', ou lance les labs via "
+            "'dsoxlab check', qui l'embarque."
+        ) from exc
+
     if name not in _LABENV_HOSTS:
         if not _LABENV_HOSTS:
             raise RuntimeError(

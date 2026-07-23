@@ -2,7 +2,7 @@ id: l3-boot-target
 title: "Set the default systemd boot target"
 description: "A server has no business booting into a graphical target. Set the default to multi-user.target and confirm it."
 section: linux
-type: lab
+lab_type: lab
 level: l3
 track:
   - exploiter

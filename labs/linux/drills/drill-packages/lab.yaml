@@ -2,7 +2,7 @@ id: drill-packages
 title: "Drill — package management under exam conditions"
 description: "5 tasks, 100 points, 20 minutes, no hints: install a package, freeze it against upgrades, find which package owns a file, list what a package installed, and remove one. The objective is shared by RHCSA and LFCS — only the tool changes (dnf or apt), and you use your distribution's."
 section: linux
-type: challenge
+lab_type: challenge
 level: l2
 track:
   - administration

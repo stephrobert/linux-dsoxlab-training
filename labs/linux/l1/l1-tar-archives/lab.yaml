@@ -2,7 +2,7 @@ id: l1-tar-archives
 title: "Archive, compress and selectively extract with tar, gzip and bzip2"
 description: "Create gzip and bzip2 tarballs, list their contents, and extract a single member into a target directory."
 section: linux
-type: lab
+lab_type: lab
 level: l1
 track:
   - fondamentaux

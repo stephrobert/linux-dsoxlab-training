@@ -3,7 +3,7 @@ title: First steps in the terminal
 description: Run basic commands (whoami, pwd, hostname, date) and capture the output
   in a file.
 section: linux
-type: lab
+lab_type: lab
 level: l1
 bloc: 0
 bloc_order: 4

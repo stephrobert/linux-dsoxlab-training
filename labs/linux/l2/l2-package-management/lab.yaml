@@ -2,7 +2,7 @@ id: l2-package-management
 title: "Install, remove and query packages with dnf"
 description: "Bring the machine to a target software state: install a needed package, remove an unwanted one, and confirm with dnf/rpm queries."
 section: linux
-type: lab
+lab_type: lab
 level: l2
 track:
   - administration

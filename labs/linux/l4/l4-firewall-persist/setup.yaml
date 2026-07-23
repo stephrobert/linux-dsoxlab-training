@@ -28,7 +28,10 @@
     - name: Brief the learner
       ansible.builtin.debug:
         msg: >-
-          Ouvre le service http à travers firewalld de façon PERMANENTE
-          (firewall-cmd --permanent --add-service=http) puis applique
-          (firewall-cmd --reload). Ne ferme jamais ssh. Vérifie avec
-          firewall-cmd --list-services et --permanent --list-services.
+          firewalld est installé, actif et activé au démarrage. Le service ssh
+          reste autorisé : c'est l'accès de gestion de la machine, ne le ferme
+          jamais. Le reste du filtrage a été remis à son état de départ. L'état
+          attendu est décrit par « dsoxlab challenge l4-firewall-persist », la
+          méthode par « dsoxlab course l4-firewall-persist ». Aucune commande
+          n'est donnée ici : les indices sont dans
+          « dsoxlab hint l4-firewall-persist ».

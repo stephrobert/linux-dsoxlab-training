@@ -32,6 +32,23 @@ def test_swapfile_exists_and_secure(host):
     )
 
 
+def test_swapfile_size(host):
+    """Le swap file doit faire 256 MiB, la taille demandee par l'enonce.
+
+    L'enonce l'exigeait sans qu'aucun test ne le verifie : un fichier de
+    64 MiB passait la validation. On tolere une marge de 1 MiB, parce que
+    `fallocate` et `dd` n'arrondissent pas de la meme facon.
+    """
+    out = host.run(f"stat -c %s {SWAPFILE}")
+    assert out.rc == 0, f"{SWAPFILE} introuvable."
+    taille = int(out.stdout.strip())
+    attendu = 256 * 1024 * 1024
+    assert abs(taille - attendu) <= 1024 * 1024, (
+        f"{SWAPFILE} doit faire 256 MiB (vu : {taille // (1024 * 1024)} MiB). "
+        f"sudo dd if=/dev/zero of={SWAPFILE} bs=1M count=256"
+    )
+
+
 def test_swap_active(host):
     """Le swap /swapfile doit etre actif."""
     out = host.run("swapon --show=NAME --noheadings 2>/dev/null")

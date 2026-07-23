@@ -1,49 +1,14 @@
-# Lab l1-09 — Chemins absolus et relatifs
+# Contexte — désigner un fichier sans se tromper
 
-| | |
-|---|---|
-| **Niveau** | L1 — Fondamentaux (B1) — **Checkpoint** |
-| **Runtime** | `shell` — aucune VM requise |
-| **Durée estimée** | 25 min |
-| **Référence** | [Système de fichiers Linux](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/filesystem/) |
+Toute commande qui touche un fichier doit d'abord savoir où il se trouve. Deux
+écritures existent pour le lui dire : l'une part de la racine et vaut depuis
+n'importe où, l'autre part de l'endroit où tu te tiens et change de sens dès que
+tu te déplaces. Les confondre, c'est écrire au mauvais endroit, ou ne rien
+trouver du tout.
 
----
+Ce lab te fait pratiquer les deux écritures sur une même copie de fichier, puis
+te met à l'épreuve sur des trajets à calculer de tête, sans exécuter le moindre
+shell.
 
-## Ce que vous allez apprendre
-
-- Distinguer visuellement un chemin absolu d'un chemin relatif
-- Copier un fichier avec un chemin absolu
-- Copier un fichier avec un chemin relatif depuis un autre répertoire
-- Calculer mentalement le résultat d'une navigation avec `..`
-- Résoudre des puzzles de chemins sans exécuter un shell
-
----
-
-## Concepts clés
-
-### Chemin absolu
-
-Commence par `/`. Toujours correct peu importe où vous êtes.
-
-```
-/home/bob/docs/rapport.txt
-/etc/nginx/nginx.conf
-```
-
-### Chemin relatif
-
-Part du **répertoire courant**. Dépend de l'endroit où vous vous trouvez.
-
-```
-docs/rapport.txt      (relatif à /home/bob/ si vous y êtes)
-../bob/docs/          (monter d'un niveau, puis descendre)
-./script.sh          (répertoire courant explicitement)
-```
-
----
-
-## Validation
-
-```bash
-dsoxlab check l1-paths-absolute-relative
-```
+Méthode dans le guide compagnon :
+https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/se-reperer-fichiers/chemins-linux/

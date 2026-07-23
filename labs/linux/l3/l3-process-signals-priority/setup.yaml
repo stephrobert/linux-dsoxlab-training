@@ -41,7 +41,9 @@
     - name: Brief the learner
       ansible.builtin.debug:
         msg: >-
-          Le service labworker tourne à priorité normale (nice 0) et gêne le
-          travail interactif. Abaisse sa priorité à nice 10 (Nice=10 dans l'unit,
-          idéalement via un drop-in systemctl edit), recharge et redémarre.
-          Vérifie avec ps -o ni= -p $(systemctl show -p MainPID --value labworker).
+          Le service labworker a été installé et démarré : il tourne à priorité
+          normale (nice 0) et gêne le travail interactif. L'état attendu est
+          décrit par « dsoxlab challenge l3-process-signals-priority », la
+          méthode par « dsoxlab course l3-process-signals-priority ». Aucune
+          commande n'est donnée ici : les indices sont dans
+          « dsoxlab hint l3-process-signals-priority ».

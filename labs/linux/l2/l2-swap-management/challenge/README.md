@@ -20,14 +20,9 @@ You must:
 
 ## Useful approach
 
-```bash
-sudo dd if=/dev/zero of=/swapfile bs=1M count=256
-sudo chmod 0600 /swapfile
-sudo mkswap /swapfile
-sudo swapon /swapfile
-swapon --show
-# persistence + swappiness: edit /etc/fstab and /etc/sysctl.d/99-swappiness.conf
-```
+The steps follow from the companion guide linked in the course's
+`## Reminder`. If you get stuck, `dsoxlab hint` spells them out, at the
+stated cost.
 
 ## Validation
 

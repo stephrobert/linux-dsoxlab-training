@@ -2,7 +2,7 @@ id: l4-podman-images
 title: "Manage container images: pull, tag, save and inspect"
 description: "Pull an image from a registry, tag it, save it to an archive and inspect that archive with skopeo — the image-management skills for RHCSA containers."
 section: linux
-type: lab
+lab_type: lab
 level: l4
 track:
   - conteneurs

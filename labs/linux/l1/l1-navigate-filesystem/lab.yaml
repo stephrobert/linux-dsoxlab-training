@@ -2,7 +2,7 @@ id: l1-navigate-filesystem
 title: Navigate the filesystem
 description: Use cd, ls, mkdir, cp, mv, rm to build a target directory tree from scratch.
 section: linux
-type: lab
+lab_type: lab
 level: l1
 bloc: 1
 bloc_order: 2
