@@ -1,7 +1,7 @@
 id: l2-collaborative-setgid
 title: "Set up a collaborative directory with the set-GID bit"
 description: "Give a shared directory the devteam group and the set-GID bit so files created inside inherit the group — proven by the directory mode and a member's new file."
-section: linux
+section: l2
 lab_type: lab
 level: l2
 track:

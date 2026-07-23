@@ -2,7 +2,7 @@ id: l1-choose-distro
 title: Choose your reference Linux distribution
 description: Compare Debian/Ubuntu and RHEL-based distributions, understand the criteria
   for choosing between them, and document your choice for three practical scenarios.
-section: linux
+section: l1
 level: l1
 lab_type: lab
 bloc: 0

@@ -2,7 +2,7 @@ id: l1-first-terminal
 title: First steps in the terminal
 description: Run basic commands (whoami, pwd, hostname, date) and capture the output
   in a file.
-section: linux
+section: l1
 lab_type: lab
 level: l1
 bloc: 0

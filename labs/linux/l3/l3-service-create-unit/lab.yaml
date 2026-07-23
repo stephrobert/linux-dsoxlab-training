@@ -1,7 +1,7 @@
 id: l3-service-create-unit
 title: "Create and enable a systemd service unit"
 description: "Wrap a program in a systemd .service unit, start it and enable it at boot — proven by the service being active, enabled and doing its job."
-section: linux
+section: l3
 lab_type: lab
 level: l3
 track:

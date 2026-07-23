@@ -1,7 +1,7 @@
 id: l4-bridge-bonding
 title: "Aggregate links: an active-backup bond under a bridge with nmcli"
 description: "Build an active-backup bond over two slave interfaces and put a bridge on top, persistently with NetworkManager — proven by the bonding state and the bridge port."
-section: linux
+section: l4
 lab_type: lab
 level: l4
 track:

@@ -1,7 +1,7 @@
 id: l3-grub-kernel-args
 title: "Add a persistent kernel boot parameter"
 description: "Add a kernel command-line parameter to the current kernel with grubby and to /etc/default/grub for future kernels, so it survives reboots and updates — proven by grubby and the grub config."
-section: linux
+section: l3
 lab_type: lab
 level: l3
 track:

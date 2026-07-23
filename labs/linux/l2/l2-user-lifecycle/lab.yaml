@@ -1,7 +1,7 @@
 id: l2-user-lifecycle
 title: "Create a local account with exact UID, shell and groups"
 description: "Onboard a user with a specific UID, home, login shell, a primary group and a supplementary group — the RHCSA account-creation drill."
-section: linux
+section: l2
 lab_type: lab
 level: l2
 track:

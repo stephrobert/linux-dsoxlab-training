@@ -1,7 +1,7 @@
 id: l3-journald-persist
 title: "Make the systemd journal persistent across reboots"
 description: "By default logs vanish on reboot. Enable persistent journald storage so /var/log/journal keeps history — proven by config, directory and a real journal file."
-section: linux
+section: l3
 lab_type: lab
 level: l3
 track:

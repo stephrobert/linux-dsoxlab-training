@@ -1,7 +1,7 @@
 id: lfcs-storage-quotas
 title: "Enable XFS user quotas and enforce a limit"
 description: "Format a dedicated disk as XFS, mount it with user quotas enabled persistently, and enforce a block quota on a user — proven by the live quota state and the enforced limit."
-section: linux
+section: lfcs
 lab_type: lab
 level: l2
 track:

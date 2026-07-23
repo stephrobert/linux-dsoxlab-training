@@ -1,7 +1,7 @@
 id: l2-sudo-delegation
 title: "Delegate limited sudo rights with a sudoers drop-in"
 description: "Grant the operators group password-less sudo for systemctl only, via a validated /etc/sudoers.d drop-in — least privilege, not full root."
-section: linux
+section: l2
 lab_type: lab
 level: l2
 track:
