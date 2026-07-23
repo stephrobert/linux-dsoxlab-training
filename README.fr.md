@@ -49,23 +49,60 @@ l'installe comme un outil autonome.
 uv tool install dsoxlab        # ou : pipx install dsoxlab
 
 # 2. Cloner ce catalogue de labs
-git clone <url-de-ce-depot> linux-dsoxlab-training
+git clone https://github.com/stephrobert/linux-dsoxlab-training.git
 cd linux-dsoxlab-training
 
-# 3. Découvrir et lancer
-dsoxlab list-labs
-dsoxlab run <id-du-lab>
-dsoxlab check <id-du-lab>
+# 3. Vérifier que tout est en place
+dsoxlab doctor
 ```
+
+### Ton premier lab, en cinq minutes
+
+**Commence par la section `l1`.** Ses vingt labs tournent dans un simple
+terminal : aucune machine virtuelle, aucun provider, rien à provisionner. Tu
+peux les faire sur ton poste, tout de suite.
+
+```bash
+dsoxlab use l1                       # section de départ
+dsoxlab next                         # → l1-discover-linux-map
+```
+
+Puis, pour ce lab comme pour tous les autres, le même cycle en quatre temps :
+
+```bash
+dsoxlab course l1-discover-linux-map      # 1. le contexte, puis le cours
+dsoxlab challenge l1-discover-linux-map   # 2. ce qui t'est demandé
+dsoxlab run l1-discover-linux-map         # 3. prépare ton espace de travail
+                                          #    (challenge/work/) et t'y place
+dsoxlab check l1-discover-linux-map       # 4. valide et note
+```
+
+`run` est l'étape que l'on oublie : c'est elle qui crée les fichiers sur
+lesquels tu travailles, et pour un lab VM, qui met la machine dans l'état
+décrit par le scénario. Un `check` lancé sans `run` échoue en annonçant que
+rien n'est fait, ce qui est vrai mais trompeur.
+
+Bloqué ? `dsoxlab hint <id>` révèle un indice, au prix de quelques points.
+
+### Passer aux labs sur machine virtuelle
+
+Les sections `l2` et suivantes configurent de vrais systèmes : systemd,
+pare-feu, SELinux, stockage. Elles demandent un provider actif et une
+infrastructure provisionnée.
+
+```bash
+dsoxlab use --provider kvm     # persisté pour ce dépôt
+dsoxlab provision              # crée les machines (quelques minutes)
+dsoxlab status                 # vérifie qu'elles répondent
+```
+
+Si une machine devient inaccessible, voir
+[Récupérer une machine devenue inaccessible](#récupérer-une-machine-devenue-inaccessible).
 
 Vérifie ton environnement avec `dsoxlab doctor` (Python, pytest, runtimes, labs
 détectés). Ce dépôt déclare plusieurs providers d'infrastructure : les labs VM
 en exigent donc un actif.
 
-```bash
-dsoxlab use --provider kvm     # persisté pour ce dépôt
-# ou, one-shot : DSOXLAB_PROVIDER=kvm dsoxlab provision
-```
 
 ### Garder à jour
 
