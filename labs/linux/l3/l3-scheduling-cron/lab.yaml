@@ -2,6 +2,7 @@ id: l3-scheduling-cron
 title: "Schedule a recurring job with cron"
 description: "Run /usr/local/bin/report.sh every day at 02:30 through a cron entry — proven by the actual schedule the cron daemon will honour."
 section: l3
+bloc_order: 6
 lab_type: lab
 level: l3
 track:

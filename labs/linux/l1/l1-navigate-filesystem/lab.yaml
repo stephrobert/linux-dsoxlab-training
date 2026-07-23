@@ -5,7 +5,7 @@ section: l1
 lab_type: lab
 level: l1
 bloc: 1
-bloc_order: 2
+bloc_order: 8
 difficulty: beginner
 estimated_time: 30m
 runtime:

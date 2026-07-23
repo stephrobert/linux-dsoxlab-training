@@ -2,6 +2,7 @@ id: drill-essential-commands
 title: "Drill — essential commands under exam conditions"
 description: "5 tasks, 100 points, 20 minutes, no hints: find by size, build a frequency report, links, ownership and permissions, and split stdout from stderr. Playable on RHEL or Debian — the skills are identical."
 section: drills
+bloc_order: 1
 lab_type: challenge
 level: l1
 track:

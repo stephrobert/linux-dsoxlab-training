@@ -2,6 +2,7 @@ id: l2-disk-space-troubleshoot
 title: "Diagnose a full filesystem and reclaim space"
 description: "A filesystem is full. Find the culprit with df/du, remove the junk without deleting the legitimate data, and bring usage back down."
 section: l2
+bloc_order: 5
 lab_type: lab
 level: l2
 track:

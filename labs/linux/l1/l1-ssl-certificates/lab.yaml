@@ -2,6 +2,7 @@ id: l1-ssl-certificates
 title: "Inspect a TLS certificate with openssl"
 description: "Read a delivered X.509 certificate: extract its subject, validity dates, SHA-256 fingerprint and public key with openssl x509."
 section: l1
+bloc_order: 20
 lab_type: lab
 level: l1
 track:

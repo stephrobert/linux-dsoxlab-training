@@ -2,6 +2,7 @@ id: l4-firewall-persist
 title: "Open a firewalld service permanently"
 description: "Allow the http service through firewalld so it holds now and after reload/reboot — proven by the runtime and permanent service lists, without ever closing ssh."
 section: l4
+bloc_order: 4
 lab_type: lab
 level: l4
 track:

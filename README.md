@@ -49,23 +49,58 @@ as a standalone tool:
 uv tool install dsoxlab        # or: pipx install dsoxlab
 
 # 2. Clone this lab catalog
-git clone <this-repo-url> linux-dsoxlab-training
+git clone https://github.com/stephrobert/linux-dsoxlab-training.git
 cd linux-dsoxlab-training
 
-# 3. Discover and run
-dsoxlab list-labs
-dsoxlab run <lab-id>
-dsoxlab check <lab-id>
+# 3. Check everything is in place
+dsoxlab doctor
 ```
+
+### Your first lab, in five minutes
+
+**Start with section `l1`.** Its twenty labs run in a plain terminal: no virtual
+machine, no provider, nothing to provision. You can do them on your own box,
+right now.
+
+```bash
+dsoxlab use l1                       # starting section
+dsoxlab next                         # → l1-discover-linux-map
+```
+
+Then, for this lab and every other one, the same four-step cycle:
+
+```bash
+dsoxlab course l1-discover-linux-map      # 1. the context, then the course
+dsoxlab challenge l1-discover-linux-map   # 2. what is asked of you
+dsoxlab run l1-discover-linux-map         # 3. prepares your workspace
+                                          #    (challenge/work/) and puts you in it
+dsoxlab check l1-discover-linux-map       # 4. validate and score
+```
+
+`run` is the step people skip: it creates the files you work on, and for a VM
+lab it puts the machine into the state the scenario describes. A `check` run
+without `run` fails by reporting that nothing is done — true, but misleading.
+
+Stuck? `dsoxlab hint <id>` reveals a hint, at the cost of a few points.
+
+### Moving on to virtual-machine labs
+
+Sections `l2` and beyond configure real systems: systemd, firewall, SELinux,
+storage. They need an active provider and provisioned infrastructure.
+
+```bash
+dsoxlab use --provider kvm     # persisted for this repo
+dsoxlab provision              # creates the machines (a few minutes)
+dsoxlab status                 # check they answer
+```
+
+If a machine becomes unreachable, see
+[Recovering an unreachable machine](#recovering-an-unreachable-machine).
 
 Check your environment with `dsoxlab doctor` (Python, pytest, runtimes, detected
 labs). This repo declares several infrastructure providers, so VM labs need an
 active one:
 
-```bash
-dsoxlab use --provider kvm     # persisted for this repo
-# or, one-shot: DSOXLAB_PROVIDER=kvm dsoxlab provision
-```
 
 ### Keeping it up to date
 

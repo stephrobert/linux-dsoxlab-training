@@ -2,6 +2,7 @@ id: l4-selinux-context-fix
 title: "Fix a file's SELinux context, persistently"
 description: "Give a custom web directory the httpd_sys_content_t type with semanage fcontext + restorecon so it survives a relabel/reboot — proven by ls -Z and the fcontext rule."
 section: l4
+bloc_order: 10
 lab_type: lab
 level: l4
 track:

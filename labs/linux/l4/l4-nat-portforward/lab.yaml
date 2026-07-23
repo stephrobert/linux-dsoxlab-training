@@ -2,6 +2,7 @@ id: l4-nat-portforward
 title: "Set up persistent NAT port forwarding with nftables"
 description: "Enable IP forwarding and add an nftables nat table (DNAT port forward + masquerade) that survives reboot — proven by the live ruleset, sysctl and persistence files."
 section: l4
+bloc_order: 12
 lab_type: lab
 level: l4
 track:

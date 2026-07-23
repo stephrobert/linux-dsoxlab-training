@@ -2,6 +2,7 @@ id: l3-ssh-access-recovery
 title: "Repair a broken sshd config before it locks you out"
 description: "A drop-in left an invalid directive: sshd -t fails, so the next reload or reboot would kill remote access. Fix the config, keep root login disabled, and reload cleanly."
 section: l3
+bloc_order: 14
 lab_type: lab
 level: l3
 track:

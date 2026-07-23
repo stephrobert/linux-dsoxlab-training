@@ -2,6 +2,7 @@ id: l2-repo-configure
 title: "Configure a dnf repository with a .repo file"
 description: "Add a software repository under /etc/yum.repos.d: an id, a baseurl, enabled and GPG-checked, then confirm dnf sees it."
 section: l2
+bloc_order: 18
 lab_type: lab
 level: l2
 track:

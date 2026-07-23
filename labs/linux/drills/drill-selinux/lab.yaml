@@ -2,6 +2,7 @@ id: drill-selinux
 title: "Drill — SELinux under exam conditions"
 description: "4 tasks, 100 points, 20 minutes, no hints: put SELinux back in enforcing for good, fix a file context so it survives a relabel, flip a boolean persistently, and label a non-standard port. RHCSA only — Debian uses AppArmor, see drill-apparmor."
 section: drills
+bloc_order: 7
 lab_type: challenge
 level: l4
 track:

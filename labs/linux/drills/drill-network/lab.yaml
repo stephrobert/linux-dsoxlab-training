@@ -2,6 +2,7 @@ id: drill-network
 title: "Drill — static networking under exam conditions"
 description: "4 tasks, 100 points, 20 minutes, no hints: a static address, a static route and an MTU on a dedicated interface, plus local name resolution. The objective is shared by RHCSA and LFCS — only the tool changes (nmcli or netplan)."
 section: drills
+bloc_order: 9
 lab_type: challenge
 level: l4
 track:

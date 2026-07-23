@@ -2,6 +2,7 @@ id: l3-scheduling-timers
 title: "Schedule a recurring job with a systemd timer"
 description: "Create a .service and its .timer (OnCalendar), enable it, and prove it is active and persistent — the systemd way to schedule recurring work."
 section: l3
+bloc_order: 8
 lab_type: lab
 level: l3
 track:

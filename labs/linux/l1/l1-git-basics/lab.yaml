@@ -2,6 +2,7 @@ id: l1-git-basics
 title: "Initialize a Git repo: commit, history and a branch"
 description: "Create a repository, make two commits tracking real files, and open a feature branch — proven by inspecting the repository state itself."
 section: l1
+bloc_order: 18
 lab_type: lab
 level: l1
 track:

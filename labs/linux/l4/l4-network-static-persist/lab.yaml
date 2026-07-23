@@ -2,6 +2,7 @@ id: l4-network-static-persist
 title: "Configure a persistent static IPv4 with NetworkManager"
 description: "Create a NetworkManager connection with a static IPv4 (manual method) that survives reboot — proven by the on-disk profile and the live address."
 section: l4
+bloc_order: 2
 lab_type: lab
 level: l4
 track:

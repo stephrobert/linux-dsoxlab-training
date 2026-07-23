@@ -2,6 +2,7 @@ id: drill-systemd
 title: "Drill — systemd units, timers and scheduling under exam conditions"
 description: "5 tasks, 100 points, 25 minutes, no hints: write a service unit with a restart policy, schedule a weekly timer, add a cron job, fix the default boot target, and mask a service for good. Playable on RHEL or Debian — systemd is systemd."
 section: drills
+bloc_order: 3
 lab_type: challenge
 level: l3
 track:

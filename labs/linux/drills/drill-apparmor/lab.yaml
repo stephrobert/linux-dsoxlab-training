@@ -2,6 +2,7 @@ id: drill-apparmor
 title: "Drill — AppArmor under exam conditions"
 description: "4 tasks, 100 points, 15 minutes, no hints: confirm AppArmor is up, put one profile in complain, and bring two others back to enforce. LFCS only — RHEL uses SELinux, see drill-selinux."
 section: drills
+bloc_order: 8
 lab_type: challenge
 level: l4
 track:

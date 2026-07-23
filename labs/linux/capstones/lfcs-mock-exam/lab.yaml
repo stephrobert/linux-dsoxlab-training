@@ -2,6 +2,7 @@ id: lfcs-mock-exam
 title: "LFCS mock exam — 17 tasks on Ubuntu 24.04"
 description: "Performance-based LFCS mock exam covering the 5 official domains: Essential Commands (20%), Operations Deployment (25%), Users and Groups (10%), Networking (25%), Storage (20%). 17 tasks scored on 100 points on a single Ubuntu VM. 70/100 to pass. No hints."
 section: capstones
+bloc_order: 2
 lab_type: capstone
 level: l2
 track:
