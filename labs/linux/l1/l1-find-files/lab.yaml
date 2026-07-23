@@ -1,7 +1,7 @@
 id: l1-find-files
 title: "Locate files with find by name, size and permissions"
 description: "Extract a project tree and use find to list files by name pattern, by size and by exact permissions — producing the results into files that are checked against the real tree."
-section: linux
+section: l1
 lab_type: lab
 level: l1
 track:

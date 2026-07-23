@@ -1,7 +1,7 @@
 id: l4-selinux-diagnose-avc
 title: "Diagnose an SELinux denial (AVC) and fix it the right way"
 description: "A web file has the wrong SELinux label so httpd is denied (403). Read the AVC in the audit log and restore the context — without disabling SELinux. Proven by the live context and a 200 response."
-section: linux
+section: l4
 lab_type: lab
 level: l4
 track:

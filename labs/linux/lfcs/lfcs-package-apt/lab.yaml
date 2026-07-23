@@ -1,7 +1,7 @@
 id: lfcs-package-apt
 title: "Manage Debian packages with apt and dpkg"
 description: "Install a package with apt, pin it with a hold so updates skip it, and identify which package owns a file — the Debian package-management skills for LFCS."
-section: linux
+section: lfcs
 lab_type: lab
 level: l2
 track:

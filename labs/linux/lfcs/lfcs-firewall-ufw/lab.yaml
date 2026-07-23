@@ -1,7 +1,7 @@
 id: lfcs-firewall-ufw
 title: "Open a service through the firewall with ufw"
 description: "Allow the http service and enable ufw so it filters at boot, without ever locking out SSH — the Debian firewall counterpart to firewalld, proven by ufw status."
-section: linux
+section: lfcs
 lab_type: lab
 level: l4
 track:

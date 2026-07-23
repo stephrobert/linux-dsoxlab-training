@@ -1,7 +1,7 @@
 id: l4-selinux-boolean-port
 title: "Allow a service with SELinux: persistent boolean and labeled port"
 description: "Turn on an SELinux boolean persistently and label a non-standard port so a service is allowed under enforcing SELinux — proven by getsebool and semanage port."
-section: linux
+section: l4
 lab_type: lab
 level: l4
 track:

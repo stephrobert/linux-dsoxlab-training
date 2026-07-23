@@ -1,7 +1,7 @@
 id: drill-storage
 title: "Drill — partitions, LVM and swap under exam conditions"
 description: "5 tasks, 100 points, 25 minutes, no hints: partition a disk in GPT, build an LVM stack, mount by UUID persistently, add swap, and extend a logical volume online. Playable on RHEL or Debian — parted, LVM and XFS are identical."
-section: linux
+section: drills
 lab_type: challenge
 level: l2
 track:

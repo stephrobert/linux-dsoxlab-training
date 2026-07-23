@@ -1,7 +1,7 @@
 id: lfcs-apparmor
 title: "Manage an AppArmor profile: switch it to complain mode"
 description: "Put a loaded AppArmor profile into complain (learning) mode with aa-complain and prove it with aa-status — the Debian mandatory-access-control counterpart to SELinux."
-section: linux
+section: lfcs
 lab_type: lab
 level: l4
 track:

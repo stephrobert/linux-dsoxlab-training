@@ -95,6 +95,27 @@ def test_task4_sudo_delegation_actually_works(host):
         f"Le script doit s'exécuter en root (uid=0). Vu : {res.stdout!r}"
     )
 
+    # « Et rien de plus » : le versant interdit de la tâche. Sans cette
+    # assertion, « %ops ALL=(ALL) NOPASSWD: ALL » marquait les 20 points,
+    # alors que c'est le root complet, soit l'exact contraire du moindre
+    # privilège demandé. Un drill de sécurité doit prouver ce qui est
+    # interdit, pas seulement ce qui est permis.
+    #
+    # Assertion gardée DANS ce test plutôt que dans un test séparé : le score
+    # se calcule par test, et les cinq tâches valent 20 points chacune. Un
+    # sixième test ramènerait chaque tâche à 16,7 points.
+    #
+    # /usr/bin/id sert de témoin : aucune raison de le déléguer, et son refus
+    # est net (sudo sort en erreur avec « not allowed to execute »).
+    trop_large = host.run("runuser -u deploy -- sudo -n /usr/bin/id")
+    assert trop_large.rc != 0, (
+        "deploy peut lancer /usr/bin/id en root, alors que la tâche ne "
+        "délègue que /usr/local/bin/ops-report.sh. La règle sudo est trop "
+        "large (un NOPASSWD: ALL, ou un chemin en ALL) : elle accorde le root "
+        "complet. Restreins-la à la seule commande demandée.\n"
+        f"Sortie : {trop_large.stdout}{trop_large.stderr}"
+    )
+
 
 @pytest.mark.points(20)
 def test_task5_departing_account_locked(host):
@@ -106,8 +127,11 @@ def test_task5_departing_account_locked(host):
         f"afficher L en 2e champ). Vu : {statut!r}"
     )
     shell = host.user("former").shell
-    assert shell.endswith("nologin"), (
-        "Le shell de former doit interdire la connexion (…/nologin) : "
-        "verrouiller le mot de passe ne suffit pas, une clé SSH passerait "
-        f"encore. Vu : {shell}."
+    # L'énoncé demande un shell qui « interdit la connexion », pas nommément
+    # nologin : /bin/false et /sbin/nologin remplissent tous deux le contrat.
+    # N'accepter que nologin recalait une réponse juste.
+    assert shell.endswith(("nologin", "false")), (
+        "Le shell de former doit interdire la connexion (…/nologin ou "
+        "/bin/false) : verrouiller le mot de passe ne suffit pas, une clé SSH "
+        f"passerait encore. Vu : {shell}."
     )

@@ -1,7 +1,7 @@
 id: l2-filesystem-create-xfs
 title: "Create and label an XFS filesystem, then mount it"
 description: "Format a prepared partition as XFS with a label, create a mount point and mount it — proven by the filesystem type, its label and the active mount."
-section: linux
+section: l2
 lab_type: lab
 level: l2
 track:

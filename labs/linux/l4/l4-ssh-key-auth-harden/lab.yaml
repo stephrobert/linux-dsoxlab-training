@@ -1,7 +1,7 @@
 id: l4-ssh-key-auth-harden
 title: "Set up hardened key-based SSH access for a service user"
 description: "Give the deploy user key-based SSH login with correct ownership and permissions (.ssh 700, authorized_keys 600, owned by the user) — the classic trap that silently breaks key auth."
-section: linux
+section: l4
 lab_type: lab
 level: l4
 track:

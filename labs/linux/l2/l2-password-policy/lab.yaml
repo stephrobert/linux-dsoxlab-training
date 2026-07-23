@@ -1,7 +1,7 @@
 id: l2-password-policy
 title: "Enforce password aging and complexity policy"
 description: "Set per-account password aging with chage, the system default max age in login.defs, and a minimum password length via pwquality."
-section: linux
+section: l2
 lab_type: lab
 level: l2
 track:

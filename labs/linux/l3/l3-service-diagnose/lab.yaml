@@ -1,7 +1,7 @@
 id: l3-service-diagnose
 title: "Diagnose and fix a systemd service stuck in a crash loop"
 description: "A systemd service keeps restarting because of a missing config file. Use systemctl + journalctl to find the root cause and fix it permanently."
-section: linux
+section: l3
 lab_type: lab
 level: l3
 track:

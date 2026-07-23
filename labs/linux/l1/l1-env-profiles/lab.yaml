@@ -1,7 +1,7 @@
 id: l1-env-profiles
 title: "Environment variables: export, PATH and a sourced env file"
 description: "Write env.sh that, when sourced, exports variables, reuses one in another, and prepends a bin directory to PATH — proven by sourcing it in a subshell."
-section: linux
+section: l1
 lab_type: lab
 level: l1
 track:

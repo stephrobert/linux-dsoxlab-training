@@ -1,7 +1,7 @@
 id: l1-grep-regex
 title: "Filter a log with grep and regular expressions"
 description: "Use grep with anchors, character classes, invert-match and count to extract exact facts from an access log."
-section: linux
+section: l1
 lab_type: lab
 level: l1
 track:

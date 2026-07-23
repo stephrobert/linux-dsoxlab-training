@@ -1,7 +1,7 @@
 id: l3-sysctl-persist
 title: "Harden kernel parameters persistently with sysctl.d"
 description: "Disable IP forwarding and ICMP redirects via /etc/sysctl.d, applied now and surviving reboot — proven by the live sysctl values."
-section: linux
+section: l3
 lab_type: lab
 level: l3
 track:

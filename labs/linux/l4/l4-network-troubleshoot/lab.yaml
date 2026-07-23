@@ -1,7 +1,7 @@
 id: l4-network-troubleshoot
 title: "Diagnose and restore a down network connection"
 description: "A NetworkManager connection is configured but stays down and won't auto-start. Diagnose it, bring it up, and make it auto-connect — proven by the live state and autoconnect flag."
-section: linux
+section: l4
 lab_type: lab
 level: l4
 track:

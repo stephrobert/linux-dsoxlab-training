@@ -1,7 +1,7 @@
 id: l2-raid-mdadm
 title: "Build a software RAID 1 with mdadm"
 description: "Assemble two disks into a redundant RAID 1 array with mdadm, format and mount it, and make it persistent."
-section: linux
+section: l2
 lab_type: lab
 level: l2
 track:

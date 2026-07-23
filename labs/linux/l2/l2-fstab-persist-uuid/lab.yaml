@@ -1,7 +1,7 @@
 id: l2-fstab-persist-uuid
 title: "Mount a filesystem persistently by UUID in /etc/fstab"
 description: "Mount a pre-formatted extra disk at /srv/data through /etc/fstab, referenced by UUID (not device name) so it survives a reboot, and prove the line with mount -a AND findmnt --verify."
-section: linux
+section: l2
 lab_type: lab
 level: l2
 track:

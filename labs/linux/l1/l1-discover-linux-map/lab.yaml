@@ -3,7 +3,7 @@ title: 'Map Linux: kernel, distribution and key directories'
 description: 'Explore what Linux is made of: run real commands on your own system
   to discover the kernel, your distribution and the role of /etc, /var/log and /proc.
   Fill in a knowledge map.'
-section: linux
+section: l1
 level: l1
 lab_type: lab
 bloc: 0
