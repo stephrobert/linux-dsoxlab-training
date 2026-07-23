@@ -1,8 +1,8 @@
 id: l4-podman-systemd-persist
 title: "Run a container as a systemd service with Quadlet (boot-persistent)"
 description: "Define a Quadlet .container unit so a container starts at boot under systemd — proven by the active service, the running container and the on-disk unit."
-section: linux
-type: lab
+section: l4
+lab_type: lab
 level: l4
 track:
   - conteneurs
@@ -16,6 +16,9 @@ difficulty: advanced
 estimated_time: 30m
 runtime:
   type: vm
+  # On reste sur le poste : c'est à l'apprenant de taper son ssh vers
+  # la machine du lab, et dsoxlab n'est installé que sur le poste.
+  session: local
   default: rhel
   snapshot_required: false
   targets:

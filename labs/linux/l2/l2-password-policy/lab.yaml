@@ -1,8 +1,8 @@
 id: l2-password-policy
 title: "Enforce password aging and complexity policy"
 description: "Set per-account password aging with chage, the system default max age in login.defs, and a minimum password length via pwquality."
-section: linux
-type: lab
+section: l2
+lab_type: lab
 level: l2
 track:
   - administration
@@ -15,6 +15,9 @@ difficulty: intermediate
 estimated_time: 25m
 runtime:
   type: vm
+  # On reste sur le poste : c'est à l'apprenant de taper son ssh vers
+  # la machine du lab, et dsoxlab n'est installé que sur le poste.
+  session: local
   default: rhel
   snapshot_required: false
   targets:

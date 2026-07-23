@@ -2,8 +2,8 @@ id: l1-get-help
 title: Get help from the command line
 description: Use man, --help, and apropos to find the right command options without
   searching the web.
-section: linux
-type: lab
+section: l1
+lab_type: lab
 level: l1
 bloc: 0
 bloc_order: 6

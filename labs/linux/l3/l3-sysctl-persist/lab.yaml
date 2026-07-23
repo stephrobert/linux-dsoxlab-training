@@ -1,8 +1,8 @@
 id: l3-sysctl-persist
 title: "Harden kernel parameters persistently with sysctl.d"
 description: "Disable IP forwarding and ICMP redirects via /etc/sysctl.d, applied now and surviving reboot — proven by the live sysctl values."
-section: linux
-type: lab
+section: l3
+lab_type: lab
 level: l3
 track:
   - exploiter
@@ -15,6 +15,9 @@ difficulty: intermediate
 estimated_time: 20m
 runtime:
   type: vm
+  # On reste sur le poste : c'est à l'apprenant de taper son ssh vers
+  # la machine du lab, et dsoxlab n'est installé que sur le poste.
+  session: local
   default: rhel
   snapshot_required: false
   targets:

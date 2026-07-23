@@ -1,8 +1,8 @@
 id: l2-acl-posix
 title: "Grant fine-grained access with POSIX ACLs"
 description: "Go beyond ugo: give one user rw on a file and a group rx on a directory, with a default ACL so new files inherit it — using setfacl/getfacl."
-section: linux
-type: lab
+section: l2
+lab_type: lab
 level: l2
 track:
   - administration
@@ -15,6 +15,9 @@ difficulty: intermediate
 estimated_time: 25m
 runtime:
   type: vm
+  # On reste sur le poste : c'est à l'apprenant de taper son ssh vers
+  # la machine du lab, et dsoxlab n'est installé que sur le poste.
+  session: local
   default: rhel
   snapshot_required: false
   targets:

@@ -1,8 +1,8 @@
 id: l4-reverse-proxy-lb
 title: "Load-balance a web backend with HAProxy"
 description: "Configure HAProxy on the front host to reverse-proxy and load-balance to a backend web server, persistently — proven by a request through the proxy returning the backend's page."
-section: linux
-type: lab
+section: l4
+lab_type: lab
 level: l4
 track:
   - reseau
@@ -15,6 +15,9 @@ difficulty: advanced
 estimated_time: 30m
 runtime:
   type: vm
+  # On reste sur le poste : c'est à l'apprenant de taper son ssh vers
+  # la machine du lab, et dsoxlab n'est installé que sur le poste.
+  session: local
   default: rhel
   snapshot_required: false
   targets:

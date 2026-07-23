@@ -6,6 +6,17 @@
   become: true
   gather_facts: false
   tasks:
+    # mdadm ships with neither the AlmaLinux 10 nor the Ubuntu 24.04 cloud
+    # image, and nothing in the challenge tells the learner to install it.
+    # Fail loudly if the package cannot be installed: a silent skip would leave
+    # the learner facing "command not found" with no clue why.
+    - name: Ensure mdadm + xfsprogs
+      ansible.builtin.package:
+        name:
+          - mdadm
+          - xfsprogs
+        state: present
+
     - name: Create two 512 MiB backing files
       ansible.builtin.command:
         cmd: "dd if=/dev/zero of=/root/raid{{ item }}.img bs=1M count=512"

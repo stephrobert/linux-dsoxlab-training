@@ -1,8 +1,8 @@
 id: l3-tuned-profile
 title: "Apply a tuned performance profile"
 description: "Switch the active tuned profile to throughput-performance and make it stick — proven by the active profile the tuned daemon reports."
-section: linux
-type: lab
+section: l3
+lab_type: lab
 level: l3
 track:
   - exploiter
@@ -14,6 +14,9 @@ difficulty: intermediate
 estimated_time: 20m
 runtime:
   type: vm
+  # On reste sur le poste : c'est à l'apprenant de taper son ssh vers
+  # la machine du lab, et dsoxlab n'est installé que sur le poste.
+  session: local
   default: rhel
   snapshot_required: false
   targets:

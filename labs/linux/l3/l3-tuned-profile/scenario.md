@@ -5,15 +5,10 @@ tuned profile. Switch it to a profile built for **throughput**, so the kernel
 knobs (CPU governor, I/O, VM) are set for sustained load — and make it survive a
 reboot.
 
-Your mission, on the VM:
-
-1. Set the active tuned profile to **`throughput-performance`**
-   (`tuned-adm profile throughput-performance`).
-2. Confirm it with `tuned-adm active`.
-
-The point: `tuned` bundles dozens of kernel/sysfs settings into named profiles;
-`tuned-adm list` shows them, `tuned-adm profile <name>` switches, and the choice
-is stored (in `/etc/tuned/active_profile`) so it holds across reboots.
+The point: `tuned` bundles dozens of kernel and sysfs settings into named
+profiles, one per broad kind of workload. The chosen profile is recorded on disk,
+and that is what makes it hold across reboots. What's left is picking the right
+one and switching to it.
 
 Method in the companion guide:
 https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/tuned/

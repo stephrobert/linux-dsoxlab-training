@@ -1,8 +1,8 @@
 id: drill-users-groups
 title: "Drill — users, groups and delegation under exam conditions"
 description: "5 tasks, 100 points, 20 minutes, no hints: create an account to exact specs, enforce password aging, build a collaborative directory, delegate sudo narrowly, and lock a departing account. Playable on RHEL or Debian — user management is identical."
-section: linux
-type: challenge
+section: drills
+lab_type: challenge
 level: l2
 track:
   - administration
@@ -23,6 +23,9 @@ estimated_time: 20m
 # règle sudo en chemin absolu ne serait pas portable.
 runtime:
   type: vm
+  # On reste sur le poste : c'est à l'apprenant de taper son ssh vers
+  # la machine du lab, et dsoxlab n'est installé que sur le poste.
+  session: local
   default: rhel
   snapshot_required: false
   targets:

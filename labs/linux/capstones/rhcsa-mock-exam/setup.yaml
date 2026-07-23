@@ -32,7 +32,6 @@
           - lvm2
           - parted
         state: present
-      failed_when: false
 
     - name: Tache 8 — fournir /var/log/myapp.log (root:root, 0600)
       ansible.builtin.copy:
@@ -201,7 +200,6 @@
           - nfs-utils
           - openssh-server
         state: present
-      failed_when: false
 
     # Tâche 9/17 — le réseau part en DHCP (auto), sinon la tâche serait offerte.
     # On identifie la connexion de gestion par sa FONCTION (celle qui porte la

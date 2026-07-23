@@ -17,6 +17,9 @@ reload cuts off access.
 - Fix `/etc/ssh/sshd_config.d/99-lab.conf` (MaxAuthTries = a number), keep
   `PermitRootLogin no`, validate with `sshd -t`, then `systemctl reload sshd`.
   Never reload a config that `sshd -t` rejects.
+- Deleting the file is not a repair: the security setting would go with it.
+- Keep a **second SSH session open** for the whole exercise: no account on the
+  VM has a password, so the serial console would not save you.
 
 ## Validation
 

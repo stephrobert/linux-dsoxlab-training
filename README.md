@@ -157,10 +157,32 @@ typed" is rejected.
 
 `check` records a score (passed/total minus the cost of any hints used). Hints
 are **cost-weighted** — revealing one deducts points, which is why they are
-opt-in. History lives in a local SQLite database
-(`~/.local/share/dsoxlab/progress.db`, XDG-overridable); `dsoxlab scores` and
+opt-in. History lives in a SQLite database **local to this repository**
+(`.dsoxlab.db` at the root, gitignored); `dsoxlab scores` and
 `dsoxlab progress` read it. The active session (context, provider) is stored per
 repo in `.dsoxlab-context.json`.
+
+### Recovering an unreachable machine
+
+A lab that deliberately breaks SSH, networking or the root mount can leave a VM
+unreachable, and that is sometimes the point of the exercise. When the machine
+stops answering and the console is not enough, the reliable route is to rebuild
+the park:
+
+```bash
+dsoxlab destroy --yes     # about 6 s
+dsoxlab provision         # about 4 min, all 3 hosts come back ready
+```
+
+The IPs are reassigned identically (`10.10.30.11` to `.13`): the `ssh_config`
+fragment and the inventory are regenerated, nothing else needs touching. Your
+progress is unaffected: it lives in `.dsoxlab.db`, not in the VMs.
+
+`dsoxlab destroy --host <fqdn>` exists, but it does **not** recover a single
+machine: Terraform also destroys everything that depends on the target, so
+asking for one host takes others down with it (measured: 7 resources planned
+for a single one requested). Use it only to narrow a plan, never as a recovery
+procedure.
 
 ## Catalog
 
@@ -231,7 +253,7 @@ to refresh it.
 | `l3-scheduling-timers` | Schedule a recurring job with a systemd timer | l3 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/planification/timers/) |
 | `l3-app-constraints` | Set per-user resource limits (open files) with limits.d | l3 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/processus/limites-ressources/) |
 | `l3-sysctl-persist` | Harden kernel parameters persistently with sysctl.d | l3 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/securiser/durcissement/sysctl/) |
-| `l3-process-signals-priority` | Lower a service's scheduling priority with Nice | l3 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/utilisateurs-droits-processus/comprendre-processus/) |
+| `l3-process-signals-priority` | Lower a service's scheduling priority with Nice | l3 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/processus/) |
 | `l3-tuned-profile` | Apply a tuned performance profile | l3 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/tuned/) |
 | `l3-fs-readonly-recover` | Recover a read-only mount caused by a broken fstab | l3 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/depanner/systeme-fichiers-lecture-seule/) |
 | `l3-ssh-access-recovery` | Repair a broken sshd config before it locks you out | l3 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/depanner/perte-acces-ssh/) |

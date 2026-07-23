@@ -13,8 +13,12 @@ Delegate a restricted sudo to the `operators` group (of which `ops` is a member)
 
 ## Constraints
 
-- Edit via `visudo -f /etc/sudoers.d/operators` (validated on save),
-  mode `0440`. Validation reads the **effective policy** (`sudo -l -U ops`).
+- Edit via `visudo -f /etc/sudoers.d/operators`: it validates the syntax on
+  save, but it does **not** set the expected permissions. It leaves the file at
+  `0640`, and `visudo -c` then rejects the whole set (`bad permissions, should
+  be mode 0440`) even though the rule works. So finish with
+  `chmod 0440 /etc/sudoers.d/operators`.
+- Validation reads the **effective policy** (`sudo -l -U ops`).
 
 ## Validation
 

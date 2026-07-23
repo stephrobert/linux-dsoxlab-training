@@ -160,10 +160,32 @@ seulement qu'une commande a été tapée est rejeté.
 
 `check` enregistre un score (tests réussis/total, moins le coût des indices
 utilisés). Les indices sont **à coût variable** : en révéler un déduit des
-points, d'où leur caractère opt-in. L'historique vit dans une base SQLite locale
-(`~/.local/share/dsoxlab/progress.db`, surchargeable via XDG) ; `dsoxlab scores`
-et `dsoxlab progress` la lisent. La session active (contexte, provider) est
+points, d'où leur caractère opt-in. L'historique vit dans une base SQLite **propre à ce dépôt**
+(`.dsoxlab.db`, à la racine, gitignorée) ; `dsoxlab scores` et
+`dsoxlab progress` la lisent. La session active (contexte, provider) est
 stockée par dépôt dans `.dsoxlab-context.json`.
+
+### Récupérer une machine devenue inaccessible
+
+Un lab qui casse volontairement SSH, le réseau ou le montage racine peut laisser
+une VM injoignable, et c'est parfois le but de l'exercice. Quand la machine ne
+répond plus et que la console ne suffit pas, la voie fiable est de reconstruire
+le parc :
+
+```bash
+dsoxlab destroy --yes     # environ 6 s
+dsoxlab provision         # environ 4 min, les 3 hôtes reviennent prêts
+```
+
+Les IP sont réattribuées à l'identique (`10.10.30.11` à `.13`) : le fragment
+`ssh_config` et l'inventaire sont régénérés, rien d'autre n'est à retoucher. La
+progression n'est pas touchée : elle vit dans `.dsoxlab.db`, pas dans les VM.
+
+`dsoxlab destroy --host <fqdn>` existe, mais **ne récupère pas une seule
+machine** : Terraform détruit aussi tout ce qui dépend de la cible, si bien que
+demander un hôte en emporte d'autres (mesuré : 7 ressources planifiées pour une
+seule demandée). Ne s'en servir que pour restreindre un plan, jamais comme
+procédure de récupération.
 
 ## Catalogue
 
@@ -234,7 +256,7 @@ ci-dessous est générée à partir des vrais `lab.yaml` : lance
 | `l3-scheduling-timers` | Planifier une tâche récurrente avec un timer systemd | l3 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/planification/timers/) |
 | `l3-app-constraints` | Régler les limites de ressources par utilisateur (fichiers ouverts) avec limits.d | l3 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/processus/limites-ressources/) |
 | `l3-sysctl-persist` | Durcir des paramètres noyau durablement avec sysctl.d | l3 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/securiser/durcissement/sysctl/) |
-| `l3-process-signals-priority` | Abaisser la priorité d'ordonnancement d'un service avec Nice | l3 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/utilisateurs-droits-processus/comprendre-processus/) |
+| `l3-process-signals-priority` | Abaisser la priorité d'ordonnancement d'un service avec Nice | l3 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/processus/) |
 | `l3-tuned-profile` | Appliquer un profil de performance tuned | l3 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/tuned/) |
 | `l3-fs-readonly-recover` | Récupérer un montage en lecture seule dû à un fstab cassé | l3 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/depanner/systeme-fichiers-lecture-seule/) |
 | `l3-ssh-access-recovery` | Réparer une config sshd cassée avant qu'elle ne te verrouille dehors | l3 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/depanner/perte-acces-ssh/) |

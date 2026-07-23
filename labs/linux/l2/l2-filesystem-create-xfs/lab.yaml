@@ -1,8 +1,8 @@
 id: l2-filesystem-create-xfs
 title: "Create and label an XFS filesystem, then mount it"
 description: "Format a prepared partition as XFS with a label, create a mount point and mount it — proven by the filesystem type, its label and the active mount."
-section: linux
-type: lab
+section: l2
+lab_type: lab
 level: l2
 track:
   - stockage
@@ -15,6 +15,9 @@ difficulty: intermediate
 estimated_time: 25m
 runtime:
   type: vm
+  # On reste sur le poste : c'est à l'apprenant de taper son ssh vers
+  # la machine du lab, et dsoxlab n'est installé que sur le poste.
+  session: local
   default: rhel
   snapshot_required: false
   targets:

@@ -5,19 +5,19 @@ mettre en place d'un coup : quelques variables, une construite à partir d'une
 autre, et un `bin/` local placé en tête de `PATH` pour que ses outils priment.
 Écris ce fichier.
 
-Ta mission — écris `env.sh` dans le répertoire de travail pour qu'une fois sourcé
-(`source env.sh`) :
+Le contrat, celui que les tests vérifient : `env.sh`, dans le répertoire de
+travail, une fois sourcé (`source env.sh`), laisse l'environnement dans cet
+état :
 
-1. `PROJET` soit exporté et vaille `dsoxlab` ;
-2. `EDITOR` soit exporté et vaille `vim` ;
+1. `PROJET` est exporté et vaut `dsoxlab` ;
+2. `EDITOR` est exporté et vaut `vim` ;
 3. `GREETING` réutilise `PROJET` : sa valeur est `Bienvenue sur dsoxlab` ;
-4. `PATH` commence par `$PWD/bin` (le `bin/` du projet passe en premier).
+4. `PATH` commence par `$PWD/bin`, le `bin/` du projet passant en premier.
 
-L'idée : `export NOM=valeur` publie une variable vers les processus enfants, une
-variable peut être construite à partir d'une autre (`"...$PROJET"`), et préfixer
-`PATH` (`export PATH="$PWD/bin:$PATH"`) donne la priorité aux outils locaux. Les
-tests sourcent ton fichier dans un sous-shell et lancent même un processus enfant
-pour confirmer que les variables sont réellement exportées.
+L'idée : une variable n'existe pour les processus enfants que si elle leur est
+publiée, et l'ordre de `PATH` décide quel binaire gagne quand deux portent le
+même nom. Les tests sourcent ton fichier dans un sous-shell et lancent un
+processus enfant pour confirmer que les variables sont réellement exportées.
 
 Méthode dans le guide compagnon :
 https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/efficace-shell/variables-environnement/

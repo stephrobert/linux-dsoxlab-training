@@ -1,8 +1,8 @@
 id: l2-lvm-extend-persist
 title: "Extend a logical volume and prove the mount survives a reboot"
 description: "Extend an LVM logical volume, grow the XFS filesystem, and make the mount persistent via /etc/fstab by UUID."
-section: linux
-type: lab
+section: l2
+lab_type: lab
 level: l2
 track:
   - stockage
@@ -15,6 +15,9 @@ difficulty: intermediate
 estimated_time: 25m
 runtime:
   type: vm
+  # On reste sur le poste : c'est à l'apprenant de taper son ssh vers
+  # la machine du lab, et dsoxlab n'est installé que sur le poste.
+  session: local
   default: rhel
   snapshot_required: false
   targets:

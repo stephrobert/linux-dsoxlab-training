@@ -15,7 +15,7 @@ The VM's additional disk is **blank**. Lay down a GPT table and two partitions.
 
 ## Constraints
 
-- `parted` (or `gdisk`) for the table and the partitions ; `partprobe` to
+- `parted` (or `fdisk`) for the table and the partitions ; `partprobe` to
   inform the kernel. Locate the disk with `lsblk` (the disk without partitions).
 - Validation reads the **real state** (PTTYPE, partitions, sizes), not the command.
 

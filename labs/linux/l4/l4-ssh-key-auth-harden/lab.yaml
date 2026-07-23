@@ -1,8 +1,8 @@
 id: l4-ssh-key-auth-harden
 title: "Set up hardened key-based SSH access for a service user"
 description: "Give the deploy user key-based SSH login with correct ownership and permissions (.ssh 700, authorized_keys 600, owned by the user) — the classic trap that silently breaks key auth."
-section: linux
-type: lab
+section: l4
+lab_type: lab
 level: l4
 track:
   - securiser
@@ -15,6 +15,9 @@ difficulty: intermediate
 estimated_time: 20m
 runtime:
   type: vm
+  # On reste sur le poste : c'est à l'apprenant de taper son ssh vers
+  # la machine du lab, et dsoxlab n'est installé que sur le poste.
+  session: local
   default: rhel
   snapshot_required: false
   targets:

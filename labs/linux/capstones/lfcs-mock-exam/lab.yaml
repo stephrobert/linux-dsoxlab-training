@@ -1,8 +1,8 @@
 id: lfcs-mock-exam
 title: "LFCS mock exam — 17 tasks on Ubuntu 24.04"
 description: "Performance-based LFCS mock exam covering the 5 official domains: Essential Commands (20%), Operations Deployment (25%), Users and Groups (10%), Networking (25%), Storage (20%). 17 tasks scored on 100 points on a single Ubuntu VM. 70/100 to pass. No hints."
-section: linux
-type: capstone
+section: capstones
+lab_type: capstone
 level: l2
 track:
   - capstones
@@ -37,6 +37,9 @@ estimated_time: 120m
 # pour le domaine Networking (jamais l'interface de gestion = gestion).
 runtime:
   type: vm
+  # On reste sur le poste : c'est à l'apprenant de taper son ssh vers
+  # la machine du lab, et dsoxlab n'est installé que sur le poste.
+  session: local
   default: ubuntu
   snapshot_required: false
   targets:

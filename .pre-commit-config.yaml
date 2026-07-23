@@ -9,6 +9,12 @@
 minimum_pre_commit_version: "3.5.0"
 default_install_hook_types: [pre-commit, pre-push]
 
+# `solution/` contient les solutions de reference, chiffrees par ansible-vault.
+# C'est du chiffre, pas du source : aucun hook ne doit le lire ni le reecrire.
+# `end-of-file-fixer` et `trailing-whitespace` corrompraient la charge vault de
+# facon irreversible, et ruff echoue d'emblee sur un .py chiffre.
+exclude: '^solution/'
+
 repos:
   # General hygiene + a hard stop on committing secrets and private keys.
   - repo: https://github.com/pre-commit/pre-commit-hooks
@@ -45,6 +51,48 @@ repos:
         entry: trufflehog git file://. --since-commit HEAD --results=verified --fail --no-update
         language: system
         pass_filenames: false
+
+      # A solution must never land in clear text: it spoils the lab, and git
+      # keeps it forever. The ansible-vault header is the proof of encryption,
+      # so check it rather than trust the author. Runs on every commit — this
+      # is the repo's cardinal rule. 84 header reads, no network, no VM.
+      - id: solutions-encrypted
+        name: solutions stay ansible-vault encrypted
+        entry: uv run --no-project --with pytest --with pyyaml pytest tests/test_solutions_chiffrees.py -q
+        language: system
+        pass_filenames: false
+        always_run: true
+
+      # Garde-fou d'outillage. Dans le dépôt Ansible jumeau, deux fois pendant
+      # une même session, une modification a disparu sans trace git : un test de
+      # catalogue, puis un hook. Plusieurs processus écrivent dans ces dépôts,
+      # et une disparition est muette par nature — un test absent ne proteste
+      # pas. Ce hook rend l'incohérence visible au commit.
+      - id: outillage-coherent
+        name: les vérificateurs de catalogue sont présents et câblés
+        entry: uv run --no-project --with pytest --with pyyaml pytest tests/test_outillage_coherent.py -q
+        language: system
+        pass_filenames: false
+        always_run: true
+
+      # Les renvois internes des README et scénarios cassent en silence : rien
+      # ne les exécute, seul l'apprenant tombe sur un lien mort. Le dépôt
+      # Ansible jumeau en comptait 150 le jour où le test y a été écrit.
+      # Instantané sur les 507 Markdown du catalogue.
+      - id: internal-links
+        name: les liens relatifs des Markdown pointent vers un fichier existant
+        entry: uv run --no-project --with pytest --with pyyaml pytest tests/test_liens_internes.py -q
+        language: system
+        pass_filenames: false
+        files: '\.md$'
+
+      # NB : tests/test_doc_urls.py n'est volontairement câblé nulle part. Il
+      # fait 72 requêtes HTTP vers le blog et échouerait hors ligne ou pendant
+      # une indisponibilité du site, ce qui n'a rien à voir avec la justesse
+      # des labs. Il se lance à la demande, après une refonte du site :
+      #   pytest tests/test_doc_urls.py -v
+      # Cette exclusion est recensée dans HORS_PRE_COMMIT
+      # (tests/test_outillage_coherent.py), qui échoue si on l'oublie.
 
       # The declarative contract is validated on push (kept off the per-commit
       # path for speed). A provider must be selected even though nothing is

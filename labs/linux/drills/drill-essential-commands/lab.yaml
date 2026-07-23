@@ -1,8 +1,8 @@
 id: drill-essential-commands
 title: "Drill — essential commands under exam conditions"
 description: "5 tasks, 100 points, 20 minutes, no hints: find by size, build a frequency report, links, ownership and permissions, and split stdout from stderr. Playable on RHEL or Debian — the skills are identical."
-section: linux
-type: challenge
+section: drills
+lab_type: challenge
 level: l1
 track:
   - fondamentaux
@@ -24,6 +24,9 @@ estimated_time: 20m
 # sur Ubuntu. Exige dsoxlab >= 0.1.7.
 runtime:
   type: vm
+  # On reste sur le poste : c'est à l'apprenant de taper son ssh vers
+  # la machine du lab, et dsoxlab n'est installé que sur le poste.
+  session: local
   default: rhel
   snapshot_required: false
   targets:

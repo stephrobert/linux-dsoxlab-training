@@ -1,8 +1,8 @@
 id: l2-raid-mdadm
 title: "Build a software RAID 1 with mdadm"
 description: "Assemble two disks into a redundant RAID 1 array with mdadm, format and mount it, and make it persistent."
-section: linux
-type: lab
+section: l2
+lab_type: lab
 level: l2
 track:
   - stockage
@@ -15,6 +15,9 @@ difficulty: intermediate
 estimated_time: 30m
 runtime:
   type: vm
+  # On reste sur le poste : c'est à l'apprenant de taper son ssh vers
+  # la machine du lab, et dsoxlab n'est installé que sur le poste.
+  session: local
   default: rhel
   snapshot_required: false
   targets:

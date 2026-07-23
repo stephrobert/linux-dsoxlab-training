@@ -1,8 +1,8 @@
 id: lfcs-apparmor
 title: "Manage an AppArmor profile: switch it to complain mode"
 description: "Put a loaded AppArmor profile into complain (learning) mode with aa-complain and prove it with aa-status — the Debian mandatory-access-control counterpart to SELinux."
-section: linux
-type: lab
+section: lfcs
+lab_type: lab
 level: l4
 track:
   - securiser
@@ -15,6 +15,9 @@ difficulty: intermediate
 estimated_time: 20m
 runtime:
   type: vm
+  # On reste sur le poste : c'est à l'apprenant de taper son ssh vers
+  # la machine du lab, et dsoxlab n'est installé que sur le poste.
+  session: local
   default: ubuntu
   snapshot_required: false
   targets:

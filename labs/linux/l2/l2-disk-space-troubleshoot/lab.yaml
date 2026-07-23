@@ -1,8 +1,8 @@
 id: l2-disk-space-troubleshoot
 title: "Diagnose a full filesystem and reclaim space"
 description: "A filesystem is full. Find the culprit with df/du, remove the junk without deleting the legitimate data, and bring usage back down."
-section: linux
-type: lab
+section: l2
+lab_type: lab
 level: l2
 track:
   - stockage
@@ -15,6 +15,9 @@ difficulty: intermediate
 estimated_time: 25m
 runtime:
   type: vm
+  # On reste sur le poste : c'est à l'apprenant de taper son ssh vers
+  # la machine du lab, et dsoxlab n'est installé que sur le poste.
+  session: local
   default: rhel
   snapshot_required: false
   targets:

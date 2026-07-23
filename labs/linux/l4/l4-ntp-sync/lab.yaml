@@ -1,8 +1,8 @@
 id: l4-ntp-sync
 title: "Synchronize the clock with chrony and set the timezone, persistently"
 description: "Enable and start chronyd, turn NTP on and set the timezone to Europe/Paris — surviving reboot, proven by the live service state and timedatectl."
-section: linux
-type: lab
+section: l4
+lab_type: lab
 level: l4
 track:
   - reseau
@@ -16,6 +16,9 @@ difficulty: beginner
 estimated_time: 15m
 runtime:
   type: vm
+  # On reste sur le poste : c'est à l'apprenant de taper son ssh vers
+  # la machine du lab, et dsoxlab n'est installé que sur le poste.
+  session: local
   default: rhel
   snapshot_required: false
   targets:

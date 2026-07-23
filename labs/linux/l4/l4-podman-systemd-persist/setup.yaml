@@ -28,8 +28,11 @@
     - name: Brief the learner
       ansible.builtin.debug:
         msg: >-
-          Fais tourner un conteneur « weblab » (image ubi9/ubi-micro, commande
-          sleep infinity) en SERVICE systemd persistant, via une unité Quadlet
-          /etc/containers/systemd/weblab.container avec une section [Install]
-          WantedBy=. Puis systemctl daemon-reload et démarre weblab.service.
-          Vérifie avec systemctl is-active weblab.service et podman ps.
+          podman est installé et l'image registry.access.redhat.com/ubi9/ubi-micro
+          a été pré-tirée localement : aucun accès au registre n'est nécessaire.
+          La machine part d'un état vierge, aucune unité ni aucun conteneur de
+          lab ne subsiste. L'état attendu est décrit par
+          « dsoxlab challenge l4-podman-systemd-persist », la méthode par
+          « dsoxlab course l4-podman-systemd-persist ». Aucune commande n'est
+          donnée ici : les indices sont dans
+          « dsoxlab hint l4-podman-systemd-persist ».

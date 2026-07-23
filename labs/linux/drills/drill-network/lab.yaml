@@ -1,8 +1,8 @@
 id: drill-network
 title: "Drill — static networking under exam conditions"
 description: "4 tasks, 100 points, 20 minutes, no hints: a static address, a static route and an MTU on a dedicated interface, plus local name resolution. The objective is shared by RHCSA and LFCS — only the tool changes (nmcli or netplan)."
-section: linux
-type: challenge
+section: drills
+lab_type: challenge
 level: l4
 track:
   - reseau
@@ -28,6 +28,9 @@ estimated_time: 20m
 # avant de vérifier. Un `ip addr add` posé à la main meurt à ce moment-là.
 runtime:
   type: vm
+  # On reste sur le poste : c'est à l'apprenant de taper son ssh vers
+  # la machine du lab, et dsoxlab n'est installé que sur le poste.
+  session: local
   default: rhel
   snapshot_required: false
   targets:

@@ -2,8 +2,8 @@ id: l1-read-a-command
 title: Read and decode a command
 description: Decompose 5 Linux commands into their command/options/arguments parts
   and fix 3 broken commands.
-section: linux
-type: lab
+section: l1
+lab_type: lab
 level: l1
 bloc: 0
 bloc_order: 5

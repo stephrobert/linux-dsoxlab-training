@@ -1,8 +1,8 @@
 id: l1-links-hard-sym
 title: "Create hard and symbolic links and tell them apart"
 description: "Make a hard link that shares the inode, a symbolic link that points by path, and a symlink to a directory — proven by inode, link count and link target."
-section: linux
-type: lab
+section: l1
+lab_type: lab
 level: l1
 track:
   - fondamentaux

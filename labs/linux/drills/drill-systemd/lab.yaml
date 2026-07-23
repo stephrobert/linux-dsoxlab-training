@@ -1,8 +1,8 @@
 id: drill-systemd
 title: "Drill — systemd units, timers and scheduling under exam conditions"
 description: "5 tasks, 100 points, 25 minutes, no hints: write a service unit with a restart policy, schedule a weekly timer, add a cron job, fix the default boot target, and mask a service for good. Playable on RHEL or Debian — systemd is systemd."
-section: linux
-type: challenge
+section: drills
+lab_type: challenge
 level: l3
 track:
   - exploiter
@@ -24,6 +24,9 @@ estimated_time: 25m
 #     sur alma et le candidat gagnerait 20 points sans rien toucher.
 runtime:
   type: vm
+  # On reste sur le poste : c'est à l'apprenant de taper son ssh vers
+  # la machine du lab, et dsoxlab n'est installé que sur le poste.
+  session: local
   default: rhel
   snapshot_required: false
   targets:

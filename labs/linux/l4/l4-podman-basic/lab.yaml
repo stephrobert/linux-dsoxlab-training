@@ -1,8 +1,8 @@
 id: l4-podman-basic
 title: "Run a detached container with Podman"
 description: "Pull an image and run a named container detached, and prove it is up — the Podman basics for RHCSA containers."
-section: linux
-type: lab
+section: l4
+lab_type: lab
 level: l4
 track:
   - conteneurs
@@ -14,6 +14,9 @@ difficulty: intermediate
 estimated_time: 20m
 runtime:
   type: vm
+  # On reste sur le poste : c'est à l'apprenant de taper son ssh vers
+  # la machine du lab, et dsoxlab n'est installé que sur le poste.
+  session: local
   default: rhel
   snapshot_required: false
   targets:

@@ -1,8 +1,8 @@
 id: l3-app-constraints
 title: "Set per-user resource limits (open files) with limits.d"
 description: "Give the appuser account a higher open-files limit via /etc/security/limits.d — proven by the effective ulimit in a real login session."
-section: linux
-type: lab
+section: l3
+lab_type: lab
 level: l3
 track:
   - exploiter
@@ -15,6 +15,9 @@ difficulty: intermediate
 estimated_time: 25m
 runtime:
   type: vm
+  # On reste sur le poste : c'est à l'apprenant de taper son ssh vers
+  # la machine du lab, et dsoxlab n'est installé que sur le poste.
+  session: local
   default: rhel
   snapshot_required: false
   targets:

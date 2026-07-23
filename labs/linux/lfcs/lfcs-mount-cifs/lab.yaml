@@ -1,8 +1,8 @@
 id: lfcs-mount-cifs
 title: "Mount an SMB/CIFS share persistently and safely"
 description: "A second host serves an SMB share. Mount it on the client, make it persistent in /etc/fstab with _netdev, and keep the password out of the world-readable fstab by using a 0600 credentials file."
-section: linux
-type: lab
+section: lfcs
+lab_type: lab
 level: l2
 track:
   - stockage
@@ -16,6 +16,9 @@ difficulty: intermediate
 estimated_time: 30m
 runtime:
   type: vm
+  # On reste sur le poste : c'est à l'apprenant de taper son ssh vers
+  # la machine du lab, et dsoxlab n'est installé que sur le poste.
+  session: local
   default: ubuntu
   snapshot_required: false
   targets:

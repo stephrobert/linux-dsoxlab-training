@@ -1,8 +1,8 @@
 id: drill-firewall
 title: "Drill — firewall under exam conditions"
 description: "5 tasks, 100 points, 20 minutes, no hints: bring the firewall up, open two ports so they survive a reload, keep SSH alive, and explicitly reject a port. The objective is shared by RHCSA and LFCS — only the tool changes (firewalld or ufw)."
-section: linux
-type: challenge
+section: drills
+lab_type: challenge
 level: l4
 track:
   - securiser
@@ -25,6 +25,9 @@ estimated_time: 20m
 # RHCSA, intégré au lieu d'être annoncé.
 runtime:
   type: vm
+  # On reste sur le poste : c'est à l'apprenant de taper son ssh vers
+  # la machine du lab, et dsoxlab n'est installé que sur le poste.
+  session: local
   default: rhel
   snapshot_required: false
   targets:

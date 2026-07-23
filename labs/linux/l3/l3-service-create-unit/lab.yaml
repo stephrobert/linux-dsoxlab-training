@@ -1,8 +1,8 @@
 id: l3-service-create-unit
 title: "Create and enable a systemd service unit"
 description: "Wrap a program in a systemd .service unit, start it and enable it at boot — proven by the service being active, enabled and doing its job."
-section: linux
-type: lab
+section: l3
+lab_type: lab
 level: l3
 track:
   - exploiter
@@ -15,6 +15,9 @@ difficulty: intermediate
 estimated_time: 30m
 runtime:
   type: vm
+  # On reste sur le poste : c'est à l'apprenant de taper son ssh vers
+  # la machine du lab, et dsoxlab n'est installé que sur le poste.
+  session: local
   default: rhel
   snapshot_required: false
   targets:

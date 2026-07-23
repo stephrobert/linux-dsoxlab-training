@@ -2,8 +2,7 @@ id: l1-prepare-vm
 title: Identify your Linux machine
 description: Run commands to collect your system's hostname, distribution, kernel
   version and IP address. Produce a machine identity card stored in vm-info.txt.
-section: linux
-type: lab
+section: l1
 level: l1
 lab_type: lab
 bloc: 0

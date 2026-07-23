@@ -1,8 +1,8 @@
 id: l4-bridge-bonding
 title: "Aggregate links: an active-backup bond under a bridge with nmcli"
 description: "Build an active-backup bond over two slave interfaces and put a bridge on top, persistently with NetworkManager — proven by the bonding state and the bridge port."
-section: linux
-type: lab
+section: l4
+lab_type: lab
 level: l4
 track:
   - reseau
@@ -16,6 +16,9 @@ difficulty: advanced
 estimated_time: 30m
 runtime:
   type: vm
+  # On reste sur le poste : c'est à l'apprenant de taper son ssh vers
+  # la machine du lab, et dsoxlab n'est installé que sur le poste.
+  session: local
   default: rhel
   snapshot_required: false
   targets:

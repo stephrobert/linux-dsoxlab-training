@@ -10,7 +10,6 @@
       ansible.builtin.package:
         name: libpwquality
         state: present
-      failed_when: false
 
     - name: Create user bob (default aging)
       ansible.builtin.user:

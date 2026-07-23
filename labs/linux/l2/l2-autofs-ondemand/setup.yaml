@@ -18,7 +18,6 @@
           - parted
           - util-linux
         state: present
-      failed_when: false
 
     - name: Detect the additional block device (not the root disk)
       ansible.builtin.shell:
@@ -61,10 +60,13 @@
       changed_when: false
 
     - name: Brief the learner
+      # Le brief décrit l'ÉTAT DE DÉPART, pas la solution : les lignes de cartes
+      # sont le contenu des indices payants (challenge/hints.yaml), les donner
+      # ici reviendrait à offrir le challenge.
       ansible.builtin.debug:
         msg: >-
-          Configure autofs pour qu'acceder a /autofs/data monte AUTOMATIQUEMENT
-          le disque (PART dans /root/autofs-disk.env, un XFS avec marker.txt).
-          Carte maitre /etc/auto.master.d/lab.autofs (/autofs vers /etc/auto.lab),
-          carte de montage /etc/auto.lab (data -fstype=xfs :/dev/...). Demarre
-          autofs, puis ls /autofs/data doit declencher le montage.
+          VM prête : autofs est installé, aucune carte ne déclare /autofs, et le
+          disque supplémentaire porte un XFS (avec un témoin marker.txt) qui
+          n'est pas monté. Sa partition est indiquée dans /root/autofs-disk.env.
+          Configure autofs pour qu'un accès à /autofs/data monte ce disque à la
+          demande.

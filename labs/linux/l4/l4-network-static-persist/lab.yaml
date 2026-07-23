@@ -1,8 +1,8 @@
 id: l4-network-static-persist
 title: "Configure a persistent static IPv4 with NetworkManager"
 description: "Create a NetworkManager connection with a static IPv4 (manual method) that survives reboot — proven by the on-disk profile and the live address."
-section: linux
-type: lab
+section: l4
+lab_type: lab
 level: l4
 track:
   - reseau
@@ -15,6 +15,9 @@ difficulty: intermediate
 estimated_time: 25m
 runtime:
   type: vm
+  # On reste sur le poste : c'est à l'apprenant de taper son ssh vers
+  # la machine du lab, et dsoxlab n'est installé que sur le poste.
+  session: local
   default: rhel
   snapshot_required: false
   targets:

@@ -2,8 +2,8 @@ id: l1-linux-filesystem
 title: Linux filesystem hierarchy (FHS)
 description: Match the standard Linux directories to their roles and classify files
   by location.
-section: linux
-type: lab
+section: l1
+lab_type: lab
 level: l1
 bloc: 1
 bloc_order: 1

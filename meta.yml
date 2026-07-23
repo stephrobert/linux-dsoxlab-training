@@ -31,6 +31,13 @@ infra:
     - outscale
   network: lab-linux
   cidr: 10.10.30.0/24
+
+  # ATTENTION : l'IP et la MAC de chaque hôte sont dérivées de sa POSITION dans
+  # cette liste (templates/terraform/kvm/main.tf : `idx + 11` et `idx + 16`).
+  # Insérer un hôte au milieu réattribue donc les adresses de tous les suivants,
+  # ce que le provider libvirt refuse en cours de route
+  # (« ips[0].dhcp.hosts: element N has vanished »). Tout nouvel hôte s'ajoute
+  # EN FIN DE LISTE.
   hosts:
     - name: alma-rhcsa-1.lab
       distro: alma10
@@ -58,9 +65,6 @@ infra:
       # avec usrquota/grpquota + quotas utilisateur). Apparaît comme
       # /dev/vdb (kvm/incus). Les quotas exigent un vrai noyau → KVM.
       extra_disk_gb: 5
-
-  # Overrides spécifiques par provider (lus par le template Terraform
-  # correspondant côté dsoxlab/templates/terraform/<provider>/).
   providers:
     kvm:
       libvirt_uri: "qemu:///system"

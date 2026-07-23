@@ -23,10 +23,10 @@ From `source.txt`, produce three files with the right command:
 ## Useful commands
 
 ```bash
-cat source.txt              # lis d'abord ce que tu manipules
-cp --help | head            # options de copie
-tar --help | grep -A1 -- -c # créer une archive
-cat --help | grep -- -n     # numéroter les lignes
+cat source.txt              # read what you are working with first
+cp --help | head            # copy options
+tar --help | grep -A1 -- -c # create an archive
+cat --help | grep -- -n     # number the lines
 ```
 
 ## Validation

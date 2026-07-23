@@ -1,8 +1,8 @@
 id: l4-nat-portforward
 title: "Set up persistent NAT port forwarding with nftables"
 description: "Enable IP forwarding and add an nftables nat table (DNAT port forward + masquerade) that survives reboot — proven by the live ruleset, sysctl and persistence files."
-section: linux
-type: lab
+section: l4
+lab_type: lab
 level: l4
 track:
   - reseau
@@ -17,6 +17,9 @@ difficulty: advanced
 estimated_time: 35m
 runtime:
   type: vm
+  # On reste sur le poste : c'est à l'apprenant de taper son ssh vers
+  # la machine du lab, et dsoxlab n'est installé que sur le poste.
+  session: local
   default: rhel
   snapshot_required: false
   targets:

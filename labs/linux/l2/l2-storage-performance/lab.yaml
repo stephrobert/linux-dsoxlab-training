@@ -1,8 +1,8 @@
 id: l2-storage-performance
 title: "Tune a mount for performance with noatime (persistently)"
 description: "A read-heavy filesystem wastes I/O writing access times. Add the noatime mount option, make it active and persistent in /etc/fstab."
-section: linux
-type: lab
+section: l2
+lab_type: lab
 level: l2
 track:
   - stockage
@@ -15,6 +15,9 @@ difficulty: intermediate
 estimated_time: 20m
 runtime:
   type: vm
+  # On reste sur le poste : c'est à l'apprenant de taper son ssh vers
+  # la machine du lab, et dsoxlab n'est installé que sur le poste.
+  session: local
   default: rhel
   snapshot_required: false
   targets:

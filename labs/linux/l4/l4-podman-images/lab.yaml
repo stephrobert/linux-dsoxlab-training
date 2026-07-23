@@ -1,8 +1,8 @@
 id: l4-podman-images
 title: "Manage container images: pull, tag, save and inspect"
 description: "Pull an image from a registry, tag it, save it to an archive and inspect that archive with skopeo — the image-management skills for RHCSA containers."
-section: linux
-type: lab
+section: l4
+lab_type: lab
 level: l4
 track:
   - conteneurs
@@ -16,6 +16,9 @@ difficulty: intermediate
 estimated_time: 25m
 runtime:
   type: vm
+  # On reste sur le poste : c'est à l'apprenant de taper son ssh vers
+  # la machine du lab, et dsoxlab n'est installé que sur le poste.
+  session: local
   default: rhel
   snapshot_required: false
   targets:

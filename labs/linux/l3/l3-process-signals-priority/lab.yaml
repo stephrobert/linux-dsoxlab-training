@@ -1,8 +1,8 @@
 id: l3-process-signals-priority
 title: "Lower a service's scheduling priority with Nice"
 description: "A batch worker hogs the CPU. Give its service a nice value of 10 so it yields to interactive work — proven by the live process priority and the unit config."
-section: linux
-type: lab
+section: l3
+lab_type: lab
 level: l3
 track:
   - exploiter
@@ -15,6 +15,9 @@ difficulty: intermediate
 estimated_time: 25m
 runtime:
   type: vm
+  # On reste sur le poste : c'est à l'apprenant de taper son ssh vers
+  # la machine du lab, et dsoxlab n'est installé que sur le poste.
+  session: local
   default: rhel
   snapshot_required: false
   targets:
@@ -26,7 +29,7 @@ distros:
   - rhel10
   - almalinux10
   - ubuntu24.04
-doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/utilisateurs-droits-processus/comprendre-processus/
+doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/processus/
 validation:
   functional: true
   security: false

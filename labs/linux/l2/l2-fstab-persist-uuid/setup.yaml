@@ -3,16 +3,22 @@
 # /etc/fstab. L'apprenant doit le monter durablement sur /srv/data par UUID.
 # Le disque est détecté dynamiquement (le seul disque qui ne porte pas la racine :
 # kvm /dev/vdb, incus /dev/sdb). Joué par dsoxlab run (ansible-runner).
+#
+# Ce disque est PARTAGÉ avec les autres labs de stockage de la même VM : il peut
+# arriver ici partitionné, formaté en XFS ou monté ailleurs. Le setup ne pose
+# donc aucun marqueur "déjà fait" : il revérifie et rétablit l'état de départ à
+# chaque exécution, sinon un lab joué entre-temps le laisserait faux en silence.
 - name: Setup fstab-persist-uuid lab (formatted disk, not mounted)
   hosts: lab_target
   become: true
   gather_facts: false
   tasks:
-    - name: Ensure e2fsprogs (mkfs.ext4, blkid)
+    - name: Ensure e2fsprogs and util-linux (mkfs.ext4, blkid, wipefs)
       ansible.builtin.package:
-        name: e2fsprogs
+        name:
+          - e2fsprogs
+          - util-linux
         state: present
-      failed_when: false
 
     - name: Detect the additional block device (not the root disk)
       ansible.builtin.shell: |
@@ -23,12 +29,17 @@
                 | grep -v "^${root_disk}$" | head -1)
         [ -n "$extra" ] || { echo "no additional disk found" >&2; exit 1; }
         echo "DISK=/dev/${extra}" > /root/fstab-disk.env
-      args:
-        creates: /root/fstab-disk.env
+      changed_when: false
 
-    - name: Clean state — unmount /srv/data, drop any leftover fstab line
+    - name: Clean state - release the disk, drop any leftover /srv/data line
       ansible.builtin.shell: |
+        set -e
+        . /root/fstab-disk.env
         umount /srv/data 2>/dev/null || true
+        # Un autre lab a pu monter ce disque (ou une de ses partitions)
+        # ailleurs. mkfs.ext4 -F refuse un périphérique monté : on le libère.
+        umount "$DISK" 2>/dev/null || true
+        umount "${DISK}"[0-9]* 2>/dev/null || true
         sed -i '\#[[:space:]]/srv/data[[:space:]]#d' /etc/fstab
       changed_when: false
 
@@ -36,15 +47,23 @@
       ansible.builtin.shell: |
         set -e
         . /root/fstab-disk.env
-        blkid "$DISK" | grep -q ext4 || mkfs.ext4 -F "$DISK"
-        touch /root/.fstab-lab-ready
-      args:
-        creates: /root/.fstab-lab-ready
+        if [ "$(blkid -s TYPE -o value "$DISK" 2>/dev/null)" = "ext4" ]; then
+          echo "already-ext4"
+        else
+          # Table de partitions ou autre filesystem laissé par un lab
+          # précédent : on efface les signatures avant de formater.
+          wipefs -a "$DISK"
+          mkfs.ext4 -F "$DISK"
+          echo "formatted"
+        fi
+      register: fstab_lab_format
+      changed_when: "'formatted' in fstab_lab_format.stdout"
 
     - name: Brief the learner
       ansible.builtin.debug:
         msg: >-
           Un disque additionnel est formaté en ext4 mais n'est ni monté ni
           déclaré. Objectif : le monter sur /srv/data de façon persistante via
-          /etc/fstab en le référençant par UUID (blkid), puis vérifier avec
-          mount -a. Ne l'écrivez pas par nom de périphérique.
+          /etc/fstab en le référençant par UUID (blkid). Ne l'écrivez pas par
+          nom de périphérique, et contrôlez la ligne avec findmnt --verify en
+          plus de mount -a.

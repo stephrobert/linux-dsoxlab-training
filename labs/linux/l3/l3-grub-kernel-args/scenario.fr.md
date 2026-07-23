@@ -5,17 +5,10 @@ Tu veux que le noyau redémarre automatiquement dix secondes après un panic
 Éditer le `/proc/cmdline` vivant est impossible ; le paramètre a sa place dans le
 **bootloader**.
 
-Ta mission, sur la VM :
-
-1. Ajoute `panic=10` aux noyaux **existants** :
-   `grubby --update-kernel=ALL --args="panic=10"`.
-2. Ajoute `panic=10` à **`GRUB_CMDLINE_LINUX`** dans `/etc/default/grub` pour que
-   les **futurs** noyaux (après une mise à jour) l'aient aussi.
-
-L'idée : `grubby` édite les entrées de démarrage des noyaux installés ;
-`/etc/default/grub` est le modèle que `grub2-mkconfig` utilise pour les nouveaux
-noyaux — il faut les deux pour un paramètre qui persiste vraiment.
-`grubby --info=DEFAULT` montre les arguments actuels du noyau par défaut.
+L'idée : un paramètre noyau doit atteindre deux populations distinctes, les
+noyaux déjà installés et ceux qui le seront demain. Rien ne garantit qu'un même
+geste couvre les deux, et sur une distribution à entrées de démarrage BLS c'est
+précisément là que le piège se referme.
 
 Méthode dans le guide compagnon :
 https://blog.stephane-robert.info/docs/securiser/durcissement/grub/

@@ -16,7 +16,7 @@ partitions.
 
 ## Contraintes
 
-- `parted` (ou `gdisk`) pour la table et les partitions ; `partprobe` pour
+- `parted` (ou `fdisk`) pour la table et les partitions ; `partprobe` pour
   informer le noyau. Repère le disque avec `lsblk` (le disque sans partition).
 - La validation lit l'**état réel** (PTTYPE, partitions, tailles), pas la commande.
 

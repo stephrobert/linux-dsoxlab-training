@@ -1,8 +1,8 @@
 id: l2-sudo-delegation
 title: "Delegate limited sudo rights with a sudoers drop-in"
 description: "Grant the operators group password-less sudo for systemctl only, via a validated /etc/sudoers.d drop-in — least privilege, not full root."
-section: linux
-type: lab
+section: l2
+lab_type: lab
 level: l2
 track:
   - administration
@@ -15,6 +15,9 @@ difficulty: intermediate
 estimated_time: 25m
 runtime:
   type: vm
+  # On reste sur le poste : c'est à l'apprenant de taper son ssh vers
+  # la machine du lab, et dsoxlab n'est installé que sur le poste.
+  session: local
   default: rhel
   snapshot_required: false
   targets:

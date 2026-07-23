@@ -1,8 +1,8 @@
 id: l4-selinux-context-fix
 title: "Fix a file's SELinux context, persistently"
 description: "Give a custom web directory the httpd_sys_content_t type with semanage fcontext + restorecon so it survives a relabel/reboot — proven by ls -Z and the fcontext rule."
-section: linux
-type: lab
+section: l4
+lab_type: lab
 level: l4
 track:
   - securiser
@@ -16,6 +16,9 @@ difficulty: intermediate
 estimated_time: 25m
 runtime:
   type: vm
+  # On reste sur le poste : c'est à l'apprenant de taper son ssh vers
+  # la machine du lab, et dsoxlab n'est installé que sur le poste.
+  session: local
   default: rhel
   snapshot_required: false
   targets:

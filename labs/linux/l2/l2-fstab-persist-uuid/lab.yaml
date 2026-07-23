@@ -1,8 +1,8 @@
 id: l2-fstab-persist-uuid
 title: "Mount a filesystem persistently by UUID in /etc/fstab"
-description: "Mount a pre-formatted extra disk at /srv/data through /etc/fstab, referenced by UUID (not device name) so it survives a reboot and passes mount -a."
-section: linux
-type: lab
+description: "Mount a pre-formatted extra disk at /srv/data through /etc/fstab, referenced by UUID (not device name) so it survives a reboot, and prove the line with mount -a AND findmnt --verify."
+section: l2
+lab_type: lab
 level: l2
 track:
   - stockage
@@ -15,13 +15,16 @@ difficulty: intermediate
 estimated_time: 25m
 runtime:
   type: vm
+  # On reste sur le poste : c'est à l'apprenant de taper son ssh vers
+  # la machine du lab, et dsoxlab n'est installé que sur le poste.
+  session: local
   default: rhel
   snapshot_required: false
   targets:
     - name: rhel
       host: alma-rhcsa-1.lab
-      label_en: "AlmaLinux 10 (blkid, /etc/fstab UUID, mount -a)"
-      label_fr: "AlmaLinux 10 (blkid, /etc/fstab UUID, mount -a)"
+      label_en: "AlmaLinux 10 (blkid, /etc/fstab UUID, mount -a + findmnt --verify)"
+      label_fr: "AlmaLinux 10 (blkid, /etc/fstab UUID, mount -a + findmnt --verify)"
 distros:
   - rhel10
   - almalinux10
