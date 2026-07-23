@@ -58,7 +58,7 @@ repos:
       # is the repo's cardinal rule. 84 header reads, no network, no VM.
       - id: solutions-encrypted
         name: solutions stay ansible-vault encrypted
-        entry: pytest tests/test_solutions_chiffrees.py -q
+        entry: uv run --no-project --with pytest --with pyyaml pytest tests/test_solutions_chiffrees.py -q
         language: system
         pass_filenames: false
         always_run: true
@@ -70,7 +70,7 @@ repos:
       # pas. Ce hook rend l'incohérence visible au commit.
       - id: outillage-coherent
         name: les vérificateurs de catalogue sont présents et câblés
-        entry: pytest tests/test_outillage_coherent.py -q
+        entry: uv run --no-project --with pytest --with pyyaml pytest tests/test_outillage_coherent.py -q
         language: system
         pass_filenames: false
         always_run: true
@@ -81,7 +81,7 @@ repos:
       # Instantané sur les 507 Markdown du catalogue.
       - id: internal-links
         name: les liens relatifs des Markdown pointent vers un fichier existant
-        entry: pytest tests/test_liens_internes.py -q
+        entry: uv run --no-project --with pytest --with pyyaml pytest tests/test_liens_internes.py -q
         language: system
         pass_filenames: false
         files: '\.md$'
