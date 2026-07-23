@@ -27,11 +27,21 @@ from __future__ import annotations
 import os
 import subprocess
 import sys
+from typing import TYPE_CHECKING
 from pathlib import Path
 
 import pytest
-import testinfra
 import yaml
+
+# testinfra n'est importé que dans lab_host(), à l'usage. Il ne sert qu'aux
+# labs vm, alors qu'un import en tête de fichier casse le chargement de ce
+# conftest pour TOUS les tests du dépôt, y compris les validateurs de
+# contenu de tests/ qui ne touchent jamais une machine. C'est le même
+# défaut que celui corrigé pour ProviderUnresolved (issue #21).
+# Sous TYPE_CHECKING uniquement : l'annotation de lab_host() a besoin du
+# nom, pas du module (from __future__ import annotations les diffère).
+if TYPE_CHECKING:
+    import testinfra
 
 REPO_ROOT = Path(__file__).parent.resolve()
 SSH_KEY = REPO_ROOT / "ssh" / "id_ed25519"
@@ -111,8 +121,19 @@ def lab_host(name: str) -> testinfra.host.Host:
     Raises:
         ValueError: si le nom n'est pas trouvé dans l'inventory.
         RuntimeError: si l'infra n'est pas provisionnée
-            (``dsoxlab provision`` à lancer d'abord).
+            (``dsoxlab provision`` à lancer d'abord), ou si testinfra
+            n'est pas installé.
     """
+    try:
+        import testinfra
+    except ModuleNotFoundError as exc:  # pragma: no cover - dépend de l'env
+        raise RuntimeError(
+            "testinfra est absent : les labs vm ont besoin de "
+            "pytest-testinfra. Installe-le avec "
+            "'uv pip install pytest-testinfra', ou lance les labs via "
+            "'dsoxlab check', qui l'embarque."
+        ) from exc
+
     if name not in _LABENV_HOSTS:
         if not _LABENV_HOSTS:
             raise RuntimeError(
