@@ -123,9 +123,26 @@ def test_task5_telnet_rejected(host):
         )
     else:
         regles = host.check_output("firewall-cmd --list-all")
-        assert "port=\"23\"" in regles or "port=23" in regles, (
+        ligne = next(
+            (
+                entree
+                for entree in regles.splitlines()
+                if 'port="23"' in entree or "port=23" in entree
+            ),
+            "",
+        )
+        assert ligne, (
             "Aucune règle riche ne vise le port 23. Une règle riche de rejet "
             f"est attendue. Vu :\n{regles}"
+        )
+        # Viser le port ne suffit pas : il faut le REJETER. Sans ce contrôle,
+        # une règle riche « accept » sur le port 23 marquait les 20 points de
+        # la tâche « Telnet, jamais », en ouvrant précisément ce qu'elle
+        # demande de fermer.
+        assert "reject" in ligne.lower() or "drop" in ligne.lower(), (
+            "La règle riche vise bien 23/tcp mais ne le rejette pas. "
+            "L'énoncé demande un rejet explicite, pas une simple mention du "
+            f"port. Vu : {ligne!r}"
         )
         assert "reject" in regles or "drop" in regles, (
             f"Le port 23 doit être rejeté, pas autorisé. Vu :\n{regles}"
