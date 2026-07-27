@@ -24,6 +24,7 @@ def _source_and_read(expr: str) -> subprocess.CompletedProcess[str]:
         capture_output=True,
         text=True,
         timeout=15,
+        check=False,
     )
 
 

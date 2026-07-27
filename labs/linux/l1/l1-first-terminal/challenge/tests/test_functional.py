@@ -89,7 +89,10 @@ def test_home_matches_real() -> None:
 def test_date_is_real() -> None:
     """DATE doit être une vraie sortie de `date` (contient l'année courante)."""
     value = _field(_read(), "DATE")
-    year = str(datetime.date.today().year)
+    # `date.today()` lit l'horloge locale sans fuseau explicite ; on veut
+    # l'année telle que la machine du lab la voit, donc son heure locale
+    # assumée, pas une conversion implicite.
+    year = str(datetime.datetime.now().astimezone().year)
     assert value, "Champ DATE vide. Lance : date — puis reporte la sortie."
     assert year in value, (
         f"DATE ('{value}') ne contient pas l'année courante ({year}). "

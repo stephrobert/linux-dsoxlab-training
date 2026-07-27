@@ -27,8 +27,8 @@ from __future__ import annotations
 import os
 import subprocess
 import sys
-from typing import TYPE_CHECKING
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 import pytest
 import yaml
@@ -223,16 +223,15 @@ def _find_lab_root(test_path: Path) -> Path | None:
             continue
         # rel doit être de la forme <category>/<section>/<lab> (3 composants)
         # ou plus profond pour les labs avec sous-sous-section
-        if len(rel.parts) >= 3:
-            # Le lab root est le plus profond qui contient un lab.yaml
-            if (parent / "lab.yaml").is_file():
-                return parent
+        # Le lab root est le plus profond qui contient un lab.yaml
+        if len(rel.parts) >= 3 and (parent / "lab.yaml").is_file():
+            return parent
     return None
 
 
 def _run(cmd: list[str], **kwargs) -> subprocess.CompletedProcess:
     """Exécute une commande, lève une RuntimeError lisible en cas d'échec."""
-    result = subprocess.run(cmd, capture_output=True, text=True, **kwargs)
+    result = subprocess.run(cmd, capture_output=True, text=True, check=False, **kwargs)
     if result.returncode != 0:
         raise RuntimeError(
             f"Commande échouée (exit {result.returncode}) : {' '.join(cmd)}\n"

@@ -3,6 +3,7 @@ Validates: challenge/work/projet/ matches the target directory tree exactly.
 Total: 100 points (9 tests).
 """
 import pathlib
+
 import pytest
 
 WORK = pathlib.Path(".")

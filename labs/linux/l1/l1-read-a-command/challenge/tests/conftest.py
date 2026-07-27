@@ -1,6 +1,7 @@
 """conftest.py — l1-read-a-command"""
 import os
 import pathlib
+
 import pytest
 
 
