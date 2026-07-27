@@ -24,8 +24,16 @@ def test_disk_is_luks2(host):
     assert disk, "/root/luks-disk.env introuvable (lab non prepare ?)."
     out = host.run(f"cryptsetup luksDump {disk} 2>/dev/null")
     assert out.rc == 0, f"{disk} n'est pas un volume LUKS (cryptsetup luksFormat manquant ?)."
-    assert "Version:" in out.stdout and "2" in out.stdout.split("Version:")[1][:8], (
-        "Le volume doit etre en LUKS2 (--type luks2)."
+    assert "Version:" in out.stdout, (
+        f"{disk} ne presente pas d'en-tete LUKS lisible."
+    )
+    # On lit la VALEUR du champ, pas une fenetre de caracteres : cryptsetup
+    # aligne la colonne avec des espaces puis une tabulation, si bien que le
+    # chiffre tombait en 9e position et echappait a une tranche [:8]. Le
+    # volume etait bien en LUKS2, seul le test se trompait.
+    version = out.stdout.split("Version:", 1)[1].splitlines()[0].strip()
+    assert version == "2", (
+        f"Le volume doit etre en LUKS2 (--type luks2), version lue : {version!r}."
     )
 
 

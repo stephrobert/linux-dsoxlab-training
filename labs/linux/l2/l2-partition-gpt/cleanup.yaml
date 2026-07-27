@@ -14,7 +14,8 @@
 
     - name: Wipe the partition table
       ansible.builtin.shell: |
-        . /root/part-disk.env 2>/dev/null || exit 0
+        [ -f /root/part-disk.env ] || exit 0
+        . /root/part-disk.env
         umount "${DISK}"* 2>/dev/null || true
         wipefs -a "$DISK" 2>/dev/null || true
         sgdisk --zap-all "$DISK" 2>/dev/null || true

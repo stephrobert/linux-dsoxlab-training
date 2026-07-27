@@ -24,6 +24,21 @@
         enabled: true
         state: started
 
+    # Sans cette regle, le backend repond en local mais reste injoignable
+    # depuis le front : HAProxy rend un 503 « No server is available » et le
+    # lab est infaisable. Le sujet du lab est le reverse proxy, pas le
+    # pare-feu du backend : cette ouverture fait donc partie de l etat de
+    # depart, pas du travail demande a l apprenant.
+    - name: Allow HTTP through the backend firewall (state the lab starts from)
+      ansible.builtin.shell:
+        cmd: |
+          systemctl is-active --quiet firewalld || exit 0
+          firewall-cmd --permanent --add-service=http >/dev/null 2>&1 || true
+          firewall-cmd --reload >/dev/null 2>&1 || true
+          exit 0
+        chdir: /
+      changed_when: false
+
 - name: Front host — prepare HAProxy (lab_target)
   hosts: lab_target
   become: true

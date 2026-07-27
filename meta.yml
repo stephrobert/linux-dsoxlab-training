@@ -105,10 +105,16 @@ sections:
     title: "Fondamentaux (l1)"
     description: "Découvrir Linux, le shell, les fichiers — runtime: shell."
     labs:
+      # l1-first-terminal ouvre la formation : c'est le seul lab qui enseigne
+      # l'invite, le shell et l'édition d'un fichier. Les trois labs suivants
+      # demandent tous de compléter un fichier de réponses, et le challenge de
+      # l1-first-terminal interdit même la redirection. Le placer en quatrième
+      # position obligeait donc le débutant à sortir de la formation pour
+      # apprendre nano ou vi.
+      - linux/l1/l1-first-terminal
       - linux/l1/l1-discover-linux-map
       - linux/l1/l1-choose-distro
       - linux/l1/l1-prepare-vm
-      - linux/l1/l1-first-terminal
       - linux/l1/l1-read-a-command
       - linux/l1/l1-get-help
       - linux/l1/l1-linux-filesystem

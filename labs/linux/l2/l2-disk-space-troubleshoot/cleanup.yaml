@@ -12,9 +12,12 @@
 
     - name: Wipe the filesystem on the target partition
       ansible.builtin.shell: |
-        . /root/dsk-disk.env 2>/dev/null || exit 0
+        [ -f /root/dsk-disk.env ] || exit 0
+        . /root/dsk-disk.env
         part="${DISK}1"; [ -b "$part" ] || part="${DISK}p1"
         wipefs -a "$part" 2>/dev/null || true
+        wipefs -a "$DISK" 2>/dev/null || true
+        partprobe "$DISK" 2>/dev/null || true
       changed_when: false
 
     - name: Remove the mount point and ready marker

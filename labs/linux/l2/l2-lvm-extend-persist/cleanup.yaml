@@ -6,6 +6,11 @@
   become: true
   gather_facts: false
   tasks:
+    # Le module shell rend le code de la DERNIERE commande, que `set +e` ne
+    # neutralise pas : un rmdir sur un /data absent suffisait a faire echouer
+    # tout le cleanup, donc tout `dsoxlab reset`. D ou le `exit 0` final.
+    # Ce commentaire reste HORS du bloc shell : une apostrophe a l interieur
+    # casse le parsing des arguments par Ansible (unbalanced quotes).
     - name: Tear down the LVM stack (best-effort)
       ansible.builtin.shell: |
         set +e
@@ -15,6 +20,7 @@
         if [ -f /root/lvm-disk.env ]; then . /root/lvm-disk.env; pvremove -y "$DISK" 2>/dev/null; fi
         rm -f /root/lvm-disk.env /root/.lvm-lab-ready
         rmdir /data 2>/dev/null
+        exit 0
       changed_when: false
 
     - name: Remove the /data fstab entry

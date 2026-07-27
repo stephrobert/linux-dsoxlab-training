@@ -19,8 +19,11 @@
 
     - name: Wipe the filesystem + remove mount point and marker
       ansible.builtin.shell: |
-        . /root/perf-disk.env 2>/dev/null || exit 0
+        [ -f /root/perf-disk.env ] || exit 0
+        . /root/perf-disk.env
         part="${DISK}1"; [ -b "$part" ] || part="${DISK}p1"
         wipefs -a "$part" 2>/dev/null || true
+        wipefs -a "$DISK" 2>/dev/null || true
+        partprobe "$DISK" 2>/dev/null || true
         rm -rf /srv/data /root/.perf-lab-ready
       changed_when: false

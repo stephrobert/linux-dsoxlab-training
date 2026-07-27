@@ -13,8 +13,13 @@
 
     - name: Wipe the filesystem on the target partition
       ansible.builtin.shell: |
-        . /root/xfs-disk.env 2>/dev/null || exit 0
+        [ -f /root/xfs-disk.env ] || exit 0
+        . /root/xfs-disk.env
         [ -n "$PART" ] && wipefs -a "$PART" 2>/dev/null || true
+        wipefs -a "$DISK" 2>/dev/null || true
+        partprobe "$DISK" 2>/dev/null || true
+        rm -f /root/xfs-disk.env /root/.xfs-lab-ready
+        exit 0
       changed_when: false
 
     - name: Remove the mount point

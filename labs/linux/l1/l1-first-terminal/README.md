@@ -325,6 +325,95 @@ code retour = 130
 The `130` is the signature of a command killed by Ctrl+C. Finally, **Ctrl+D** on
 an **empty** line closes the session: it is the keyboard equivalent of `exit`.
 
+### Writing to a file without leaving the terminal
+
+So far you have been reading. An administrator, however, spends the day
+**modifying** files, and most servers have no graphical interface: the editor is
+a basic tool, just like `cd`.
+
+Two editors are available almost everywhere. The first takes a minute to learn,
+the second is the one you land on when the first is missing.
+
+#### `nano`: the one that shows its commands
+
+Create a demonstration file, unrelated to anything:
+
+```bash
+nano /tmp/demo-carnet.txt
+```
+
+The screen fills up, and the bottom bar lists the shortcuts:
+
+```text
+  GNU nano 7.2                    /tmp/demo-carnet.txt
+monday: database backup
+tuesday: log rotation
+
+^G Help       ^O Write Out  ^W Where Is   ^K Cut
+^X Exit       ^R Read File  ^\ Replace    ^U Paste
+```
+
+The cursor types directly: enter your text as in any editor. The `^` in the bar
+means the **Ctrl** key, so `^O` reads "Ctrl+O". The whole sequence is three
+gestures:
+
+1. **Ctrl+O** to write the file. nano shows the proposed name at the bottom,
+   confirm with **Enter**.
+2. **Ctrl+X** to quit.
+3. If you quit without writing, nano asks `Save modified buffer?` and waits for
+   `Y`, `N` or Ctrl+C to cancel.
+
+Check the result without reopening the editor:
+
+```text
+bash-5.2$ cat /tmp/demo-carnet.txt
+monday: database backup
+tuesday: log rotation
+```
+
+#### `vi`: the one you cannot get out of
+
+`nano` is not always installed, `vi` almost always is. Its quirk is
+disconcerting: it starts in **normal mode**, where keys are **commands**, not
+text. Typing "hello" does not write it, it runs five commands.
+
+```bash
+vi /tmp/demo-carnet.txt
+```
+
+| You want to | Type | Note |
+|---|---|---|
+| write text | `i` | enters insert mode, `-- INSERT --` shows at the bottom |
+| go back to commands | **Esc** | required before any `:` command |
+| save and quit | `:wq` then Enter | `w` for write, `q` for quit |
+| quit **without** saving | `:q!` then Enter | the `!` forces changes to be dropped |
+
+The famous "how do I exit vim" has an answer: **Esc**, then `:q!`, then Enter.
+The habit to build is to press Esc whenever you are lost, which always brings
+you back to normal mode.
+
+#### Which editor starts on its own
+
+Some commands (`crontab -e`, `visudo`, `systemctl edit`) open an editor without
+asking which one. They follow the `EDITOR` variable:
+
+```text
+bash-5.2$ echo "$EDITOR"
+
+bash-5.2$ EDITOR=nano
+bash-5.2$ echo "$EDITOR"
+nano
+```
+
+When empty, the system falls back to its default, often `vi`. That is why you
+need the four survival gestures above, even if you prefer `nano`.
+
+Clean up the demonstration:
+
+```bash
+rm /tmp/demo-carnet.txt
+```
+
 ### Troubleshooting
 
 | Symptom | Likely cause | Check |
@@ -337,6 +426,9 @@ an **empty** line closes the session: it is the keyboard equivalent of `exit`.
 | display with no colour, or stray characters | `TERM` missing or incorrect | `echo "$TERM"` then `tput colors` |
 | the Ctrl+something shortcuts do not respond | you are not in an interactive shell input | `tty` must answer a `/dev/pts/...` |
 | Ctrl+D does not close the shell | the `IGNOREEOF` variable is set | use `exit` |
+| `nano: command not found` | the editor is not installed (common on a minimal image) | use `vi`, present everywhere |
+| cannot get out of `vi` | you are in insert mode | **Esc**, then `:q!`, then Enter |
+| in `vi`, typed text triggers actions | you are in normal mode, not insert mode | **Esc** then `i` to insert |
 
 To finish, leave the disposable bash and erase the setup:
 

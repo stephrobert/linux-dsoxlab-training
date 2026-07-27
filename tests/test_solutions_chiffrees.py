@@ -43,8 +43,10 @@ REPO_ROOT = Path(__file__).parent.parent.resolve()
 SOLUTION_DIR = REPO_ROOT / "solution"
 VAULT_HEADER = b"$ANSIBLE_VAULT"
 
-# Rien à chiffrer dans ces fichiers de service.
-EXEMPTS = {".gitkeep", ".gitignore"}
+# Rien à chiffrer dans ces fichiers de service. `verified-with.json` est le
+# verdict écrit par `scripts/verify-solutions.py` : il dit quelle solution a
+# été rejouée avec quel interpréteur et quand, sans jamais citer son contenu.
+EXEMPTS = {".gitkeep", ".gitignore", "verified-with.json"}
 
 
 def _fichiers_suivis() -> list[Path]:

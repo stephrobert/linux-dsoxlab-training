@@ -329,6 +329,97 @@ code retour = 130
 Le `130` est la signature d'une commande tuée par Ctrl+C. Enfin, **Ctrl+D** sur
 une ligne **vide** ferme la session : c'est l'équivalent clavier de `exit`.
 
+### Écrire dans un fichier sans quitter le terminal
+
+Jusqu'ici vous avez lu. Un administrateur passe pourtant sa journée à
+**modifier** des fichiers, et la plupart des serveurs n'ont aucune interface
+graphique : l'éditeur est donc un outil de base, au même titre que `cd`.
+
+Deux éditeurs sont présents à peu près partout. Le premier s'apprend en une
+minute, le second est celui sur lequel on tombe quand le premier manque.
+
+#### `nano` : celui qui affiche ses commandes
+
+Fabriquez un fichier de démonstration, sans rapport avec quoi que ce soit :
+
+```bash
+nano /tmp/demo-carnet.txt
+```
+
+L'écran se remplit, et le bandeau du bas liste les raccourcis :
+
+```text
+  GNU nano 7.2                    /tmp/demo-carnet.txt
+lundi : sauvegarde des bases
+mardi : rotation des journaux
+
+^G Aide       ^O Écrire     ^W Chercher   ^K Couper
+^X Quitter    ^R Lire fich. ^\ Remplacer  ^U Coller
+```
+
+Le curseur écrit directement : tapez votre texte comme dans n'importe quel
+éditeur. Le `^` du bandeau désigne la touche **Ctrl**, donc `^O` se lit
+« Ctrl+O ». La séquence complète tient en trois gestes :
+
+1. **Ctrl+O** pour écrire le fichier. nano affiche le nom proposé en bas,
+   confirmez par **Entrée**.
+2. **Ctrl+X** pour quitter.
+3. Si vous quittez sans avoir écrit, nano demande `Sauver le fichier modifié ?`
+   et attend `O`, `N` ou Ctrl+C pour annuler.
+
+Vérifiez le résultat sans rouvrir l'éditeur :
+
+```text
+bash-5.2$ cat /tmp/demo-carnet.txt
+lundi : sauvegarde des bases
+mardi : rotation des journaux
+```
+
+#### `vi` : celui dont on n'arrive pas à sortir
+
+`nano` n'est pas toujours installé, `vi` l'est quasiment toujours. Sa
+particularité déroute : il démarre en **mode normal**, où les touches sont des
+**commandes** et non du texte. Taper « bonjour » ne l'écrit pas, ça exécute sept
+commandes.
+
+```bash
+vi /tmp/demo-carnet.txt
+```
+
+| Vous voulez | Tapez | Remarque |
+|---|---|---|
+| écrire du texte | `i` | passe en mode insertion, `-- INSERTION --` s'affiche en bas |
+| revenir aux commandes | **Échap** | à faire avant toute commande `:` |
+| enregistrer et quitter | `:wq` puis Entrée | `w` pour write, `q` pour quit |
+| quitter **sans** enregistrer | `:q!` puis Entrée | le `!` force l'abandon des modifications |
+
+La question « comment je sors de vim » a sa réponse : **Échap**, puis `:q!`,
+puis Entrée. Le réflexe à prendre est d'appuyer sur Échap dès qu'on ne sait plus
+où l'on en est, ce qui ramène toujours au mode normal.
+
+#### Quel éditeur se lance tout seul
+
+Certaines commandes (`crontab -e`, `visudo`, `systemctl edit`) ouvrent un
+éditeur sans vous demander lequel. Elles suivent la variable `EDITOR` :
+
+```text
+bash-5.2$ echo "$EDITOR"
+
+bash-5.2$ EDITOR=nano
+bash-5.2$ echo "$EDITOR"
+nano
+```
+
+Vide, le système retombe sur son défaut, souvent `vi`. C'est la raison pour
+laquelle il faut connaître les quatre gestes de survie ci-dessus, même si vous
+préférez `nano`.
+
+Effacez la démonstration :
+
+```bash
+rm /tmp/demo-carnet.txt
+```
+
 ### Dépannage
 
 | Symptôme | Cause probable | Vérification |
@@ -341,6 +432,9 @@ une ligne **vide** ferme la session : c'est l'équivalent clavier de `exit`.
 | affichage sans couleur, ou caractères parasites | `TERM` absent ou incorrect | `echo "$TERM"` puis `tput colors` |
 | les raccourcis Ctrl+quelque chose ne répondent pas | vous n'êtes pas dans une saisie interactive du shell | `tty` doit répondre un `/dev/pts/...` |
 | Ctrl+D ne ferme pas le shell | la variable `IGNOREEOF` est définie | utiliser `exit` |
+| `nano : commande introuvable` | l'éditeur n'est pas installé (fréquent sur une image minimale) | utiliser `vi`, présent partout |
+| impossible de sortir de `vi` | vous êtes en mode insertion | **Échap**, puis `:q!`, puis Entrée |
+| dans `vi`, le texte tapé déclenche des actions | vous êtes en mode normal, pas en insertion | **Échap** puis `i` pour insérer |
 
 Pour finir, quittez le bash jetable et effacez le décor :
 

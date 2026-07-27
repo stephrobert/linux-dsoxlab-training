@@ -54,6 +54,20 @@
         chdir: /
       changed_when: false
 
+    # Sans cette regle, l annuaire repond en local mais le client recoit un
+    # « No route to host » sur le port 389 : SSSD ne resout rien et le lab est
+    # infaisable. Le sujet est l integration SSSD cote client, pas le pare-feu
+    # du serveur : cette ouverture appartient donc a l etat de depart.
+    - name: Allow LDAP through the server firewall (state the lab starts from)
+      ansible.builtin.shell:
+        cmd: |
+          systemctl is-active --quiet firewalld || exit 0
+          firewall-cmd --permanent --add-service=ldap >/dev/null 2>&1 || true
+          firewall-cmd --reload >/dev/null 2>&1 || true
+          exit 0
+        chdir: /
+      changed_when: false
+
 - name: LDAP client — prepare SSSD tooling (lab_target)
   hosts: lab_target
   become: true

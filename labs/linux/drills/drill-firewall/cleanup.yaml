@@ -16,7 +16,13 @@
       when: ansible_os_family == "Debian"
       changed_when: false
 
-    - name: RHEL — drop the lab rules and stop firewalld
+    # Le cleanup retire les regles du drill, puis REND firewalld actif : c est
+    # l etat par defaut d une machine RHEL, et celui que les autres labs
+    # supposent. Le laisser desactive faisait echouer rhcsa-mock-exam, dont la
+    # solution appelle firewall-cmd et recoit « FirewallD is not running ».
+    # Un cleanup rend le systeme neutre, il ne laisse pas l etat de depart du
+    # drill derriere lui.
+    - name: RHEL — drop the lab rules, leave firewalld running as the system default
       ansible.builtin.shell:
         cmd: |
           set +e
@@ -24,7 +30,7 @@
           firewall-cmd --permanent --remove-port=8443/tcp 2>/dev/null
           firewall-cmd --permanent --remove-rich-rule='rule port port=23 protocol=tcp reject' 2>/dev/null
           firewall-cmd --reload 2>/dev/null
-          systemctl disable --now firewalld 2>/dev/null
+          systemctl enable --now firewalld 2>/dev/null
           exit 0
         chdir: /
       when: ansible_os_family == "RedHat"

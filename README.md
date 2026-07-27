@@ -64,17 +64,17 @@ right now.
 
 ```bash
 dsoxlab use l1                       # starting section
-dsoxlab next                         # → l1-discover-linux-map
+dsoxlab next                         # → l1-first-terminal
 ```
 
 Then, for this lab and every other one, the same four-step cycle:
 
 ```bash
-dsoxlab course l1-discover-linux-map      # 1. the context, then the course
-dsoxlab challenge l1-discover-linux-map   # 2. what is asked of you
-dsoxlab run l1-discover-linux-map         # 3. prepares your workspace
+dsoxlab course l1-first-terminal      # 1. the context, then the course
+dsoxlab challenge l1-first-terminal   # 2. what is asked of you
+dsoxlab run l1-first-terminal         # 3. prepares your workspace
                                           #    (challenge/work/) and puts you in it
-dsoxlab check l1-discover-linux-map       # 4. validate and score
+dsoxlab check l1-first-terminal       # 4. validate and score
 ```
 
 `run` is the step people skip: it creates the files you work on, and for a VM
@@ -230,10 +230,10 @@ to refresh it.
 
 | Lab (id) | Title | Level | Certif | Runtime | Companion guide |
 |---|---|---|---|---|---|
+| `l1-first-terminal` | First steps in the terminal | l1 | RHCSA · LFCS | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/prompt-terminal/) |
 | `l1-discover-linux-map` | Map Linux: kernel, distribution and key directories | l1 | RHCSA · LFCS | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/notions/) |
 | `l1-choose-distro` | Choose your reference Linux distribution | l1 | RHCSA · LFCS | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/distributions-serveur/) |
 | `l1-prepare-vm` | Identify your Linux machine | l1 | RHCSA · LFCS | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/installer-vm/) |
-| `l1-first-terminal` | First steps in the terminal | l1 | RHCSA · LFCS | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/prompt-terminal/) |
 | `l1-read-a-command` | Read and decode a command | l1 | RHCSA · LFCS | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/anatomie-commande/) |
 | `l1-get-help` | Get help from the command line | l1 | RHCSA · LFCS | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/obtenir-aide/) |
 | `l1-linux-filesystem` | Linux filesystem hierarchy (FHS) | l1 | RHCSA · LFCS | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/se-reperer-fichiers/arborescence-fhs/) |

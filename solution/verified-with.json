@@ -1,0 +1,426 @@
+{
+  "verifie_le": "2026-07-27T11:46:19+00:00",
+  "python": "3.14.2",
+  "labs": {
+    "lfcs-mock-exam": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "17 passed, 17 warnings in 22.81s"
+    },
+    "rhcsa-mock-exam": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "20 passed, 20 warnings in 40.16s"
+    },
+    "drill-apparmor": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "4 passed, 4 warnings in 4.08s"
+    },
+    "drill-essential-commands": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "5 passed, 5 warnings in 6.26s"
+    },
+    "drill-firewall": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "5 passed, 5 warnings in 16.19s"
+    },
+    "drill-network": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "4 passed, 4 warnings in 14.11s"
+    },
+    "drill-packages": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "5 passed, 5 warnings in 17.28s"
+    },
+    "drill-selinux": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "4 passed, 4 warnings in 5.55s"
+    },
+    "drill-storage": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "5 passed, 5 warnings in 6.13s"
+    },
+    "drill-systemd": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "5 passed, 5 warnings in 9.07s"
+    },
+    "drill-users-groups": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "5 passed, 5 warnings in 5.93s"
+    },
+    "l1-bash-script": {
+      "etat": "vert",
+      "runtime": "shell",
+      "resume": "3 passed in 0.24s"
+    },
+    "l1-choose-distro": {
+      "etat": "vert",
+      "runtime": "shell",
+      "resume": "5 passed in 0.22s"
+    },
+    "l1-discover-linux-map": {
+      "etat": "vert",
+      "runtime": "shell",
+      "resume": "6 passed in 0.25s"
+    },
+    "l1-env-profiles": {
+      "etat": "vert",
+      "runtime": "shell",
+      "resume": "4 passed in 0.22s"
+    },
+    "l1-find-files": {
+      "etat": "vert",
+      "runtime": "shell",
+      "resume": "4 passed in 0.23s"
+    },
+    "l1-first-terminal": {
+      "etat": "vert",
+      "runtime": "shell",
+      "resume": "7 passed in 0.23s"
+    },
+    "l1-get-help": {
+      "etat": "vert",
+      "runtime": "shell",
+      "resume": "4 passed in 0.21s"
+    },
+    "l1-git-basics": {
+      "etat": "vert",
+      "runtime": "shell",
+      "resume": "5 passed in 0.23s"
+    },
+    "l1-grep-regex": {
+      "etat": "vert",
+      "runtime": "shell",
+      "resume": "5 passed in 0.22s"
+    },
+    "l1-links-hard-sym": {
+      "etat": "vert",
+      "runtime": "shell",
+      "resume": "5 passed in 0.21s"
+    },
+    "l1-linux-filesystem": {
+      "etat": "vert",
+      "runtime": "shell",
+      "resume": "6 passed in 0.22s"
+    },
+    "l1-navigate-filesystem": {
+      "etat": "vert",
+      "runtime": "shell",
+      "resume": "10 passed, 3 warnings in 0.22s"
+    },
+    "l1-paths-absolute-relative": {
+      "etat": "vert",
+      "runtime": "shell",
+      "resume": "9 passed, 5 warnings in 0.23s"
+    },
+    "l1-permissions-ugo": {
+      "etat": "vert",
+      "runtime": "shell",
+      "resume": "4 passed in 0.22s"
+    },
+    "l1-prepare-vm": {
+      "etat": "vert",
+      "runtime": "shell",
+      "resume": "6 passed in 0.23s"
+    },
+    "l1-read-a-command": {
+      "etat": "vert",
+      "runtime": "shell",
+      "resume": "4 passed in 0.23s"
+    },
+    "l1-redirections-pipes": {
+      "etat": "vert",
+      "runtime": "shell",
+      "resume": "5 passed in 0.23s"
+    },
+    "l1-ssl-certificates": {
+      "etat": "vert",
+      "runtime": "shell",
+      "resume": "5 passed in 0.30s"
+    },
+    "l1-tar-archives": {
+      "etat": "vert",
+      "runtime": "shell",
+      "resume": "5 passed in 0.24s"
+    },
+    "l1-text-processing": {
+      "etat": "vert",
+      "runtime": "shell",
+      "resume": "5 passed in 0.24s"
+    },
+    "l2-acl-posix": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "3 passed in 2.17s"
+    },
+    "l2-autofs-ondemand": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "4 passed in 5.63s"
+    },
+    "l2-collaborative-setgid": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "2 passed in 2.79s"
+    },
+    "l2-disk-space-troubleshoot": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "3 passed in 2.45s"
+    },
+    "l2-filesystem-create-xfs": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "4 passed in 3.52s"
+    },
+    "l2-fstab-persist-uuid": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "6 passed in 4.88s"
+    },
+    "l2-luks-encryption": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "4 passed in 14.78s"
+    },
+    "l2-lvm-extend-persist": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "4 passed in 2.74s"
+    },
+    "l2-nfs-mount-persist": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "4 passed in 3.06s"
+    },
+    "l2-package-management": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "3 passed in 4.06s"
+    },
+    "l2-partition-gpt": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "4 passed in 3.77s"
+    },
+    "l2-password-policy": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "5 passed in 2.99s"
+    },
+    "l2-raid-mdadm": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "3 passed in 5.62s"
+    },
+    "l2-repo-configure": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "5 passed in 2.54s"
+    },
+    "l2-storage-performance": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "3 passed in 3.12s"
+    },
+    "l2-sudo-delegation": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "4 passed in 2.60s"
+    },
+    "l2-swap-management": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "5 passed in 5.74s"
+    },
+    "l2-user-lifecycle": {
+      "etat": "ROUGE",
+      "runtime": "vm",
+      "resume": "4 errors in 1.86s"
+    },
+    "l3-app-constraints": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "3 passed in 1.94s"
+    },
+    "l3-boot-target": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "1 passed in 1.51s"
+    },
+    "l3-fs-readonly-recover": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "4 passed in 2.90s"
+    },
+    "l3-grub-kernel-args": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "2 passed in 2.31s"
+    },
+    "l3-journald-persist": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "3 passed in 4.65s"
+    },
+    "l3-process-signals-priority": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "3 passed in 3.91s"
+    },
+    "l3-scheduling-at": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "3 passed in 2.42s"
+    },
+    "l3-scheduling-cron": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "2 passed in 1.77s"
+    },
+    "l3-scheduling-timers": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "3 passed in 4.53s"
+    },
+    "l3-service-create-unit": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "3 passed in 3.71s"
+    },
+    "l3-service-diagnose": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "6 passed in 5.44s"
+    },
+    "l3-ssh-access-recovery": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "5 passed in 3.38s"
+    },
+    "l3-sysctl-persist": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "3 passed in 2.32s"
+    },
+    "l3-tuned-profile": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "3 passed in 3.45s"
+    },
+    "l4-bridge-bonding": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "5 passed in 3.04s"
+    },
+    "l4-firewall-persist": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "3 passed in 2.29s"
+    },
+    "l4-ldap-integration": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "4 passed in 4.44s"
+    },
+    "l4-nat-portforward": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "5 passed in 16.58s"
+    },
+    "l4-network-static-persist": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "4 passed in 2.34s"
+    },
+    "l4-network-troubleshoot": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "3 passed in 1.60s"
+    },
+    "l4-ntp-sync": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "3 passed in 3.47s"
+    },
+    "l4-podman-basic": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "2 passed in 1.60s"
+    },
+    "l4-podman-images": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "3 passed in 5.55s"
+    },
+    "l4-podman-systemd-persist": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "3 passed in 3.78s"
+    },
+    "l4-reverse-proxy-lb": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "3 passed in 4.34s"
+    },
+    "l4-selinux-boolean-port": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "3 passed in 2.64s"
+    },
+    "l4-selinux-context-fix": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "3 passed in 2.33s"
+    },
+    "l4-selinux-diagnose-avc": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "3 passed in 1.56s"
+    },
+    "l4-ssh-key-auth-harden": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "3 passed in 4.37s"
+    },
+    "lfcs-apparmor": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "2 passed in 1.50s"
+    },
+    "lfcs-firewall-ufw": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "3 passed in 1.97s"
+    },
+    "lfcs-mount-cifs": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "6 passed in 4.54s"
+    },
+    "lfcs-netplan-static": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "3 passed in 3.37s"
+    },
+    "lfcs-package-apt": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "3 passed in 5.66s"
+    },
+    "lfcs-storage-quotas": {
+      "etat": "vert",
+      "runtime": "vm",
+      "resume": "4 passed in 3.25s"
+    }
+  }
+}
