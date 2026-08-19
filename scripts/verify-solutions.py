@@ -45,6 +45,9 @@ VAULT_PASS = REPO / ".vault-pass"
 
 VM_RUNTIMES = {"vm", "kvm", "incus"}
 
+#: Sortie complete du dernier pytest joue, conservee pour les echecs.
+DERNIERE_SORTIE = ""
+
 
 # ── découverte ────────────────────────────────────────────────────────────────
 
@@ -210,6 +213,11 @@ def jouer(lab: Lab, *, rejeu: bool) -> tuple[bool, str]:
     )
     lignes = [ligne for ligne in proc.stdout.strip().splitlines() if ligne.strip()]
     resume = lignes[-1] if lignes else "aucune sortie"
+    # La sortie complete est conservee pour les rouges : un resume du type
+    # « 4 errors » ne dit RIEN de la cause, et reproduire un echec de sequence
+    # coute une passe entiere. On garde de quoi diagnostiquer sans rejouer.
+    global DERNIERE_SORTIE
+    DERNIERE_SORTIE = (proc.stdout + proc.stderr)[-6000:]
     return proc.returncode == 0, resume
 
 
@@ -319,6 +327,8 @@ def main() -> int:
                 )
                 ok = False
 
+        if not ok:
+            entree["sortie"] = DERNIERE_SORTIE
         verdicts[lab.id] = entree
         if ok:
             verts += 1
