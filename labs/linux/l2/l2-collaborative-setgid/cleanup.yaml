@@ -13,3 +13,17 @@
           chmod 0755 /srv/partage 2>/dev/null || true
         chdir: /
       changed_when: false
+
+    # Le setup cree alice, bob et devteam : les laisser derriere soi casse
+    # l2-user-lifecycle, dont la solution fait un useradd alice et echoue sur
+    # un compte deja pris. Un cleanup rend la machine comme il l a trouvee.
+    - name: Remove the accounts this lab created
+      ansible.builtin.shell:
+        cmd: |
+          set +e
+          userdel -r alice 2>/dev/null
+          userdel -r bob 2>/dev/null
+          groupdel devteam 2>/dev/null
+          exit 0
+        chdir: /
+      changed_when: false

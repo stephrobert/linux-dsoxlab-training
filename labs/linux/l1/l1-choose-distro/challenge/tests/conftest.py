@@ -1,8 +1,8 @@
 """conftest.py — Anchors the working directory to challenge/work/ for all tests."""
 
 import os
+from collections.abc import Generator
 from pathlib import Path
-from typing import Generator
 
 import pytest
 

@@ -64,17 +64,17 @@ peux les faire sur ton poste, tout de suite.
 
 ```bash
 dsoxlab use l1                       # section de départ
-dsoxlab next                         # → l1-discover-linux-map
+dsoxlab next                         # → l1-first-terminal
 ```
 
 Puis, pour ce lab comme pour tous les autres, le même cycle en quatre temps :
 
 ```bash
-dsoxlab course l1-discover-linux-map      # 1. le contexte, puis le cours
-dsoxlab challenge l1-discover-linux-map   # 2. ce qui t'est demandé
-dsoxlab run l1-discover-linux-map         # 3. prépare ton espace de travail
+dsoxlab course l1-first-terminal      # 1. le contexte, puis le cours
+dsoxlab challenge l1-first-terminal   # 2. ce qui t'est demandé
+dsoxlab run l1-first-terminal         # 3. prépare ton espace de travail
                                           #    (challenge/work/) et t'y place
-dsoxlab check l1-discover-linux-map       # 4. valide et note
+dsoxlab check l1-first-terminal       # 4. valide et note
 ```
 
 `run` est l'étape que l'on oublie : c'est elle qui crée les fichiers sur
@@ -235,10 +235,10 @@ ci-dessous est générée à partir des vrais `lab.yaml` : lance
 
 | Lab (id) | Titre | Niveau | Certif | Runtime | Guide compagnon |
 |---|---|---|---|---|---|
+| `l1-first-terminal` | Premiers pas dans le terminal | l1 | RHCSA · LFCS | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/prompt-terminal/) |
 | `l1-discover-linux-map` | Cartographier Linux : noyau, distribution et répertoires clés | l1 | RHCSA · LFCS | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/notions/) |
 | `l1-choose-distro` | Choisir sa distribution Linux de référence | l1 | RHCSA · LFCS | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/distributions-serveur/) |
 | `l1-prepare-vm` | Identifier sa machine Linux | l1 | RHCSA · LFCS | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/installer-vm/) |
-| `l1-first-terminal` | Premiers pas dans le terminal | l1 | RHCSA · LFCS | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/prompt-terminal/) |
 | `l1-read-a-command` | Lire et décoder une commande | l1 | RHCSA · LFCS | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/anatomie-commande/) |
 | `l1-get-help` | Obtenir de l'aide en ligne de commande | l1 | RHCSA · LFCS | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/obtenir-aide/) |
 | `l1-linux-filesystem` | Hiérarchie du système de fichiers Linux (FHS) | l1 | RHCSA · LFCS | shell | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/se-reperer-fichiers/arborescence-fhs/) |
@@ -350,7 +350,7 @@ ci-dessous est générée à partir des vrais `lab.yaml` : lance
 | `rhcsa-mock-exam` | Examen blanc RHCSA EX200 — 20 tâches sur 2 VMs | l2 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/certifications/rhcsa/) |
 | `lfcs-mock-exam` | Examen blanc LFCS — 17 tâches sur Ubuntu 24.04 | l2 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/certifications/lfcs/) |
 
-_84 labs — table générée par `scripts/gen_catalog.py`._
+_84 labs, table générée par `scripts/gen_catalog.py`._
 <!-- LABS:END -->
 
 ## Contribuer et licence

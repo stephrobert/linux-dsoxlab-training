@@ -1,6 +1,7 @@
 """conftest.py — l1-paths-absolute-relative"""
 import os
 import pathlib
+
 import pytest
 
 

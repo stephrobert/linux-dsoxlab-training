@@ -63,6 +63,30 @@ repos:
         pass_filenames: false
         always_run: true
 
+      # Un setup et son cleanup doivent se répondre : ce que le setup garde
+      # (marqueur `creates:`) ou crée (comptes), le cleanup doit le rendre.
+      # Sinon le lab ne se réinitialise qu'une fois, ou occupe un nom pour tous
+      # les suivants — et c'est le lab d'APRÈS qui échoue, jamais le fautif.
+      # Lecture de fichiers seulement : ni VM ni réseau.
+      - id: marqueurs-setup-cleanup
+        name: un cleanup rend ce que son setup garde ou crée
+        entry: uv run --no-project --with pytest --with pyyaml pytest tests/test_marqueurs_setup_cleanup.py -q
+        language: system
+        pass_filenames: false
+        always_run: true
+
+      # Un YAML valide ne prouve pas qu'Ansible charge les tâches : une
+      # apostrophe dans un bloc `shell` casse le découpage des arguments, et le
+      # playbook ne se voit refusé qu'à l'exécution, en rc=4 sans une seule
+      # tâche jouée. On ne le lance que si un playbook change : `--syntax-check`
+      # sur les 129 fichiers prend une quarantaine de secondes.
+      - id: playbooks-syntaxe
+        name: les setup/cleanup se chargent (ansible-playbook --syntax-check)
+        entry: uv run --no-project --with pytest --with pyyaml pytest tests/test_playbooks_syntaxe.py -q
+        language: system
+        pass_filenames: false
+        files: 'labs/.*/(setup|cleanup)\.yaml$'
+
       # Garde-fou d'outillage. Dans le dépôt Ansible jumeau, deux fois pendant
       # une même session, une modification a disparu sans trace git : un test de
       # catalogue, puis un hook. Plusieurs processus écrivent dans ces dépôts,

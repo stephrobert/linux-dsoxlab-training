@@ -11,7 +11,8 @@
         cmd: |
           umount /srv/data 2>/dev/null || true
           sed -i '\#[[:space:]]/srv/data[[:space:]]#d' /etc/fstab
-          . /root/fsro-disk.env 2>/dev/null || exit 0
+          [ -f /root/fsro-disk.env ] || exit 0
+          . /root/fsro-disk.env
           part="${DISK}1"; [ -b "$part" ] || part="${DISK}p1"
           wipefs -a "$part" 2>/dev/null || true
           rm -f /root/.fsro-ready

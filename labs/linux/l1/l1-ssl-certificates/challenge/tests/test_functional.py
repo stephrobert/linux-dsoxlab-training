@@ -23,6 +23,7 @@ def _openssl(*args: str) -> str:
         capture_output=True,
         text=True,
         timeout=15,
+        check=False,
     )
     assert res.returncode == 0, f"openssl a échoué : {res.stderr}"
     return res.stdout

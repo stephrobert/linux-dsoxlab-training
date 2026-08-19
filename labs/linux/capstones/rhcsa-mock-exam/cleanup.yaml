@@ -23,6 +23,29 @@
               /etc/systemd/system/weekly-backup.service \
               /etc/systemd/system/weekly-backup.timer
         systemctl daemon-reload 2>/dev/null
+        # Rendre le disque partage : les taches 1 a 3 posent une table GPT, un
+        # VG et un LV dessus. Les laisser en place occupe /dev/vdb pour tous les
+        # labs suivants, qui echouent alors a la place de celui-ci.
+        #
+        # Le umount du debut de ce bloc ne suffit pas : l export NFS tient
+        # encore /data/share a ce moment-la (exportfs -ua vient apres), donc le
+        # demontage echoue et le VG reste actif. On redemonte ici, apres la
+        # desexportation, avec un demontage paresseux en dernier recours.
+        exportfs -ua 2>/dev/null
+        umount -R /data/share 2>/dev/null
+        umount -R /data 2>/dev/null || umount -l /data 2>/dev/null
+        # Les taches 6 et 7 creent appuser, devuser et le groupe developers.
+        # Les laisser en place occupe des UID/GID que d autres labs posent a
+        # leur tour, et fait echouer leur useradd a la place de celui-ci.
+        userdel -r appuser 2>/dev/null
+        userdel -r devuser 2>/dev/null
+        groupdel developers 2>/dev/null
+        vgchange -an vgapp 2>/dev/null
+        vgremove -f vgapp 2>/dev/null
+        pvremove -f -y /dev/vdb1 2>/dev/null
+        wipefs -a /dev/vdb1 /dev/vdb2 /dev/vdb 2>/dev/null
+        partprobe /dev/vdb 2>/dev/null
+        exit 0
       changed_when: false
 
     - name: Retirer les entrees fstab swap/data

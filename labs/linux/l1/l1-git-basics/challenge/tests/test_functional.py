@@ -22,6 +22,7 @@ def _git(*args: str) -> subprocess.CompletedProcess[str]:
         capture_output=True,
         text=True,
         timeout=15,
+        check=False,
     )
 
 

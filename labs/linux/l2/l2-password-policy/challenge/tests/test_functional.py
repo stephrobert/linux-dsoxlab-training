@@ -52,7 +52,7 @@ def test_warn_7(chage):
 def test_login_defs_max_days(host):
     """Le défaut système PASS_MAX_DAYS doit être 60."""
     content = host.file("/etc/login.defs").content_string
-    m = re.search(r"^\s*PASS_MAX_DAYS\s+(\d+)", content, re.M)
+    m = re.search(r"^\s*PASS_MAX_DAYS\s+(\d+)", content, re.MULTILINE)
     assert m and m.group(1) == "60", (
         "PASS_MAX_DAYS doit valoir 60 dans /etc/login.defs "
         f"(vu : {m.group(1) if m else 'absent'})."
@@ -62,7 +62,7 @@ def test_login_defs_max_days(host):
 def test_pwquality_minlen_12(host):
     """La longueur minimale doit être 12 dans pwquality.conf."""
     content = host.file("/etc/security/pwquality.conf").content_string
-    m = re.search(r"^\s*minlen\s*=\s*(\d+)", content, re.M)
+    m = re.search(r"^\s*minlen\s*=\s*(\d+)", content, re.MULTILINE)
     assert m and int(m.group(1)) >= 12, (
         "minlen doit être >= 12 dans /etc/security/pwquality.conf "
         f"(vu : {m.group(1) if m else 'absent/commenté'})."

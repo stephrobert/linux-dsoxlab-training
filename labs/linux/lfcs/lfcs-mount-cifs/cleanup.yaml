@@ -42,3 +42,16 @@
       ansible.builtin.file:
         path: /srv/share
         state: absent
+
+    # Le setup cree smbuser (compte Samba + compte local). Le laisser derriere
+    # soi occupe son nom et son UID pour les labs suivants, qui echouent alors
+    # a la place de celui-ci.
+    - name: Remove the account this lab created
+      ansible.builtin.shell:
+        cmd: |
+          set +e
+          smbpasswd -x smbuser 2>/dev/null
+          userdel -r smbuser 2>/dev/null
+          exit 0
+        chdir: /
+      changed_when: false

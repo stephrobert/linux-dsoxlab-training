@@ -40,7 +40,7 @@ def test_array_persistent(host):
     assert conf.exists, (
         "Ajoutez l'array a /etc/mdadm.conf : mdadm --detail --scan >> /etc/mdadm.conf"
     )
-    assert re.search(r"^ARRAY\s+/dev/md/?\d+", conf.content_string, re.M), (
+    assert re.search(r"^ARRAY\s+/dev/md/?\d+", conf.content_string, re.MULTILINE), (
         "Aucune ligne ARRAY dans /etc/mdadm.conf. "
         "Ajoutez-la : mdadm --detail --scan >> /etc/mdadm.conf"
     )

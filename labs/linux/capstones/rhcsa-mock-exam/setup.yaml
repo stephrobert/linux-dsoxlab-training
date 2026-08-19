@@ -33,6 +33,17 @@
           - parted
         state: present
 
+    # Installer firewalld ne suffit pas : un lab joue avant celui-ci peut
+    # l avoir laisse desactive, et plusieurs taches de l examen appellent
+    # firewall-cmd, qui rend alors « FirewallD is not running ». Sur un examen
+    # RHCSA le pare-feu tourne : c est donc un donne de l epreuve, pas une
+    # tache du candidat.
+    - name: Donnee de l epreuve — firewalld tourne, comme sur une machine RHEL
+      ansible.builtin.systemd_service:
+        name: firewalld
+        enabled: true
+        state: started
+
     - name: Tache 8 — fournir /var/log/myapp.log (root:root, 0600)
       ansible.builtin.copy:
         dest: /var/log/myapp.log

@@ -17,6 +17,28 @@ dependencies = []
 # lance un lab à la fois et ne voit pas le problème).
 addopts = "--import-mode=importlib"
 
+# `ansible-runner` appelle encore `codecs.open()`, que Python 3.14 déprécie :
+# chaque playbook joué émet une poignée de DeprecationWarning, ce qui donne des
+# lignes « 232 warnings » sur les labs vm. Ce n'est ni notre code ni notre
+# décision, et ce bruit avait un coût réel : il masquait un ResourceWarning
+# venant de dsoxlab lui-même (un descripteur d'artefact jamais refermé).
+#
+# On fait donc taire ce message précis, de cette bibliothèque précise. Tout
+# AUTRE warning reste visible, ce qui est bien l'intérêt de l'opération : un
+# warning qui parle de notre code ne doit pas se noyer dans celui d'une
+# dépendance. À retirer quand ansible-runner aura migré vers open().
+# Le message est traité comme une EXPRESSION RÉGULIÈRE : les parenthèses de
+# `codecs.open()` doivent être échappées, sinon elles forment un groupe vide et
+# le motif ne correspond plus à rien (constaté : le filtre restait sans effet).
+# Guillemets SIMPLES : en TOML, une chaîne littérale n'interprète pas les
+# échappements, ce qu'il faut pour écrire une regex. Entre guillemets doubles,
+# `\.` et `\(` sont des séquences d'échappement invalides et le fichier ne
+# parse plus.
+filterwarnings = [
+    "default",
+    'ignore:codecs\.open\(\) is deprecated:DeprecationWarning',
+]
+
 # Ne collecter QUE les tests des challenges. Le contrat dsoxlab impose leur
 # emplacement (challenge/tests/test_functional.py) : tout ce qui porte
 # `test_*.py` ailleurs est autre chose.

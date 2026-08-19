@@ -1,6 +1,7 @@
 """conftest.py — l1-first-terminal"""
 import os
 import pathlib
+
 import pytest
 
 

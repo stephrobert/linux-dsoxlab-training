@@ -15,8 +15,11 @@
 
     - name: Wipe the filesystem + markers
       ansible.builtin.shell: |
-        . /root/autofs-disk.env 2>/dev/null || exit 0
+        [ -f /root/autofs-disk.env ] || exit 0
+        . /root/autofs-disk.env
         part="${DISK}1"; [ -b "$part" ] || part="${DISK}p1"
         wipefs -a "$part" 2>/dev/null || true
+        wipefs -a "$DISK" 2>/dev/null || true
+        partprobe "$DISK" 2>/dev/null || true
         rm -f /root/.autofs-lab-ready
       changed_when: false
