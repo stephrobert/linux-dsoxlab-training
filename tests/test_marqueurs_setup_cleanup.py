@@ -111,6 +111,85 @@ COMPTES = [
 ]
 
 
+# ── comptes créés par la SOLUTION ─────────────────────────────────────────────
+#
+# La solution est chiffrée, donc illisible par un test. Mais les tests du lab,
+# eux, nomment forcément les comptes qu'ils attendent : c'est leur objet.
+#
+# Le cas qui a coûté le plus cher : `rhcsa-mock-exam` fait créer `appuser` avec
+# l'UID 1500 par sa solution, et son cleanup échouait à le supprimer. Cinquante
+# labs plus loin, `l2-user-lifecycle` créait `alice` avec ce même UID et
+# tombait sur « useradd: UID 1500 is not unique ». Le lab accusé n'était pas le
+# lab fautif, et il passait parfaitement joué seul.
+
+def _est_supprime(cleanup: str, nom: str) -> bool:
+    """Le cleanup SUPPRIME-t-il réellement ce compte ou ce groupe ?
+
+    Chercher le nom n'importe où ne suffit pas : un commentaire qui le cite,
+    ou un `pkill -u <nom>` qui ne fait que tuer ses processus, satisfaisaient
+    la vérification sans rien supprimer. Ce test a d'ailleurs commencé sa vie
+    ainsi, et il passait sur un cleanup dont on venait de retirer le
+    `userdel`.
+
+    On exige donc une vraie commande de suppression :
+
+    - `userdel …  <nom>` / `groupdel … <nom>` (shell) ;
+    - ou un module Ansible `name: <nom>` suivi de `state: absent`.
+    """
+    echappe = re.escape(nom)
+    if re.search(rf"^\s*(?:user|group)del[^\n#]*\b{echappe}\b", cleanup, re.MULTILINE):
+        return True
+
+    # Forme Ansible. On découpe en tâches, et on accepte celle qui porte à la
+    # fois `state: absent` et le nom. Cela couvre le `name: alice` direct comme
+    # la boucle `name: "{{ item }}"` + `loop:` dont les entrées listent les
+    # comptes : c'est la forme qu'emploie `drill-users-groups`, et un motif
+    # calé sur `name: <nom>` la déclarait fautive à tort.
+    for tache in re.split(r"\n\s*- name:", cleanup):
+        if "state: absent" in tache and re.search(rf"\b{echappe}\b", tache):
+            return True
+    return False
+
+
+#: `<hôte>.user("X")` dans un test : le compte que le lab attend. La fixture
+#: ne s'appelle pas toujours `host` : le capstone RHCSA écrit `srv1.user(...)`,
+#: et un motif calé sur `host` laissait justement passer `appuser`, le compte
+#: qui a causé tout ce diagnostic.
+_COMPTE_TESTE = re.compile(r'\b\w+\.user\(\s*"(?P<nom>[a-z][\w-]*)"\s*\)')
+
+COMPTES_TESTES = [
+    (lab, nom)
+    for lab in _labs_avec_setup()
+    for test in [lab / "challenge" / "tests" / "test_functional.py"]
+    if test.is_file()
+    for nom in sorted(set(_COMPTE_TESTE.findall(test.read_text(encoding="utf-8"))))
+    if nom not in SYSTEME
+]
+
+
+@pytest.mark.parametrize(
+    ("lab", "nom"),
+    COMPTES_TESTES,
+    ids=[f"{lab.name}:{nom}" for lab, nom in COMPTES_TESTES],
+)
+def test_le_cleanup_supprime_les_comptes_attendus(lab: Path, nom: str) -> None:
+    """Ce que la solution crée, le cleanup doit le rendre.
+
+    Un compte survivant garde son UID, et le lab qui voudra le même UID
+    échouera à sa place, souvent très loin dans la séquence.
+    """
+    cleanup = lab / "cleanup.yaml"
+    assert cleanup.is_file(), f"{lab.name} a un setup.yaml mais pas de cleanup.yaml"
+
+    assert _est_supprime(cleanup.read_text(encoding="utf-8"), nom), (
+        f"{lab.name} : les tests attendent le compte « {nom} », que le cleanup "
+        f"ne SUPPRIME pas.\n"
+        f"S'il est créé par la solution, il survivra au nettoyage et gardera "
+        f"son UID pour tous les labs suivants.\n"
+        f"Ajouter par exemple :  userdel -rf {nom}"
+    )
+
+
 @pytest.mark.parametrize(
     ("lab", "genre", "nom"),
     COMPTES,

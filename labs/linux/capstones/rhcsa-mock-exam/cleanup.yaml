@@ -37,8 +37,15 @@
         # Les taches 6 et 7 creent appuser, devuser et le groupe developers.
         # Les laisser en place occupe des UID/GID que d autres labs posent a
         # leur tour, et fait echouer leur useradd a la place de celui-ci.
-        userdel -r appuser 2>/dev/null
-        userdel -r devuser 2>/dev/null
+        # `userdel` REFUSE tant qu un processus appartient au compte, et le
+        # service myapp.service vient a peine d etre arrete : sans -f, la
+        # suppression echouait en silence (2>/dev/null), appuser gardait
+        # l UID 1500, et l2-user-lifecycle echouait ensuite sur
+        # « useradd: UID 1500 is not unique ». On tue d abord, on force ensuite.
+        pkill -KILL -u appuser 2>/dev/null
+        pkill -KILL -u devuser 2>/dev/null
+        userdel -rf appuser 2>/dev/null
+        userdel -rf devuser 2>/dev/null
         groupdel developers 2>/dev/null
         vgchange -an vgapp 2>/dev/null
         vgremove -f vgapp 2>/dev/null
