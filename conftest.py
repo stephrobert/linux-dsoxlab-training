@@ -28,7 +28,7 @@ import os
 import subprocess
 import sys
 from pathlib import Path
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 import pytest
 import yaml
@@ -315,6 +315,31 @@ def _replay_shell_solution(lab_root: Path, rel_path: Path) -> None:
         )
 
 
+def message_echec_solution(lab_id: str, result: Any) -> str:
+    """Message d'échec du replay de la solution, sortie du playbook comprise.
+
+    Sans cette sortie, un échec se résume à « 1 failure sur tel hôte » : ni la
+    tâche fautive, ni sa raison. Or reproduire coûte une passe entière sur
+    l'infrastructure, ce qui a fait traîner l'incident du capstone RHCSA.
+
+    On a longtemps cru la sortie perdue, `run_playbook` créant un répertoire
+    temporaire qu'il nettoie ensuite. C'est inexact : `dsoxlab` lit le stdout
+    AVANT de supprimer ce répertoire. Vérifié en jouant un playbook en échec
+    dans les conditions exactes d'ici (`quiet=True`, `private_data_dir=None`) :
+    la tâche fautive, le `fatal:` et le `PLAY RECAP` y sont tous.
+
+    La fin plutôt que le début : Ansible s'arrête à la tâche fautive, donc
+    l'erreur est toujours dans les derniers caractères.
+    """
+    sortie = (result.stdout or "").strip()
+    detail = f"\n\nSortie du playbook (fin) :\n{sortie[-4000:]}" if sortie else ""
+    return (
+        f"solution.yaml a échoué pour {lab_id} "
+        f"(rc={result.rc}, status={result.status}). "
+        f"Stats : {result.stats}{detail}"
+    )
+
+
 @pytest.fixture(scope="module", autouse=True)
 def _apply_lab_state(request) -> None:
     """Applique la solution officielle du formateur avant les tests.
@@ -411,8 +436,4 @@ def _apply_lab_state(request) -> None:
         vault_password_file=vault_password_file,
     )
     if not result.ok:
-        raise RuntimeError(
-            f"solution.yaml a échoué pour {lab_root.name} "
-            f"(rc={result.rc}, status={result.status}). "
-            f"Stats : {result.stats}"
-        )
+        raise RuntimeError(message_echec_solution(lab_root.name, result))
