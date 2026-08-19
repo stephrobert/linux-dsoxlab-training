@@ -17,6 +17,23 @@ updates:
     # validation du fichier côté GitHub.
     cooldown:
       default-days: 7
+    # Un lot par semaine plutôt qu'une branche par action. Cinq PR étaient
+    # ouvertes en même temps, dont trois pour les trois actions
+    # github/codeql-action/*, qui sortent toujours la même version le même jour
+    # et ne se fusionnent jamais séparément. Chacune ouvrait une branche et
+    # déclenchait une CI complète.
+    #
+    # Les majeures restent seules : ce sont elles qui cassent, elles méritent
+    # d'être lues, et les grouper ferait qu'une action incompatible bloquerait
+    # toutes les autres du même lot.
+    #
+    # Les alertes de sécurité restent hors groupe, ce qui est le défaut
+    # (`applies-to: version-updates`) : elles sont urgentes et méritent une PR
+    # ciblée plutôt que d'attendre le lot hebdomadaire.
+    groups:
+      actions-mineures-et-correctives:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
 
   # Pas d'écosystème "uv" ici : ce dépôt de contenu n'a aucune dépendance
   # Python à builder (pyproject.toml : package = false, dependencies = []).

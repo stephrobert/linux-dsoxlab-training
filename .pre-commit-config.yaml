@@ -45,6 +45,22 @@ repos:
         types_or: [python, pyi]
         require_serial: true
 
+      # Une dependabot.yml invalide est refusée en bloc par GitHub, qui cesse
+      # alors d'ouvrir des PR : cela ressemble exactement à « aucune mise à
+      # jour disponible ». Ce dépôt en a fait les frais avec des paliers
+      # semver-*-days que l'écosystème github-actions ne supporte pas.
+      #
+      # Portée mesurée en soumettant au hook chacune de ces fautes : il rejette
+      # une clé mal orthographiée, une valeur d'update-types inventée et un
+      # écosystème inexistant. Il n'attrape PAS les restrictions par
+      # écosystème, y compris le cas semver-*-days ci-dessus, légal ailleurs.
+      # Il réduit donc l'écart, il ne le ferme pas.
+      - id: dependabot-schema
+        name: dependabot.yml est conforme au schéma officiel
+        entry: uvx check-jsonschema --builtin-schema vendor.dependabot
+        language: system
+        files: '^\.github/dependabot\.yml$'
+
       - id: trufflehog
         name: trufflehog (secret scan)
         # --no-update: never auto-fetch a new binary at hook time (supply-chain hardening).
