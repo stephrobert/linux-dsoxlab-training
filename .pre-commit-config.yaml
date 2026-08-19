@@ -99,6 +99,18 @@ repos:
         pass_filenames: false
         always_run: true
 
+      # Quand le replay d'une solution échoue, le message doit dire POURQUOI.
+      # Il ne rendait que « rc=2, 1 failure sur tel hôte » : ni la tâche
+      # fautive, ni sa raison, alors que reproduire coûte une passe entière sur
+      # l'infrastructure. La sortie du playbook était pourtant disponible, et
+      # simplement jetée. Ce test tient le message et son garde-fou d'appel.
+      - id: diagnostic-replay
+        name: un replay de solution en échec dit pourquoi
+        entry: uv run --no-project --with pytest --with pyyaml pytest tests/test_diagnostic_replay.py -q
+        language: system
+        pass_filenames: false
+        always_run: true
+
       # Les renvois internes des README et scénarios cassent en silence : rien
       # ne les exécute, seul l'apprenant tombe sur un lien mort. Le dépôt
       # Ansible jumeau en comptait 150 le jour où le test y a été écrit.
