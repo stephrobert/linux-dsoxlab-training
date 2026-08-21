@@ -1,0 +1,18 @@
+---
+# Collections Ansible que ce dépôt emploie réellement, hors `ansible.builtin`.
+#
+# Elles n'étaient déclarées nulle part : deux d'entre elles se trouvaient
+# installées par hasard sur la machine de développement, la troisième non, et
+# le capstone rhcsa-mock-exam échouait alors sur un « rc=4 » qui ressemble à un
+# problème de réseau (issue #50).
+#
+# Installation :
+#     ansible-galaxy collection install -r requirements.yml
+#
+# `tests/test_collections_declarees.py` refuse qu'une collection employée dans
+# labs/ ou solution/ manque à cette liste.
+
+collections:
+  - name: ansible.posix
+  - name: community.general
+  - name: community.crypto
