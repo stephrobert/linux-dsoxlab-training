@@ -42,7 +42,6 @@ runtime:
   session: local
   default: server
   snapshot_required: false
-  hosts_required: 2
   targets:
     - name: server
       host: alma-rhcsa-1.lab
