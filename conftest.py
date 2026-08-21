@@ -315,6 +315,27 @@ def _replay_shell_solution(lab_root: Path, rel_path: Path) -> None:
         )
 
 
+def _premiere_cause(stdout: str) -> str:
+    """Extrait du stdout d'Ansible la première ligne qui dit vraiment pourquoi.
+
+    Sans elle, un échec se présente comme « rc=4, Stats : {} ». Or 4 est le code
+    « unreachable » d'Ansible, et des stats vides se lisent comme « aucun hôte
+    joint » : le message envoie donc chercher un problème de réseau. Vécu sur le
+    capstone rhcsa-mock-exam, dont la cause réelle était une collection absente
+    (`community.crypto`) pendant que les trois hôtes répondaient au ping.
+
+    Le stdout est déjà là, dans PlaybookResult. Il suffisait de le lire.
+    """
+    if not stdout:
+        return ""
+    interessantes = ("[ERROR]", "fatal:", "ERROR!", "unreachable=")
+    for ligne in stdout.splitlines():
+        nue = ligne.strip()
+        if any(marqueur in nue for marqueur in interessantes):
+            return f"\nCause probable : {nue[:400]}"
+    return ""
+
+
 @pytest.fixture(scope="module", autouse=True)
 def _apply_lab_state(request) -> None:
     """Applique la solution officielle du formateur avant les tests.
@@ -415,4 +436,5 @@ def _apply_lab_state(request) -> None:
             f"solution.yaml a échoué pour {lab_root.name} "
             f"(rc={result.rc}, status={result.status}). "
             f"Stats : {result.stats}"
+            f"{_premiere_cause(result.stdout)}"
         )

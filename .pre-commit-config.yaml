@@ -87,6 +87,18 @@ repos:
         pass_filenames: false
         files: 'labs/.*/(setup|cleanup)\.yaml$'
 
+      # Une collection Ansible employée mais non déclarée ne se voit pas : elle
+      # est installée par hasard sur la machine de qui a écrit le lab, absente
+      # sur celle du suivant, et l'échec se présente alors comme un « rc=4 »
+      # d'Ansible, qui ressemble à un problème de réseau. Vécu sur le capstone
+      # rhcsa-mock-exam (issue #50).
+      - id: collections-declarees
+        name: toute collection Ansible employée est déclarée
+        entry: uv run --no-project --with pytest --with pyyaml pytest tests/test_collections_declarees.py -q
+        language: system
+        pass_filenames: false
+        always_run: true
+
       # Garde-fou d'outillage. Dans le dépôt Ansible jumeau, deux fois pendant
       # une même session, une modification a disparu sans trace git : un test de
       # catalogue, puis un hook. Plusieurs processus écrivent dans ces dépôts,
