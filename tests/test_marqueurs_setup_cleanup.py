@@ -55,6 +55,32 @@ CAS = [
 ]
 
 
+def _est_efface(cleanup: str, marqueur: str) -> bool:
+    """Le cleanup EFFACE-t-il réellement ce marqueur ?
+
+    Le mentionner ne suffit pas : « . /root/xxx.env » le lit sans le rendre, et
+    un commentaire qui le cite satisfaisait la vérification. C'est exactement le
+    piège que la partie « comptes » de ce module avait déjà corrigé avec
+    `_est_supprime()`, dont la docstring note : « ce test a commencé sa vie
+    ainsi, et il passait sur un cleanup dont on venait de retirer le userdel ».
+    La leçon n'avait pas été reportée ici.
+
+    Deux formes légitimes, et seulement elles :
+
+    - shell : ``rm`` suivi du chemin, éventuellement parmi d'autres ;
+    - Ansible : une tâche qui porte à la fois le chemin et ``state: absent``.
+    """
+    echappe = re.escape(marqueur)
+    # `rm -f a b c` : le marqueur peut être n'importe lequel des chemins.
+    if re.search(rf"^\s*rm\b[^\n#]*\s{echappe}(\s|$)", cleanup, re.MULTILINE):
+        return True
+    # Une tâche Ansible se délimite au « - name: » suivant.
+    for tache in re.split(r"\n\s*- name:", cleanup):
+        if "state: absent" in tache and re.search(rf"{echappe}(\s|$|\")", tache):
+            return True
+    return False
+
+
 @pytest.mark.parametrize(
     ("lab", "marqueur"),
     CAS,
@@ -70,9 +96,11 @@ def test_le_cleanup_efface_le_marqueur(lab: Path, marqueur: str) -> None:
     assert cleanup.is_file(), f"{lab.name} a un setup.yaml mais pas de cleanup.yaml"
 
     texte = cleanup.read_text(encoding="utf-8")
-    assert marqueur in texte, (
+    assert _est_efface(texte, marqueur), (
         f"{lab.name} : le setup se garde avec « creates: {marqueur} », mais le "
-        f"cleanup ne mentionne jamais ce chemin.\n"
+        f"cleanup ne l'EFFACE jamais.\n"
+        f"Le mentionner ne suffit pas — « . {marqueur} » le lit, un commentaire "
+        f"le cite — et cette vérification a d'ailleurs commencé sa vie ainsi.\n"
         f"Le nettoyage laissera donc le marqueur en place : au prochain setup, "
         f"la tâche sera sautée et l'état de départ ne sera jamais reconstruit.\n"
         f"Ajouter par exemple :  rm -f {marqueur}"
