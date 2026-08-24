@@ -25,5 +25,5 @@
         wipefs -a "$part" 2>/dev/null || true
         wipefs -a "$DISK" 2>/dev/null || true
         partprobe "$DISK" 2>/dev/null || true
-        rm -rf /srv/data /root/.perf-lab-ready
+        rm -rf /srv/data /root/.perf-lab-ready /root/perf-disk.env
       changed_when: false

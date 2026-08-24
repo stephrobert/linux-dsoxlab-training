@@ -27,3 +27,6 @@
       loop:
         - /srv/data
         - /root/.dsk-lab-ready
+        # Lu plus haut pour connaître le disque : il doit partir avec
+        # le reste, sinon le prochain setup saute la détection.
+        - /root/dsk-disk.env

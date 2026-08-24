@@ -20,4 +20,5 @@
         wipefs -a "$DISK" 2>/dev/null || true
         sgdisk --zap-all "$DISK" 2>/dev/null || true
         partprobe "$DISK" 2>/dev/null || true
+        rm -f /root/part-disk.env
       changed_when: false
