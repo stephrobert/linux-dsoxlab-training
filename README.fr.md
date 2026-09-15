@@ -359,3 +359,16 @@ _84 labs, table générée par `scripts/gen_catalog.py`._
 - Conduite : [Code de conduite](./CODE_OF_CONDUCT.fr.md) · Sécurité : [SECURITY](./SECURITY.fr.md).
 - Versions : [RELEASING](./RELEASING.fr.md) (bundles tar.gz, pas de PyPI).
 - Licence : [CC BY 4.0](./LICENSE).
+
+### Licence
+
+Copyright (c) 2026 Stéphane Robert, https://blog.stephane-robert.info
+
+Ce catalogue est publié sous licence
+[Creative Commons Attribution 4.0 International (CC BY 4.0)](./LICENSE). Vous
+pouvez le partager et l'adapter, y compris commercialement, à une condition :
+créditer Stéphane Robert, lier le blog, et indiquer si vous avez modifié le
+contenu, sans laisser entendre que l'auteur approuve votre usage.
+
+Le fichier `LICENSE` ne contient que le texte officiel de la licence, sans
+en-tête ajouté : c'est ce qui permet à GitHub de la reconnaître.
