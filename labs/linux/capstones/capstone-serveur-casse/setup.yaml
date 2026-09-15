@@ -52,6 +52,19 @@
           exit 0
       changed_when: false
 
+    # TROUVE PAR RED TEAM le 2026-09-15, et le defaut allait dans les DEUX sens.
+    # Un candidat qui triche avec `setenforce 0` laisse la machine en
+    # permissive. La session suivante heritait alors d'un systeme desarme :
+    # si la panne tiree etait `selinux`, elle ne mordait plus et le site
+    # repondait tout seul ; si c'etait une autre, le candidat echouait au
+    # garde-fou SELinux pour un etat qu'il n'avait pas cree. Le cleanup le
+    # corrigeait deja, mais un setup doit se suffire a lui-meme : le fichier
+    # annonce qu'il est rejouable sur une VM deja utilisee.
+    - name: Remettre SELinux en enforcing, quoi qu'ait fait la session precedente
+      ansible.posix.selinux:
+        policy: targeted
+        state: enforcing
+
     - name: Le docroot du site interne
       ansible.builtin.file:
         path: "{{ docroot }}"

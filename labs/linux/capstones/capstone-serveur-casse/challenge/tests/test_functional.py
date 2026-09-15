@@ -113,9 +113,22 @@ def test_pare_feu_actif_et_port_ouvert(serveur):
     )
 
     permanent = serveur.check_output("firewall-cmd --permanent --list-all")
-    assert "http" in permanent or "80/tcp" in permanent, (
+    # On compare des JETONS, pas des sous-chaines. Trouve par red team le
+    # 2026-09-15 : un `ports: 8080/tcp` laisse par un autre lab contenait la
+    # sous-chaine « 80/tcp », et le test passait alors qu'aucune regle
+    # permanente n'ouvrait le port 80. Une triche `firewall-cmd
+    # --add-service=http` sans `--permanent` etait donc acceptee.
+    def jetons(prefixe: str) -> set[str]:
+        for ligne in permanent.splitlines():
+            if ligne.strip().startswith(prefixe):
+                return set(ligne.split(":", 1)[1].split())
+        return set()
+
+    ouvert = "http" in jetons("services:") or "80/tcp" in jetons("ports:")
+    assert ouvert, (
         "Le port 80 n'est pas ouvert de facon PERMANENTE. Une ouverture "
-        "faite sans `--permanent` disparait au prochain rechargement."
+        "faite sans `--permanent` disparait au prochain rechargement.\n"
+        f"Configuration permanente lue :\n{permanent}"
     )
 
 
