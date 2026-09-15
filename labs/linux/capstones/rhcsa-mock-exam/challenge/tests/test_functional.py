@@ -96,7 +96,12 @@ def test_04_swapfile_active_persistent(srv1):
     assert f.size >= 500 * 1024 * 1024, f"Taille trop petite : {f.size} bytes"
     # Active
     swap = srv1.run("swapon --show=NAME --noheadings")
-    assert "/swapfile" in swap.stdout, "/swapfile pas activé via swapon"
+    # Comparaison ligne à ligne : « /swapfile » se trouve aussi dans un
+    # « /swapfile2 » resté d'un autre essai.
+    actifs = [x.strip() for x in swap.stdout.splitlines() if x.strip()]
+    assert "/swapfile" in actifs, (
+        f"/swapfile pas activé via swapon. Swaps actifs : {actifs or 'aucun'}"
+    )
     # Persistant
     fstab = srv1.file("/etc/fstab").content_string
     assert re.search(r"^/swapfile\s+\S+\s+swap", fstab, re.MULTILINE), (
@@ -269,9 +274,15 @@ def test_09_srv1_static_ip_hostname_firewall_8080(srv1):
     """Tâche 9 : srv-1 réseau figé en statique, hostname, port 8080/tcp."""
     _assert_static_pinned(srv1, SRV1)
     hn = srv1.run("hostnamectl --static")
-    assert "srv-rhcsa-1.lab" in hn.stdout.strip(), f"Hostname static : {hn.stdout}"
+    assert hn.stdout.strip() == "srv-rhcsa-1.lab", f"Hostname static : {hn.stdout}"
     fw = srv1.run("firewall-cmd --list-ports --permanent")
-    assert "8080/tcp" in fw.stdout, "Port 8080/tcp pas ouvert permanent"
+    # Comparaison par JETONS. Cherchée en sous-chaîne, « 8080/tcp » serait
+    # trouvée dans un « 18080/tcp » ouvert pour tout autre chose : le candidat
+    # marquerait les 6 points sans avoir ouvert le bon port (red team du
+    # 2026-09-15, même défaut relevé sur les deux capstones).
+    assert "8080/tcp" in fw.stdout.split(), (
+        f"Port 8080/tcp pas ouvert permanent. Ports lus : {fw.stdout.strip() or 'aucun'}"
+    )
 
 
 @pytest.mark.points(4)
@@ -279,7 +290,7 @@ def test_17_srv2_static_ip_hostname(srv2):
     """Tâche 17 : srv-2 réseau figé en statique + hostname srv-rhcsa-2.lab."""
     _assert_static_pinned(srv2, SRV2)
     hn = srv2.run("hostnamectl --static")
-    assert "srv-rhcsa-2.lab" in hn.stdout.strip(), f"Hostname static : {hn.stdout}"
+    assert hn.stdout.strip() == "srv-rhcsa-2.lab", f"Hostname static : {hn.stdout}"
 
 
 # ── Section D — Services ───────────────────────────────────────────────────

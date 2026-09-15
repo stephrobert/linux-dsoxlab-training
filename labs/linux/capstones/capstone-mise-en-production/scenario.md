@@ -1,48 +1,54 @@
-# Contexte — la recette, puis le lendemain
+# Context: the hand-over, then the morning after
 
-Les deux examens blancs de la section évaluent une **certification**. Ce
-capstone évalue autre chose : la capacité à **livrer un serveur qui tient**.
+The two mock exams in this section assess a **certification**. This capstone
+assesses something else: the ability to **deliver a server that holds**.
 
-Un apprenant qui ne passe aucune certification mérite lui aussi une épreuve
-finale. C'est celle-ci, et elle se résume à une phrase : on vous remet une
-application, vous la mettez en service, et **la machine redémarre**.
+A learner who sits no certification deserves a final exercise too. This is it,
+and it fits in one sentence: you are handed an application, you put it into
+service, and **the machine reboots**.
 
-## Ce que le capstone mesure vraiment
+## What the capstone actually measures
 
-Neuf livrables, et un dixième test qui les reprend tous. La note ne porte
-jamais sur les commandes tapées : chaque test lit un **état observable**.
+Nine deliverables, and a tenth test that covers them all at once. The mark
+never depends on which commands you typed: every test reads an **observable
+state**.
 
-| Livrable | Ce qui se vérifie |
+| Deliverable | What gets checked |
 |---|---|
-| Stockage | un volume logique dédié, monté par `fstab` |
-| Compte de service | système, sans shell de connexion, propriétaire du contenu |
-| Service | actif, `enabled`, en écoute côté réseau |
-| MAC | SELinux enforcing, port étiqueté, contexte durable |
-| Pare-feu | port ouvert de façon permanente |
-| Accès | un 200 obtenu **depuis une autre machine** |
-| Journal | persistant sur disque |
-| SSH | ni mot de passe, ni root |
-| Sauvegarde | planifiée, et ayant déjà produit une archive |
+| Storage | a dedicated logical volume, mounted from `fstab` |
+| Service account | system account, no login shell, owns the content |
+| Service | active, `enabled`, listening on the network |
+| MAC | SELinux enforcing, port labelled, context durable |
+| Firewall | port opened permanently |
+| Access | a 200 obtained **from another machine** |
+| Journal | persisted on disk |
+| SSH | neither password nor root |
+| Backup | scheduled, and has already produced an archive |
 
-## Le redémarrage, et pourquoi il vaut 10 points
+## The reboot, and why it is worth 10 points
 
-Un serveur qui marche le jour de la recette et pas le lendemain n'a pas été
-mis en production. Les quatre oublis qui produisent ce résultat sont toujours
-les mêmes, et aucun ne se voit avant le reboot :
+A server that works on hand-over day and not the next morning was never put
+into production. The four omissions that produce that outcome are always the
+same, and none of them shows before the reboot:
 
-1. le montage n'est pas dans `fstab` ;
-2. le service n'a jamais été passé en `enabled` ;
-3. la règle de pare-feu a été posée sans `--permanent` ;
-4. l'étiquette SELinux vient d'un `chcon` et non de `semanage`.
+1. the mount is not in `fstab`;
+2. the service was never switched to `enabled`;
+3. the firewall rule was added without `--permanent`;
+4. the SELinux label comes from a `chcon` instead of `semanage`.
 
-Le dernier test redémarre donc la machine pour de bon, puis redemande la page
-**depuis le client**. Si elle revient, les quatre sont bons d'un coup.
+So the last test reboots the machine for real, then asks for the page again
+**from the client**. If it comes back, all four are right at once.
 
-## Deux pièges propres à cette machine, mesurés
+## Three traps specific to this machine, measured
 
-Le port **8080 n'appartient pas** à `http_port_t` sur AlmaLinux 10 : la liste
-par défaut est 80, 81, 443, 488, 8008, 8009, 8443, 9000. Le service refusera
-de démarrer avec un message de permission qui ne nomme jamais SELinux.
+Port **8080 does not belong** to `http_port_t` on AlmaLinux 10: the default
+list is 80, 81, 443, 488, 8008, 8009, 8443, 9000. The service will refuse to
+start, with a permission message that never names SELinux.
 
-`/var/log/journal` **n'existe pas** : tant qu'il manque, journald garde tout
-en mémoire et l'historique disparaît au redémarrage.
+`/var/log/journal` **does not exist**: while it is missing, journald keeps
+everything in memory and the history disappears on reboot.
+
+The `sshd` configuration is **split across several files**. Writing your own
+is not enough: `sshd` keeps the **first** value it reads, in the lexical order
+of the files. `sshd -T` tells you the effective configuration; the file you
+have just written only tells you your intentions.

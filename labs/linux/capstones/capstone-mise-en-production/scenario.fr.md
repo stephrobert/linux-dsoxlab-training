@@ -38,7 +38,7 @@ les mêmes, et aucun ne se voit avant le reboot :
 Le dernier test redémarre donc la machine pour de bon, puis redemande la page
 **depuis le client**. Si elle revient, les quatre sont bons d'un coup.
 
-## Deux pièges propres à cette machine, mesurés
+## Trois pièges propres à cette machine, mesurés
 
 Le port **8080 n'appartient pas** à `http_port_t` sur AlmaLinux 10 : la liste
 par défaut est 80, 81, 443, 488, 8008, 8009, 8443, 9000. Le service refusera
@@ -46,3 +46,8 @@ de démarrer avec un message de permission qui ne nomme jamais SELinux.
 
 `/var/log/journal` **n'existe pas** : tant qu'il manque, journald garde tout
 en mémoire et l'historique disparaît au redémarrage.
+
+La configuration de `sshd` est **éclatée en plusieurs fichiers**. Écrire le
+vôtre ne suffit pas : `sshd` retient la **première** valeur lue, dans l'ordre
+lexical des fichiers. `sshd -T` dit la configuration effective, le fichier que
+vous venez d'écrire ne dit que vos intentions.
