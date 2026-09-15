@@ -24,15 +24,16 @@ based on [Keep a Changelog](https://keepachangelog.com/), and the project follow
     archive is re-checked against its digest before publication so an artifact
     altered between two jobs is not published with provenance that does not
     describe it.
-  - Two linters disagreed, and the tie was broken on the merits. zizmor
-    recommends the `uses: $/...` self-repository form, generally available on
-    github.com since July 2026; actionlint 1.7.12, released in March, still
-    rejects it as an invalid format. `$/` wins: it does not depend on the
-    runtime filesystem state, so it cannot load a file a previous step dropped
-    in place, and GitHub treats it as pinning. The actionlint exception is
-    scoped to that one message in that one file, dated, and verified narrow by
-    planting another `workflow-call` fault in the same file: the rule still
-    catches it.
+  - Two linters disagreed, then a third settled it. zizmor recommends the
+    `uses: $/...` self-repository form, generally available on github.com since
+    July 2026; actionlint 1.7.12, released in March, still rejects it as an
+    invalid format. `$/` was kept at first, then dropped: Plumber takes it for
+    an unpinned third-party action from an unauthorised source, two HIGH
+    findings, and the score fell from 100/100 to 70/100. Security tooling
+    cannot read it yet, and an analyser that does not understand a construct
+    cannot judge it safe, least of all on the line that calls the workflow
+    which signs. The call went back to `./`, with the measurement recorded
+    beside it and a single scoped zizmor acknowledgement.
   - The check that proves the level is in `RELEASING.md`: it names the signing
     workflow and fails if the provenance came from anywhere else. It needs a
     real release, so it has not been exercised yet.

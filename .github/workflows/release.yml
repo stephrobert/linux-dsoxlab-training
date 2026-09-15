@@ -111,14 +111,30 @@ jobs:
   provenance:
     name: Provenance SLSA
     needs: build
-    # `$/` et non `./` : la forme « self-repository », disponible sur
-    # github.com depuis juillet 2026, résout le workflow dans CE dépôt au
-    # commit qui tourne. Contrairement à la forme relative au workspace, elle
-    # ne dépend pas de l'état du système de fichiers au moment de l'exécution,
-    # donc elle ne peut pas charger un fichier qu'une étape précédente aurait
-    # déposé, et GitHub la traite comme un épinglage. Pour un workflow dont
-    # tout l'intérêt est d'être hors de portée du build, la nuance compte.
-    uses: $/.github/workflows/attester.yml
+    # POURQUOI `./` ET NON `$/`, LA FORME QUE ZIZMOR RECOMMANDE ICI.
+    #
+    # `$/` est la forme « self-repository », publiée par GitHub en juillet
+    # 2026. Sur le fond elle est meilleure : elle ne dépend pas de l'état du
+    # système de fichiers, donc elle ne peut pas charger un fichier qu'une
+    # étape précédente aurait déposé. Elle a pourtant été retirée d'ici, et la
+    # raison tient en une phrase : l'outillage de sécurité ne sait pas encore
+    # la lire, et un analyseur qui ne comprend pas une construction ne peut pas
+    # la juger sûre.
+    #
+    # Mesuré le 2026-09-15, sur cette ligne exactement :
+    #   - actionlint 1.7.12 la rejette comme un format invalide ;
+    #   - zizmor 1.26.1 refuse de charger le fichier et n'audite plus RIEN ;
+    #   - Plumber la prend pour une action tierce non épinglée et venant d'une
+    #     source non autorisée : deux constats HIGH, score 70/100 au lieu de
+    #     100/100.
+    #
+    # Le workflow appelé est celui qui SIGNE la provenance. C'est la dernière
+    # ligne du dépôt sur laquelle se priver du regard des analyseurs. `./` est
+    # comprise par les trois, et zizmor ne lui reproche qu'un point de style,
+    # acquitté juste en dessous.
+    #
+    # À reconsidérer quand actionlint et Plumber sauront lire `$/`.
+    uses: ./.github/workflows/attester.yml # zizmor: ignore[self-repository]
     permissions:
       id-token: write
       attestations: write
