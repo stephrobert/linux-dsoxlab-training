@@ -168,6 +168,20 @@ repos:
         pass_filenames: false
         stages: [pre-push]
 
+      # The catalogue scripts run in CI over PULL REQUEST content, so over YAML
+      # written by someone else. An unterminated quote used to surface a
+      # yaml.scanner.ScannerError in the terminal: the contributor got a
+      # traceback instead of their file name, and the other 83 labs stopped
+      # being checked at all. The contract is the one the dsoxlab CLI applies to
+      # itself — a malformed lab is skipped with a message, never at the cost of
+      # the process.
+      - id: yaml-malforme
+        name: a lab with unreadable YAML reports itself, it does not break the tooling
+        entry: uv run --no-project --with pytest --with pyyaml pytest tests/test_yaml_malforme.py -q
+        language: system
+        pass_filenames: false
+        always_run: true
+
       # The root README must list every lab with its guide URL. Regenerated
       # from the real lab.yaml files; a stale catalog blocks the push.
       - id: catalog-fresh

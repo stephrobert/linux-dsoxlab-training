@@ -14,7 +14,9 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
-import yaml
+# Un seul chemin de lecture pour tout le catalogue : voir scripts/lecture_yaml.py.
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from lecture_yaml import YamlIllisible, lire_yaml
 
 ROOT = Path(__file__).resolve().parent.parent
 META = ROOT / "meta.yml"
@@ -35,7 +37,12 @@ def _runtime_label(lab: dict) -> str:
 
 def _rows_by_section() -> list[tuple[str, str, list[dict]]]:
     """Retourne [(section_id, section_title, [lab_dict, ...]), ...] dans l'ordre meta.yml."""
-    meta = yaml.safe_load(META.read_text(encoding="utf-8"))
+    try:
+        meta = lire_yaml(META)
+    except YamlIllisible as exc:
+        # Sans meta.yml il n'y a pas de catalogue du tout : on s'arrête. Mais on
+        # s'arrête en DISANT quoi, pas sur une trace d'appels.
+        sys.exit(f"catalogue ingénérable — {exc}")
     out: list[tuple[str, str, list[dict]]] = []
     for section in meta.get("sections", []):
         labs: list[dict] = []
@@ -44,11 +51,19 @@ def _rows_by_section() -> list[tuple[str, str, list[dict]]]:
             lab_yaml = lab_dir / "lab.yaml"
             if not lab_yaml.exists():
                 continue
-            lab = yaml.safe_load(lab_yaml.read_text(encoding="utf-8")) or {}
+            try:
+                lab = lire_yaml(lab_yaml)
+            except YamlIllisible as exc:
+                print(f"  lab écarté du catalogue — {rel}/{exc}", file=sys.stderr)
+                continue
             fr_yaml = lab_dir / "lab.fr.yaml"
             lab["_title_fr"] = lab.get("title", "")
             if fr_yaml.exists():
-                fr = yaml.safe_load(fr_yaml.read_text(encoding="utf-8")) or {}
+                try:
+                    fr = lire_yaml(fr_yaml)
+                except YamlIllisible as exc:
+                    print(f"  {rel}/{exc}", file=sys.stderr)
+                    fr = {}
                 lab["_title_fr"] = fr.get("title", lab.get("title", ""))
             labs.append(lab)
         if labs:
