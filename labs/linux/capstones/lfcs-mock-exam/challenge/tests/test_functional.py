@@ -44,71 +44,149 @@ def _fstab_line(host, mount: str) -> str | None:
 
 
 @pytest.mark.points(5)
-def test_task01_archive_contains_only_logs(host):
-    """L'archive doit contenir tous les .log de /srv/audit, et rien d'autre."""
-    assert host.file("/root/logs.tar.gz").exists, (
-        "/root/logs.tar.gz est absent."
+def test_task01_git_repository(host):
+    """Depot Git initialise, deux fichiers commites, .cache ignore, branche recette.
+
+    Objectif LFCS : « Basic Git Operations ». Le test interroge Git, pas le
+    disque : un .git recopie a la main ne rend pas un journal de commits.
+    """
+    depot = "/srv/deploiement"
+    dans_depot = host.run(f"git -C {depot} rev-parse --is-inside-work-tree")
+    assert dans_depot.rc == 0 and dans_depot.stdout.strip() == "true", (
+        f"{depot} n'est pas un depot Git."
     )
-    listing = host.check_output("tar -tzf /root/logs.tar.gz")
-    entries = [e for e in listing.split() if e and not e.endswith("/")]
-    assert entries, "L'archive est vide."
-    bases = {e.rsplit("/", 1)[-1] for e in entries}
-    assert {"access.log", "app.log", "kernel.log"} <= bases, (
-        "Il manque des .log : les 3 attendus sont access.log, app.log et "
-        f"kernel.log (trouvés : {sorted(bases)})."
+
+    commits = host.run(f"git -C {depot} rev-list --count HEAD")
+    assert commits.rc == 0 and int(commits.stdout.strip() or 0) >= 1, (
+        "Aucun commit dans le depot : initialiser ne suffit pas."
     )
-    intrus = [e for e in entries if not e.endswith(".log")]
+
+    suivis = set(host.check_output(f"git -C {depot} ls-files").split())
+    assert {"config.yml", "notes.txt"} <= suivis, (
+        f"config.yml et notes.txt doivent etre suivis (suivis : {sorted(suivis)})."
+    )
+    intrus = [f for f in suivis if f.startswith(".cache/")]
     assert not intrus, (
-        f"L'archive contient des fichiers qui ne sont pas des .log : {intrus}."
+        f".cache/ ne doit pas etre versionne, or il l'est : {intrus}"
+    )
+
+    etat = host.check_output(f"git -C {depot} status --porcelain")
+    assert ".cache" not in etat, (
+        "git status mentionne encore .cache : il n'est pas ignore.\n"
+        f"{etat}"
+    )
+
+    # `branch --list recette` plutot qu'un format personnalise : testinfra
+    # n'applique le formatage % que si on lui passe des arguments, un
+    # --format=%(refname:short) arriverait donc tel quel ou mal echappe.
+    recette = host.run(f"git -C {depot} branch --list recette")
+    assert recette.rc == 0 and recette.stdout.strip(), (
+        "La branche recette est absente.\n"
+        + host.check_output(f"git -C {depot} branch -a")
     )
 
 
-@pytest.mark.points(5)
-def test_task02_error_report(host):
-    """Le rapport doit contenir exactement les lignes ERROR, dans l'ordre."""
-    f = host.file("/root/errors.txt")
-    assert f.exists, "/root/errors.txt est absent."
-    lignes = [ligne for ligne in f.content_string.splitlines() if ligne.strip()]
-    attendu = [
-        "ERROR disk almost full",
-        "ERROR permission denied",
-        "ERROR timeout on backend",
-    ]
-    assert lignes == attendu, (
-        f"Le rapport doit contenir exactement les 3 lignes ERROR dans leur "
-        f"ordre d'origine.\nAttendu : {attendu}\nVu : {lignes}"
+@pytest.mark.points(6)
+def test_task02_broken_service_repaired(host):
+    """collecteur.service repare : actif, active au boot, et il ecrit vraiment.
+
+    Objectif LFCS : « Create, configure, and troubleshoot services ». Deux
+    defauts sont poses par le setup, un ExecStart qui ne pointe nulle part et
+    un script prive de son bit d'execution. Le test ne dit pas comment les
+    corriger, il constate que le service tourne et produit.
+    """
+    svc = host.service("collecteur")
+    assert svc.is_running, (
+        "collecteur.service n'est pas actif. `systemctl status collecteur` et "
+        "`journalctl -u collecteur` nomment les deux defauts."
+    )
+    assert svc.is_enabled, "collecteur.service n'est pas active au boot."
+
+    journal = host.file("/var/log/collecteur.log")
+    assert journal.exists, "/var/log/collecteur.log n'existe pas."
+    assert journal.size > 0, (
+        "/var/log/collecteur.log est vide : le service tourne-t-il vraiment, "
+        "ou a-t-il ete demarre a l'instant sans jamais ecrire ?"
     )
 
 
 @pytest.mark.points(4)
-def test_task03_links(host):
-    """Un lien physique (même inode) et un lien symbolique."""
-    src_inode = host.check_output("stat -c %%i %s", "/srv/audit/access.log")
-    hard = host.file("/root/access.hard")
-    assert hard.exists, "/root/access.hard est absent."
-    hard_inode = host.check_output("stat -c %%i %s", "/root/access.hard")
-    assert hard_inode == src_inode, (
-        "/root/access.hard n'est pas un lien PHYSIQUE vers "
-        f"/srv/audit/access.log (inodes différents : {hard_inode} vs "
-        f"{src_inode}). Une copie ne compte pas."
+def test_task03_deleted_file_space_released(host):
+    """L'unite fautive est nommee, arretee, et l'espace est rendu.
+
+    Objectif LFCS : « Troubleshoot diskspace issues ». Le cas est celui qui
+    coute le plus de temps en production : df compte l'espace, du ne le trouve
+    pas, parce qu'un processus retient un fichier deja supprime.
+    """
+    reponse = host.file("/root/diskspace.txt")
+    assert reponse.exists, "/root/diskspace.txt est absent."
+    assert "fuite-disque" in reponse.content_string, (
+        "Le fichier doit nommer l'unite responsable. Vu : "
+        f"{reponse.content_string.strip()!r}"
     )
-    soft = host.file("/root/access.soft")
-    assert soft.exists, "/root/access.soft est absent."
-    assert soft.is_symlink, "/root/access.soft doit être un lien SYMBOLIQUE."
+
+    svc = host.service("fuite-disque")
+    assert not svc.is_running, "fuite-disque.service tourne encore."
+    assert not svc.is_enabled, (
+        "fuite-disque.service reviendra au boot : il faut aussi le desactiver."
+    )
+
+    # La preuve par l'espace : plus aucun fichier supprime de cette taille
+    # n'est retenu ouvert. lsof +L1 ne liste que les fichiers sans lien.
+    retenus = host.run(
+        "lsof -nP +L1 2>/dev/null | awk '$8+0 > 100000000 {print $1, $8}'"
+    )
+    assert not retenus.stdout.strip(), (
+        "Un processus retient encore un gros fichier supprime :\n"
+        f"{retenus.stdout}"
+    )
 
 
-@pytest.mark.points(6)
-def test_task04_collaborative_directory(host):
-    """/srv/shared : groupe auditors, mode 2770 (set-GID pour l'héritage)."""
-    d = host.file("/srv/shared")
-    assert d.exists and d.is_directory, "/srv/shared n'existe pas."
-    assert d.group == "auditors", (
-        f"Le groupe propriétaire de /srv/shared doit être auditors (vu : "
-        f"{d.group})."
+@pytest.mark.points(5)
+def test_task04_self_signed_certificate(host):
+    """Certificat auto-signe, CN attendu, 365 jours, cle privee protegee.
+
+    Objectif LFCS : « Work with SSL certificates ». Le test verifie aussi que
+    la cle correspond au certificat : deux fichiers generes separement passent
+    tous les controles de forme et ne servent a rien ensemble.
+    """
+    cle = host.file("/etc/ssl/lab/collecteur.key")
+    cert = host.file("/etc/ssl/lab/collecteur.crt")
+    assert cle.exists, "/etc/ssl/lab/collecteur.key est absent."
+    assert cert.exists, "/etc/ssl/lab/collecteur.crt est absent."
+
+    assert cle.mode & 0o077 == 0, (
+        "La cle privee doit rester lisible par root seul "
+        f"(mode vu : {oct(cle.mode)})."
     )
-    assert d.mode == 0o2770, (
-        "Le mode doit être 2770 : le bit set-GID est ce qui fait hériter le "
-        f"groupe aux nouveaux fichiers (vu : {oct(d.mode)})."
+
+    sujet = host.run("openssl x509 -noout -subject -in /etc/ssl/lab/collecteur.crt")
+    assert sujet.rc == 0, f"Le certificat ne se lit pas :\n{sujet.stderr}"
+    assert "collecteur.lab" in sujet.stdout, (
+        f"CN attendu collecteur.lab, vu : {sujet.stdout.strip()}"
+    )
+
+    # 364 jours et non 365 : le certificat est emis le jour meme, exiger
+    # exactement 365 ferait echouer un travail correct a quelques heures pres.
+    validite = host.run(
+        f"openssl x509 -noout -checkend {364 * 86400} "
+        "-in /etc/ssl/lab/collecteur.crt"
+    )
+    assert validite.rc == 0, (
+        "Le certificat expire dans moins de 365 jours."
+    )
+
+    mod_cert = host.check_output(
+        "openssl x509 -noout -modulus -in /etc/ssl/lab/collecteur.crt "
+        "2>/dev/null | openssl md5"
+    )
+    mod_cle = host.check_output(
+        "openssl rsa -noout -modulus -in /etc/ssl/lab/collecteur.key "
+        "2>/dev/null | openssl md5"
+    )
+    assert mod_cert == mod_cle, (
+        "La cle privee ne correspond pas au certificat : ils n'ont pas ete "
+        "generes l'un pour l'autre."
     )
 
 
@@ -195,19 +273,62 @@ def test_task09_account(host):
 
 
 @pytest.mark.points(5)
-def test_task10_sudo_delegation(host):
-    """La règle sudo doit être EFFECTIVE pour un membre d'auditors."""
-    regles = host.check_output("sudo -l -U auditor1 2>/dev/null || true")
-    assert "systemctl status" in regles, (
-        "auditor1 (membre d'auditors) n'a pas le droit sudo sur "
-        f"systemctl status. Vu :\n{regles}"
+def test_task10_acl_on_reports_directory(host):
+    """ACL POSIX sur /srv/rapports, y compris l'ACL par defaut.
+
+    Objectif LFCS : « Configure and manage ACLs ». Le repertoire est a
+    root:root en 0750 : sans ACL, devops n'entre pas. Le test verifie aussi que
+    le mode standard n'a pas bouge, parce qu'un chmod 0757 donnerait l'acces
+    sans repondre a l'objectif, et ouvrirait a tout le monde au passage.
+    """
+    d = host.file("/srv/rapports")
+    assert d.exists and d.is_directory, "/srv/rapports n'existe pas."
+    assert d.user == "root" and d.group == "root", (
+        f"Le proprietaire ne devait pas changer (vu : {d.user}:{d.group})."
     )
-    assert "NOPASSWD" in regles, (
-        f"La règle doit être NOPASSWD. Vu :\n{regles}"
+    # Les bits de GROUPE ne sont volontairement pas testes : des qu'une entree
+    # nommee existe, POSIX place un MASQUE dans l'ACL, et c'est ce masque que
+    # stat affiche a la place des droits de groupe. Un 0750 devient 0770 sans
+    # qu'aucun chmod n'ait ete tape. Ce qui doit rester vrai, c'est que rien
+    # n'a ete ouvert au reste du monde et que le proprietaire garde la main.
+    assert d.mode & 0o007 == 0, (
+        "Le repertoire est devenu accessible a tout le monde. L'acces demande "
+        f"passe par une ACL nommee, pas par un chmod (vu : {oct(d.mode)})."
     )
-    assert "(ALL) ALL" not in regles, (
-        "La délégation est trop large : auditors ne doit pouvoir lancer QUE "
-        f"systemctl status, pas tout. Vu :\n{regles}"
+    assert (d.mode >> 6) & 0o7 == 0o7, (
+        f"root a perdu des droits sur son propre repertoire (vu : {oct(d.mode)})."
+    )
+
+    # `-p` seul : `-pn` afficherait les identifiants numeriques et aucune
+    # comparaison sur le nom « devops » ne pourrait aboutir.
+    acl_rep = host.check_output("getfacl -p /srv/rapports 2>/dev/null")
+    assert "user:devops:rwx" in acl_rep, (
+        f"devops n'a pas rwx sur /srv/rapports :\n{acl_rep}"
+    )
+    defaut = [l for l in acl_rep.splitlines() if l.startswith("default:user:devops:")]
+    assert defaut, (
+        "Aucune ACL par defaut pour devops : les nouveaux fichiers n'heriteront "
+        f"de rien.\n{acl_rep}"
+    )
+    droits_defaut = defaut[0].rsplit(":", 1)[-1]
+    assert "r" in droits_defaut and "w" in droits_defaut, (
+        f"L'ACL par defaut doit accorder au moins rw (vue : {defaut[0]})."
+    )
+
+    acl_fic = host.check_output("getfacl -p /srv/rapports/bilan.csv 2>/dev/null")
+    assert "user:devops:rw" in acl_fic, (
+        "devops n'a pas rw sur le fichier deja present : une ACL par defaut "
+        f"n'est pas retroactive, il faut aussi traiter l'existant.\n{acl_fic}"
+    )
+
+    # Preuve par l'usage : un fichier cree maintenant doit hériter de l'ACL.
+    host.check_output("rm -f /srv/rapports/.sonde-acl")
+    host.check_output("touch /srv/rapports/.sonde-acl")
+    herite = host.check_output("getfacl -p /srv/rapports/.sonde-acl 2>/dev/null")
+    host.check_output("rm -f /srv/rapports/.sonde-acl")
+    assert "user:devops:rw" in herite, (
+        "Un fichier cree a l'instant n'accorde pas rw a devops : l'ACL par "
+        f"defaut ne produit pas son effet.\n{herite}"
     )
 
 
@@ -291,36 +412,35 @@ def test_task15_lvm_mount_by_uuid(host):
 
 
 @pytest.mark.points(7)
-def test_task16_quota(host):
-    """/srv/quota en XFS avec quotas utilisateur ; devops limité 20M/30M."""
-    assert host.mount_point("/srv/quota").exists, "/srv/quota n'est pas monté."
-    fstype = host.check_output("findmnt -no FSTYPE /srv/quota")
-    assert fstype == "xfs", f"/srv/quota doit être en XFS (vu : {fstype})."
-    state = host.check_output('xfs_quota -x -c "state -u" /srv/quota')
-    assert "Accounting: ON" in state and "Enforcement: ON" in state, (
-        "Les quotas utilisateur ne sont pas appliqués sur /srv/quota "
-        f"(option de montage uquota). Vu :\n{state}"
+def test_task16_automount_on_demand(host):
+    """/mnt/auto/donnees monte a la demande par autofs, et absent de fstab.
+
+    Objectif LFCS : « Configure filesystem automounters ». Le quota, teste ici
+    auparavant, ne figure dans aucun objectif LFCS.
+    """
+    svc = host.service("autofs")
+    assert svc.is_running, "Le service autofs n'est pas actif."
+    assert svc.is_enabled, "Le service autofs n'est pas active au boot."
+
+    ligne = _fstab_line(host, "/mnt/auto/donnees")
+    assert ligne is None, (
+        "/mnt/auto/donnees est monte par /etc/fstab. L'epreuve demande un "
+        f"montage a la demande, pas un montage au boot :\n{ligne}"
     )
-    ligne = _fstab_line(host, "/srv/quota")
-    assert ligne is not None, "Aucune entrée fstab pour /srv/quota."
-    opts = ligne.split()[3].split(",")
-    assert any(o in ("uquota", "usrquota", "quota") for o in opts), (
-        "L'entrée fstab doit porter l'option de quota utilisateur, sinon les "
-        f"quotas sont perdus au reboot. Vu : {ligne.split()[3]!r}"
+
+    # Le seul controle qui prouve l'automontage : y acceder declenche le
+    # montage. On demonte d'abord pour ne pas mesurer un reste du run precedent.
+    host.run("umount /mnt/auto/donnees 2>/dev/null")
+    acces = host.run("ls /mnt/auto/donnees")
+    assert acces.rc == 0, (
+        "L'acces a /mnt/auto/donnees echoue : l'automonteur ne connait pas "
+        f"cette cle.\n{acces.stderr}"
     )
-    report = host.check_output('xfs_quota -x -c "report -u -N -b" /srv/quota')
-    ligne_devops = next(
-        (ligne for ligne in report.splitlines()
-         if ligne.split() and ligne.split()[0] == "devops"),
-        None,
-    )
-    assert ligne_devops is not None, (
-        f"devops n'apparaît pas dans le rapport de quotas. Vu :\n{report}"
-    )
-    soft, hard = int(ligne_devops.split()[2]), int(ligne_devops.split()[3])
-    assert (soft, hard) == (20480, 30720), (
-        "devops doit être limité à 20M souple / 30M dur (soit 20480/30720 "
-        f"blocs de 1K). Vu : {soft}/{hard}."
+
+    fstype = host.run("findmnt -no FSTYPE /mnt/auto/donnees")
+    assert fstype.rc == 0 and fstype.stdout.strip() == "xfs", (
+        "Apres acces, /mnt/auto/donnees doit etre monte en XFS "
+        f"(vu : {fstype.stdout.strip()!r})."
     )
 
 

@@ -7,8 +7,13 @@ décoratif (dsoxlab calcule passed/total), mais sera consommé quand on
 ajoutera le plugin pytest-points dans dsoxlab.
 
 Cibles testées :
-- alma-rhcsa-1.lab (16 tâches : storage, services, SELinux, NFS export…)
-- alma-rhcsa-2.lab (4 tâches : NFS mount, SSH key auth, IP statique, root reset)
+- alma-rhcsa-1.lab (15 tâches : storage, script shell, services, SELinux…)
+- alma-rhcsa-2.lab (5 tâches : NFS mount, client de temps, SSH key auth,
+  IP statique, root reset)
+
+Deux compétences ne sont PAS notées ici parce qu'elles ne figurent pas au
+référentiel EX200 : exporter un partage NFS et configurer un serveur de temps.
+Les deux sont fournies par setup.yaml, et seul leur versant client est noté.
 
 Le module conftest.py racine du repo expose ``lab_host(name)`` qui
 retourne un host testinfra connecté en SSH+sudo via le ssh_config
@@ -99,23 +104,56 @@ def test_04_swapfile_active_persistent(srv1):
     )
 
 
+# ── Section A bis — Script shell ───────────────────────────────────────────
+
 @pytest.mark.points(6)
-def test_05_nfs_export_data_share(srv1):
-    """Tâche 5 : /data/share exporté NFS pour srv-2, ports ouverts firewalld."""
-    # Service nfs-server actif et activé
-    nfs = srv1.service("nfs-server")
-    assert nfs.is_running, "nfs-server n'est pas actif"
-    assert nfs.is_enabled, "nfs-server pas activé au boot"
-    # Export visible
-    exp = srv1.run("exportfs -v")
-    assert "/data/share" in exp.stdout, "/data/share pas exporté"
-    srv2_ip = lab_host_ip(SRV2)
-    assert "alma-rhcsa-2" in exp.stdout or srv2_ip in exp.stdout, (
-        f"Export non restreint à srv-2 ({srv2_ip} ou son nom) :\n{exp.stdout}"
+def test_05_rapport_groupe_script(srv1):
+    """Tâche 5 : /usr/local/bin/rapport-groupe.sh, jugé sur son comportement.
+
+    Les quatre objectifs EX200 de « Create simple shell scripts » sont couverts
+    par ce seul script : traitement de $1, exécution conditionnelle, boucle sur
+    les membres du groupe, et exploitation de la sortie d'une commande.
+
+    Le test n'ouvre jamais le script : il l'exécute. Imposer `getent` plutôt
+    que `id`, ou `[` plutôt que `[[`, reviendrait à noter une méthode alors que
+    l'examen note un résultat.
+    """
+    script = srv1.file("/usr/local/bin/rapport-groupe.sh")
+    assert script.exists, "/usr/local/bin/rapport-groupe.sh est absent"
+    assert script.mode & 0o111, (
+        f"Le script n'est pas exécutable (mode {oct(script.mode)})"
     )
-    # firewalld autorise nfs (et services associés)
-    fw = srv1.run("firewall-cmd --list-services --permanent")
-    assert "nfs" in fw.stdout, "Service nfs absent de firewalld permanent"
+
+    # Sans argument : code 2, rien sur stdout.
+    vide = srv1.run("/usr/local/bin/rapport-groupe.sh")
+    assert vide.rc == 2, (
+        f"Sans argument, code de retour attendu 2, obtenu {vide.rc}"
+    )
+    assert vide.stdout.strip() == "", (
+        f"Sans argument, la sortie standard doit rester vide : {vide.stdout!r}"
+    )
+
+    # Groupe inconnu : code 3, rien sur stdout.
+    inconnu = srv1.run("/usr/local/bin/rapport-groupe.sh groupe-qui-nexiste-pas")
+    assert inconnu.rc == 3, (
+        f"Groupe inconnu, code de retour attendu 3, obtenu {inconnu.rc}"
+    )
+    assert inconnu.stdout.strip() == "", (
+        f"Groupe inconnu, la sortie standard doit rester vide : {inconnu.stdout!r}"
+    )
+
+    # Groupe existant : une ligne par membre, verdict conforme au disque.
+    res = srv1.run("/usr/local/bin/rapport-groupe.sh evaluation")
+    assert res.rc == 0, (
+        f"Sur un groupe existant, code de retour attendu 0, obtenu {res.rc}"
+    )
+    lignes = {ligne.strip() for ligne in res.stdout.splitlines() if ligne.strip()}
+    attendu = {"eva-jean:OK", "eva-marie:OK", "eva-paul:ABSENT"}
+    assert lignes == attendu, (
+        "Le rapport ne correspond pas à l'état des répertoires personnels.\n"
+        f"  attendu : {sorted(attendu)}\n"
+        f"  obtenu  : {sorted(lignes)}"
+    )
 
 
 # ── Section B — Utilisateurs, groupes, permissions ──────────────────────────
@@ -272,18 +310,38 @@ def test_11_weekly_backup_timer(srv1):
 
 
 @pytest.mark.points(4)
-def test_12_chrony_server_allows_srv2(srv1):
-    """Tâche 12 : chrony source pool.ntp.org + autorise srv-2."""
-    chrony = srv1.file("/etc/chrony.conf").content_string
-    assert "pool.ntp.org" in chrony or "pool 2.ntp.org" in chrony, (
-        "Source pool.ntp.org absente"
+def test_12_srv2_time_client_uses_srv1(srv2):
+    """Tâche 12 : srv-2 se synchronise sur srv-1.
+
+    L'objectif EX200 dit « Configure time service clients ». Le serveur de
+    temps est donc un donné du lab, posé par setup.yaml sur srv-1, et c'est la
+    configuration cliente qui est notée ici.
+    """
+    srv1_ip = lab_host_ip(SRV1)
+    conf = srv2.file("/etc/chrony.conf").content_string
+    source = re.search(
+        rf"^\s*(server|pool)\s+(alma-rhcsa-1\S*|{re.escape(srv1_ip)})\b",
+        conf,
+        re.MULTILINE,
     )
-    srv2_ip = lab_host_ip(SRV2)
-    assert re.search(rf"^allow\s+{re.escape(srv2_ip)}", chrony, re.MULTILINE), (
-        f"Directive 'allow {srv2_ip}' absente de /etc/chrony.conf"
+    assert source, (
+        "Aucune source de temps pointant srv-1 dans /etc/chrony.conf "
+        f"(attendu 'server alma-rhcsa-1.lab' ou 'server {srv1_ip}')"
     )
-    svc = srv1.service("chronyd")
-    assert svc.is_running and svc.is_enabled, "chronyd pas actif/activé"
+
+    svc = srv2.service("chronyd")
+    assert svc.is_running, "chronyd n'est pas actif sur srv-2"
+    assert svc.is_enabled, "chronyd n'est pas activé au boot sur srv-2"
+
+    # La configuration doit être chargée, pas seulement écrite : chronyc
+    # interroge le démon vivant, un fichier jamais relu ne passe pas.
+    sources = srv2.run("chronyc -n sources")
+    assert sources.rc == 0, f"chronyc sources a échoué :\n{sources.stderr}"
+    assert srv1_ip in sources.stdout, (
+        f"srv-1 ({srv1_ip}) n'apparaît pas dans chronyc sources. "
+        "Le démon a-t-il été rechargé après modification du fichier ?\n"
+        f"{sources.stdout}"
+    )
 
 
 # ── Section E — SELinux ────────────────────────────────────────────────────
@@ -324,13 +382,13 @@ def test_15_selinux_port_label_8888_http(srv1):
 
 @pytest.mark.points(6)
 def test_18_srv2_nfs_mount(srv2):
-    """Tâche 18 : srv-2 monte alma-rhcsa-1.lab:/data/share sur /mnt/share."""
+    """Tâche 18 : srv-2 monte alma-rhcsa-1.lab:/srv/nfs-public sur /mnt/share."""
     mp = srv2.mount_point("/mnt/share")
     assert mp.exists, "/mnt/share n'est pas un point de montage"
     assert mp.filesystem in ("nfs", "nfs4"), f"FS attendu nfs, trouvé {mp.filesystem}"
     fstab = srv2.file("/etc/fstab").content_string
     assert re.search(
-        r"alma-rhcsa-1\.lab:/data/share\s+/mnt/share\s+nfs",
+        r"alma-rhcsa-1\.lab:/srv/nfs-public\s+/mnt/share\s+nfs",
         fstab,
     ), "Mount NFS absent de /etc/fstab"
     assert "_netdev" in fstab, "Option _netdev manquante"

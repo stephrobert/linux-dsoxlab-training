@@ -22,47 +22,134 @@
           - lvm2
           - ufw
           - cron
+          - git
+          - openssl
+          - lsof
+          - acl
+          - autofs
         state: present
 
     # ------------------------------------------------------------------
     # Section A — matière à traiter
     # ------------------------------------------------------------------
-    - name: Task 1 — scatter files under /srv/audit
+    # Le domaine « Essential Commands » du LFCS ne designe plus les commandes
+    # de base du shell. Ses six objectifs publies sont Git, la creation et le
+    # depannage de services, la supervision des performances, les contraintes
+    # applicatives, l'espace disque et les certificats SSL. Les donnees
+    # ci-dessous servent ce perimetre-la.
+
+    - name: Task 1 — the working tree the candidate must put under Git
       ansible.builtin.file:
         path: "{{ item }}"
         state: directory
         mode: "0755"
       loop:
-        - /srv/audit
-        - /srv/audit/app
-        - /srv/audit/sys
+        - /srv/deploiement
+        - /srv/deploiement/.cache
 
-    - name: Task 1 — provide the .log files to find, plus decoys
+    - name: Task 1 — two files to track, one directory to ignore
       ansible.builtin.copy:
         dest: "{{ item.path }}"
         content: "{{ item.content }}"
         mode: "0644"
       loop:
-        - path: /srv/audit/app/app.log
-          content: "app started\n"
-        - path: /srv/audit/sys/kernel.log
-          content: "kernel loaded\n"
-        - path: /srv/audit/app/notes.txt
-          content: "ceci n'est pas un .log\n"
-        - path: /srv/audit/README
-          content: "ni ceci\n"
+        - path: /srv/deploiement/config.yml
+          content: "port: 8080\n"
+        - path: /srv/deploiement/notes.txt
+          content: "premiere version du deploiement\n"
+        - path: /srv/deploiement/.cache/build.bin
+          content: "artefact de build, ne doit pas etre versionne\n"
 
-    - name: Task 2 — provide the mixed-level access.log
+    # Task 2 — un service EN PANNE, avec deux defauts a trouver :
+    # le chemin de l'ExecStart ne pointe nulle part, et le script n'est pas
+    # executable. C'est l'objectif « Create, configure, and troubleshoot
+    # services » : le candidat repare, il n'ecrit pas de zero.
+    - name: Task 2 — the collector script, deliberately not executable
       ansible.builtin.copy:
-        dest: /srv/audit/access.log
+        dest: /usr/local/bin/collecteur.sh
         mode: "0644"
         content: |
-          INFO service up
-          ERROR disk almost full
-          WARN high memory
-          ERROR permission denied
-          INFO heartbeat
-          ERROR timeout on backend
+          #!/bin/bash
+          while true; do
+              echo "$(date -Is) collecte" >> /var/log/collecteur.log
+              sleep 5
+          done
+
+    - name: Task 2 — the broken unit, with a path that leads nowhere
+      ansible.builtin.copy:
+        dest: /etc/systemd/system/collecteur.service
+        mode: "0644"
+        content: |
+          [Unit]
+          Description=Collecteur de metriques du lab
+
+          [Service]
+          Type=simple
+          ExecStart=/usr/local/sbin/collecteur.sh
+          Restart=on-failure
+
+          [Install]
+          WantedBy=multi-user.target
+
+    # Task 3 — un fichier supprime mais toujours ouvert : df voit l'espace
+    # occupe, du ne le trouve pas. C'est l'objectif « Troubleshoot diskspace
+    # issues », et le piege qui coute le plus de temps en production.
+    - name: Task 3 — the unit that holds a deleted file open
+      ansible.builtin.copy:
+        dest: /etc/systemd/system/fuite-disque.service
+        mode: "0644"
+        content: |
+          [Unit]
+          Description=Retention d'un fichier supprime (epreuve du lab)
+
+          [Service]
+          Type=simple
+          ExecStart=/bin/bash -c 'dd if=/dev/zero of=/var/tmp/fuite bs=1M count=512 status=none; exec 3<>/var/tmp/fuite; rm -f /var/tmp/fuite; exec sleep infinity'
+
+          [Install]
+          WantedBy=multi-user.target
+
+    - name: Task 3 — start the leak so df and du disagree
+      ansible.builtin.systemd_service:
+        name: fuite-disque.service
+        daemon_reload: true
+        enabled: true
+        state: restarted
+
+    - name: Task 4 — the directory the certificate will live in
+      ansible.builtin.file:
+        path: /etc/ssl/lab
+        state: directory
+        mode: "0755"
+
+    # Task 10 — un repertoire volontairement ferme : root:root, 0750. La seule
+    # facon d'y ouvrir un acces a devops sans toucher au mode standard est une
+    # ACL POSIX, ce que demande l'objectif « Configure and manage ACLs ».
+    - name: Task 10 — the closed directory ACLs will have to open
+      ansible.builtin.file:
+        path: /srv/rapports
+        state: directory
+        owner: root
+        group: root
+        mode: "0750"
+
+    - name: Task 10 — a file already inside, to show the ACL is not retroactive
+      ansible.builtin.copy:
+        dest: /srv/rapports/bilan.csv
+        owner: root
+        group: root
+        mode: "0640"
+        content: |
+          date,service,etat
+          2026-09-15,collecteur,ok
+
+    # Task 16 — autofs gere le point de montage lui-meme, mais son repertoire
+    # parent doit exister avant qu'il demarre.
+    - name: Task 16 — the parent directory the automounter will manage
+      ansible.builtin.file:
+        path: /mnt/auto
+        state: directory
+        mode: "0755"
 
     # ------------------------------------------------------------------
     # Sections B/C — prérequis (scripts, groupe, utilisateur)
@@ -106,10 +193,12 @@
         path: "{{ item }}"
         state: absent
       loop:
-        - /root/logs.tar.gz
-        - /root/errors.txt
-        - /root/access.hard
-        - /root/access.soft
+        - /srv/deploiement/.git
+        - /srv/deploiement/.gitignore
+        - /var/log/collecteur.log
+        - /root/diskspace.txt
+        - /etc/ssl/lab/collecteur.key
+        - /etc/ssl/lab/collecteur.crt
         - /srv/shared
         - /etc/systemd/system/labwatch.service
         - /etc/systemd/system/labreport.service
@@ -131,6 +220,16 @@
           apt-get remove -y -qq tree 2>/dev/null
           crontab -u devops -r 2>/dev/null
           systemctl disable --now labwatch.service labreport.timer 2>/dev/null
+          # Tâche 2 — le service réparé par un run précédent redevient en panne :
+          # les givens ci-dessus ont déjà réécrit l'unité et retiré le bit x,
+          # il reste à l'arrêter pour qu'elle ne tourne pas au départ.
+          systemctl disable --now collecteur.service 2>/dev/null
+          # Tâche 10 — les ACL posées par un run précédent
+          setfacl -bR /srv/rapports 2>/dev/null
+          # Tâche 16 — l'automontage posé par un run précédent
+          systemctl disable --now autofs 2>/dev/null
+          umount -f /mnt/auto/donnees 2>/dev/null
+          rm -f /etc/auto.master.d/lab.autofs /etc/auto.lab
           systemctl daemon-reload
           ufw --force reset 2>/dev/null
           ufw allow OpenSSH 2>/dev/null
@@ -147,7 +246,7 @@
           swapoff /swapfile 2>/dev/null
           rm -f /swapfile
           sed -i '\#^/swapfile#d' /etc/fstab
-          umount /data /srv/quota /srv/data 2>/dev/null
+          umount /data /srv/quota /srv/data /mnt/auto/donnees 2>/dev/null
           sed -i '\#[[:space:]]/data[[:space:]]#d;\#[[:space:]]/srv/quota[[:space:]]#d;\#[[:space:]]/srv/data[[:space:]]#d' /etc/fstab
           lvremove -f /dev/vgdata 2>/dev/null
           vgremove -f vgdata 2>/dev/null

@@ -162,18 +162,11 @@
                 /etc/systemd/system/weekly-backup.timer \
                 /usr/local/bin/backup.sh
           systemctl daemon-reload
-          # Tâche 5 — export NFS
-          systemctl disable --now nfs-server 2>/dev/null
-          : > /etc/exports; exportfs -ra 2>/dev/null
-          rm -rf /data/share
+          # Tâche 5 — le script du candidat
+          rm -f /usr/local/bin/rapport-groupe.sh
           # Tâche 9 — port applicatif
           firewall-cmd --permanent --remove-port=8080/tcp 2>/dev/null
-          firewall-cmd --permanent --remove-service=nfs 2>/dev/null
-          firewall-cmd --permanent --remove-service=rpc-bind 2>/dev/null
-          firewall-cmd --permanent --remove-service=mountd 2>/dev/null
           firewall-cmd --reload 2>/dev/null
-          # Tâche 12 — chrony
-          sed -i '/^allow /d;/^pool pool.ntp.org/d' /etc/chrony.conf 2>/dev/null
           # Tâche 16 — logiciels
           dnf remove -y tree >/dev/null 2>&1
           flatpak uninstall -y --system org.gnome.Calculator >/dev/null 2>&1
@@ -192,12 +185,77 @@
       ansible.builtin.command: "hostnamectl set-hostname {{ inventory_hostname.split('.')[0] }}"
       changed_when: false
 
+    # ── Donnees de l'epreuve posees APRES la remise a zero ─────────────────
+    # Elles viennent ici et pas plus haut : le clean slate ci-dessus efface
+    # /etc/exports et des regles firewalld, il annulerait ces trois blocs.
+
+    # L'export NFS est un DONNE, pas une tache. « Mount and unmount network
+    # file systems using NFS » est un objectif EX200 ; exporter ne l'est pas,
+    # c'est du ressort du RHCE. Le partage vit sur / et non sur /data, qui
+    # n'existe qu'une fois les taches 1 a 3 faites par le candidat.
+    - name: Tache 18 — le partage NFS que le client devra monter
+      ansible.builtin.shell:
+        cmd: |
+          set -e
+          mkdir -p /srv/nfs-public
+          chmod 0755 /srv/nfs-public
+          echo "servi par alma-rhcsa-1" > /srv/nfs-public/hello.txt
+          SRV2={{ hostvars['alma-rhcsa-2.lab']['ansible_host'] }}
+          echo "/srv/nfs-public ${SRV2}(rw,sync,no_root_squash,no_subtree_check)" > /etc/exports
+          systemctl enable --now nfs-server
+          exportfs -ra
+          firewall-cmd --permanent --add-service=nfs
+          firewall-cmd --permanent --add-service=rpc-bind
+          firewall-cmd --permanent --add-service=mountd
+          firewall-cmd --permanent --add-service=ntp
+          firewall-cmd --reload
+        executable: /bin/bash
+        chdir: /
+      changed_when: false
+
+    # Meme raisonnement : l'objectif EX200 dit « Configure time service
+    # clients ». Le serveur de temps est donc fourni, et c'est le client
+    # (tache 12, sur alma-rhcsa-2) qui est note.
+    - name: Tache 12 — le serveur de temps que le client devra interroger
+      ansible.builtin.shell:
+        cmd: |
+          set -e
+          SRV2={{ hostvars['alma-rhcsa-2.lab']['ansible_host'] }}
+          grep -q '^local stratum 10' /etc/chrony.conf \
+            || echo "local stratum 10" >> /etc/chrony.conf
+          grep -q "^allow ${SRV2}" /etc/chrony.conf \
+            || echo "allow ${SRV2}" >> /etc/chrony.conf
+          systemctl enable --now chronyd
+          systemctl restart chronyd
+        executable: /bin/bash
+        chdir: /
+      changed_when: false
+
+    # Tache 5 — le groupe que le script du candidat devra parcourir.
+    # Appartenance SECONDAIRE voulue : un membre dont « evaluation » serait le
+    # groupe primaire n'apparaitrait pas dans getent group, et la tache
+    # deviendrait un piege au lieu d'un exercice de script.
+    - name: Tache 5 — le groupe et les comptes que le script devra parcourir
+      ansible.builtin.shell:
+        cmd: |
+          set -e
+          getent group evaluation >/dev/null || groupadd evaluation
+          for u in eva-jean eva-marie; do
+            id "$u" >/dev/null 2>&1 || useradd -m -G evaluation "$u"
+          done
+          id eva-paul >/dev/null 2>&1 || useradd -M -G evaluation eva-paul
+          rm -rf /home/eva-paul
+        executable: /bin/bash
+        chdir: /
+      changed_when: false
+
     - name: Briefing candidat (serveur)
       ansible.builtin.debug:
         msg: >-
           Examen blanc RHCSA pret sur le serveur. /dev/vdb (10 GiB) est attache ;
           /var/log/myapp.log et /var/www/html/index.html (contexte a corriger)
-          sont en place. Mission complete : challenge/README.md.
+          sont en place, le groupe evaluation compte trois membres et
+          /srv/nfs-public est exporte. Mission complete : challenge/README.md.
 
 # ── Client : alma-rhcsa-2 ─────────────────────────────────────────────────────
 - name: RHCSA mock exam — client givens
@@ -210,6 +268,7 @@
         name:
           - nfs-utils
           - openssh-server
+          - chrony
         state: present
 
     # Tâche 9/17 — le réseau part en DHCP (auto), sinon la tâche serait offerte.
@@ -241,6 +300,11 @@
           umount -f /mnt/share 2>/dev/null
           sed -i '\#[[:space:]]/mnt/share[[:space:]]#d' /etc/fstab
           rm -rf /mnt/share
+          # Tâche 12 — client de temps : on retire toute source pointant srv-1,
+          # qu'elle ait été écrite par son nom ou par son adresse.
+          sed -i "/alma-rhcsa-1/d" /etc/chrony.conf 2>/dev/null
+          sed -i "\#{{ hostvars['alma-rhcsa-1.lab']['ansible_host'] }}#d" /etc/chrony.conf 2>/dev/null
+          systemctl restart chronyd 2>/dev/null
           # Tâche 19 — durcissement sshd et compte
           rm -f /etc/ssh/sshd_config.d/99-lab-hardening.conf
           systemctl reload sshd 2>/dev/null

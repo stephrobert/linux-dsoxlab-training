@@ -1,6 +1,6 @@
 id: rhcsa-mock-exam
 title: "RHCSA EX200 mock exam — 20 tasks across 2 VMs"
-description: "Performance-based RHCSA mock exam covering 10 RHCSA domains: storage (LVM, swap, NFS), networking (static IP, firewalld), users/groups, ACLs, services (systemd units, timers, chrony), SELinux (modes, contexts, booleans, port labels), software (DNF, Flatpak), boot recovery (rd.break root reset). 20 tasks scored on 100 points across 2 VMs (server + client). 70/100 to pass. No hints."
+description: "Performance-based RHCSA mock exam covering 10 RHCSA domains: storage (LVM, swap, NFS client), shell scripting, networking (static IP, firewalld), users/groups, ACLs, services (systemd units, timers, time client), SELinux (modes, contexts, booleans, port labels), software (DNF, Flatpak), boot recovery (rd.break root reset). 20 tasks scored on 100 points across 2 VMs (server + client). 70/100 to pass. No hints."
 section: capstones
 lab_type: capstone
 level: l2
@@ -10,14 +10,15 @@ skills:
   - lvm
   - filesystems-xfs
   - swap
-  - nfs
+  - nfs-client
   - users-groups
   - acl-posix
+  - shell-scripting
   - networking-static
   - firewalld
   - systemd-units
   - systemd-timers
-  - chrony
+  - time-client
   - selinux-contexts
   - selinux-booleans
   - selinux-ports
@@ -45,12 +46,12 @@ runtime:
   targets:
     - name: server
       host: alma-rhcsa-1.lab
-      label_en: "Server (srv-rhcsa-1.lab) — 16 tasks: storage, services, SELinux, NFS export"
-      label_fr: "Serveur (srv-rhcsa-1.lab) — 16 tâches : stockage, services, SELinux, export NFS"
+      label_en: "Server (srv-rhcsa-1.lab) — 15 tasks: storage, shell script, services, SELinux"
+      label_fr: "Serveur (srv-rhcsa-1.lab) — 15 tâches : stockage, script shell, services, SELinux"
     - name: client
       host: alma-rhcsa-2.lab
-      label_en: "Client (srv-rhcsa-2.lab) — 4 tasks: NFS mount, SSH key auth, root recovery"
-      label_fr: "Client (srv-rhcsa-2.lab) — 4 tâches : montage NFS, SSH clé, recovery root"
+      label_en: "Client (srv-rhcsa-2.lab) — 5 tasks: NFS mount, time client, SSH key auth, root recovery"
+      label_fr: "Client (srv-rhcsa-2.lab) — 5 tâches : montage NFS, client de temps, SSH clé, recovery root"
 
 distros:
   - almalinux10

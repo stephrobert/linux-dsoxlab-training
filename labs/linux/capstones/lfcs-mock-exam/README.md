@@ -52,8 +52,8 @@ domain by domain, where each subject is taught.
 Four subjects of the exam have no course on site, because the labs that carry
 them point to the online guide rather than teaching: `lfcs-package-apt` for
 Debian package management and version pinning, `lfcs-netplan-static` for network
-configuration, `lfcs-firewall-ufw` for the firewall and `lfcs-storage-quotas`
-for quotas. These four labs are playable and worth doing beforehand: it is the
+configuration, `lfcs-firewall-ufw` for the firewall and `lfcs-mount-cifs`
+for remote filesystems. These four labs are playable and worth doing beforehand: it is the
 course that is missing, not the exercise. The labs `l4-network-static-persist`
 and `l4-firewall-persist` teach the corresponding reasoning on the RHEL side,
 with other tools.
