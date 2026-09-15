@@ -54,11 +54,16 @@ D'où `.github/workflows/attester.yml`, appelé comme workflow réutilisable :
   artefact altéré entre deux jobs ne soit pas publié avec une provenance qui ne
   le décrit pas.
 
-L'appel s'écrit `uses: $/.github/workflows/attester.yml`, la forme
-« self-repository » que GitHub a rendue disponible en juillet 2026 : elle
-résout le workflow au commit qui tourne, sans dépendre de l'état du système de
-fichiers, donc sans pouvoir charger un fichier qu'une étape précédente aurait
-déposé.
+L'appel s'écrit `uses: ./.github/workflows/attester.yml`, et non la forme
+« self-repository » `$/`, plus récente, que zizmor recommande pourtant. La
+raison mérite d'être consignée : l'outillage de sécurité ne sait pas encore
+lire `$/`, et un analyseur qui ne comprend pas une construction ne peut pas la
+juger sûre. Mesuré le 2026-09-15, sur cette ligne exactement : actionlint la
+rejette comme un format invalide, zizmor 1.26.1 refuse de charger le fichier et
+n'audite plus rien, et Plumber la prend pour une action tierce non épinglée
+venant d'une source non autorisée, deux constats HIGH et un score de 70/100 au
+lieu de 100/100. Le workflow appelé est celui qui SIGNE : c'est la dernière
+ligne du dépôt sur laquelle se priver du regard des analyseurs.
 
 ## Produire une version
 

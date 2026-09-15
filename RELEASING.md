@@ -52,10 +52,16 @@ Hence `.github/workflows/attester.yml`, called as a reusable workflow:
   an artifact altered between two jobs is not published with provenance that
   does not describe it.
 
-The call reads `uses: $/.github/workflows/attester.yml`, the "self-repository"
-form GitHub made available in July 2026: it resolves the workflow at the commit
-being run, without depending on the runtime filesystem state, so it cannot load
-a file a previous step dropped in place.
+The call reads `uses: ./.github/workflows/attester.yml`, and not the newer
+`$/` "self-repository" form, even though zizmor recommends the latter. The
+reason is worth recording: security tooling cannot read `$/` yet, and an
+analyser that does not understand a construct cannot judge it safe. Measured on
+2026-09-15, on that exact line: actionlint rejects it as an invalid format,
+zizmor 1.26.1 refuses to load the file and audits nothing at all, and Plumber
+takes it for an unpinned third-party action from an unauthorised source, two
+HIGH findings and a score of 70/100 instead of 100/100. The called workflow is
+the one that *signs*: it is the last line in the repository on which to give up
+the analysers' scrutiny.
 
 ## Cutting a release
 

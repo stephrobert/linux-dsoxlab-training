@@ -25,15 +25,17 @@ suit le [versionnage sémantique](https://semver.org/lang/fr/).
     permission, et l'archive est recomparée à son empreinte avant publication
     pour qu'un artefact altéré entre deux jobs ne parte pas avec une provenance
     qui ne le décrit pas.
-  - Deux linters en désaccord, tranché sur le fond. zizmor recommande la forme
-    « self-repository » `uses: $/...`, disponible sur github.com depuis juillet
-    2026 ; actionlint 1.7.12, publié en mars, la rejette encore comme un format
-    invalide. `$/` gagne : elle ne dépend pas de l'état du système de fichiers,
-    donc elle ne peut pas charger un fichier qu'une étape précédente aurait
-    déposé, et GitHub la traite comme un épinglage. L'exception actionlint est
-    limitée à ce message et à ce fichier, datée, et vérifiée ciblée en
-    fabriquant une autre faute `workflow-call` dans le même fichier : la règle
-    l'attrape toujours.
+  - Deux linters en désaccord, puis un troisième a tranché. zizmor recommande
+    la forme « self-repository » `uses: $/...`, disponible sur github.com
+    depuis juillet 2026 ; actionlint 1.7.12, publié en mars, la rejette encore
+    comme un format invalide. `$/` a d'abord été retenue, puis retirée :
+    Plumber la prend pour une action tierce non épinglée venant d'une source
+    non autorisée, deux constats HIGH, et le score est tombé de 100/100 à
+    70/100. L'outillage de sécurité ne sait pas encore la lire, et un
+    analyseur qui ne comprend pas une construction ne peut pas la juger sûre,
+    encore moins sur la ligne qui appelle le workflow qui signe. L'appel est
+    revenu à `./`, avec la mesure consignée à côté et un seul acquittement
+    zizmor, ciblé.
   - La vérification qui prouve le niveau est dans `RELEASING.fr.md` : elle nomme
     le workflow signataire et échoue si la provenance vient d'ailleurs. Elle
     demande une release réelle : elle n'a donc pas encore été jouée.
