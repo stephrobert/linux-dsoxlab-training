@@ -8,6 +8,35 @@ based on [Keep a Changelog](https://keepachangelog.com/), and the project follow
 
 ## [Unreleased]
 
+### Changed
+
+- **Build provenance now reaches SLSA Build Level 3.** The release workflow used
+  to attest from its own build job, which GitHub's documentation rates at level
+  2: "Artifact attestations by itself provides SLSA v1.0 Build Level 2", while
+  "Reusable workflows can provide isolation between the build process and the
+  calling workflow, to meet SLSA v1.0 Build Level 3". The README badge has
+  claimed level 3 for a while; the workflow now produces it.
+  - `.github/workflows/attester.yml` is the only workflow in the repository
+    granted `attestations: write`. It performs no `checkout`, receives only a
+    name and a digest, and runs no repository code.
+  - `release.yml` is split into three jobs: build, attest, publish. The publish
+    job writes the release but cannot attest, lacking the permission, and the
+    archive is re-checked against its digest before publication so an artifact
+    altered between two jobs is not published with provenance that does not
+    describe it.
+  - Two linters disagreed, and the tie was broken on the merits. zizmor
+    recommends the `uses: $/...` self-repository form, generally available on
+    github.com since July 2026; actionlint 1.7.12, released in March, still
+    rejects it as an invalid format. `$/` wins: it does not depend on the
+    runtime filesystem state, so it cannot load a file a previous step dropped
+    in place, and GitHub treats it as pinning. The actionlint exception is
+    scoped to that one message in that one file, dated, and verified narrow by
+    planting another `workflow-call` fault in the same file: the rule still
+    catches it.
+  - The check that proves the level is in `RELEASING.md`: it names the signing
+    workflow and fails if the provenance came from anywhere else. It needs a
+    real release, so it has not been exercised yet.
+
 ### Fixed — the first full validation campaign
 
 All 84 labs were replayed on KVM with a negative control (red without the

@@ -8,6 +8,36 @@ suit le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ## [Non publié]
 
+### Modifié
+
+- **La provenance du build atteint désormais SLSA Build Level 3.** Le workflow
+  de release attestait depuis son propre job de build, ce que la documentation
+  GitHub classe au niveau 2 : « Artifact attestations by itself provides SLSA
+  v1.0 Build Level 2 », là où « Reusable workflows can provide isolation between
+  the build process and the calling workflow, to meet SLSA v1.0 Build Level 3 ».
+  Le badge du README annonçait le niveau 3 depuis un moment ; le workflow le
+  produit maintenant.
+  - `.github/workflows/attester.yml` est le seul workflow du dépôt à recevoir
+    `attestations: write`. Il ne fait aucun `checkout`, ne reçoit qu'un nom et
+    une empreinte, et n'exécute aucun code du dépôt.
+  - `release.yml` est découpé en trois jobs : construire, attester, publier. Le
+    job de publication écrit la release mais ne peut pas attester, faute de la
+    permission, et l'archive est recomparée à son empreinte avant publication
+    pour qu'un artefact altéré entre deux jobs ne parte pas avec une provenance
+    qui ne le décrit pas.
+  - Deux linters en désaccord, tranché sur le fond. zizmor recommande la forme
+    « self-repository » `uses: $/...`, disponible sur github.com depuis juillet
+    2026 ; actionlint 1.7.12, publié en mars, la rejette encore comme un format
+    invalide. `$/` gagne : elle ne dépend pas de l'état du système de fichiers,
+    donc elle ne peut pas charger un fichier qu'une étape précédente aurait
+    déposé, et GitHub la traite comme un épinglage. L'exception actionlint est
+    limitée à ce message et à ce fichier, datée, et vérifiée ciblée en
+    fabriquant une autre faute `workflow-call` dans le même fichier : la règle
+    l'attrape toujours.
+  - La vérification qui prouve le niveau est dans `RELEASING.fr.md` : elle nomme
+    le workflow signataire et échoue si la provenance vient d'ailleurs. Elle
+    demande une release réelle : elle n'a donc pas encore été jouée.
+
 ### Corrigé — la première campagne de validation complète
 
 Les 84 labs ont été rejoués sur KVM avec contrôle négatif (rouge sans la

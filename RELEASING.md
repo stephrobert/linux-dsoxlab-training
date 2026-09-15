@@ -28,6 +28,35 @@ Four assets are published next to the archive:
 | `<pkg>.tar.gz.cosign.bundle` | Cosign keyless signature bundle |
 | (registry-side) | native GitHub build attestation |
 
+## Why three jobs, and not one
+
+The workflow is split into **build**, **attest**, **publish**, and that split is
+the only thing separating SLSA Build Level 2 from Level 3.
+
+GitHub's documentation puts it in two sentences: "Artifact attestations by
+itself provides SLSA v1.0 Build Level 2", and "Reusable workflows can provide
+isolation between the build process and the calling workflow, to meet SLSA v1.0
+Build Level 3". As long as the job that builds the archive is also the one that
+signs its provenance, nothing technically stops the build process from
+producing provenance that lies. Level 3 requires the signing to happen out of
+its reach.
+
+Hence `.github/workflows/attester.yml`, called as a reusable workflow:
+
+- it is the **only workflow in the repository** granted `attestations: write`;
+- it receives **a name and a digest**, never the archive nor the repository: it
+  performs no `checkout`;
+- the publish job can write the release but **cannot attest**, lacking that
+  permission;
+- the archive is re-checked against its digest **before** publication, so that
+  an artifact altered between two jobs is not published with provenance that
+  does not describe it.
+
+The call reads `uses: $/.github/workflows/attester.yml`, the "self-repository"
+form GitHub made available in July 2026: it resolves the workflow at the commit
+being run, without depending on the runtime filesystem state, so it cannot load
+a file a previous step dropped in place.
+
 ## Cutting a release
 
 1. Update `CHANGELOG.md` and `CHANGELOG.fr.md` (move items under a new version).
@@ -57,6 +86,17 @@ rebuilt by someone else:
 ```bash
 gh attestation verify linux-dsoxlab-training-<version>.tar.gz \
   --repo stephrobert/linux-dsoxlab-training
+```
+
+**The check that establishes Build Level 3** names the signing workflow. It
+fails if the provenance was produced anywhere other than the isolated attester
+workflow, and it is the one to run on the first release to confirm the chain
+holds:
+
+```bash
+gh attestation verify linux-dsoxlab-training-<version>.tar.gz \
+  --repo stephrobert/linux-dsoxlab-training \
+  --signer-workflow stephrobert/linux-dsoxlab-training/.github/workflows/attester.yml
 ```
 
 Cosign keyless signature. **Both** flags are mandatory: without them `cosign

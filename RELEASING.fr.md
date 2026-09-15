@@ -30,6 +30,36 @@ Quatre artefacts accompagnent l'archive :
 | `<pkg>.tar.gz.cosign.bundle` | bundle de signature Cosign keyless |
 | (côté registre) | attestation de build native GitHub |
 
+## Pourquoi trois jobs, et pas un seul
+
+Le workflow est découpé en **construire**, **attester**, **publier**, et ce
+découpage est la seule chose qui sépare SLSA Build Level 2 de Level 3.
+
+La documentation GitHub le dit en deux phrases : « Artifact attestations by
+itself provides SLSA v1.0 Build Level 2 », et « Reusable workflows can provide
+isolation between the build process and the calling workflow, to meet SLSA
+v1.0 Build Level 3 ». Tant que le job qui construit l'archive est aussi celui
+qui signe sa provenance, rien n'empêche techniquement le processus de build de
+produire une provenance qui ment. Le niveau 3 exige que la signature se fasse
+hors de sa portée.
+
+D'où `.github/workflows/attester.yml`, appelé comme workflow réutilisable :
+
+- il est le **seul du dépôt** à recevoir la permission `attestations: write` ;
+- il ne reçoit qu'un **nom et une empreinte**, jamais l'archive ni le dépôt : il
+  ne fait aucun `checkout` ;
+- le job de publication, lui, peut écrire la release mais **ne peut pas
+  attester**, faute de cette permission ;
+- l'archive est recomparée à son empreinte **avant** publication, pour qu'un
+  artefact altéré entre deux jobs ne soit pas publié avec une provenance qui ne
+  le décrit pas.
+
+L'appel s'écrit `uses: $/.github/workflows/attester.yml`, la forme
+« self-repository » que GitHub a rendue disponible en juillet 2026 : elle
+résout le workflow au commit qui tourne, sans dépendre de l'état du système de
+fichiers, donc sans pouvoir charger un fichier qu'une étape précédente aurait
+déposé.
+
 ## Produire une version
 
 1. Mettre à jour `CHANGELOG.md` et `CHANGELOG.fr.md` (basculer les entrées sous
@@ -60,6 +90,17 @@ ce dépôt, et non reconstruite par quelqu'un d'autre.
 ```bash
 gh attestation verify linux-dsoxlab-training-<version>.tar.gz \
   --repo stephrobert/linux-dsoxlab-training
+```
+
+**La vérification qui atteste le niveau 3** nomme le workflow signataire. Elle
+échoue si la provenance a été produite ailleurs que par le workflow
+d'attestation isolé, et c'est elle qu'il faut lancer à la première release pour
+confirmer que la chaîne tient :
+
+```bash
+gh attestation verify linux-dsoxlab-training-<version>.tar.gz \
+  --repo stephrobert/linux-dsoxlab-training \
+  --signer-workflow stephrobert/linux-dsoxlab-training/.github/workflows/attester.yml
 ```
 
 Signature Cosign keyless. Les **deux** options sont obligatoires : sans elles,
