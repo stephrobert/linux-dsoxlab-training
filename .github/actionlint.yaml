@@ -1,0 +1,24 @@
+# Configuration d'actionlint.
+#
+# Une seule exception, ciblée, et elle est datée : actionlint 1.7.12 est la
+# dernière version publiée (mars 2026) et ne connaît pas encore la forme
+# « self-repository » des appels de workflow réutilisable, `uses: $/...`, que
+# GitHub a rendue généralement disponible en juillet 2026. Il la rejette donc
+# comme un format invalide, alors que zizmor, lui, RECOMMANDE cette forme et
+# signale la forme relative `./...` comme un défaut.
+#
+# Deux linters en désaccord, il faut trancher avec une raison. La forme `$/`
+# gagne sur le fond : elle résout le workflow au commit qui tourne sans dépendre
+# de l'état du système de fichiers, donc elle ne peut pas charger un fichier
+# qu'une étape précédente aurait déposé, et GitHub la traite comme un
+# épinglage. Pour `attester.yml`, dont tout l'intérêt est d'être hors de portée
+# du job de build, cette nuance est exactement le sujet.
+#
+# L'exception est limitée à `release.yml` et au message exact : la règle
+# `workflow-call` continue de juger tout le reste, dans ce fichier comme
+# ailleurs. À RETIRER dès qu'actionlint sait lire `$/`, et le contrôle
+# reprendra tout seul.
+paths:
+  .github/workflows/release.yml:
+    ignore:
+      - 'reusable workflow call "\$/.+" at "uses" is not following the format'
