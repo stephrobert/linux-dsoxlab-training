@@ -12,8 +12,11 @@ Le workflow `release.yml` construit `linux-dsoxlab-training-<version>.tar.gz`
 avec :
 
 - `labs/`, `meta.yml`, `conftest.py`, `solution/` (chiffré par vault)
+- `pyproject.toml` et `uv.lock` : une contrainte `>=` laisse chaque
+  installation résoudre ce qu'elle veut, l'archive embarque donc le verrou qui
+  dit ce qu'elle attend vraiment
 - les documents de gouvernance (`README`, `LICENSE`, `CONTRIBUTING`,
-  `CODE_OF_CONDUCT`, `SECURITY`, `CHANGELOG`)
+  `CODE_OF_CONDUCT`, `SECURITY`, `CHANGELOG`), dans les deux langues
 
 Il **exclut** le pilotage local (`.claude/`, `todo/`, `ROADMAP-*.md`,
 `CLAUDE.md`) et les fichiers générés (`.venv/`, caches). `ssh/` n'est **pas**
