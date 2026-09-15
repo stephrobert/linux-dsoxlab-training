@@ -1,0 +1,55 @@
+id: capstone-serveur-casse
+title: "Broken server: the site is down, the symptom tells you nothing"
+description: "A working internal site stops answering. The setup injects ONE fault among six, drawn at random, and never says which: stopped service, wrong port, closed firewall, SELinux context, docroot permissions, full filesystem. You diagnose, you repair, and the repair must survive a reboot. Scored purely on observable state, with three checks that reject the sledgehammer fixes: SELinux must stay enforcing, firewalld must stay running, and the docroot must not become world-writable."
+section: capstones
+lab_type: capstone
+level: l3
+track:
+  - capstones
+  - depanner
+skills:
+  - service-troubleshooting
+  - systemd
+  - journalctl
+  - selinux
+  - firewalld
+  - permissions
+  - diskspace-troubleshooting
+  - nginx
+difficulty: advanced
+estimated_time: 45m
+
+# DEUX machines, et ce n'est pas un confort : une panne de pare-feu ou de
+# contexte SELinux ne se voit pas depuis la machine elle-meme. Un `curl
+# localhost` peut repondre 200 alors que le service reste injoignable du
+# reseau. Le verdict se prend donc DEPUIS LE CLIENT, comme un utilisateur.
+runtime:
+  type: vm
+  session: local
+  default: serveur
+  snapshot_required: false
+  targets:
+    - name: serveur
+      host: alma-rhcsa-1.lab
+      label_en: "AlmaLinux 10 — the broken server"
+      label_fr: "AlmaLinux 10 — le serveur en panne"
+    - name: client
+      host: alma-rhcsa-2.lab
+      label_en: "AlmaLinux 10 — the client that must get a 200"
+      label_fr: "AlmaLinux 10 — le client qui doit obtenir un 200"
+
+distros:
+  - almalinux10
+  - rhel10
+doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/depanner/
+validation:
+  functional: true
+  security: true
+  persistence_after_reboot: true
+certification_tags:
+  - rhcsa
+
+# Capstone = mode examen, aucun indice. Le seuil est haut parce que la moitie
+# des tests sont des garde-fous : les desactiver reviendrait a « reparer » en
+# cassant la securite, ce que ce capstone existe precisement pour interdire.
+exam_passing_score: 80

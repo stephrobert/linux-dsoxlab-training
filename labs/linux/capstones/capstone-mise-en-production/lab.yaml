@@ -1,0 +1,56 @@
+id: capstone-mise-en-production
+title: "Put a server into production: one mission, nine deliverables, one reboot"
+description: "A fresh VM, a delivered application, and one mission: put it into service. Storage on LVM, service account, application on port 8080, SELinux port label and context, permanent firewall rule, persistent journal, hardened SSH, scheduled backup. Nothing is scored on the commands typed: every test reads observable state, and the last one reboots the machine and checks again. What does not survive the reboot scores zero."
+section: capstones
+lab_type: capstone
+level: l2
+track:
+  - capstones
+skills:
+  - lvm
+  - filesystems-xfs
+  - fstab
+  - users-groups
+  - systemd-units
+  - systemd-timers
+  - selinux
+  - firewalld
+  - journald
+  - sshd
+difficulty: advanced
+estimated_time: 90m
+
+# Deux machines. Le serveur se met en production, le client prouve qu'il est
+# joignable : une mise en service qui ne se verifie que depuis la machine
+# elle-meme n'est pas une mise en service.
+runtime:
+  type: vm
+  session: local
+  default: serveur
+  snapshot_required: false
+  targets:
+    - name: serveur
+      host: alma-rhcsa-1.lab
+      label_en: "AlmaLinux 10 — the server to put into production"
+      label_fr: "AlmaLinux 10 — le serveur à mettre en production"
+    - name: client
+      host: alma-rhcsa-2.lab
+      label_en: "AlmaLinux 10 — the client that must reach the service"
+      label_fr: "AlmaLinux 10 — le client qui doit joindre le service"
+
+distros:
+  - almalinux10
+  - rhel10
+doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/
+validation:
+  functional: true
+  security: true
+  persistence_after_reboot: true
+certification_tags:
+  - rhcsa
+  - lfcs
+
+# 80/100. Le seuil est haut parce qu'aucune tache n'est facultative dans une
+# mise en production : un service qui ne revient pas au boot, un pare-feu
+# ouvert a la volee ou un SELinux desarme sont des livraisons ratees.
+exam_passing_score: 80

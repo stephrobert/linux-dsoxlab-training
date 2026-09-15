@@ -1,0 +1,3 @@
+id: capstone-serveur-casse
+title: "Serveur cassé : le site ne répond plus, le symptôme ne dit rien"
+description: "Un site interne qui marchait cesse de répondre. Le setup injecte UNE panne parmi six, tirée au sort, et ne dit jamais laquelle : service arrêté, mauvais port, pare-feu fermé, contexte SELinux, permissions du docroot, système de fichiers plein. Vous diagnostiquez, vous réparez, et la réparation doit survivre à un redémarrage. La notation porte uniquement sur l'état observable, avec trois contrôles qui refusent les réparations à la masse : SELinux doit rester enforcing, firewalld doit rester actif, et le docroot ne doit pas devenir accessible en écriture à tous."

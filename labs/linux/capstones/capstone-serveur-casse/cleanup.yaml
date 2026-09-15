@@ -1,0 +1,47 @@
+---
+# Reset du capstone. Le setup remet lui-meme l'etat sain en entier avant de
+# casser : on se contente ici de retirer ce qui generait un re-run ou une autre
+# session, et de rendre la machine a un etat neutre.
+- name: Cleanup capstone-serveur-casse
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Retirer le site, sa conf et la trace du formateur
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - /etc/nginx/conf.d/site-interne.conf
+        - /srv/site-interne
+        - /root/.capstone-serveur-casse
+        - /var/log/capstone-remplissage.img
+
+    - name: Retirer la regle SELinux posee pour le docroot
+      ansible.builtin.shell:
+        cmd: |
+          set +e
+          semanage fcontext -d "/srv/site-interne(/.*)?" 2>/dev/null
+          exit 0
+      changed_when: false
+
+    - name: Refermer le port et arreter nginx, sans toucher au pare-feu
+      ansible.builtin.shell:
+        cmd: |
+          set +e
+          systemctl disable --now nginx 2>/dev/null
+          firewall-cmd --permanent --remove-service=http 2>/dev/null
+          firewall-cmd --reload 2>/dev/null
+          exit 0
+      changed_when: false
+
+    # Un capstone qui laisse SELinux en permissive piegerait la session
+    # suivante : le candidat suivant reparerait une panne deja desamorcee.
+    - name: Remettre SELinux en enforcing, quoi qu'ait fait le candidat
+      ansible.builtin.shell:
+        cmd: |
+          set +e
+          setenforce 1 2>/dev/null
+          sed -i 's/^SELINUX=.*/SELINUX=enforcing/' /etc/selinux/config
+          exit 0
+      changed_when: false

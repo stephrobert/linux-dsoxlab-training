@@ -1,0 +1,208 @@
+---
+# Capstone « serveur casse » — etat initial.
+#
+# Le setup fait DEUX choses, dans cet ordre, et l'ordre compte :
+#   1. il monte un site interne qui FONCTIONNE, et le prouve depuis le client ;
+#   2. il casse UNE chose, tiree au sort parmi six, sans le dire a personne.
+#
+# Pourquoi tirer au sort. Un lab intitule « reparer un probleme SELinux » a
+# deja donne la moitie du diagnostic. Ici le candidat ne recoit qu'un symptome,
+# « le site ne repond plus », et doit remonter seul jusqu'a la cause. C'est la
+# difference entre connaitre une procedure et savoir depanner.
+#
+# Le formateur peut forcer une panne precise : -e panne=selinux
+
+- name: Capstone serveur casse — le site qui marche
+  hosts: lab_target
+  become: true
+  gather_facts: true
+  vars:
+    docroot: /srv/site-interne
+    marqueur: "CAPSTONE-SERVEUR-CASSE-OK"
+    pannes:
+      - service
+      - port
+      - pare_feu
+      - selinux
+      - permissions
+      - ecoute_locale
+    panne: "{{ pannes | random(seed=lookup('pipe', 'date +%s%N')) }}"
+  tasks:
+    - name: Outillage
+      ansible.builtin.package:
+        name:
+          - nginx
+          - firewalld
+          - policycoreutils-python-utils
+          - curl
+        state: present
+
+    # ------------------------------------------------------------------
+    # 1. L'etat sain, pose integralement a chaque execution : le capstone
+    #    doit pouvoir etre rejoue sur une VM deja utilisee.
+    # ------------------------------------------------------------------
+    - name: Remettre a zero ce qu'une session precedente aurait laisse
+      ansible.builtin.shell:
+        cmd: |
+          set +e
+          rm -f /var/log/capstone-remplissage.img
+          semanage fcontext -d "{{ docroot }}(/.*)?" 2>/dev/null
+          firewall-cmd --permanent --remove-service=http 2>/dev/null
+          firewall-cmd --reload 2>/dev/null
+          exit 0
+      changed_when: false
+
+    - name: Le docroot du site interne
+      ansible.builtin.file:
+        path: "{{ docroot }}"
+        state: directory
+        owner: root
+        group: root
+        mode: "0755"
+
+    - name: La page servie, avec son marqueur de reussite
+      ansible.builtin.copy:
+        dest: "{{ docroot }}/index.html"
+        content: |
+          <!doctype html>
+          <title>Site interne</title>
+          <h1>{{ marqueur }}</h1>
+        owner: root
+        group: root
+        mode: "0644"
+
+    # Le site vit HORS des chemins web par defaut : c'est le cas reel, et c'est
+    # ce qui rend le contexte SELinux interessant a poser puis a casser.
+    - name: Declarer le contexte SELinux du docroot, puis l'appliquer
+      ansible.builtin.shell:
+        cmd: |
+          set -e
+          semanage fcontext -a -t httpd_sys_content_t "{{ docroot }}(/.*)?"
+          restorecon -R "{{ docroot }}"
+      changed_when: true
+
+    - name: Le bloc serveur nginx, sur le port 80
+      ansible.builtin.copy:
+        dest: /etc/nginx/conf.d/site-interne.conf
+        content: |
+          server {
+              listen 80;
+              server_name _;
+              root {{ docroot }};
+              index index.html;
+          }
+        mode: "0644"
+
+    - name: Retirer le bloc serveur par defaut, qui occuperait le port 80
+      ansible.builtin.lineinfile:
+        path: /etc/nginx/nginx.conf
+        regexp: '^\s*listen\s+80;'
+        state: absent
+
+    - name: firewalld actif, et le port 80 ouvert
+      ansible.builtin.systemd:
+        name: firewalld
+        state: started
+        enabled: true
+
+    - name: Ouvrir le service http
+      ansible.posix.firewalld:
+        service: http
+        permanent: true
+        immediate: true
+        state: enabled
+
+    - name: nginx actif et persistant
+      ansible.builtin.systemd:
+        name: nginx
+        state: restarted
+        enabled: true
+        daemon_reload: true
+
+    - name: Prouver que le site repond AVANT de le casser
+      ansible.builtin.uri:
+        url: "http://127.0.0.1/"
+        return_content: true
+      register: sain
+      retries: 5
+      delay: 2
+      until: sain.status == 200
+      failed_when: marqueur not in (sain.content | default(''))
+
+    # ------------------------------------------------------------------
+    # 2. La panne, une seule, jamais annoncee.
+    # ------------------------------------------------------------------
+    - name: Panne retenue pour cette session
+      ansible.builtin.debug:
+        msg: "panne injectee : {{ panne }} (ne pas montrer au candidat)"
+      when: lookup('env', 'DSOXLAB_DEBUG_PANNE') | default('', true) | length > 0
+
+    - name: "Panne : le service est arrete et ne redemarrera pas au boot"
+      ansible.builtin.systemd:
+        name: nginx
+        state: stopped
+        enabled: false
+      when: panne == 'service'
+
+    - name: "Panne : nginx ecoute sur un autre port"
+      ansible.builtin.replace:
+        path: /etc/nginx/conf.d/site-interne.conf
+        regexp: 'listen 80;'
+        replace: 'listen 8080;'
+      when: panne == 'port'
+      notify: relancer nginx
+
+    - name: "Panne : le pare-feu referme le port"
+      ansible.posix.firewalld:
+        service: http
+        permanent: true
+        immediate: true
+        state: disabled
+      when: panne == 'pare_feu'
+
+    - name: "Panne : le docroot perd son contexte SELinux"
+      ansible.builtin.shell:
+        cmd: chcon -R -t admin_home_t "{{ docroot }}"
+      changed_when: true
+      when: panne == 'selinux'
+
+    - name: "Panne : le docroot n'est plus traversable"
+      ansible.builtin.file:
+        path: "{{ docroot }}"
+        mode: "0700"
+      when: panne == 'permissions'
+
+    # La panne « ecoute locale » est la plus instructive des six, parce qu'elle
+    # met le candidat face au piege du « mais chez moi ca marche » : un
+    # `curl localhost` rend 200, et pourtant personne n'y accede. Elle
+    # s'attrape avec `ss -lnt`, en lisant l'adresse d'ecoute et pas seulement
+    # le port.
+    - name: "Panne : nginx n'ecoute plus que sur la boucle locale"
+      ansible.builtin.replace:
+        path: /etc/nginx/conf.d/site-interne.conf
+        regexp: 'listen 80;'
+        replace: 'listen 127.0.0.1:80;'
+      when: panne == 'ecoute_locale'
+      notify: relancer nginx
+
+    # UNE PANNE ECARTEE, ET LA MESURE QUI L'ECARTE. Le disque plein figurait
+    # dans la liste de depart. Mesure du 2026-09-15 sur AlmaLinux 10.2 : avec
+    # `/` a 100 % et 1,5 Mo libres, nginx CONTINUE de servir sa page statique,
+    # et il redemarre meme sans broncher. Le client obtient toujours 200.
+    # Servir un fichier ne demande aucune ecriture : la saturation casse les
+    # journaux, pas la lecture. Garder cette panne aurait enseigne une
+    # attente fausse, donc elle est retiree plutot que contournee.
+
+    - name: Trace horodatee, lisible par le formateur seulement
+      ansible.builtin.copy:
+        dest: /root/.capstone-serveur-casse
+        content: "{{ panne }}\n"
+        owner: root
+        group: root
+        mode: "0600"
+
+  handlers:
+    - name: relancer nginx
+      ansible.builtin.systemd:
+        name: nginx
+        state: restarted
