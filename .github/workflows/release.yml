@@ -79,7 +79,7 @@ jobs:
               --exclude=".dsoxlab-context.json" \
               --exclude=".dsoxlab.db" \
               -czf "${PKG}.tar.gz" \
-              labs meta.yml conftest.py pyproject.toml \
+              labs meta.yml conftest.py pyproject.toml uv.lock \
               README.md README.fr.md LICENSE \
               CONTRIBUTING.md CONTRIBUTING.fr.md \
               CODE_OF_CONDUCT.md CODE_OF_CONDUCT.fr.md \

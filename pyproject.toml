@@ -75,15 +75,26 @@ package = false
 #   pipx install dsoxlab
 
 [dependency-groups]
-# dsoxlab embarque pytest + pytest-testinfra et expose
-# dsoxlab.infra.inventory : aucun outil Python à installer côté repo
-# de labs. On garde dsoxlab en dev-dep uniquement pour les contributeurs
-# qui veulent un venv local (édition + IDE), mais l'apprenant utilise
-# le tool global installé via `uv tool install dsoxlab`.
+# dsoxlab n'est PAS déclaré ici, et c'est délibéré : ici la CLI est un OUTIL,
+# installé à part, comme dans le catalogue Kubernetes jumeau.
+#
+#     uv tool install dsoxlab      # ou : uvx dsoxlab <commande>
+#
+# Elle y était jusqu'au 2026-09-15, en source chemin local éditable
+# (`../dsoxlab`), et cela coûtait trois choses, chacune mesurée :
+#
+#   - le verrou n'était pas PORTABLE : il décrivait une dépendance qui n'existe
+#     que sur un poste ayant le dépôt dsoxlab à côté ;
+#   - il n'était pas VÉRIFIABLE en CI, où `../dsoxlab` est absent, donc rien ne
+#     garantissait qu'il décrivait encore le pyproject ;
+#   - il n'était pas SUIVABLE par Dependabot, pour la même raison. Le dépôt
+#     avait donc un uv.lock de 100 Ko que personne ne faisait avancer, et c'est
+#     ainsi que deux vulnérabilités (pytest, click) y ont dormi jusqu'à ce
+#     qu'un scan les trouve.
+#
+# Aucun hook ni aucun job n'en dépendait : tous passent par `uvx dsoxlab` ou
+# `uv run --no-project`, vérifié avant de le retirer. Ce qui reste est ce dont
+# les vérificateurs de catalogue ont besoin pour lire des YAML.
 dev = [
     "pyyaml>=6",
-    "dsoxlab",
 ]
-
-[tool.uv.sources]
-dsoxlab = { path = "../dsoxlab", editable = true }

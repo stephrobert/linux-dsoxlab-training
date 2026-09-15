@@ -11,8 +11,11 @@ wheels, no external artifact registry.
 The `release.yml` workflow builds `linux-dsoxlab-training-<version>.tar.gz` with:
 
 - `labs/`, `meta.yml`, `conftest.py`, `solution/` (vault-encrypted)
+- `pyproject.toml` and `uv.lock`: a `>=` constraint lets every installation
+  resolve whatever it likes, so the archive ships the lock that says what it
+  actually expects
 - the governance docs (`README`, `LICENSE`, `CONTRIBUTING`, `CODE_OF_CONDUCT`,
-  `SECURITY`, `CHANGELOG`)
+  `SECURITY`, `CHANGELOG`), in both languages
 
 It **excludes** local piloting (`.claude/`, `todo/`, `ROADMAP-*.md`, `CLAUDE.md`)
 and generated files (`.venv/`, caches). `ssh/` is **not** shipped at all: the

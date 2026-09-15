@@ -172,10 +172,12 @@ repos:
       # from the real lab.yaml files; a stale catalog blocks the push.
       - id: catalog-fresh
         name: README catalog up to date (labs + guide URLs)
-        # --no-project: ephemeral env with just pyyaml, so uv does NOT resolve
-        # this repo's pyproject (which pins dsoxlab to a local path) — that would
-        # rebuild dsoxlab and rewrite uv.lock, which pre-commit flags as a
-        # modification, and would outright fail in CI where ../dsoxlab is absent.
+        # --no-project: ephemeral env with just pyyaml, so uv neither creates
+        # nor syncs this repo's venv to run a catalogue script. It used to be
+        # load-bearing for a stronger reason — the pyproject pinned dsoxlab to
+        # a local path, so resolving it rebuilt dsoxlab and rewrote uv.lock —
+        # which is no longer the case since dsoxlab became a tool rather than a
+        # dev dependency. The flag stays because the env is still cheaper.
         entry: uv run --no-project --with pyyaml python scripts/gen_catalog.py --check
         language: system
         pass_filenames: false
