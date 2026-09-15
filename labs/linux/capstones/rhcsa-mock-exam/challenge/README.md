@@ -7,8 +7,8 @@
 
 | Host | Initial IP | Role |
 |---|---|---|
-| `alma-rhcsa-1.lab` | DHCP (variable) | Main server — 16 tasks |
-| `alma-rhcsa-2.lab` | DHCP (variable) | Client — 4 tasks dependent on the server |
+| `alma-rhcsa-1.lab` | DHCP (variable) | Main server, 15 tasks |
+| `alma-rhcsa-2.lab` | DHCP (variable) | Client, 5 tasks dependent on the server |
 
 Connect via `dsoxlab ssh alma-rhcsa-1.lab` (or `alma-rhcsa-2.lab` for the client). You are `student` with sudo NOPASSWD.
 
@@ -42,14 +42,27 @@ Extend `lvdata` to **3.5 GiB**. The XFS filesystem must reflect the new size **w
 
 Create `/swapfile` of 512 MiB enabled as swap, persistent at boot. Total swap (`free -m`) must increase by ~512 MiB.
 
-### Task 5 — Export `/data/share` via NFS (6 pts)
+---
 
-On `alma-rhcsa-1`:
+## Section A bis — Shell script
 
-- Create `/data/share` (mode 0775, owner root, group `developers` — see task 7)
-- Export it via NFS with **read/write** access only for `alma-rhcsa-2.lab`
-- Open the required ports in `firewalld` (public zone, **permanent**)
-- The `nfs-server` service must be active and enabled at boot
+### Task 5 — Write `/usr/local/bin/rapport-groupe.sh` (6 pts)
+
+On `alma-rhcsa-1`, write a script that takes **a group name as its first
+argument** and reports on the home directories of that group's members.
+
+- Exact path: `/usr/local/bin/rapport-groupe.sh`, executable
+- **No argument**: nothing on standard output, exit code **2**
+- **Unknown group**: nothing on standard output, exit code **3**
+- **Existing group**: **one line per member** on standard output, formatted as
+  `user:OK` when their home directory exists, `user:ABSENT` otherwise. Exit
+  code **0**
+
+The `evaluation` group is already in place with three members so you can check
+your work. Line order is not graded, line content is.
+
+No method is imposed: the script is judged on what it prints and on its exit
+code, not on how it is written.
 
 ---
 
@@ -133,13 +146,14 @@ On `alma-rhcsa-1`, create:
 - `weekly-backup.timer` that triggers the service every **Sunday at 03:00**, persistent
 - The timer must be **active** and **enabled at boot**
 
-### Task 12 — Chrony server on `srv-1` (4 pts)
+### Task 12 — Time client on `srv-2` (4 pts)
 
-Configure chrony on `alma-rhcsa-1` to:
+`alma-rhcsa-1` already serves time on the lab network. Configure
+`alma-rhcsa-2` to synchronize against it:
 
-- Synchronize with **`pool.ntp.org` iburst**
-- **Allow `alma-rhcsa-2.lab`** to query this server (`allow <srv-2 address>`)
-- Service active and enabled at boot
+- `chronyd` takes **`alma-rhcsa-1.lab` as its time source**
+- Service **active and enabled at boot**
+- `chronyc sources` must show the source, not an empty list
 
 ---
 
@@ -174,10 +188,10 @@ On `alma-rhcsa-2`:
 
 ### Task 18 — Mount NFS at boot on `srv-2` (6 pts)
 
-On `alma-rhcsa-2`, mount the NFS share exposed by `srv-1` (task 5):
+`alma-rhcsa-1` already exports a share. Mount it on `alma-rhcsa-2`:
 
 - Mount point: `/mnt/share`
-- Source: `alma-rhcsa-1.lab:/data/share`
+- Source: `alma-rhcsa-1.lab:/srv/nfs-public`
 - Persistent at boot via `/etc/fstab` with `_netdev` (and ideally `nofail` so it does not block boot if the server is down)
 
 `mountpoint /mnt/share` must return `is a mountpoint` and the content must be readable.

@@ -7,8 +7,8 @@
 
 | Hôte | IP initiale | Rôle |
 |---|---|---|
-| `alma-rhcsa-1.lab` | DHCP (variable) | Serveur principal — 16 tâches |
-| `alma-rhcsa-2.lab` | DHCP (variable) | Client — 4 tâches dépendantes du serveur |
+| `alma-rhcsa-1.lab` | DHCP (variable) | Serveur principal, 15 tâches |
+| `alma-rhcsa-2.lab` | DHCP (variable) | Client, 5 tâches dépendantes du serveur |
 
 Connectez-vous via `dsoxlab ssh alma-rhcsa-1.lab` (ou `alma-rhcsa-2.lab` pour le client). Vous êtes `student` avec sudo NOPASSWD.
 
@@ -42,14 +42,27 @@ Sur `/dev/vdb1` :
 
 Créez `/swapfile` de 512 MiB activé en swap, persistant au boot. Le swap total (`free -m`) doit augmenter de ~512 MiB.
 
-### Tâche 5 — Exporter `/data/share` via NFS (6 pts)
+---
 
-Sur `alma-rhcsa-1` :
+## Section A bis — Script shell
 
-- Créez `/data/share` (mode 0775, owner root, group `developers` — voir tâche 7)
-- Exportez via NFS en **lecture/écriture** uniquement pour `alma-rhcsa-2.lab`
-- Ouvrez les ports nécessaires dans `firewalld` (zone publique, **permanent**)
-- Le service `nfs-server` doit être actif et activé au boot
+### Tâche 5 — Écrire `/usr/local/bin/rapport-groupe.sh` (6 pts)
+
+Sur `alma-rhcsa-1`, écrivez un script qui prend **un nom de groupe en premier
+argument** et rend l'état des répertoires personnels de ses membres.
+
+- Chemin exact : `/usr/local/bin/rapport-groupe.sh`, exécutable
+- **Sans argument** : rien sur la sortie standard, et code de retour **2**
+- **Groupe inconnu** : rien sur la sortie standard, et code de retour **3**
+- **Groupe existant** : **une ligne par membre** sur la sortie standard, au
+  format `utilisateur:OK` si son répertoire personnel existe,
+  `utilisateur:ABSENT` sinon. Code de retour **0**
+
+Le groupe `evaluation` est déjà en place avec trois membres pour vous permettre
+de vérifier. L'ordre des lignes n'est pas noté, leur contenu l'est.
+
+Aucune méthode n'est imposée : le script est jugé sur ce qu'il affiche et sur
+son code de retour, pas sur la façon dont il est écrit.
 
 ---
 
@@ -134,13 +147,14 @@ Sur `alma-rhcsa-1`, créez :
 - `weekly-backup.timer` qui déclenche le service tous les **dimanches à 03:00**, persistant
 - Le timer doit être **actif** et **activé au boot**
 
-### Tâche 12 — Chrony serveur sur `srv-1` (4 pts)
+### Tâche 12 — Client de temps sur `srv-2` (4 pts)
 
-Configurez chrony sur `alma-rhcsa-1` pour :
+`alma-rhcsa-1` sert déjà l'heure sur le réseau du lab. Configurez
+`alma-rhcsa-2` pour s'y synchroniser :
 
-- Se synchroniser avec **`pool.ntp.org` iburst**
-- **Autoriser `alma-rhcsa-2.lab`** à interroger ce serveur (`allow <adresse de srv-2>`)
-- Service actif et activé au boot
+- `chronyd` prend **`alma-rhcsa-1.lab` comme source de temps**
+- Service **actif et activé au boot**
+- `chronyc sources` doit voir la source, et non une liste vide
 
 ---
 
@@ -175,10 +189,10 @@ Sur `alma-rhcsa-2` :
 
 ### Tâche 18 — Mount NFS au boot sur `srv-2` (6 pts)
 
-Sur `alma-rhcsa-2`, montez le partage NFS exposé par `srv-1` (tâche 5) :
+`alma-rhcsa-1` exporte déjà un partage. Montez-le sur `alma-rhcsa-2` :
 
 - Mount point : `/mnt/share`
-- Source : `alma-rhcsa-1.lab:/data/share`
+- Source : `alma-rhcsa-1.lab:/srv/nfs-public`
 - Persistant au boot via `/etc/fstab` avec `_netdev` (et idéalement `nofail` pour ne pas bloquer le boot si le serveur est down)
 
 `mountpoint /mnt/share` doit retourner `is a mountpoint` et le contenu doit être lisible.
