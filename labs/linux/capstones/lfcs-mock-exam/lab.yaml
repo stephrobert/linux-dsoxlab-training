@@ -1,23 +1,22 @@
 id: lfcs-mock-exam
 title: "LFCS mock exam — 17 tasks on Ubuntu 24.04"
-description: "Performance-based LFCS mock exam covering the 5 official domains: Essential Commands (20%), Operations Deployment (25%), Users and Groups (10%), Networking (25%), Storage (20%). 17 tasks scored on 100 points on a single Ubuntu VM. 70/100 to pass. No hints."
+description: "Performance-based LFCS mock exam mapped task by task onto the published objectives of the 5 official domains: Essential Commands (20%: Git, service troubleshooting, disk space, SSL), Operations Deployment (25%), Users and Groups (10%: accounts and ACLs), Networking (25%), Storage (20%: LVM, automount, swap). 17 tasks scored on 100 points on a single Ubuntu VM. 70/100 to pass. No hints."
 section: capstones
 lab_type: capstone
 level: l2
 track:
   - capstones
 skills:
-  - find
-  - tar-archives
-  - grep-regex
-  - links
-  - permissions
+  - git
+  - service-troubleshooting
+  - diskspace-troubleshooting
+  - ssl-certificates
   - apt
   - systemd-units
   - systemd-timers
   - cron
   - users-groups
-  - sudo-delegation
+  - acl-posix
   - netplan
   - static-ip
   - routing
@@ -26,14 +25,14 @@ skills:
   - lvm
   - filesystems-xfs
   - fstab
-  - quotas
+  - autofs
   - swap
 difficulty: advanced
 estimated_time: 120m
 
 # 1 seule VM : le LFCS est mono-distrib côté candidat (Ubuntu 24.04 ici).
 # Les 17 tâches tiennent sur ubuntu-lfcs-1.lab, qui porte /dev/vdb (5 Go)
-# pour le domaine Storage (LVM + XFS + quotas) et l'interface dédiée lab0
+# pour le domaine Storage (LVM + XFS + automontage) et l'interface dédiée lab0
 # pour le domaine Networking (jamais l'interface de gestion = gestion).
 runtime:
   type: vm
@@ -59,7 +58,7 @@ validation:
 certification_tags:
   - lfcs
 
-# Capstone = pas de hints (mode examen). Passing score aligné sur l'examen
-# officiel LFCS (66/100 chez la Linux Foundation, arrondi à 70 comme le mock
-# RHCSA pour rester exigeant).
+# Capstone = pas de hints (mode examen). Le seuil officiel de la Linux
+# Foundation est de 67 % (instructions d'examen relevées le 2026-09-15) ; on
+# le porte à 70 comme le mock RHCSA, pour garder une marge à l'entraînement.
 exam_passing_score: 70

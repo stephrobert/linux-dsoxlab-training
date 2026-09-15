@@ -13,12 +13,25 @@
           set +e
           swapoff /swapfile 2>/dev/null; rm -f /swapfile
           sed -i '\#^/swapfile#d' /etc/fstab
+          # L'automonteur tient /dev/vdb2 ouvert : tant qu'il tourne, wipefs
+          # echoue en silence et le disque reste partitionne pour le lab
+          # suivant. On l'arrete AVANT de toucher au disque.
+          systemctl disable --now autofs 2>/dev/null
+          umount -f /mnt/auto/donnees 2>/dev/null
+          rm -f /etc/auto.master.d/lab.autofs /etc/auto.lab
           umount /data /srv/quota 2>/dev/null
           sed -i '\#[[:space:]]/data[[:space:]]#d;\#[[:space:]]/srv/quota[[:space:]]#d' /etc/fstab
           lvremove -f /dev/vgdata 2>/dev/null
           vgremove -f vgdata 2>/dev/null
           pvremove -f -y /dev/vdb1 2>/dev/null
           wipefs -a /dev/vdb1 /dev/vdb2 /dev/vdb 2>/dev/null
+          dd if=/dev/zero of=/dev/vdb bs=1M count=10 2>/dev/null
+          partprobe /dev/vdb 2>/dev/null
+          setfacl -bR /srv/rapports 2>/dev/null
+          systemctl disable --now collecteur.service fuite-disque.service 2>/dev/null
+          rm -f /var/log/collecteur.log /root/diskspace.txt
+          rm -f /etc/ssl/lab/collecteur.key /etc/ssl/lab/collecteur.crt
+          rm -rf /srv/deploiement/.git /srv/deploiement/.gitignore
           systemctl disable --now labwatch.service labreport.timer 2>/dev/null
           rm -f /etc/systemd/system/labwatch.service /etc/systemd/system/labreport.service /etc/systemd/system/labreport.timer
           systemctl daemon-reload
@@ -29,7 +42,7 @@
           netplan apply 2>/dev/null
           sed -i '/lab-target\.lab/d' /etc/hosts
           userdel -r auditor1 2>/dev/null
-          rm -rf /srv/shared /root/logs.tar.gz /root/errors.txt /root/access.hard /root/access.soft
+          rm -rf /srv/shared
           exit 0
         chdir: /
       changed_when: false

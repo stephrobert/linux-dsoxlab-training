@@ -13,6 +13,12 @@ officiels du LFCS** dans leurs poids réels :
 | Storage | 20 % | 15–17 |
 
 **17 tâches, 100 points, 120 minutes, 70/100 pour réussir.**
+Chaque tâche est rattachée à un **objectif publié** du domaine qu'elle sert.
+Deux compétences que ce capstone testait autrefois n'y figurent plus : les
+**quotas disque**, qui n'appartiennent à aucun objectif LFCS, et la
+**délégation sudo**, que le blueprint ne nomme nulle part. Elles ont laissé la
+place à l'**automontage** et aux **ACL**, qui sont des objectifs.
+
 
 Tout se passe sur une seule VM Ubuntu 24.04 : le LFCS est multi-distrib, et cette
 session en est le versant Debian.

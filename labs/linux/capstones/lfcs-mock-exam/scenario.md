@@ -13,6 +13,11 @@ real weights:
 | Storage | 20% | 15–17 |
 
 **17 tasks, 100 points, 120 minutes, 70/100 to pass.**
+Every task maps onto a **published objective** of the domain it serves. Two
+skills this capstone used to test are gone: **disk quotas**, which belong to no
+LFCS objective, and **sudo delegation**, which the blueprint names nowhere.
+They gave way to **automounting** and **ACLs**, which are objectives.
+
 
 Everything happens on a single Ubuntu 24.04 VM — the LFCS is multi-distro, and
 this run is the Debian side of it.

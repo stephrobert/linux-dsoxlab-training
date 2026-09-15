@@ -23,32 +23,43 @@ vierge.
 
 ## Section A — Essential Commands (20 pts)
 
-### Tâche 1 — Chercher et archiver (5 pts)
+### Tâche 1 — Mettre `/srv/deploiement` sous Git (5 pts)
 
-Sous `/srv/audit/`, des fichiers sont éparpillés dans des sous-répertoires. Crée
-l'archive **`/root/logs.tar.gz`** (tar compressé gzip) contenant **tous les
-fichiers dont le nom se termine par `.log`** trouvés n'importe où sous
-`/srv/audit/`, et rien d'autre.
+Le répertoire `/srv/deploiement` contient deux fichiers de travail et un
+sous-répertoire `.cache/` qui ne doit jamais être versionné.
 
-### Tâche 2 — Extraire un rapport (5 pts)
+- Initialise un dépôt Git **dans `/srv/deploiement`**
+- `config.yml` et `notes.txt` sont **suivis et commités**
+- `.cache/` est **ignoré** : `git status` ne doit plus le mentionner
+- Crée une branche **`recette`**, sans y basculer obligatoirement
 
-Le fichier `/srv/audit/access.log` mélange plusieurs niveaux. Écris dans
-**`/root/errors.txt`** uniquement les lignes contenant `ERROR`, dans leur ordre
-d'origine. Aucune autre ligne.
+### Tâche 2 — Réparer `collecteur.service` (6 pts)
 
-### Tâche 3 — Liens (4 pts)
+Le service `collecteur.service` est installé mais refuse de démarrer. Le script
+qu'il doit lancer, `/usr/local/bin/collecteur.sh`, est correct : **ne le
+réécris pas**, il y a deux défauts ailleurs.
 
-Pour le fichier `/srv/audit/access.log`, crée :
+- `systemctl start collecteur` doit réussir
+- Le service doit être **actif** et **activé au boot**
+- `/var/log/collecteur.log` doit se remplir
 
-- un **lien physique** en `/root/access.hard`
-- un **lien symbolique** en `/root/access.soft`
+### Tâche 3 — Retrouver l'espace disque disparu (4 pts)
 
-### Tâche 4 — Répertoire collaboratif (6 pts)
+`df` annonce plusieurs centaines de mégaoctets occupés sous `/var` que `du` ne
+retrouve pas. Un processus retient un fichier **supprimé mais toujours ouvert**.
 
-Le groupe `auditors` doit partager `/srv/shared` :
+- Écris dans **`/root/diskspace.txt`** le **nom de l'unité systemd** responsable
+  (une ligne, le nom seul suffit)
+- **Libère l'espace** : cette unité ne doit plus tourner, ni revenir au boot
 
-- groupe propriétaire `auditors`, mode `2770`
-- tout nouveau fichier créé dedans hérite du groupe `auditors`
+### Tâche 4 — Certificat auto-signé (5 pts)
+
+Produis un certificat pour le collecteur, dans `/etc/ssl/lab/` :
+
+- Clé privée **`/etc/ssl/lab/collecteur.key`**, lisible **par root seul**
+- Certificat **`/etc/ssl/lab/collecteur.crt`**, auto-signé par cette clé
+- **CN = `collecteur.lab`**
+- Valide **au moins 365 jours** à compter d'aujourd'hui
 
 ---
 
@@ -89,11 +100,17 @@ Crée l'utilisateur **`auditor1`** :
 - shell de connexion **`/bin/bash`**
 - membre du groupe supplémentaire **`auditors`**
 
-### Tâche 10 — Déléguer sudo (5 pts)
+### Tâche 10 — Ouvrir `/srv/rapports` par ACL (5 pts)
 
-Les membres du groupe **`auditors`** doivent pouvoir exécuter **uniquement**
-`/usr/bin/systemctl status *` en root, **sans mot de passe**. Déclare-le dans un
-fichier sous `/etc/sudoers.d/`.
+`/srv/rapports` appartient à `root:root` en mode `0750` : l'utilisateur
+`devops` n'y a aucun accès. Ouvre-lui la porte **sans changer le propriétaire
+ni le groupe**, et **sans ouvrir quoi que ce soit au reste du monde**. Un
+`chmod` qui donnerait l'accès à tous ne compte pas.
+
+- `devops` obtient **`rwx`** sur `/srv/rapports`
+- `devops` obtient **`rw`** sur le fichier `bilan.csv` déjà présent
+- Tout **nouveau** fichier créé dans ce répertoire doit lui accorder **`rw`**
+  automatiquement, sans intervention
 
 ---
 
@@ -133,12 +150,15 @@ Sur `/dev/vdb` :
 - crée le volume logique **`lvapp`** de **1 Gio**, formaté en **XFS**
 - monte-le sur **`/data`** au boot, **par UUID** (pas par chemin de device)
 
-### Tâche 16 — Quota (7 pts)
+### Tâche 16 — Automontage à la demande (7 pts)
 
-Sur une seconde partition `/dev/vdb2` de **1 Gio**, formatée en **XFS** et montée
-sur **`/srv/quota`** de façon persistante avec les **quotas utilisateur**
-activés : impose à l'utilisateur `devops` un quota de blocs de **20M souple /
-30M dur**.
+Crée une seconde partition **`/dev/vdb2`** de **1 Gio** formatée en **XFS**,
+puis fais-la monter **à la demande** par l'automonteur.
+
+- Le point de montage est **`/mnt/auto/donnees`**
+- Il ne doit **pas** apparaître dans `/etc/fstab` : c'est `autofs` qui le monte
+- Un simple `ls /mnt/auto/donnees` déclenche le montage
+- Le service `autofs` est **actif et activé au boot**
 
 ### Tâche 17 — Swap (5 pts)
 

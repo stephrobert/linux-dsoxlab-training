@@ -21,31 +21,44 @@ dedicated `lab0` interface. The disk `/dev/vdb` (5 GiB) is attached and blank.
 
 ## Section A — Essential Commands (20 pts)
 
-### Task 1 — Find and archive (5 pts)
+### Task 1 — Put `/srv/deploiement` under Git (5 pts)
 
-Under `/srv/audit/` there are files scattered in subdirectories. Create the
-archive **`/root/logs.tar.gz`** (gzip-compressed tar) containing **every file
-whose name ends in `.log`** found anywhere under `/srv/audit/`, and nothing else.
+The directory `/srv/deploiement` holds two working files and a `.cache/`
+subdirectory that must never be versioned.
 
-### Task 2 — Extract a report (5 pts)
+- Initialise a Git repository **in `/srv/deploiement`**
+- `config.yml` and `notes.txt` are **tracked and committed**
+- `.cache/` is **ignored**: `git status` must no longer mention it
+- Create a branch named **`recette`**; you do not have to switch to it
 
-The file `/srv/audit/access.log` mixes several levels. Write to
-**`/root/errors.txt`** only the lines containing `ERROR`, in their original
-order. No other line.
+### Task 2 — Repair `collecteur.service` (6 pts)
 
-### Task 3 — Links (4 pts)
+The `collecteur.service` unit is installed but refuses to start. The script it
+is meant to run, `/usr/local/bin/collecteur.sh`, is correct: **do not rewrite
+it**, the two faults are elsewhere.
 
-For the file `/srv/audit/access.log`, create:
+- `systemctl start collecteur` must succeed
+- The service must be **active** and **enabled at boot**
+- `/var/log/collecteur.log` must start filling up
 
-- a **hard link** at `/root/access.hard`
-- a **symbolic link** at `/root/access.soft`
+### Task 3 — Find the missing disk space (4 pts)
 
-### Task 4 — Collaborative directory (6 pts)
+`df` reports several hundred megabytes used under `/var` that `du` cannot
+account for. A process is holding a file that was **deleted but is still open**.
 
-The group `auditors` must share `/srv/shared`:
+- Write the **systemd unit name** responsible into **`/root/diskspace.txt`**
+  (one line, the name alone is enough)
+- **Release the space**: that unit must no longer run, and must not come back at
+  boot
 
-- owned by group `auditors`, mode `2770`
-- any new file created inside inherits the group `auditors`
+### Task 4 — Self-signed certificate (5 pts)
+
+Produce a certificate for the collector, under `/etc/ssl/lab/`:
+
+- Private key **`/etc/ssl/lab/collecteur.key`**, readable **by root only**
+- Certificate **`/etc/ssl/lab/collecteur.crt`**, self-signed with that key
+- **CN = `collecteur.lab`**
+- Valid for **at least 365 days** from today
 
 ---
 
@@ -85,11 +98,17 @@ Create the user **`auditor1`**:
 - login shell **`/bin/bash`**
 - member of the supplementary group **`auditors`**
 
-### Task 10 — Delegate sudo (5 pts)
+### Task 10 — Open `/srv/rapports` with ACLs (5 pts)
 
-Members of the group **`auditors`** must be able to run **only**
-`/usr/bin/systemctl status *` as root, **without a password**. Declare it in a
-file under `/etc/sudoers.d/`.
+`/srv/rapports` is owned by `root:root` with mode `0750`: the user `devops` has
+no access at all. Let them in **without changing the owner or the group**, and
+**without opening anything to the rest of the world**. A `chmod` that grants
+access to everyone does not count.
+
+- `devops` gets **`rwx`** on `/srv/rapports`
+- `devops` gets **`rw`** on the existing `bilan.csv` file
+- Every **new** file created in that directory must grant them **`rw`**
+  automatically, with no further action
 
 ---
 
@@ -129,11 +148,15 @@ On `/dev/vdb`:
 - create the logical volume **`lvapp`** of **1 GiB**, formatted **XFS**
 - mount it on **`/data`** at boot, **by UUID** (not by device path)
 
-### Task 16 — Quota (7 pts)
+### Task 16 — On-demand automount (7 pts)
 
-On a second partition `/dev/vdb2` of **1 GiB**, formatted **XFS** and mounted on
-**`/srv/quota`** persistently with **user quotas** enabled: enforce on the user
-`devops` a block quota of **20M soft / 30M hard**.
+Create a second partition **`/dev/vdb2`** of **1 GiB** formatted **XFS**, then
+have it mounted **on demand** by the automounter.
+
+- The mount point is **`/mnt/auto/donnees`**
+- It must **not** appear in `/etc/fstab`: `autofs` is what mounts it
+- A plain `ls /mnt/auto/donnees` triggers the mount
+- The `autofs` service is **active and enabled at boot**
 
 ### Task 17 — Swap (5 pts)
 

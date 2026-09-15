@@ -54,8 +54,8 @@ Quatre sujets de l'examen n'ont pas de cours sur place, parce que les labs qui
 les portent renvoient au guide en ligne plutôt que d'enseigner : `lfcs-package-apt`
 pour la gestion des paquets Debian et le gel de version, `lfcs-netplan-static`
 pour la configuration réseau, `lfcs-firewall-ufw` pour le pare-feu et
-`lfcs-storage-quotas` pour les quotas. Ces quatre labs sont jouables et valent la
-peine d'être faits avant : c'est le cours qui manque, pas l'exercice. Les labs
+`lfcs-mount-cifs` pour les systèmes de fichiers distants. Ces quatre labs sont
+jouables et valent la peine d'être faits avant : c'est le cours qui manque, pas l'exercice. Les labs
 `l4-network-static-persist` et `l4-firewall-persist` enseignent le raisonnement
 correspondant côté RHEL, avec d'autres outils.
 
