@@ -1,0 +1,70 @@
+---
+# Reset du capstone « mise en production ».
+#
+# Le setup fait deja la remise a neuf complete, parce qu'il doit pouvoir etre
+# rejoue sur une VM deja travaillee. Ce cleanup rend la machine a un etat
+# neutre pour les AUTRES labs : il defait ce que le capstone a demande de
+# construire, y compris le volume, que rien d'autre ne saurait liberer.
+- name: Cleanup capstone-mise-en-production
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  vars:
+    docroot: /srv/cotisation
+    disque: /dev/vdb
+  tasks:
+    - name: Arreter et desactiver ce que le candidat a mis en service
+      ansible.builtin.shell:
+        cmd: |
+          set +e
+          systemctl disable --now cotisation-sauvegarde.timer 2>/dev/null
+          systemctl disable --now nginx 2>/dev/null
+          rm -f /etc/nginx/conf.d/cotisation.conf
+          rm -f /etc/systemd/system/cotisation-sauvegarde.service
+          rm -f /etc/systemd/system/cotisation-sauvegarde.timer
+          rm -f /etc/ssh/sshd_config.d/99-capstone.conf
+          rm -f /etc/ssh/sshd_config.d/00-capstone-depart.conf
+          systemctl daemon-reload
+          systemctl reload sshd 2>/dev/null
+          exit 0
+      changed_when: false
+
+    # Le volume tient le point de montage : tant qu'il est monte, wipefs
+    # echoue en silence et le disque reste partitionne pour le lab suivant.
+    - name: Liberer le volume, puis le disque
+      ansible.builtin.shell:
+        cmd: |
+          set +e
+          umount {{ docroot }} 2>/dev/null
+          sed -i '\#{{ docroot }}#d' /etc/fstab
+          lvremove -f /dev/vg_app/lv_cotisation 2>/dev/null
+          vgremove -f vg_app 2>/dev/null
+          pvremove -f {{ disque }} 2>/dev/null
+          wipefs -a {{ disque }} 2>/dev/null
+          rm -rf {{ docroot }} /srv/sauvegardes /opt/livraison
+          exit 0
+      changed_when: false
+
+    - name: Retirer les declarations SELinux et la regle de pare-feu
+      ansible.builtin.shell:
+        cmd: |
+          set +e
+          semanage port -d -t http_port_t -p tcp 8080 2>/dev/null
+          semanage fcontext -d "{{ docroot }}(/.*)?" 2>/dev/null
+          firewall-cmd --permanent --remove-port=8080/tcp 2>/dev/null
+          firewall-cmd --reload 2>/dev/null
+          userdel -r cotisation 2>/dev/null
+          exit 0
+      changed_when: false
+
+    # SELinux reste en enforcing, quoi qu'ait fait le candidat : le laisser en
+    # permissive piegerait la session suivante, qui hériterait d'une machine
+    # deja desarmee sans le savoir.
+    - name: Rendre la machine avec SELinux en enforcing
+      ansible.builtin.shell:
+        cmd: |
+          set +e
+          setenforce 1 2>/dev/null
+          sed -i 's/^SELINUX=.*/SELINUX=enforcing/' /etc/selinux/config
+          exit 0
+      changed_when: false

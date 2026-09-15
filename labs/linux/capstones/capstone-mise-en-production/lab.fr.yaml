@@ -1,0 +1,3 @@
+id: capstone-mise-en-production
+title: "Mettre un serveur en production : une mission, neuf livrables, un redémarrage"
+description: "Une VM neuve, une application livrée, et une mission : la mettre en service. Stockage sur LVM, compte de service, application sur le port 8080, étiquette de port et contexte SELinux, règle de pare-feu permanente, journal persistant, SSH durci, sauvegarde planifiée. Rien n'est noté sur les commandes tapées : chaque test lit un état observable, et le dernier redémarre la machine avant de regarder une seconde fois. Ce qui ne survit pas au redémarrage vaut zéro."

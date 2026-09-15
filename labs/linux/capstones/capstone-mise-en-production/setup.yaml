@@ -1,0 +1,130 @@
+---
+# Capstone « mise en production » — etat initial.
+#
+# Le setup ne fait AUCUNE des neuf taches. Il livre seulement :
+#   - l'application a mettre en service, dans /opt/livraison ;
+#   - une VM remise a neuf, pour que le capstone soit rejouable.
+#
+# Tout le reste appartient au candidat : le stockage, le compte de service, le
+# service lui-meme, SELinux, le pare-feu, le journal, SSH, la sauvegarde.
+
+- name: Capstone mise en production — la livraison et rien d'autre
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  vars:
+    docroot: /srv/cotisation
+    marqueur: "COTISATION-EN-PRODUCTION"
+    disque: /dev/vdb
+  tasks:
+    - name: Outillage disponible sur la machine
+      ansible.builtin.package:
+        name:
+          - lvm2
+          - xfsprogs
+          - nginx
+          - firewalld
+          - policycoreutils-python-utils
+          - curl
+          - tar
+        state: present
+
+    # ------------------------------------------------------------------
+    # Remise a neuf : le capstone doit pouvoir etre rejoue sur une VM deja
+    # utilisee, sinon le candidat suivant herite du travail du precedent et
+    # la note ne veut plus rien dire.
+    # ------------------------------------------------------------------
+    - name: Defaire ce qu'une session precedente aurait laisse
+      ansible.builtin.shell:
+        cmd: |
+          set +e
+          systemctl disable --now cotisation.timer cotisation-sauvegarde.timer 2>/dev/null
+          systemctl disable --now nginx 2>/dev/null
+          rm -f /etc/nginx/conf.d/cotisation.conf
+          rm -f /etc/systemd/system/cotisation-sauvegarde.{service,timer}
+          systemctl daemon-reload
+          umount {{ docroot }} 2>/dev/null
+          sed -i '\#{{ docroot }}#d' /etc/fstab
+          lvremove -f /dev/vg_app/lv_cotisation 2>/dev/null
+          vgremove -f vg_app 2>/dev/null
+          pvremove -f {{ disque }} 2>/dev/null
+          wipefs -a {{ disque }} 2>/dev/null
+          rm -rf {{ docroot }} /srv/sauvegardes
+          semanage port -d -t http_port_t -p tcp 8080 2>/dev/null
+          semanage fcontext -d "{{ docroot }}(/.*)?" 2>/dev/null
+          firewall-cmd --permanent --remove-port=8080/tcp 2>/dev/null
+          firewall-cmd --reload 2>/dev/null
+          userdel -r cotisation 2>/dev/null
+          rm -rf /var/log/journal
+          rm -f /etc/ssh/sshd_config.d/99-capstone.conf
+          systemctl restart systemd-journald 2>/dev/null
+          exit 0
+      changed_when: false
+
+    # Mesure du 2026-09-15 : l'image du lab arrive DEJA avec
+    # PasswordAuthentication no, pose par cloud-init. Le test de durcissement
+    # SSH passait donc sans que le candidat ait rien fait, et ses 5 points
+    # etaient offerts. On remet la machine dans l'etat d'un serveur fraichement
+    # installe, mot de passe et root autorises, pour que la tache existe.
+    - name: "Etat de depart d'un serveur neuf : sshd permissif"
+      ansible.builtin.copy:
+        dest: /etc/ssh/sshd_config.d/00-capstone-depart.conf
+        content: |
+          PasswordAuthentication yes
+          PermitRootLogin yes
+        mode: "0600"
+
+    - name: Recharger sshd sans couper la session en cours
+      ansible.builtin.systemd:
+        name: sshd
+        state: reloaded
+
+    - name: Le pare-feu tourne, mais rien n'est ouvert pour l'application
+      ansible.builtin.systemd:
+        name: firewalld
+        state: started
+        enabled: true
+
+    - name: SELinux en enforcing, point de depart non negociable
+      ansible.posix.selinux:
+        policy: targeted
+        state: enforcing
+
+    # ------------------------------------------------------------------
+    # La livraison : ce que l'equipe de developpement a remis, et rien de plus.
+    # ------------------------------------------------------------------
+    - name: Le repertoire de livraison
+      ansible.builtin.file:
+        path: /opt/livraison
+        state: directory
+        mode: "0755"
+
+    - name: L'application livree, une page et sa version
+      ansible.builtin.copy:
+        dest: "/opt/livraison/{{ item.nom }}"
+        content: "{{ item.contenu }}"
+        mode: "0644"
+      loop:
+        - nom: index.html
+          contenu: |
+            <!doctype html>
+            <title>Cotisation</title>
+            <h1>{{ marqueur }}</h1>
+        - nom: VERSION
+          contenu: "1.4.0\n"
+
+    - name: La consigne de livraison, lisible par le candidat
+      ansible.builtin.copy:
+        dest: /opt/livraison/LISEZ-MOI.txt
+        content: |
+          Application « cotisation », version 1.4.0.
+
+          A servir en HTTP sur le port 8080, depuis {{ docroot }}.
+          Le contenu de ce repertoire est la livraison : index.html et VERSION.
+
+          Contraintes d'exploitation :
+            - le contenu vit sur un volume logique dedie, pas sur la racine ;
+            - le service tourne sous un compte de service, pas sous root ;
+            - SELinux reste en enforcing ;
+            - tout doit revenir apres un redemarrage.
+        mode: "0644"
