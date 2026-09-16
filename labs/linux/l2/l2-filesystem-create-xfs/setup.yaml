@@ -39,8 +39,24 @@
         parted -s "$DISK" mkpart primary 1MiB 2049MiB
         partprobe "$DISK"
         # La partition cible = <disque>1 (sdb1 / vdb1)
-        part="${DISK}1"
-        [ -b "$part" ] || part="${DISK}p1"
+        # Le noeud de la partition est cree par udev, de facon ASYNCHRONE : juste
+        # apres partprobe, /dev/vdb1 peut ne pas exister encore. Une version
+        # anterieure testait dans la milliseconde et retombait sur un repli
+        # ${DISK}p1, valable pour nvme0n1p1 ou mmcblk0p1 mais jamais
+        # pour un disque virtio : le nom faux partait ensuite dans un fichier,
+        # et la solution echouait sur « No such file or directory ». On attend
+        # donc un noeud qui EXISTE, au lieu de deviner son nom.
+        udevadm settle --timeout=30 2>/dev/null || true
+        part=""
+        for _ in $(seq 1 30); do
+          if [ -b "${DISK}1" ]; then part="${DISK}1"; break; fi
+          if [ -b "${DISK}p1" ]; then part="${DISK}p1"; break; fi
+          sleep 1
+        done
+        if [ -z "$part" ]; then
+          echo "Aucune partition apparue sur $DISK apres partprobe." >&2
+          exit 1
+        fi
         # S'assurer qu'elle est vierge (pas de FS résiduel)
         wipefs -a "$part" 2>/dev/null || true
         echo "PART=${part}" >> /root/xfs-disk.env
