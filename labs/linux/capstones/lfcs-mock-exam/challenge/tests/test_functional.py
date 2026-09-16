@@ -355,10 +355,23 @@ def test_task11_static_ip(host):
 
 @pytest.mark.points(5)
 def test_task12_static_route(host):
-    """La route vers 203.0.113.0/24 doit être active."""
+    """La route vers 203.0.113.0/24 doit être active ET déclarée dans netplan.
+
+    La consigne dit « toujours avec netplan » : sans la seconde moitié de ce
+    test, un `ip route add` marquait les 5 points et la route disparaissait au
+    premier redémarrage (red team du 2026-09-15). Le test de l'adresse
+    statique, juste au-dessus, contrôlait déjà les deux.
+    """
     routes = host.check_output("ip route show")
     assert "203.0.113.0/24" in routes, (
         f"La route vers 203.0.113.0/24 est absente. Vu :\n{routes}"
+    )
+    conf = host.check_output(
+        "grep -rl '203\\.0\\.113\\.0/24' /etc/netplan/ 2>/dev/null || true"
+    )
+    assert conf.strip(), (
+        "Aucun fichier /etc/netplan/ ne déclare la route vers 203.0.113.0/24 : "
+        "elle a été posée à la main et serait perdue au reboot."
     )
 
 
@@ -369,7 +382,9 @@ def test_task13_firewall(host):
     assert "Status: active" in status, (
         f"ufw n'est pas actif. Vu :\n{status}"
     )
-    assert "8080/tcp" in status, (
+    # Comparaison par jetons : « 8080/tcp » se trouve aussi dans « 18080/tcp »,
+    # qu'une autre règle pourrait avoir ouvert.
+    assert "8080/tcp" in status.split(), (
         f"Le port 8080/tcp n'est pas autorisé. Vu :\n{status}"
     )
     assert "OpenSSH" in status or "22/tcp" in status, (

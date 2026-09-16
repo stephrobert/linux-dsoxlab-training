@@ -1,226 +1,226 @@
 {
-  "verifie_le": "2026-09-15T20:05:38+00:00",
+  "verifie_le": "2026-09-16T08:43:30+00:00",
   "python": "3.14.2",
   "labs": {
     "capstone-mise-en-production": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "10 passed, 10 warnings in 38.12s"
+      "resume": "10 passed, 10 warnings in 40.04s"
     },
     "capstone-serveur-casse": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "7 passed, 7 warnings in 9.28s"
+      "resume": "7 passed, 7 warnings in 9.30s"
     },
     "lfcs-mock-exam": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "17 passed, 17 warnings in 30.54s"
+      "resume": "17 passed, 17 warnings in 30.74s"
     },
     "rhcsa-mock-exam": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "20 passed, 20 warnings in 38.67s"
+      "resume": "20 passed, 20 warnings in 38.85s"
     },
     "drill-apparmor": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "4 passed, 4 warnings in 4.07s"
+      "resume": "4 passed, 4 warnings in 4.16s"
     },
     "drill-essential-commands": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "5 passed, 5 warnings in 6.53s"
+      "resume": "5 passed, 5 warnings in 6.46s"
     },
     "drill-firewall": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "5 passed, 5 warnings in 16.19s"
+      "resume": "5 passed, 5 warnings in 16.27s"
     },
     "drill-network": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "4 passed, 4 warnings in 14.19s"
+      "resume": "4 passed, 4 warnings in 14.17s"
     },
     "drill-packages": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "5 passed, 5 warnings in 17.25s"
+      "resume": "5 passed, 5 warnings in 17.30s"
     },
     "drill-selinux": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "4 passed, 4 warnings in 5.60s"
+      "resume": "4 passed, 4 warnings in 5.68s"
     },
     "drill-storage": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "5 passed, 5 warnings in 6.29s"
+      "resume": "5 passed, 5 warnings in 6.30s"
     },
     "drill-systemd": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "5 passed, 5 warnings in 9.05s"
+      "resume": "5 passed, 5 warnings in 11.03s"
     },
     "drill-users-groups": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "5 passed, 5 warnings in 6.05s"
+      "resume": "5 passed, 5 warnings in 6.08s"
     },
     "l1-bash-script": {
       "etat": "vert",
       "runtime": "shell",
-      "resume": "3 passed in 0.26s"
+      "resume": "3 passed in 0.28s"
     },
     "l1-choose-distro": {
       "etat": "vert",
       "runtime": "shell",
-      "resume": "5 passed in 0.26s"
+      "resume": "5 passed in 0.29s"
     },
     "l1-discover-linux-map": {
       "etat": "vert",
       "runtime": "shell",
-      "resume": "6 passed in 0.26s"
+      "resume": "6 passed in 0.28s"
     },
     "l1-env-profiles": {
       "etat": "vert",
       "runtime": "shell",
-      "resume": "4 passed in 0.25s"
+      "resume": "4 passed in 0.29s"
     },
     "l1-find-files": {
       "etat": "vert",
       "runtime": "shell",
-      "resume": "4 passed in 0.26s"
+      "resume": "4 passed in 0.30s"
     },
     "l1-first-terminal": {
       "etat": "vert",
       "runtime": "shell",
-      "resume": "7 passed in 0.26s"
+      "resume": "7 passed in 0.29s"
     },
     "l1-get-help": {
       "etat": "vert",
       "runtime": "shell",
-      "resume": "4 passed in 0.26s"
+      "resume": "4 passed in 0.28s"
     },
     "l1-git-basics": {
       "etat": "vert",
       "runtime": "shell",
-      "resume": "5 passed in 0.27s"
+      "resume": "5 passed in 0.32s"
     },
     "l1-grep-regex": {
       "etat": "vert",
       "runtime": "shell",
-      "resume": "5 passed in 0.26s"
+      "resume": "5 passed in 0.29s"
     },
     "l1-links-hard-sym": {
       "etat": "vert",
       "runtime": "shell",
-      "resume": "5 passed in 0.25s"
+      "resume": "5 passed in 0.28s"
     },
     "l1-linux-filesystem": {
       "etat": "vert",
       "runtime": "shell",
-      "resume": "6 passed in 0.27s"
+      "resume": "6 passed in 0.29s"
     },
     "l1-navigate-filesystem": {
       "etat": "vert",
       "runtime": "shell",
-      "resume": "10 passed, 3 warnings in 0.24s"
+      "resume": "10 passed, 3 warnings in 0.29s"
     },
     "l1-paths-absolute-relative": {
       "etat": "vert",
       "runtime": "shell",
-      "resume": "9 passed, 5 warnings in 0.26s"
+      "resume": "9 passed, 5 warnings in 0.29s"
     },
     "l1-permissions-ugo": {
       "etat": "vert",
       "runtime": "shell",
-      "resume": "4 passed in 0.26s"
+      "resume": "4 passed in 0.28s"
     },
     "l1-prepare-vm": {
       "etat": "vert",
       "runtime": "shell",
-      "resume": "6 passed in 0.26s"
+      "resume": "6 passed in 0.30s"
     },
     "l1-read-a-command": {
       "etat": "vert",
       "runtime": "shell",
-      "resume": "4 passed in 0.26s"
+      "resume": "4 passed in 0.27s"
     },
     "l1-redirections-pipes": {
       "etat": "vert",
       "runtime": "shell",
-      "resume": "5 passed in 0.25s"
+      "resume": "5 passed in 0.27s"
     },
     "l1-ssl-certificates": {
       "etat": "vert",
       "runtime": "shell",
-      "resume": "5 passed in 0.33s"
+      "resume": "5 passed in 0.35s"
     },
     "l1-tar-archives": {
       "etat": "vert",
       "runtime": "shell",
-      "resume": "5 passed in 0.26s"
+      "resume": "5 passed in 0.28s"
     },
     "l1-text-processing": {
       "etat": "vert",
       "runtime": "shell",
-      "resume": "5 passed in 0.25s"
+      "resume": "5 passed in 0.27s"
     },
     "l2-acl-posix": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "3 passed in 2.28s"
+      "resume": "3 passed in 2.34s"
     },
     "l2-autofs-ondemand": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "4 passed in 5.87s"
+      "resume": "4 passed in 5.85s"
     },
     "l2-collaborative-setgid": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "2 passed in 2.81s"
+      "resume": "2 passed in 2.85s"
     },
     "l2-disk-space-troubleshoot": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "3 passed in 2.57s"
+      "resume": "3 passed in 2.54s"
     },
     "l2-filesystem-create-xfs": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "4 passed in 3.74s"
+      "resume": "4 passed in 4.58s"
     },
     "l2-fstab-persist-uuid": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "6 passed in 4.63s"
+      "resume": "6 passed in 4.72s"
     },
     "l2-luks-encryption": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "4 passed in 15.08s"
+      "resume": "4 passed in 21.82s"
     },
     "l2-lvm-extend-persist": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "4 passed in 2.84s"
+      "resume": "4 passed in 4.03s"
     },
     "l2-nfs-mount-persist": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "4 passed in 3.26s"
+      "resume": "4 passed in 4.32s"
     },
     "l2-package-management": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "3 passed in 3.93s"
+      "resume": "3 passed in 3.96s"
     },
     "l2-partition-gpt": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "4 passed in 3.83s"
+      "resume": "4 passed in 3.70s"
     },
     "l2-password-policy": {
       "etat": "vert",
@@ -230,42 +230,42 @@
     "l2-raid-mdadm": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "3 passed in 5.66s"
+      "resume": "3 passed in 5.54s"
     },
     "l2-repo-configure": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "5 passed in 2.64s"
+      "resume": "5 passed in 2.63s"
     },
     "l2-storage-performance": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "3 passed in 3.17s"
+      "resume": "3 passed in 3.22s"
     },
     "l2-sudo-delegation": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "4 passed in 2.69s"
+      "resume": "4 passed in 2.71s"
     },
     "l2-swap-management": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "5 passed in 5.73s"
+      "resume": "5 passed in 5.89s"
     },
     "l2-user-lifecycle": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "4 passed in 3.82s"
+      "resume": "4 passed in 3.95s"
     },
     "l3-app-constraints": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "3 passed in 2.44s"
+      "resume": "3 passed in 2.18s"
     },
     "l3-boot-target": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "1 passed in 1.38s"
+      "resume": "1 passed in 1.52s"
     },
     "l3-fs-readonly-recover": {
       "etat": "vert",
@@ -275,152 +275,152 @@
     "l3-grub-kernel-args": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "2 passed in 3.00s"
+      "resume": "2 passed in 2.41s"
     },
     "l3-journald-persist": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "3 passed in 4.67s"
+      "resume": "3 passed in 4.29s"
     },
     "l3-process-signals-priority": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "3 passed in 4.04s"
+      "resume": "3 passed in 4.12s"
     },
     "l3-scheduling-at": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "3 passed in 2.46s"
+      "resume": "3 passed in 2.55s"
     },
     "l3-scheduling-cron": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "2 passed in 2.56s"
+      "resume": "2 passed in 1.78s"
     },
     "l3-scheduling-timers": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "3 passed in 5.69s"
+      "resume": "3 passed in 4.65s"
     },
     "l3-service-create-unit": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "3 passed in 3.93s"
+      "resume": "3 passed in 3.79s"
     },
     "l3-service-diagnose": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "6 passed in 5.67s"
+      "resume": "6 passed in 5.57s"
     },
     "l3-ssh-access-recovery": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "5 passed in 3.46s"
+      "resume": "5 passed in 3.47s"
     },
     "l3-sysctl-persist": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "3 passed in 3.34s"
+      "resume": "3 passed in 2.51s"
     },
     "l3-tuned-profile": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "3 passed in 3.41s"
+      "resume": "3 passed in 3.47s"
     },
     "l4-bridge-bonding": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "5 passed in 3.00s"
+      "resume": "5 passed in 3.09s"
     },
     "l4-firewall-persist": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "3 passed in 2.63s"
+      "resume": "3 passed in 2.31s"
     },
     "l4-ldap-integration": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "4 passed in 4.36s"
+      "resume": "4 passed in 4.32s"
     },
     "l4-nat-portforward": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "5 passed in 16.88s"
+      "resume": "5 passed in 17.27s"
     },
     "l4-network-static-persist": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "4 passed in 3.51s"
+      "resume": "4 passed in 2.49s"
     },
     "l4-network-troubleshoot": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "3 passed in 2.09s"
+      "resume": "3 passed in 1.74s"
     },
     "l4-ntp-sync": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "3 passed in 3.66s"
+      "resume": "3 passed in 3.71s"
     },
     "l4-podman-basic": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "2 passed in 1.72s"
+      "resume": "2 passed in 1.73s"
     },
     "l4-podman-images": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "3 passed in 6.11s"
+      "resume": "3 passed in 5.69s"
     },
     "l4-podman-systemd-persist": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "3 passed in 3.75s"
+      "resume": "3 passed in 3.41s"
     },
     "l4-reverse-proxy-lb": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "3 passed in 4.81s"
+      "resume": "3 passed in 4.41s"
     },
     "l4-selinux-boolean-port": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "3 passed in 2.90s"
+      "resume": "3 passed in 2.74s"
     },
     "l4-selinux-context-fix": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "3 passed in 2.37s"
+      "resume": "3 passed in 2.31s"
     },
     "l4-selinux-diagnose-avc": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "3 passed in 1.62s"
+      "resume": "3 passed in 1.60s"
     },
     "l4-ssh-key-auth-harden": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "3 passed in 4.58s"
+      "resume": "3 passed in 4.50s"
     },
     "lfcs-apparmor": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "2 passed in 1.54s"
+      "resume": "2 passed in 1.58s"
     },
     "lfcs-firewall-ufw": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "3 passed in 2.03s"
+      "resume": "3 passed in 2.07s"
     },
     "lfcs-mount-cifs": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "6 passed in 5.42s"
+      "resume": "6 passed in 4.89s"
     },
     "lfcs-netplan-static": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "3 passed in 3.59s"
+      "resume": "3 passed in 3.42s"
     },
     "lfcs-package-apt": {
       "etat": "vert",
@@ -430,7 +430,7 @@
     "lfcs-storage-quotas": {
       "etat": "vert",
       "runtime": "vm",
-      "resume": "4 passed in 3.39s"
+      "resume": "4 passed in 3.28s"
     }
   }
 }

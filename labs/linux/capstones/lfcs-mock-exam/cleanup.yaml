@@ -38,7 +38,14 @@
           crontab -u devops -r 2>/dev/null
           apt-mark unhold tree 2>/dev/null
           ufw --force reset 2>/dev/null; ufw allow OpenSSH 2>/dev/null
-          rm -f /etc/netplan/99-lab.yaml /etc/sudoers.d/auditors
+          rm -f /etc/sudoers.d/auditors
+          # Le nom du fichier netplan est libre dans l'énoncé : on filtre sur le
+          # contenu, jamais sur le nom, sans quoi la configuration du candidat
+          # reste en place pour la session suivante.
+          for f in /etc/netplan/*.yaml /etc/netplan/*.yml; do
+            [ -e "$f" ] || continue
+            grep -qE 'lab0|198\.51\.100\.|203\.0\.113\.' "$f" && rm -f "$f"
+          done
           netplan apply 2>/dev/null
           sed -i '/lab-target\.lab/d' /etc/hosts
           userdel -r auditor1 2>/dev/null

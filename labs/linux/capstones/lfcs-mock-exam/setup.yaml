@@ -234,6 +234,17 @@
           ufw --force reset 2>/dev/null
           ufw allow OpenSSH 2>/dev/null
           sed -i '/lab-target\.lab/d' /etc/hosts
+
+          # Tâches 11/12 — l'énoncé ne dicte PAS le nom du fichier netplan, donc
+          # retirer « 99-lab.yaml » ne suffit pas : un candidat qui l'a appelé
+          # autrement laissait son adresse et sa route au suivant, qui marquait
+          # 13 points sans rien faire (red team du 2026-09-15). On filtre sur le
+          # CONTENU, ce qui épargne la configuration de l'interface de gestion :
+          # elle ne parle ni de lab0 ni de ces plages de documentation.
+          for f in /etc/netplan/*.yaml /etc/netplan/*.yml; do
+            [ -e "$f" ] || continue
+            grep -qE 'lab0|198\.51\.100\.|203\.0\.113\.' "$f" && rm -f "$f"
+          done
           netplan apply 2>/dev/null
           exit 0
         chdir: /

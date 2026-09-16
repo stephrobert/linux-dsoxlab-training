@@ -50,14 +50,40 @@
           pvremove -f {{ disque }} 2>/dev/null
           wipefs -a {{ disque }} 2>/dev/null
           rm -rf {{ docroot }} /srv/sauvegardes
+          rm -f /usr/local/sbin/cotisation-* /usr/local/bin/cotisation-*
           semanage port -d -t http_port_t -p tcp 8080 2>/dev/null
           semanage fcontext -d "{{ docroot }}(/.*)?" 2>/dev/null
           firewall-cmd --permanent --remove-port=8080/tcp 2>/dev/null
           firewall-cmd --reload 2>/dev/null
           userdel -r cotisation 2>/dev/null
           rm -rf /var/log/journal
-          rm -f /etc/ssh/sshd_config.d/99-capstone.conf
           systemctl restart systemd-journald 2>/dev/null
+
+          # nginx.conf est un fichier que le candidat MODIFIE : il y pose la
+          # directive `user` pour faire tourner le service sous le compte
+          # dedie. Sans remise a zero, la session suivante trouverait cette
+          # partie du travail deja faite.
+          #
+          # On NORMALISE la directive au lieu d'en garder un instantane. Un
+          # instantane suppose qu'il est pris sur une VM neuve, et cette
+          # hypothese s'est revelee fausse des le premier essai : le fichier
+          # « origine » avait fige un `user cotisation;` laisse par un passage
+          # precedent. La valeur par defaut d'AlmaLinux 10 est `user nginx;`,
+          # elle ne depend d'aucun etat anterieur.
+          sed -i 's/^user[[:space:]].*/user nginx;/' /etc/nginx/nginx.conf
+          rm -f /etc/nginx/nginx.conf.capstone-origine
+
+          # Tout drop-in sshd qui n'appartient pas a l'image est le reliquat
+          # d'une session precedente. Le laisser offrirait les 5 points du
+          # durcissement SSH au candidat suivant, ou pire : un fichier trie
+          # avant le notre gagnerait, puisque sshd retient la PREMIERE valeur
+          # lue. On ne garde que les trois fichiers livres avec AlmaLinux 10.
+          for f in /etc/ssh/sshd_config.d/*.conf; do
+            case "${f##*/}" in
+              40-redhat-crypto-policies.conf|50-cloud-init.conf|50-redhat.conf) ;;
+              *) rm -f "$f" ;;
+            esac
+          done
           exit 0
       changed_when: false
 
@@ -66,6 +92,13 @@
     # SSH passait donc sans que le candidat ait rien fait, et ses 5 points
     # etaient offerts. On remet la machine dans l'etat d'un serveur fraichement
     # installe, mot de passe et root autorises, pour que la tache existe.
+    # Le prefixe 00 est la clef de l'exercice : sshd retient la PREMIERE valeur
+    # lue, pas la derniere, et les drop-in sont lus par ordre lexical. Un
+    # candidat qui ajoute un 99- ne change donc rien, et `sshd -T` le lui dit.
+    #
+    # Ne pas renommer ce fichier a la legere : la solution de reference, qui
+    # est chiffree, le designe par son nom. Le renommer l'a deja cassee une
+    # fois (2026-09-15), et la panne ne s'est vue qu'au rejeu complet.
     - name: "Etat de depart d'un serveur neuf : sshd permissif"
       ansible.builtin.copy:
         dest: /etc/ssh/sshd_config.d/00-capstone-depart.conf
@@ -119,12 +152,12 @@
         content: |
           Application « cotisation », version 1.4.0.
 
-          A servir en HTTP sur le port 8080, depuis {{ docroot }}.
-          Le contenu de ce repertoire est la livraison : index.html et VERSION.
+          À servir en HTTP sur le port 8080, depuis {{ docroot }}.
+          Le contenu de ce répertoire est la livraison : index.html et VERSION.
 
           Contraintes d'exploitation :
-            - le contenu vit sur un volume logique dedie, pas sur la racine ;
+            - le contenu vit sur un volume logique dédié, pas sur la racine ;
             - le service tourne sous un compte de service, pas sous root ;
             - SELinux reste en enforcing ;
-            - tout doit revenir apres un redemarrage.
+            - tout doit revenir après un redémarrage.
         mode: "0644"

@@ -22,8 +22,24 @@
           rm -f /etc/nginx/conf.d/cotisation.conf
           rm -f /etc/systemd/system/cotisation-sauvegarde.service
           rm -f /etc/systemd/system/cotisation-sauvegarde.timer
-          rm -f /etc/ssh/sshd_config.d/99-capstone.conf
-          rm -f /etc/ssh/sshd_config.d/00-capstone-depart.conf
+          rm -f /usr/local/sbin/cotisation-* /usr/local/bin/cotisation-*
+
+          # Rendre a nginx.conf sa directive `user` par defaut : le candidat y a
+          # touche pour faire tourner le service sous `cotisation`, compte que
+          # ce cleanup supprime, et les autres labs de la section partagent
+          # cette machine. Un nginx pointant vers un compte inexistant refuse
+          # de demarrer.
+          sed -i 's/^user[[:space:]].*/user nginx;/' /etc/nginx/nginx.conf
+          rm -f /etc/nginx/nginx.conf.capstone-origine
+
+          # Ni le fichier permissif du capstone, ni celui du candidat : on ne
+          # garde que les drop-in livres avec l'image.
+          for f in /etc/ssh/sshd_config.d/*.conf; do
+            case "${f##*/}" in
+              40-redhat-crypto-policies.conf|50-cloud-init.conf|50-redhat.conf) ;;
+              *) rm -f "$f" ;;
+            esac
+          done
           systemctl daemon-reload
           systemctl reload sshd 2>/dev/null
           exit 0

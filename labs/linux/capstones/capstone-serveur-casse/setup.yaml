@@ -26,7 +26,6 @@
       - selinux
       - permissions
       - ecoute_locale
-    panne: "{{ pannes | random(seed=lookup('pipe', 'date +%s%N')) }}"
   tasks:
     - name: Outillage
       ansible.builtin.package:
@@ -51,6 +50,19 @@
           firewall-cmd --reload 2>/dev/null
           exit 0
       changed_when: false
+
+    # TROUVE PAR RED TEAM le 2026-09-15, et le defaut allait dans les DEUX sens.
+    # Un candidat qui triche avec `setenforce 0` laisse la machine en
+    # permissive. La session suivante heritait alors d'un systeme desarme :
+    # si la panne tiree etait `selinux`, elle ne mordait plus et le site
+    # repondait tout seul ; si c'etait une autre, le candidat echouait au
+    # garde-fou SELinux pour un etat qu'il n'avait pas cree. Le cleanup le
+    # corrigeait deja, mais un setup doit se suffire a lui-meme : le fichier
+    # annonce qu'il est rejouable sur une VM deja utilisee.
+    - name: Remettre SELinux en enforcing, quoi qu'ait fait la session precedente
+      ansible.posix.selinux:
+        policy: targeted
+        state: enforcing
 
     - name: Le docroot du site interne
       ansible.builtin.file:
@@ -132,6 +144,26 @@
     # ------------------------------------------------------------------
     # 2. La panne, une seule, jamais annoncee.
     # ------------------------------------------------------------------
+
+    # Le tirage se materialise ICI, et une seule fois. Declare dans `vars:`,
+    # il etait une expression Jinja PARESSEUSE : Ansible la reevalue a chaque
+    # reference, et `lookup('pipe', 'date +%s%N')` rend une graine differente
+    # a chaque fois. Les six `when: panne == ...` tiraient donc six fois,
+    # independamment, et la trace du formateur une septieme.
+    #
+    # Mesure du 2026-09-15 : une session sur trois environ n'injectait AUCUNE
+    # panne (5/6 puissance 6, soit 33 %), le site restait sain et les sept
+    # tests passaient sans que le candidat ait rien fait. D'autres sessions en
+    # injectaient plusieurs, et la trace nommait une panne qui n'avait pas ete
+    # posee. C'est le controle negatif de `verify-solutions.py --negative` qui
+    # l'a revele, pas la lecture du fichier.
+    #
+    # `set_fact` fige la valeur pour toute la session. Un `-e panne=selinux`
+    # du formateur reste prioritaire : les extra-vars priment sur set_fact.
+    - name: Tirer la panne, une seule fois pour toute la session
+      ansible.builtin.set_fact:
+        panne: "{{ pannes | random(seed=lookup('pipe', 'date +%s%N')) }}"
+
     - name: Panne retenue pour cette session
       ansible.builtin.debug:
         msg: "panne injectee : {{ panne }} (ne pas montrer au candidat)"

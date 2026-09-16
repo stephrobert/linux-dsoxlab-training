@@ -19,33 +19,33 @@ def _disk(host) -> str:
 
 
 def test_disk_is_luks2(host):
-    """Le disque doit etre formate en LUKS version 2."""
+    """Le disque doit être formaté en LUKS version 2."""
     disk = _disk(host)
-    assert disk, "/root/luks-disk.env introuvable (lab non prepare ?)."
+    assert disk, "/root/luks-disk.env introuvable (lab non préparé ?)."
     out = host.run(f"cryptsetup luksDump {disk} 2>/dev/null")
     assert out.rc == 0, f"{disk} n'est pas un volume LUKS (cryptsetup luksFormat manquant ?)."
     assert "Version:" in out.stdout, (
-        f"{disk} ne presente pas d'en-tete LUKS lisible."
+        f"{disk} ne présente pas d'en-tête LUKS lisible."
     )
-    # On lit la VALEUR du champ, pas une fenetre de caracteres : cryptsetup
+    # On lit la VALEUR du champ, pas une fenêtre de caractères : cryptsetup
     # aligne la colonne avec des espaces puis une tabulation, si bien que le
-    # chiffre tombait en 9e position et echappait a une tranche [:8]. Le
-    # volume etait bien en LUKS2, seul le test se trompait.
+    # chiffre tombait en 9e position et échappait à une tranche [:8]. Le
+    # volume était bien en LUKS2, seul le test se trompait.
     version = out.stdout.split("Version:", 1)[1].splitlines()[0].strip()
     assert version == "2", (
-        f"Le volume doit etre en LUKS2 (--type luks2), version lue : {version!r}."
+        f"Le volume doit être en LUKS2 (--type luks2), version lue : {version!r}."
     )
 
 
 def test_mapping_open(host):
-    """Le volume doit etre ouvert sous /dev/mapper/coffre."""
+    """Le volume doit être ouvert sous /dev/mapper/coffre."""
     assert host.file("/dev/mapper/coffre").exists, (
         "Ouvrez le volume : cryptsetup open <disque> coffre."
     )
 
 
 def test_mounted(host):
-    """Le volume dechiffre doit etre monte sur /mnt/coffre."""
+    """Le volume déchiffré doit être monté sur /mnt/coffre."""
     out = host.run("findmnt -n /mnt/coffre")
     assert "/dev/mapper/coffre" in out.stdout, (
         "Montez /dev/mapper/coffre sur /mnt/coffre (mkfs.xfs puis mount)."
@@ -53,8 +53,22 @@ def test_mounted(host):
 
 
 def test_crypttab_declared(host):
-    """L'entree doit figurer dans /etc/crypttab (persistance)."""
+    """L'entrée doit figurer dans /etc/crypttab (persistance)."""
     ct = host.file("/etc/crypttab")
-    assert ct.exists and "coffre" in ct.content_string, (
-        "Declarez le volume dans /etc/crypttab (coffre UUID=... /root/luks.key luks)."
+    assert ct.exists, (
+        "/etc/crypttab n'existe pas : le volume ne serait pas rouvert au "
+        "démarrage."
+    )
+    # On lit le NOM DE MAPPING, premier champ d'une ligne active, plutôt que
+    # de chercher « coffre » dans tout le fichier : un commentaire laissé par
+    # une session précédente suffirait sinon à valider une persistance absente.
+    noms = {
+        ligne.split()[0]
+        for ligne in ct.content_string.splitlines()
+        if ligne.strip() and not ligne.strip().startswith("#")
+    }
+    assert "coffre" in noms, (
+        "Déclarez le volume dans /etc/crypttab "
+        "(coffre UUID=... /root/luks.key luks). Mappings déclarés : "
+        f"{sorted(noms) or 'aucun'}."
     )
