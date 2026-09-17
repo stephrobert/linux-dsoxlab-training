@@ -347,10 +347,12 @@ ci-dessous est générée à partir des vrais `lab.yaml` : lance
 
 | Lab (id) | Titre | Niveau | Certif | Runtime | Guide compagnon |
 |---|---|---|---|---|---|
+| `capstone-mise-en-production` | Mettre un serveur en production : une mission, neuf livrables, un redémarrage | l2 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/) |
+| `capstone-serveur-casse` | Serveur cassé : le site ne répond plus, le symptôme ne dit rien | l3 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/depanner/) |
 | `rhcsa-mock-exam` | Examen blanc RHCSA EX200 — 20 tâches sur 2 VMs | l2 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/certifications/rhcsa/) |
 | `lfcs-mock-exam` | Examen blanc LFCS — 17 tâches sur Ubuntu 24.04 | l2 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/certifications/lfcs/) |
 
-_84 labs, table générée par `scripts/gen_catalog.py`._
+_86 labs, table générée par `scripts/gen_catalog.py`._
 <!-- LABS:END -->
 
 ## Contribuer et licence
