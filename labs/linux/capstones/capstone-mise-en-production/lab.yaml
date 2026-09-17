@@ -41,7 +41,7 @@ runtime:
 distros:
   - almalinux10
   - rhel10
-doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/
+doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/validation/
 validation:
   functional: true
   security: true
