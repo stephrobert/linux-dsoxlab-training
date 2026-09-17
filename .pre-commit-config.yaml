@@ -91,6 +91,19 @@ repos:
         pass_filenames: false
         always_run: true
 
+      # Le catalogue a DEUX descriptions : `labs/**/lab.yaml` dit ce qui
+      # existe, `meta.yml` dit dans quel ordre le jouer. Chaque outil lit la
+      # sienne et a raison de son côté, et rien ne comparait les deux. Mesuré le
+      # 2026-09-17 : deux capstones livrés et validés étaient absents du
+      # parcours, donc invisibles pour un apprenant qui suit meta.yml. Le commit
+      # qui les avait ajoutés n'avait pas touché ce fichier.
+      - id: meta-declare-les-labs
+        name: tout lab livré est déclaré dans meta.yml, et réciproquement
+        entry: uv run --no-project --with pytest --with pyyaml pytest tests/test_meta_declare_les_labs.py -q
+        language: system
+        pass_filenames: false
+        always_run: true
+
       # Un YAML valide ne prouve pas qu'Ansible charge les tâches : une
       # apostrophe dans un bloc `shell` casse le découpage des arguments, et le
       # playbook ne se voit refusé qu'à l'exécution, en rc=4 sans une seule

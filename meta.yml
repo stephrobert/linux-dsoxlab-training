@@ -230,5 +230,10 @@ sections:
     title: "Capstones"
     description: "Synthèses transverses — projets de fin de bloc."
     labs:
+      # Les deux synthèses d'abord : elles partent d'une situation et d'un
+      # cahier des charges, sans chronomètre. Les examens blancs ensuite, qui
+      # ajoutent la contrainte de temps à une compétence déjà acquise.
+      - linux/capstones/capstone-mise-en-production
+      - linux/capstones/capstone-serveur-casse
       - linux/capstones/rhcsa-mock-exam
       - linux/capstones/lfcs-mock-exam
