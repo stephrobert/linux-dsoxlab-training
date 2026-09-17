@@ -328,13 +328,13 @@ to refresh it.
 
 | Lab (id) | Title | Level | Certif | Runtime | Companion guide |
 |---|---|---|---|---|---|
-| `drill-essential-commands` | Drill — essential commands under exam conditions | l1 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/) |
-| `drill-users-groups` | Drill — users, groups and delegation under exam conditions | l2 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/) |
-| `drill-systemd` | Drill — systemd units, timers and scheduling under exam conditions | l3 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/) |
+| `drill-essential-commands` | Drill — essential commands under exam conditions | l1 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/validation/) |
+| `drill-users-groups` | Drill — users, groups and delegation under exam conditions | l2 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/securiser/utilisateurs-groupes/) |
+| `drill-systemd` | Drill — systemd units, timers and scheduling under exam conditions | l3 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/systemd/) |
 | `drill-storage` | Drill — partitions, LVM and swap under exam conditions | l2 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/lvm/) |
-| `drill-packages` | Drill — package management under exam conditions | l2 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/) |
+| `drill-packages` | Drill — package management under exam conditions | l2 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/maintenir/paquets/) |
 | `drill-firewall` | Drill — firewall under exam conditions | l4 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/securiser/reseaux/) |
-| `drill-selinux` | Drill — SELinux under exam conditions | l4 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/) |
+| `drill-selinux` | Drill — SELinux under exam conditions | l4 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/securiser/durcissement/selinux/) |
 | `drill-apparmor` | Drill — AppArmor under exam conditions | l4 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/securiser/durcissement/apparmor/) |
 | `drill-network` | Drill — static networking under exam conditions | l4 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/reseau/netplan/) |
 
@@ -342,7 +342,7 @@ to refresh it.
 
 | Lab (id) | Title | Level | Certif | Runtime | Companion guide |
 |---|---|---|---|---|---|
-| `capstone-mise-en-production` | Put a server into production: one mission, nine deliverables, one reboot | l2 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/) |
+| `capstone-mise-en-production` | Put a server into production: one mission, nine deliverables, one reboot | l2 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/validation/) |
 | `capstone-serveur-casse` | Broken server: the site is down, the symptom tells you nothing | l3 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/depanner/) |
 | `rhcsa-mock-exam` | RHCSA EX200 mock exam — 20 tasks across 2 VMs | l2 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/certifications/rhcsa/) |
 | `lfcs-mock-exam` | LFCS mock exam — 17 tasks on Ubuntu 24.04 | l2 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/certifications/lfcs/) |
