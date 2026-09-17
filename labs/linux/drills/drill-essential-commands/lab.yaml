@@ -44,7 +44,7 @@ distros:
   - rhel10
   - ubuntu24.04
   - debian12
-doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/
+doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/validation/
 validation:
   functional: true
   security: false
