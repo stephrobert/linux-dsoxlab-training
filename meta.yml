@@ -8,6 +8,13 @@ repo:
   category: linux
   title: "Linux DevSecOps Training — RHCSA + LFCS 2026"
   blog_url: "https://blog.stephane-robert.info/docs/admin-serveurs/linux/"
+  # Où `dsoxlab support --issue` dépose le rapport d'un apprenant.
+  #
+  # Sans ce champ, dsoxlab retombe sur `git remote get-url origin`, ce qui
+  # marche ici mais suppose deux choses : un remote nommé `origin`, et un
+  # hébergeur dont les issues vivent sous `<dépôt>/issues`. Le déclarer lève
+  # la supposition.
+  issues_url: "https://github.com/stephrobert/linux-dsoxlab-training/issues"
   description: |
     Plateforme de labs pédagogiques pour la formation Linux du blog
     Stéphane Robert. Couvre les certifications RHCSA EX200v10 (RHEL 10) et
