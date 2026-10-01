@@ -1,6 +1,6 @@
 id: capstone-serveur-casse
 title: "Broken server: the site is down, the symptom tells you nothing"
-description: "A working internal site stops answering. The setup injects ONE fault among six, drawn at random, and never says which: stopped service, wrong port, closed firewall, SELinux context, docroot permissions, full filesystem. You diagnose, you repair, and the repair must survive a reboot. Scored purely on observable state, with three checks that reject the sledgehammer fixes: SELinux must stay enforcing, firewalld must stay running, and the docroot must not become world-writable."
+description: "A working internal site stops answering. The setup injects ONE fault among six, drawn at random, and never says which: stopped service, wrong port, closed firewall, SELinux context, docroot permissions, listening on loopback only. You diagnose, you repair, and the repair must survive a reboot. Scored purely on observable state, with three checks that reject the sledgehammer fixes: SELinux must stay enforcing, firewalld must stay running, and the docroot must not become world-writable."
 section: capstones
 lab_type: capstone
 level: l3
