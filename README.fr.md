@@ -261,14 +261,14 @@ ci-dessous est générée à partir des vrais `lab.yaml` : lance
 | Lab (id) | Titre | Niveau | Certif | Runtime | Guide compagnon |
 |---|---|---|---|---|---|
 | `l2-swap-management` | Ajouter et gérer le swap | l2 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/swap/) |
-| `l2-fstab-persist-uuid` | Monter un filesystem de façon persistante par UUID dans /etc/fstab | l2 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/montage-persistance/) |
+| `l2-fstab-persist-uuid` | Monter un système de fichiers de façon persistante par UUID dans /etc/fstab | l2 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/montage-persistance/) |
 | `l2-partition-gpt` | Créer des partitions GPT sur un disque avec parted | l2 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/partitions/) |
-| `l2-filesystem-create-xfs` | Créer et labelliser un filesystem XFS, puis le monter | l2 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/xfs/) |
-| `l2-disk-space-troubleshoot` | Diagnostiquer un filesystem plein et récupérer de l'espace | l2 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/espace-disque/) |
+| `l2-filesystem-create-xfs` | Créer et labelliser un système de fichiers XFS, puis le monter | l2 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/xfs/) |
+| `l2-disk-space-troubleshoot` | Diagnostiquer un système de fichiers plein et récupérer de l'espace | l2 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/espace-disque/) |
 | `l2-storage-performance` | Optimiser un montage avec noatime (de façon persistante) | l2 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/performances-disques/) |
 | `l2-lvm-extend-persist` | Étendre un volume logique et prouver que le montage survit au reboot | l2 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/lvm/) |
 | `l2-nfs-mount-persist` | Monter un export NFS de façon persistante depuis un serveur | l2 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/services/stockage/nfs/) |
-| `l2-autofs-ondemand` | Monter un filesystem à la demande avec autofs | l2 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/autofs/) |
+| `l2-autofs-ondemand` | Monter un système de fichiers à la demande avec autofs | l2 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/autofs/) |
 | `l2-raid-mdadm` | Construire un RAID 1 logiciel avec mdadm | l2 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/raid-mdadm/) |
 | `l2-luks-encryption` | Chiffrer un disque avec LUKS | l2 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/chiffrement-luks/) |
 | `l2-user-lifecycle` | Créer un compte local avec UID, shell et groupes exacts | l2 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/securiser/utilisateurs-groupes/) |
@@ -286,7 +286,7 @@ ci-dessous est générée à partir des vrais `lab.yaml` : lance
 | `l3-boot-target` | Régler la cible de démarrage systemd par défaut | l3 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/demarrage-reboot/) |
 | `l3-grub-kernel-args` | Ajouter un paramètre noyau persistant au démarrage | l3 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/securiser/durcissement/grub/) |
 | `l3-service-create-unit` | Créer et activer un service systemd | l3 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/systemd/services/) |
-| `l3-service-diagnose` | Diagnostiquer et corriger un service systemd en crash loop | l3 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/depanner/service-ne-demarre-pas/) |
+| `l3-service-diagnose` | Diagnostiquer et corriger un service systemd en boucle de crash | l3 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/depanner/service-ne-demarre-pas/) |
 | `l3-journald-persist` | Rendre le journal systemd persistant au reboot | l3 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/systemd/journaux/) |
 | `l3-scheduling-cron` | Planifier une tâche récurrente avec cron | l3 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/planification/cron/) |
 | `l3-scheduling-at` | Planifier une tâche ponctuelle avec at | l3 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/planification/at/) |
@@ -296,7 +296,7 @@ ci-dessous est générée à partir des vrais `lab.yaml` : lance
 | `l3-process-signals-priority` | Abaisser la priorité d'ordonnancement d'un service avec Nice | l3 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/processus/) |
 | `l3-tuned-profile` | Appliquer un profil de performance tuned | l3 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/tuned/) |
 | `l3-fs-readonly-recover` | Récupérer un montage en lecture seule dû à un fstab cassé | l3 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/depanner/systeme-fichiers-lecture-seule/) |
-| `l3-ssh-access-recovery` | Réparer une config sshd cassée avant qu'elle ne te verrouille dehors | l3 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/depanner/perte-acces-ssh/) |
+| `l3-ssh-access-recovery` | Réparer une configuration sshd cassée avant de perdre la main | l3 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/depanner/perte-acces-ssh/) |
 
 ### Réseau, Sécurité & Conteneurs (l4)
 
@@ -333,15 +333,15 @@ ci-dessous est générée à partir des vrais `lab.yaml` : lance
 
 | Lab (id) | Titre | Niveau | Certif | Runtime | Guide compagnon |
 |---|---|---|---|---|---|
-| `drill-essential-commands` | Drill — commandes essentielles en conditions d'examen | l1 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/validation/) |
-| `drill-users-groups` | Drill — utilisateurs, groupes et délégation en conditions d'examen | l2 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/securiser/utilisateurs-groupes/) |
-| `drill-systemd` | Drill — unités systemd, timers et planification en conditions d'examen | l3 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/systemd/) |
-| `drill-storage` | Drill — partitions, LVM et swap en conditions d'examen | l2 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/lvm/) |
-| `drill-packages` | Drill — gestion des paquets en conditions d'examen | l2 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/maintenir/paquets/) |
+| `drill-essential-commands` | Drill : commandes essentielles en conditions d'examen | l1 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/validation/) |
+| `drill-users-groups` | Drill : utilisateurs, groupes et délégation en conditions d'examen | l2 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/securiser/utilisateurs-groupes/) |
+| `drill-systemd` | Drill : unités systemd, timers et planification en conditions d'examen | l3 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/systemd/) |
+| `drill-storage` | Drill : partitions, LVM et swap en conditions d'examen | l2 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/lvm/) |
+| `drill-packages` | Drill : gestion des paquets en conditions d'examen | l2 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/maintenir/paquets/) |
 | `drill-firewall` | Drill — pare-feu en conditions d'examen | l4 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/securiser/reseaux/) |
 | `drill-selinux` | Drill — SELinux en conditions d'examen | l4 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/securiser/durcissement/selinux/) |
 | `drill-apparmor` | Drill — AppArmor en conditions d'examen | l4 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/securiser/durcissement/apparmor/) |
-| `drill-network` | Drill — réseau statique en conditions d'examen | l4 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/reseau/netplan/) |
+| `drill-network` | Drill : réseau statique en conditions d'examen | l4 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/reseau/netplan/) |
 
 ### Capstones
 
@@ -349,8 +349,8 @@ ci-dessous est générée à partir des vrais `lab.yaml` : lance
 |---|---|---|---|---|---|
 | `capstone-mise-en-production` | Mettre un serveur en production : une mission, neuf livrables, un redémarrage | l2 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/validation/) |
 | `capstone-serveur-casse` | Serveur cassé : le site ne répond plus, le symptôme ne dit rien | l3 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/depanner/) |
-| `rhcsa-mock-exam` | Examen blanc RHCSA EX200 — 20 tâches sur 2 VMs | l2 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/certifications/rhcsa/) |
-| `lfcs-mock-exam` | Examen blanc LFCS — 17 tâches sur Ubuntu 24.04 | l2 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/certifications/lfcs/) |
+| `rhcsa-mock-exam` | Examen blanc RHCSA EX200 (20 tâches sur 2 VM) | l2 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/certifications/rhcsa/) |
+| `lfcs-mock-exam` | Examen blanc LFCS (17 tâches sur Ubuntu 24.04) | l2 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/certifications/lfcs/) |
 
 _86 labs, table générée par `scripts/gen_catalog.py`._
 <!-- LABS:END -->

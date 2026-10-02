@@ -79,11 +79,28 @@ def _certif_cell(lab: dict) -> str:
     return " · ".join(str(t).upper() for t in tags)
 
 
+# doc_url (français) -> URL du guide anglais. Le README anglais renvoyait vers
+# les guides français alors que 69 avaient leur traduction (constaté le
+# 2026-10-02). La table est produite depuis les `translationOf` du site, pas
+# écrite à la main ; un lab absent de la table garde son guide français, marqué.
+DOC_URL_EN = ROOT / "scripts" / "doc_url_en.json"
+
+
+def _doc_url_en() -> dict[str, str]:
+    if not DOC_URL_EN.exists():
+        return {}
+    import json
+
+    return json.loads(DOC_URL_EN.read_text(encoding="utf-8"))
+
+
 def _guide_cell(lab: dict, lang: str) -> str:
     url = lab.get("doc_url", "")
     if not url:
         return "—"
-    # Même mot dans les deux langues : la condition ne servait à rien.
+    if lang == "en":
+        en = _doc_url_en().get(url)
+        return f"[guide]({en})" if en else f"[guide (FR)]({url})"
     return f"[guide]({url})"
 
 
