@@ -22,6 +22,7 @@ def host():
     return lab_host(TARGET_HOST)
 
 
+@pytest.mark.garde_fou
 def test_deploy_user_exists(host):
     """L'utilisateur deploy doit exister."""
     assert host.user("deploy").exists, "L'utilisateur deploy doit exister."

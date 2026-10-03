@@ -34,6 +34,7 @@ def _fstab_line(host) -> str | None:
     return None
 
 
+@pytest.mark.garde_fou
 def test_mounted(host):
     """/srv/data doit rester monté."""
     assert host.mount_point(MOUNT).exists, (

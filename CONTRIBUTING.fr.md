@@ -66,6 +66,24 @@ catalogue est généré à partir des vrais `lab.yaml` : lance
 `python3 scripts/gen_catalog.py --check` pour vérifier. La CI et le hook
 `pre-push` refusent tous deux un catalogue périmé.
 
+### Attester un lab dans les deux sens
+
+`python3 scripts/valider-labs.py --lab <id>` exige qu'un lab rende **0 avant
+le travail** et **100 après la solution**, et écrit le verdict dans
+`validation-labs.json`. Pour un lab VM, il ramène d'abord ses machines à une
+**base figée** : sans cela, le premier check noterait aussi ce qu'ont laissé
+les labs joués avant lui sur les mêmes VM.
+
+Cette base se fige **une fois, sur des VM neuves**, et se refige après chaque
+`provision`, qui recrée les domaines :
+
+```bash
+dsoxlab destroy --yes && dsoxlab provision
+bash scripts/rebase-vms.sh     # environ 2 min ; un reset prend ensuite ~6 s
+```
+
+Sans base valide, le validateur refuse de jouer le lab et dit pourquoi.
+
 ## Conventions
 
 - **Id de lab :** `<niveau>-<slug>` (ex. `l1-first-terminal`),

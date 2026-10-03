@@ -30,6 +30,7 @@ def test_getent_resolves_directory_user(host):
     )
 
 
+@pytest.mark.garde_fou
 def test_alice_is_not_local(host):
     """alice ne doit PAS être un compte local (/etc/passwd) — elle vient de LDAP."""
     local = host.check_output("getent -s files passwd alice || true").strip()

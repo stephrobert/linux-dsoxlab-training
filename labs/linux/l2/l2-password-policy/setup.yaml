@@ -17,8 +17,11 @@
         shell: /bin/bash
         create_home: true
 
-    - name: Reset bob aging to defaults (no policy yet)
-      ansible.builtin.command: chage -M 99999 -m 0 -W 7 bob
+    # -W 0 et non 7 : 7 est la valeur DEMANDÉE. La poser au départ rendait
+    # l'avertissement déjà conforme, et le lab donnait 20 points avant tout
+    # travail (mesuré le 2026-10-03).
+    - name: Reset bob aging to a loose policy (no warning yet)
+      ansible.builtin.command: chage -M 99999 -m 0 -W 0 bob
       changed_when: false
 
     - name: Ensure PASS_MAX_DAYS default is loose (99999) at start

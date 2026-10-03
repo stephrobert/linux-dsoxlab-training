@@ -24,6 +24,7 @@ def host():
     return lab_host(TARGET_HOST)
 
 
+@pytest.mark.garde_fou
 def test_data_mounted_xfs(host):
     """/data doit être un point de montage XFS."""
     mp = host.mount_point("/data")
@@ -55,6 +56,7 @@ def test_xfs_reflects_extension(host):
     )
 
 
+@pytest.mark.garde_fou
 def test_mount_persistent_fstab_uuid(host):
     """Le montage /data doit être déclaré dans /etc/fstab par UUID (persistance)."""
     fstab = host.file("/etc/fstab").content_string

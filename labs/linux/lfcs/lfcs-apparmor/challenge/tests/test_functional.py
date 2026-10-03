@@ -27,6 +27,7 @@ def _status(host) -> dict:
     return json.loads(host.check_output("aa-status --json"))
 
 
+@pytest.mark.garde_fou
 def test_apparmor_active(host):
     """AppArmor doit être actif avec des profils chargés."""
     profiles = _status(host).get("profiles", {})

@@ -30,6 +30,7 @@ def test_dropin_exists(host):
     )
 
 
+@pytest.mark.garde_fou
 def test_sudoers_syntax_valid(host):
     """L'ensemble sudoers (drop-in inclus) doit être syntaxiquement valide."""
     rc = host.run("visudo -c").rc
@@ -53,6 +54,7 @@ def test_ops_can_run_systemctl_nopasswd(host):
     )
 
 
+@pytest.mark.garde_fou
 def test_delegation_is_limited(host):
     """Moindre privilège : ops ne doit PAS avoir un sudo total (ALL)."""
     out = host.check_output("sudo -l -U ops")

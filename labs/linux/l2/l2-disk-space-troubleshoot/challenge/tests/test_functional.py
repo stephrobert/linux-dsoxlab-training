@@ -23,6 +23,7 @@ def host():
     return lab_host(TARGET_HOST)
 
 
+@pytest.mark.garde_fou
 def test_filesystem_still_mounted(host):
     """/srv/data doit rester monté (on ne résout pas en démontant/effaçant tout)."""
     assert host.mount_point(MOUNT).exists, (
@@ -43,6 +44,7 @@ def test_usage_below_50_percent(host):
     )
 
 
+@pytest.mark.garde_fou
 def test_legit_data_kept(host):
     """Le fichier légitime app.log doit être conservé."""
     f = host.file(f"{MOUNT}/app.log")

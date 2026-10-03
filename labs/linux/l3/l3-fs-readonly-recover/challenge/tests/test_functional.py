@@ -40,6 +40,7 @@ def test_writable(host):
     )
 
 
+@pytest.mark.garde_fou
 def test_fstab_clean(host):
     """mount -a doit réussir : l'option invalide de fstab a été corrigée."""
     result = host.run("mount -a")

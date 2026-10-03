@@ -31,6 +31,7 @@ def test_sshd_config_valid(host):
     )
 
 
+@pytest.mark.garde_fou
 def test_sshd_running(host):
     """Le service sshd doit tourner."""
     assert host.service("sshd").is_running, "sshd doit être actif."

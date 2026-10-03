@@ -65,6 +65,24 @@ from the real `lab.yaml` files — run `python3 scripts/gen_catalog.py` after
 adding or renaming a lab, and `python3 scripts/gen_catalog.py --check` to verify.
 CI and the `pre-push` hook both reject a stale catalog.
 
+### Attesting a lab both ways
+
+`python3 scripts/valider-labs.py --lab <id>` requires a lab to score **0 before
+any work** and **100 after the reference solution**, and records the verdict
+in `validation-labs.json`. For a VM lab, it first brings its machines back to a
+**frozen base**: otherwise the first check would also grade whatever earlier
+labs left on the same VMs.
+
+That base is frozen **once, on fresh VMs**, and again after every `provision`,
+which recreates the domains:
+
+```bash
+dsoxlab destroy --yes && dsoxlab provision
+bash scripts/rebase-vms.sh     # about 2 min; a reset then takes ~6 s
+```
+
+Without a valid base, the validator refuses to run the lab and says why.
+
 ## Conventions
 
 - **Lab id:** `<level>-<slug>` (e.g. `l1-first-terminal`), matching the

@@ -28,6 +28,7 @@ def host():
     return lab_host(TARGET_HOST)
 
 
+@pytest.mark.garde_fou
 def test_autofs_running(host):
     """Le service autofs doit tourner."""
     assert host.service("autofs").is_running, (

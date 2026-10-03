@@ -41,6 +41,7 @@ def test_http_permanent(host):
     )
 
 
+@pytest.mark.garde_fou
 def test_ssh_still_allowed(host):
     """ssh ne doit jamais être fermé (accès de gestion)."""
     services = host.check_output("firewall-cmd --list-services").split()

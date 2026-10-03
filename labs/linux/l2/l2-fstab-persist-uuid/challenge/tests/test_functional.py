@@ -112,6 +112,7 @@ def test_fstab_type_matches_filesystem(host):
     )
 
 
+@pytest.mark.garde_fou
 def test_fstab_verify_reports_no_error(host):
     """`findmnt --verify` ne doit signaler ni parse error ni error.
 

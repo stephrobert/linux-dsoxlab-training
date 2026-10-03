@@ -21,6 +21,7 @@ def host():
     return lab_host(TARGET_HOST)
 
 
+@pytest.mark.garde_fou
 def test_atd_running(host):
     """atd doit tourner pour gérer les tâches at."""
     assert host.service("atd").is_running, (

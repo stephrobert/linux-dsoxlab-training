@@ -21,6 +21,7 @@ def host():
     return lab_host(TARGET_HOST)
 
 
+@pytest.mark.garde_fou
 def test_selinux_enforcing(host):
     """SELinux doit rester enforcing."""
     assert host.check_output("getenforce").strip() == "Enforcing"

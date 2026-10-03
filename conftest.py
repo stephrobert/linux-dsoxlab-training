@@ -205,6 +205,58 @@ def lab_target_host(default: str) -> str:
 
 
 # ----------------------------------------------------------------------
+# Garde-fous : ils ne comptent qu'une fois la tâche faite.
+# ----------------------------------------------------------------------
+#
+# Un garde-fou vérifie ce que la réparation ne doit PAS casser : SELinux reste
+# en enforcing, le pare-feu reste actif, sshd tourne toujours, la donnée
+# légitime est conservée. Il est vrai sur l'état de départ, par construction.
+# Compté comme une tâche, il donnait des points avant tout travail : mesuré le
+# 2026-10-03, 20 labs sur 86 rendaient de 17 à 57 points sans qu'on ait rien
+# fait, presque toujours par un garde-fou.
+#
+# On ne les supprime pas, ils font la valeur des labs de dépannage. Un test
+# marqué `@pytest.mark.garde_fou` se joue après les tâches de son module, et
+# n'est vert que si au moins une tâche a réussi : 0 avant le travail, et une
+# réparation « à la masse » (SELinux désactivé, pare-feu coupé) garde la tâche
+# mais perd le garde-fou.
+
+_TACHES_REUSSIES: dict[str, int] = {}
+
+
+def pytest_configure(config) -> None:
+    config.addinivalue_line(
+        "markers",
+        "garde_fou: ce que la tâche ne doit pas casser ; ne compte qu'une fois "
+        "une tâche du lab réussie.",
+    )
+
+
+def pytest_collection_modifyitems(items) -> None:
+    """Les garde-fous de chaque module passent après ses tâches (tri stable)."""
+    items.sort(key=lambda i: (str(i.path), i.get_closest_marker("garde_fou") is not None))
+
+
+@pytest.hookimpl(hookwrapper=True)
+def pytest_runtest_makereport(item, call):
+    outcome = yield
+    rapport = outcome.get_result()
+    if rapport.when == "call" and rapport.passed and not item.get_closest_marker("garde_fou"):
+        cle = str(item.path)
+        _TACHES_REUSSIES[cle] = _TACHES_REUSSIES.get(cle, 0) + 1
+
+
+def pytest_runtest_call(item) -> None:
+    if item.get_closest_marker("garde_fou") and not _TACHES_REUSSIES.get(str(item.path)):
+        pytest.fail(
+            "Garde-fou non compté : aucune tâche du lab n'est encore faite. Il "
+            "vérifie ce que ta réparation ne doit pas casser, et ne vaut des "
+            "points qu'une fois la réparation commencée.",
+            pytrace=False,
+        )
+
+
+# ----------------------------------------------------------------------
 # Fixture autouse : applique l'état du lab avant ses tests.
 # ----------------------------------------------------------------------
 

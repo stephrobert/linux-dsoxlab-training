@@ -22,6 +22,7 @@ def host():
     return lab_host(TARGET_HOST)
 
 
+@pytest.mark.garde_fou
 def test_tuned_running(host):
     """Le service tuned doit tourner."""
     assert host.service("tuned").is_running, (

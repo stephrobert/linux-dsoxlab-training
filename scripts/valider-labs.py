@@ -19,6 +19,7 @@ Il **enchaîne les commandes dsoxlab**, il ne les réimplémente pas. Pour chaqu
 lab :
 
     dsoxlab clean <id>     on part d'un état connu
+    (ses VM reviennent à leur base figée : scripts/isolation_vm.py)
     dsoxlab run   <id>     l'état de départ est posé
     dsoxlab check <id>     DOIT rendre 0 : le travail n'est pas fait
     (la solution de référence est déchiffrée dans le workdir et jouée)
@@ -64,6 +65,7 @@ from dataclasses import asdict, dataclass, field
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from isolation_vm import IsolationEteinte, hotes_du_lab, snapshot_reset
 from lecture_yaml import YamlIllisible, lire_yaml
 
 RACINE = Path(__file__).resolve().parent.parent
@@ -200,6 +202,17 @@ def valider(identifiant: str, lab: Path) -> Verdict:
 
     try:
         _dsoxlab("clean", identifiant, timeout=300)
+
+        # Les VM du lab reviennent à leur base figée AVANT le run : sans cela,
+        # le premier check note aussi ce qu'ont laissé les labs précédents.
+        # Mesuré le 2026-10-03 : 23 labs sur 86 rendaient des points avant
+        # tout travail, et le résidu ne se distinguait pas d'un test mal conçu.
+        try:
+            snapshot_reset(hotes_du_lab(lab))
+        except IsolationEteinte as erreur:
+            v.verdict = "ROUGE"
+            v.pourquoi = f"isolation impossible : {erreur}"
+            return v
 
         pose = _dsoxlab("run", identifiant)
         if pose.returncode != 0:

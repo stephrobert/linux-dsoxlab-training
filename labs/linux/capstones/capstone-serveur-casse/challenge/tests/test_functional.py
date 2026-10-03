@@ -67,6 +67,7 @@ def test_le_site_repond_depuis_le_client(client, ip_serveur):
     )
 
 
+@pytest.mark.garde_fou
 @pytest.mark.points(10)
 def test_nginx_actif_et_persistant(serveur):
     """Actif ne suffit pas : un service non `enabled` ne revient pas au boot."""
@@ -80,6 +81,7 @@ def test_nginx_actif_et_persistant(serveur):
     )
 
 
+@pytest.mark.garde_fou
 @pytest.mark.points(10)
 def test_nginx_ecoute_sur_toutes_les_interfaces(serveur, ip_serveur):
     """Le bon port ne suffit pas, il faut la bonne adresse d'écoute.
@@ -121,6 +123,7 @@ def test_nginx_ecoute_sur_toutes_les_interfaces(serveur, ip_serveur):
     )
 
 
+@pytest.mark.garde_fou
 @pytest.mark.points(10)
 def test_pare_feu_actif_et_port_ouvert(serveur):
     """GARDE-FOU : arrêter firewalld fait « marcher » le site. C'est zéro.
@@ -159,6 +162,7 @@ def test_pare_feu_actif_et_port_ouvert(serveur):
     )
 
 
+@pytest.mark.garde_fou
 @pytest.mark.points(15)
 def test_selinux_reste_enforcing(serveur):
     """GARDE-FOU : passer SELinux en permissive fait « marcher » le site.
@@ -184,6 +188,7 @@ def test_selinux_reste_enforcing(serveur):
     )
 
 
+@pytest.mark.garde_fou
 @pytest.mark.points(15)
 def test_contexte_du_docroot_durable(serveur):
     """Le contexte doit être bon MAINTENANT et le rester après réétiquetage.
@@ -214,6 +219,7 @@ def test_contexte_du_docroot_durable(serveur):
     )
 
 
+@pytest.mark.garde_fou
 @pytest.mark.points(10)
 def test_docroot_pas_ouvert_a_tout_le_monde(serveur):
     """GARDE-FOU : `chmod -R 777` fait « marcher » le site. C'est zéro.

@@ -69,6 +69,7 @@ def test_service_is_active(host):
     )
 
 
+@pytest.mark.garde_fou
 def test_service_is_enabled(host):
     """Critère persistence_after_reboot RHCSA — `enabled` au boot."""
     svc = host.service(SERVICE_NAME)
