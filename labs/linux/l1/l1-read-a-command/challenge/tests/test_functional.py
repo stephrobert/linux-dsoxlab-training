@@ -30,13 +30,6 @@ def _source_text() -> str:
 
 # ── Point de départ ───────────────────────────────────────────────────────────
 
-def test_source_present() -> None:
-    """Le fichier de départ source.txt doit être là."""
-    assert SOURCE.exists(), (
-        "source.txt introuvable — lance : dsoxlab run l1-read-a-command"
-    )
-
-
 # ── cp : produire une copie exacte ────────────────────────────────────────────
 
 def test_copie_is_exact_copy() -> None:

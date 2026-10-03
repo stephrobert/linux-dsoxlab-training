@@ -51,11 +51,6 @@ def test_relative_copy_exists():
 
 
 # ── T3 — puzzles.txt exists (5 pts) ──────────────────────────────────────────
-@pytest.mark.points(5)
-def test_puzzles_file_exists():
-    assert PUZZLES_FILE.exists(), "puzzles.txt not found — run: dsoxlab run l1-paths-absolute-relative"
-
-
 # ── T4 — No placeholder (5 pts) ──────────────────────────────────────────────
 @pytest.mark.points(5)
 def test_no_placeholder():

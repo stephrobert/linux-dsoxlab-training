@@ -29,12 +29,6 @@ def _openssl(*args: str) -> str:
     return res.stdout
 
 
-def test_source_present() -> None:
-    assert CRT.exists(), (
-        "serveur.crt introuvable — lance : dsoxlab run l1-ssl-certificates"
-    )
-
-
 def test_sujet_contains_cn() -> None:
     """sujet.txt contient le CN du certificat (openssl x509 -subject)."""
     f = WORK / "sujet.txt"

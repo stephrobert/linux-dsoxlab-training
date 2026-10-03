@@ -75,12 +75,6 @@ def _real_manager() -> str:
 
 # ── Présence & complétude ─────────────────────────────────────────────────────
 
-def test_file_exists() -> None:
-    assert ANSWER_FILE.exists(), (
-        "choix-distro.txt introuvable — lance : dsoxlab run l1-choose-distro"
-    )
-
-
 def test_no_placeholder() -> None:
     assert PLACEHOLDER not in _read(), (
         f"Le fichier contient encore '{PLACEHOLDER}'. Renseigne les 3 champs "

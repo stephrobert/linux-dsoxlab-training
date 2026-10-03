@@ -29,12 +29,6 @@ def _source_lines() -> list[str]:
 
 # ── Point de départ ───────────────────────────────────────────────────────────
 
-def test_source_present() -> None:
-    assert SOURCE.exists(), (
-        "donnees.txt introuvable — lance : dsoxlab run l1-get-help"
-    )
-
-
 # ── tail : les 3 dernières lignes ─────────────────────────────────────────────
 
 def test_fin_is_last_three_lines() -> None:

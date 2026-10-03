@@ -22,13 +22,6 @@ def _members(archive: str) -> set[str]:
         return {pathlib.PurePath(m.name).name for m in tar.getmembers() if m.isfile()}
 
 
-def test_sources_present() -> None:
-    for name in SOURCES:
-        assert (WORK / name).exists(), (
-            f"{name} introuvable — lance : dsoxlab run l1-tar-archives"
-        )
-
-
 def test_targz_created_and_gzip() -> None:
     """docs.tar.gz existe, est un tar RÉELLEMENT gzip, et contient les 3 fichiers."""
     f = WORK / "docs.tar.gz"

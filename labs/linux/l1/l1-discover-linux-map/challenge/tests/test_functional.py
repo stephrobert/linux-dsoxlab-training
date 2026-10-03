@@ -42,12 +42,6 @@ def _real_distro_id() -> str:
 
 # ── Présence & complétude ─────────────────────────────────────────────────────
 
-def test_file_exists() -> None:
-    assert ANSWER_FILE.exists(), (
-        "notions.md introuvable — lance : dsoxlab run l1-discover-linux-map"
-    )
-
-
 def test_no_placeholder() -> None:
     assert PLACEHOLDER not in _read(), (
         f"Le fichier contient encore '{PLACEHOLDER}'. Renseigne les 4 champs "

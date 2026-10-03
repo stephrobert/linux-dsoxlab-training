@@ -15,12 +15,6 @@ WORK = pathlib.Path(".")
 SOURCE = WORK / "original.txt"
 
 
-def test_source_present() -> None:
-    assert SOURCE.exists(), (
-        "original.txt introuvable — lance : dsoxlab run l1-links-hard-sym"
-    )
-
-
 def test_hard_link_shares_inode() -> None:
     """copie-dure.txt = lien physique : MÊME inode que original.txt (pas une copie)."""
     hard = WORK / "copie-dure.txt"

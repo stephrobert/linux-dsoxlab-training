@@ -1,0 +1,227 @@
+{
+  "genere_le": "2026-10-03 15:02:46",
+  "act": "act version 0.2.84",
+  "dsoxlab": "dsoxlab 0.3.0",
+  "labs": {
+    "l1-bash-script": {
+      "id": "l1-bash-script",
+      "chemin": "linux/l1/l1-bash-script",
+      "verdict": "VALIDE",
+      "score_avant": 0,
+      "score_apres": 100,
+      "tests": "3/3",
+      "duree_s": 3.1,
+      "traces": [],
+      "pourquoi": ""
+    },
+    "l1-choose-distro": {
+      "id": "l1-choose-distro",
+      "chemin": "linux/l1/l1-choose-distro",
+      "verdict": "VALIDE",
+      "score_avant": 0,
+      "score_apres": 100,
+      "tests": "4/4",
+      "duree_s": 3.0,
+      "traces": [],
+      "pourquoi": ""
+    },
+    "l1-discover-linux-map": {
+      "id": "l1-discover-linux-map",
+      "chemin": "linux/l1/l1-discover-linux-map",
+      "verdict": "VALIDE",
+      "score_avant": 0,
+      "score_apres": 100,
+      "tests": "5/5",
+      "duree_s": 3.0,
+      "traces": [],
+      "pourquoi": ""
+    },
+    "l1-env-profiles": {
+      "id": "l1-env-profiles",
+      "chemin": "linux/l1/l1-env-profiles",
+      "verdict": "VALIDE",
+      "score_avant": 0,
+      "score_apres": 100,
+      "tests": "4/4",
+      "duree_s": 3.1,
+      "traces": [],
+      "pourquoi": ""
+    },
+    "l1-find-files": {
+      "id": "l1-find-files",
+      "chemin": "linux/l1/l1-find-files",
+      "verdict": "VALIDE",
+      "score_avant": 0,
+      "score_apres": 100,
+      "tests": "4/4",
+      "duree_s": 2.9,
+      "traces": [],
+      "pourquoi": ""
+    },
+    "l1-first-terminal": {
+      "id": "l1-first-terminal",
+      "chemin": "linux/l1/l1-first-terminal",
+      "verdict": "VALIDE",
+      "score_avant": 0,
+      "score_apres": 100,
+      "tests": "5/5",
+      "duree_s": 3.0,
+      "traces": [],
+      "pourquoi": ""
+    },
+    "l1-get-help": {
+      "id": "l1-get-help",
+      "chemin": "linux/l1/l1-get-help",
+      "verdict": "VALIDE",
+      "score_avant": 0,
+      "score_apres": 100,
+      "tests": "3/3",
+      "duree_s": 3.0,
+      "traces": [],
+      "pourquoi": ""
+    },
+    "l1-git-basics": {
+      "id": "l1-git-basics",
+      "chemin": "linux/l1/l1-git-basics",
+      "verdict": "VALIDE",
+      "score_avant": 0,
+      "score_apres": 100,
+      "tests": "5/5",
+      "duree_s": 3.1,
+      "traces": [],
+      "pourquoi": ""
+    },
+    "l1-grep-regex": {
+      "id": "l1-grep-regex",
+      "chemin": "linux/l1/l1-grep-regex",
+      "verdict": "VALIDE",
+      "score_avant": 0,
+      "score_apres": 100,
+      "tests": "4/4",
+      "duree_s": 3.1,
+      "traces": [],
+      "pourquoi": ""
+    },
+    "l1-links-hard-sym": {
+      "id": "l1-links-hard-sym",
+      "chemin": "linux/l1/l1-links-hard-sym",
+      "verdict": "VALIDE",
+      "score_avant": 0,
+      "score_apres": 100,
+      "tests": "4/4",
+      "duree_s": 3.1,
+      "traces": [],
+      "pourquoi": ""
+    },
+    "l1-linux-filesystem": {
+      "id": "l1-linux-filesystem",
+      "chemin": "linux/l1/l1-linux-filesystem",
+      "verdict": "VALIDE",
+      "score_avant": 0,
+      "score_apres": 100,
+      "tests": "5/5",
+      "duree_s": 3.2,
+      "traces": [],
+      "pourquoi": ""
+    },
+    "l1-navigate-filesystem": {
+      "id": "l1-navigate-filesystem",
+      "chemin": "linux/l1/l1-navigate-filesystem",
+      "verdict": "VALIDE",
+      "score_avant": 0,
+      "score_apres": 100,
+      "tests": "10/10",
+      "duree_s": 3.0,
+      "traces": [],
+      "pourquoi": ""
+    },
+    "l1-paths-absolute-relative": {
+      "id": "l1-paths-absolute-relative",
+      "chemin": "linux/l1/l1-paths-absolute-relative",
+      "verdict": "VALIDE",
+      "score_avant": 0,
+      "score_apres": 100,
+      "tests": "8/8",
+      "duree_s": 3.1,
+      "traces": [],
+      "pourquoi": ""
+    },
+    "l1-permissions-ugo": {
+      "id": "l1-permissions-ugo",
+      "chemin": "linux/l1/l1-permissions-ugo",
+      "verdict": "VALIDE",
+      "score_avant": 0,
+      "score_apres": 100,
+      "tests": "4/4",
+      "duree_s": 3.0,
+      "traces": [],
+      "pourquoi": ""
+    },
+    "l1-prepare-vm": {
+      "id": "l1-prepare-vm",
+      "chemin": "linux/l1/l1-prepare-vm",
+      "verdict": "VALIDE",
+      "score_avant": 0,
+      "score_apres": 100,
+      "tests": "5/5",
+      "duree_s": 3.0,
+      "traces": [],
+      "pourquoi": ""
+    },
+    "l1-read-a-command": {
+      "id": "l1-read-a-command",
+      "chemin": "linux/l1/l1-read-a-command",
+      "verdict": "VALIDE",
+      "score_avant": 0,
+      "score_apres": 100,
+      "tests": "3/3",
+      "duree_s": 3.0,
+      "traces": [],
+      "pourquoi": ""
+    },
+    "l1-redirections-pipes": {
+      "id": "l1-redirections-pipes",
+      "chemin": "linux/l1/l1-redirections-pipes",
+      "verdict": "VALIDE",
+      "score_avant": 0,
+      "score_apres": 100,
+      "tests": "4/4",
+      "duree_s": 3.1,
+      "traces": [],
+      "pourquoi": ""
+    },
+    "l1-ssl-certificates": {
+      "id": "l1-ssl-certificates",
+      "chemin": "linux/l1/l1-ssl-certificates",
+      "verdict": "VALIDE",
+      "score_avant": 0,
+      "score_apres": 100,
+      "tests": "4/4",
+      "duree_s": 3.2,
+      "traces": [],
+      "pourquoi": ""
+    },
+    "l1-tar-archives": {
+      "id": "l1-tar-archives",
+      "chemin": "linux/l1/l1-tar-archives",
+      "verdict": "VALIDE",
+      "score_avant": 0,
+      "score_apres": 100,
+      "tests": "4/4",
+      "duree_s": 3.1,
+      "traces": [],
+      "pourquoi": ""
+    },
+    "l1-text-processing": {
+      "id": "l1-text-processing",
+      "chemin": "linux/l1/l1-text-processing",
+      "verdict": "VALIDE",
+      "score_avant": 0,
+      "score_apres": 100,
+      "tests": "4/4",
+      "duree_s": 3.1,
+      "traces": [],
+      "pourquoi": ""
+    }
+  }
+}

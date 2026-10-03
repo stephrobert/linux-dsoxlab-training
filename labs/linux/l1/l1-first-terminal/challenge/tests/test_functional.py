@@ -35,13 +35,6 @@ def _field(text: str, key: str) -> str:
 
 # ── Présence & complétude ─────────────────────────────────────────────────────
 
-def test_file_exists() -> None:
-    """premiers-pas.txt doit exister dans challenge/work/."""
-    assert ANSWER_FILE.exists(), (
-        "premiers-pas.txt introuvable — lance : dsoxlab run l1-first-terminal"
-    )
-
-
 def test_no_placeholder() -> None:
     """Tous les placeholders VOTRE_RÉPONSE_ICI doivent être remplacés."""
     assert PLACEHOLDER not in _read(), (
@@ -102,11 +95,3 @@ def test_date_is_real() -> None:
 
 
 # ── Structure ─────────────────────────────────────────────────────────────────
-
-def test_all_fields_present() -> None:
-    """Les 4 clés doivent figurer dans le fichier."""
-    text = _read()
-    for key in ("USER", "MACHINE", "HOME", "DATE"):
-        assert re.search(rf"^{key}:", text, re.MULTILINE), (
-            f"La ligne '{key}:' manque dans premiers-pas.txt."
-        )

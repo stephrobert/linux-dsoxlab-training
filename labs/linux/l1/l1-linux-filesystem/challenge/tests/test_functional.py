@@ -30,12 +30,6 @@ def _field(text: str, key: str) -> str:
 
 # ── Présence & complétude ─────────────────────────────────────────────────────
 
-def test_file_exists() -> None:
-    assert ANSWER_FILE.exists(), (
-        "fhs.txt introuvable — lance : dsoxlab run l1-linux-filesystem"
-    )
-
-
 def test_no_placeholder() -> None:
     assert PLACEHOLDER not in _read(), (
         f"Le fichier contient encore '{PLACEHOLDER}'. Renseigne les 4 chemins "

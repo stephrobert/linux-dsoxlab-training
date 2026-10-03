@@ -32,12 +32,6 @@ def _read_lines(name: str) -> list[str]:
     return [ln for ln in f.read_text(encoding="utf-8").splitlines() if ln.strip()]
 
 
-def test_source_present() -> None:
-    assert SOURCE.exists(), (
-        "ventes.csv introuvable — lance : dsoxlab run l1-text-processing"
-    )
-
-
 def test_regions_distinctes() -> None:
     """regions.txt = la colonne region, distincte et triée (cut + sort -u)."""
     f = WORK / "regions.txt"

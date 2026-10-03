@@ -23,12 +23,6 @@ def _lines() -> list[str]:
     return [ln for ln in SOURCE.read_text(encoding="utf-8").splitlines() if ln]
 
 
-def test_source_present() -> None:
-    assert SOURCE.exists(), (
-        "journal.log introuvable — lance : dsoxlab run l1-redirections-pipes"
-    )
-
-
 def test_total_via_redirection() -> None:
     """total.txt = nombre de lignes de journal.log, via `>`."""
     f = WORK / "total.txt"

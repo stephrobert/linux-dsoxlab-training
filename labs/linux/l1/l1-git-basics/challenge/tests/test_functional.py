@@ -63,7 +63,11 @@ def test_feature_branch_exists() -> None:
 
 def test_working_tree_clean() -> None:
     """Tout est commité : git status ne signale rien en attente."""
-    porcelain = _git("status", "--porcelain").stdout.strip()
+    # Sans dépôt, `git status` échoue et ne dit rien : un arbre absent passait
+    # pour un arbre propre, et le lab donnait des points avant tout travail.
+    statut = _git("status", "--porcelain")
+    assert statut.returncode == 0, "monprojet n'est pas un dépôt Git : git init d'abord."
+    porcelain = statut.stdout.strip()
     assert porcelain == "", (
         "L'arbre de travail doit être propre (tout commité). "
         f"En attente :\n{porcelain}"

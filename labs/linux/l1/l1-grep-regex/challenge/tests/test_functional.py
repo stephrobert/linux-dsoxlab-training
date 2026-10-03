@@ -31,12 +31,6 @@ def _read(name: str) -> list[str]:
     return [ln for ln in f.read_text(encoding="utf-8").splitlines() if ln]
 
 
-def test_source_present() -> None:
-    assert SOURCE.exists(), (
-        "acces.log introuvable — lance : dsoxlab run l1-grep-regex"
-    )
-
-
 def test_erreurs_5xx() -> None:
     """erreurs5xx.txt = uniquement les lignes dont le code HTTP est 5xx."""
     f = WORK / "erreurs5xx.txt"
