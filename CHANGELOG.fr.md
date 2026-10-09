@@ -6,7 +6,7 @@ Tous les changements notables de ce projet sont consignés dans ce fichier. Le
 format s'appuie sur [Keep a Changelog](https://keepachangelog.com/), et le projet
 suit le [versionnage sémantique](https://semver.org/lang/fr/).
 
-## [Non publié]
+## [0.1.0] - 2026-10-09
 
 ### Modifié
 
@@ -148,3 +148,6 @@ faisant échouer :
   `SECURITY`, `RELEASING`.
 - Outillage CI et release : validation de structure, lint, et bundles de release
   `tar.gz` (pas de PyPI : le contenu est livré comme archive téléchargeable).
+
+[Non publié]: https://github.com/stephrobert/linux-dsoxlab-training/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/stephrobert/linux-dsoxlab-training/releases/tag/v0.1.0
