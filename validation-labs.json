@@ -1,7 +1,7 @@
 {
-  "genere_le": "2026-10-03 17:01:03",
+  "genere_le": "2026-10-12 20:38:51",
   "act": "act version 0.2.84",
-  "dsoxlab": "dsoxlab 0.3.0",
+  "dsoxlab": "dsoxlab 0.3.5",
   "labs": {
     "capstone-mise-en-production": {
       "id": "capstone-mise-en-production",
@@ -153,7 +153,7 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "5/5",
-      "duree_s": 3.0,
+      "duree_s": 2.9,
       "traces": [],
       "pourquoi": ""
     },
@@ -164,7 +164,7 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "4/4",
-      "duree_s": 3.1,
+      "duree_s": 3.0,
       "traces": [],
       "pourquoi": ""
     },
@@ -175,7 +175,7 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "4/4",
-      "duree_s": 2.9,
+      "duree_s": 3.0,
       "traces": [],
       "pourquoi": ""
     },
@@ -208,7 +208,7 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "5/5",
-      "duree_s": 3.1,
+      "duree_s": 3.0,
       "traces": [],
       "pourquoi": ""
     },
@@ -219,7 +219,7 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "4/4",
-      "duree_s": 3.1,
+      "duree_s": 2.9,
       "traces": [],
       "pourquoi": ""
     },
@@ -230,7 +230,7 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "4/4",
-      "duree_s": 3.1,
+      "duree_s": 3.0,
       "traces": [],
       "pourquoi": ""
     },
@@ -241,7 +241,7 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "5/5",
-      "duree_s": 3.2,
+      "duree_s": 3.0,
       "traces": [],
       "pourquoi": ""
     },
@@ -263,7 +263,7 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "8/8",
-      "duree_s": 3.1,
+      "duree_s": 3.0,
       "traces": [],
       "pourquoi": ""
     },
@@ -296,7 +296,7 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "3/3",
-      "duree_s": 3.0,
+      "duree_s": 2.9,
       "traces": [],
       "pourquoi": ""
     },
@@ -307,7 +307,7 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "4/4",
-      "duree_s": 3.1,
+      "duree_s": 3.0,
       "traces": [],
       "pourquoi": ""
     },
@@ -318,7 +318,7 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "4/4",
-      "duree_s": 3.2,
+      "duree_s": 3.0,
       "traces": [],
       "pourquoi": ""
     },
@@ -329,7 +329,7 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "4/4",
-      "duree_s": 3.1,
+      "duree_s": 3.0,
       "traces": [],
       "pourquoi": ""
     },
@@ -340,7 +340,7 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "4/4",
-      "duree_s": 3.1,
+      "duree_s": 3.0,
       "traces": [],
       "pourquoi": ""
     },
