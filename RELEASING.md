@@ -70,14 +70,36 @@ the analysers' scrutiny.
 
 1. Update `CHANGELOG.md` and `CHANGELOG.fr.md` (move items under a new version).
 2. Make sure `dsoxlab validate-structure` is green locally.
-3. Tag and push the tag — this triggers `release.yml`:
+3. **Re-attest the labs that changed since their verdict.** A lab whose tests,
+   files, shared `conftest.py` or descriptors changed after the commit that
+   recorded its verdict is no longer attested by `validation-labs.json`. From
+   the site repository (`test-astro-5`, cloned next to this one), run:
+
+   ```bash
+   python3 scripts/reattester-labs.py --depot linux-dsoxlab-training           # plan and safeguards
+   python3 scripts/reattester-labs.py --depot linux-dsoxlab-training --apply   # replay and commit
+   ```
+
+   The script replays each lab marked "to re-attest" through
+   `scripts/valider-labs.py`, one at a time (modified tests and labs first,
+   then shared `conftest.py`, then descriptors), checks that the
+   `validation-labs.json` diff only touches those labs, reruns `--check` and
+   `pytest tests/`, and makes a **local** commit of the record alone. It
+   refuses a dirty repository and an active lab. A RED verdict is not
+   committed: fix the lab, then run it again.
+
+   Before tagging, run the dry-run again: it must print
+   **"0 lab(s) à réattester"**. Then push the record commit with the rest of
+   the release.
+
+4. Tag and push the tag — this triggers `release.yml`:
 
    ```bash
    git tag vX.Y.Z
    git push origin vX.Y.Z
    ```
 
-4. The workflow builds the `tar.gz`, attests its provenance, signs it keyless,
+5. The workflow builds the `tar.gz`, attests its provenance, signs it keyless,
    and creates the GitHub Release with auto-generated notes.
 
 ## Verifying a release
