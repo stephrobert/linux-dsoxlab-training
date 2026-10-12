@@ -133,7 +133,8 @@
       "tests": "3/3",
       "duree_s": 3.1,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-12"
     },
     "l1-choose-distro": {
       "id": "l1-choose-distro",
@@ -144,7 +145,8 @@
       "tests": "4/4",
       "duree_s": 3.0,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-12"
     },
     "l1-discover-linux-map": {
       "id": "l1-discover-linux-map",
@@ -155,7 +157,8 @@
       "tests": "5/5",
       "duree_s": 2.9,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-12"
     },
     "l1-env-profiles": {
       "id": "l1-env-profiles",
@@ -166,7 +169,8 @@
       "tests": "4/4",
       "duree_s": 3.0,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-12"
     },
     "l1-find-files": {
       "id": "l1-find-files",
@@ -177,7 +181,8 @@
       "tests": "4/4",
       "duree_s": 3.0,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-12"
     },
     "l1-first-terminal": {
       "id": "l1-first-terminal",
@@ -188,7 +193,8 @@
       "tests": "5/5",
       "duree_s": 3.0,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-12"
     },
     "l1-get-help": {
       "id": "l1-get-help",
@@ -199,7 +205,8 @@
       "tests": "3/3",
       "duree_s": 3.0,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-12"
     },
     "l1-git-basics": {
       "id": "l1-git-basics",
@@ -210,7 +217,8 @@
       "tests": "5/5",
       "duree_s": 3.0,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-12"
     },
     "l1-grep-regex": {
       "id": "l1-grep-regex",
@@ -221,7 +229,8 @@
       "tests": "4/4",
       "duree_s": 2.9,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-12"
     },
     "l1-links-hard-sym": {
       "id": "l1-links-hard-sym",
@@ -232,7 +241,8 @@
       "tests": "4/4",
       "duree_s": 3.0,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-12"
     },
     "l1-linux-filesystem": {
       "id": "l1-linux-filesystem",
@@ -243,7 +253,8 @@
       "tests": "5/5",
       "duree_s": 3.0,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-12"
     },
     "l1-navigate-filesystem": {
       "id": "l1-navigate-filesystem",
@@ -254,7 +265,8 @@
       "tests": "10/10",
       "duree_s": 3.0,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-12"
     },
     "l1-paths-absolute-relative": {
       "id": "l1-paths-absolute-relative",
@@ -265,7 +277,8 @@
       "tests": "8/8",
       "duree_s": 3.0,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-12"
     },
     "l1-permissions-ugo": {
       "id": "l1-permissions-ugo",
@@ -276,7 +289,8 @@
       "tests": "4/4",
       "duree_s": 3.0,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-12"
     },
     "l1-prepare-vm": {
       "id": "l1-prepare-vm",
@@ -287,7 +301,8 @@
       "tests": "5/5",
       "duree_s": 3.0,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-12"
     },
     "l1-read-a-command": {
       "id": "l1-read-a-command",
@@ -298,7 +313,8 @@
       "tests": "3/3",
       "duree_s": 2.9,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-12"
     },
     "l1-redirections-pipes": {
       "id": "l1-redirections-pipes",
@@ -309,7 +325,8 @@
       "tests": "4/4",
       "duree_s": 3.0,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-12"
     },
     "l1-ssl-certificates": {
       "id": "l1-ssl-certificates",
@@ -320,7 +337,8 @@
       "tests": "4/4",
       "duree_s": 3.0,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-12"
     },
     "l1-tar-archives": {
       "id": "l1-tar-archives",
@@ -331,7 +349,8 @@
       "tests": "4/4",
       "duree_s": 3.0,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-12"
     },
     "l1-text-processing": {
       "id": "l1-text-processing",
@@ -342,7 +361,8 @@
       "tests": "4/4",
       "duree_s": 3.0,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-12"
     },
     "l2-acl-posix": {
       "id": "l2-acl-posix",

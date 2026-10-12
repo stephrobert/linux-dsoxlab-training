@@ -371,7 +371,10 @@ def main() -> int:
     for rang, (identifiant, lab) in enumerate(a_jouer, start=1):
         print(f"[{rang}/{len(a_jouer)}] {identifiant} ... ", end="", flush=True)
         v = valider(identifiant, lab)
-        resultats[identifiant] = asdict(v)
+        # Chaque lab porte la date de SON rejeu : `genere_le` ne date que la
+        # campagne, et un lab rejoué à l'identique serait sinon indiscernable
+        # d'une entrée ancienne recopiée.
+        resultats[identifiant] = asdict(v) | {"date": time.strftime("%Y-%m-%d")}
         detail = f"{v.score_avant} -> {v.score_apres}" if v.score_avant is not None else ""
         print(f"{v.verdict} {detail} ({v.duree_s}s)")
         if v.pourquoi:
