@@ -6,6 +6,20 @@ Tous les changements notables de ce projet sont consignés dans ce fichier. Le
 format s'appuie sur [Keep a Changelog](https://keepachangelog.com/), et le projet
 suit le [versionnage sémantique](https://semver.org/lang/fr/).
 
+## [0.1.1] - 2026-10-14
+
+### Modifié
+
+- Chaque verdict de `validation-labs.json` porte la date de son rejeu : sans
+  elle, un relevé ancien et un relevé frais se ressemblent.
+- Les vingt labs du bloc l1 rejoués après la modification du `conftest.py`,
+  qu'aucun verdict antérieur ne mesurait plus.
+- La procédure de release réatteste les labs modifiés depuis leur verdict.
+
+### Corrigé
+
+- Cinq actions GitHub remises à jour.
+
 ## [0.1.0] - 2026-10-09
 
 ### Modifié
@@ -149,5 +163,6 @@ faisant échouer :
 - Outillage CI et release : validation de structure, lint, et bundles de release
   `tar.gz` (pas de PyPI : le contenu est livré comme archive téléchargeable).
 
-[Non publié]: https://github.com/stephrobert/linux-dsoxlab-training/compare/v0.1.0...HEAD
+[Non publié]: https://github.com/stephrobert/linux-dsoxlab-training/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/stephrobert/linux-dsoxlab-training/releases/tag/v0.1.1
 [0.1.0]: https://github.com/stephrobert/linux-dsoxlab-training/releases/tag/v0.1.0
