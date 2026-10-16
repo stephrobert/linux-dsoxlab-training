@@ -11,7 +11,7 @@ from __future__ import annotations
 
 import pytest
 
-from conftest import lab_host
+from conftest import lab_host, message
 
 TARGET_HOST = "alma-rhcsa-1.lab"
 
@@ -24,33 +24,42 @@ def host():
 def test_bond_mode_active_backup(host):
     """bond0 doit être en mode active-backup."""
     proc = host.check_output("cat /proc/net/bonding/bond0")
-    assert "active-backup" in proc, (
-        "bond0 doit être en mode active-backup "
-        '(bond.options "mode=active-backup,miimon=100").'
+    assert "active-backup" in proc, message(
+        en="bond0 must be in active-backup mode "
+        '(bond.options "mode=active-backup,miimon=100").' ,
+        fr="bond0 doit être en mode active-backup "
+        '(bond.options "mode=active-backup,miimon=100").',
     )
 
 
 def test_bond_two_slaves(host):
     """bond0 doit avoir dummy1 et dummy2 comme esclaves."""
     proc = host.check_output("cat /proc/net/bonding/bond0")
-    assert "dummy1" in proc and "dummy2" in proc, (
-        "bond0 doit agréger dummy1 et dummy2 (nmcli con add type dummy ... "
-        "master bond0)."
+    assert "dummy1" in proc and "dummy2" in proc, message(
+        en="bond0 must aggregate dummy1 and dummy2 (nmcli con add type dummy … "
+        "master bond0).",
+        fr="bond0 doit agréger dummy1 et dummy2 (nmcli con add type dummy ... "
+        "master bond0).",
     )
 
 
 def test_bond_connection_type(host):
     """La connexion bond0 doit être de type bond."""
     ctype = host.check_output("nmcli -g connection.type con show bond0").strip()
-    assert ctype == "bond", f"bond0 doit être de type bond (vu : {ctype!r})."
+    assert ctype == "bond", message(
+        en=f"bond0 must be of type bond (seen: {ctype!r}).",
+        fr=f"bond0 doit être de type bond (vu : {ctype!r}).",
+    )
 
 
 def test_bridge_has_bond_as_port(host):
     """br0 doit être un bridge dont bond0 est un port."""
     ports = host.check_output("ls /sys/class/net/br0/brif/ 2>/dev/null || true")
-    assert "bond0" in ports, (
-        "bond0 doit être un port du bridge br0 "
-        "(nmcli con mod bond0 master br0 slave-type bridge)."
+    assert "bond0" in ports, message(
+        en="bond0 must be a port of the br0 bridge "
+        "(nmcli con mod bond0 master br0 slave-type bridge).",
+        fr="bond0 doit être un port du bridge br0 "
+        "(nmcli con mod bond0 master br0 slave-type bridge).",
     )
 
 
@@ -60,6 +69,7 @@ def test_profiles_persist_on_disk(host):
         profile = host.file(
             f"/etc/NetworkManager/system-connections/{name}.nmconnection"
         )
-        assert profile.exists, (
-            f"Le profil {name}.nmconnection doit exister (persistance reboot)."
+        assert profile.exists, message(
+            en=f"The profile {name}.nmconnection must exist (persistence across reboots).",
+            fr=f"Le profil {name}.nmconnection doit exister (persistance reboot).",
         )

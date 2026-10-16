@@ -11,7 +11,7 @@ from __future__ import annotations
 
 import pytest
 
-from conftest import lab_host
+from conftest import lab_host, message
 
 TARGET_HOST = "alma-rhcsa-1.lab"
 
@@ -44,23 +44,34 @@ def _report_line(cron_lines: list[str]) -> str | None:
 
 def test_schedule_exists(cron_lines):
     """Une entrée cron doit lancer /usr/local/bin/report.sh."""
-    assert _report_line(cron_lines) is not None, (
-        "Aucune entrée cron ne lance report.sh. Ajoute une planification "
-        "(ex. /etc/cron.d/report)."
+    assert _report_line(cron_lines) is not None, message(
+        en="No cron entry runs report.sh. Add a schedule "
+        "(e.g. /etc/cron.d/report).",
+        fr="Aucune entrée cron ne lance report.sh. Ajoute une planification "
+        "(ex. /etc/cron.d/report).",
     )
 
 
 def test_schedule_is_daily_0230(cron_lines):
     """La planification doit être 02:30 chaque jour (minute 30, heure 2)."""
     line = _report_line(cron_lines)
-    assert line is not None, "Entrée cron pour report.sh absente."
-    fields = line.split()
-    assert len(fields) >= 5, f"Ligne cron mal formée : {line!r}"
-    minute, hour, dom, mon, dow = fields[:5]
-    assert minute == "30" and hour == "2", (
-        f"La tâche doit tourner à 02:30 (minute 30, heure 2), vu minute={minute} "
-        f"heure={hour}. Format : 30 2 * * *"
+    assert line is not None, message(
+        en="cron entry for report.sh missing.",
+        fr="Entrée cron pour report.sh absente.",
     )
-    assert dom == "*" and mon == "*" and dow == "*", (
-        f"« Chaque jour » = jour/mois/jour-semaine à * (vu : {dom} {mon} {dow})."
+    fields = line.split()
+    assert len(fields) >= 5, message(
+        en=f"Malformed cron line: {line!r}",
+        fr=f"Ligne cron mal formée : {line!r}",
+    )
+    minute, hour, dom, mon, dow = fields[:5]
+    assert minute == "30" and hour == "2", message(
+        en=f"The job must run at 02:30 (minute 30, hour 2), seen minute={minute} "
+        f"hour={hour}. Format: 30 2 * * *",
+        fr=f"La tâche doit tourner à 02:30 (minute 30, heure 2), vu minute={minute} "
+        f"heure={hour}. Format : 30 2 * * *",
+    )
+    assert dom == "*" and mon == "*" and dow == "*", message(
+        en=f"\"Every day\" means day/month/day-of-week set to * (seen: {dom} {mon} {dow}).",
+        fr=f"« Chaque jour » = jour/mois/jour-semaine à * (vu : {dom} {mon} {dow}).",
     )

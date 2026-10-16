@@ -11,7 +11,7 @@ from __future__ import annotations
 
 import pytest
 
-from conftest import lab_host
+from conftest import lab_host, message
 
 TARGET_HOST = "alma-rhcsa-1.lab"
 
@@ -27,25 +27,31 @@ def test_limits_file_present(host):
         "grep -rhs 'appuser' /etc/security/limits.conf "
         "/etc/security/limits.d/ 2>/dev/null || true"
     )
-    assert "nofile" in out, (
-        "Il faut une entrée nofile pour appuser dans /etc/security/limits.d/ "
-        f"(ou limits.conf). Vu :\n{out}"
+    assert "nofile" in out, message(
+        en="A nofile entry for appuser is needed in /etc/security/limits.d/ "
+        f"(or limits.conf). Seen:\n{out}",
+        fr="Il faut une entrée nofile pour appuser dans /etc/security/limits.d/ "
+        f"(ou limits.conf). Vu :\n{out}",
     )
 
 
 def test_effective_soft_nofile(host):
     """La limite SOUPLE effective d'appuser doit être 4096 (via pam_limits)."""
     val = host.check_output("su - appuser -c 'ulimit -Sn'").strip()
-    assert val == "4096", (
-        f"ulimit -Sn d'appuser doit valoir 4096 (vu : {val!r}). "
-        "appuser soft nofile 4096"
+    assert val == "4096", message(
+        en=f"appuser's ulimit -Sn must be 4096 (seen: {val!r}). "
+        "appuser soft nofile 4096",
+        fr=f"ulimit -Sn d'appuser doit valoir 4096 (vu : {val!r}). "
+        "appuser soft nofile 4096",
     )
 
 
 def test_effective_hard_nofile(host):
     """La limite DURE effective d'appuser doit être 8192."""
     val = host.check_output("su - appuser -c 'ulimit -Hn'").strip()
-    assert val == "8192", (
-        f"ulimit -Hn d'appuser doit valoir 8192 (vu : {val!r}). "
-        "appuser hard nofile 8192"
+    assert val == "8192", message(
+        en=f"appuser's ulimit -Hn must be 8192 (seen: {val!r}). "
+        "appuser hard nofile 8192",
+        fr=f"ulimit -Hn d'appuser doit valoir 8192 (vu : {val!r}). "
+        "appuser hard nofile 8192",
     )

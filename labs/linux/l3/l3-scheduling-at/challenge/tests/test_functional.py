@@ -11,7 +11,7 @@ from __future__ import annotations
 
 import pytest
 
-from conftest import lab_host
+from conftest import lab_host, message
 
 TARGET_HOST = "alma-rhcsa-1.lab"
 
@@ -24,17 +24,20 @@ def host():
 @pytest.mark.garde_fou
 def test_atd_running(host):
     """atd doit tourner pour gérer les tâches at."""
-    assert host.service("atd").is_running, (
-        "atd doit tourner : systemctl enable --now atd"
+    assert host.service("atd").is_running, message(
+        en="atd must be running: systemctl enable --now atd",
+        fr="atd doit tourner : systemctl enable --now atd",
     )
 
 
 def test_job_queued(host):
     """Une tâche at doit être en file (atq non vide)."""
     queue = host.check_output("atq").strip()
-    assert queue, (
-        "Aucune tâche at en file (atq est vide). "
-        "echo 'touch /run/rapport.done' | at now + 1 hour"
+    assert queue, message(
+        en="No at job queued (atq is empty). "
+        "echo 'touch /run/rapport.done' | at now + 1 hour",
+        fr="Aucune tâche at en file (atq est vide). "
+        "echo 'touch /run/rapport.done' | at now + 1 hour",
     )
 
 
@@ -46,7 +49,9 @@ def test_job_schedules_command(host):
         if line.strip()
     ]
     scripts = " ".join(host.check_output("at -c %s", jid) for jid in ids)
-    assert "touch /run/rapport.done" in scripts, (
-        "Aucune tâche at ne planifie 'touch /run/rapport.done'. "
-        "Vérifie avec at -c <numéro>."
+    assert "touch /run/rapport.done" in scripts, message(
+        en="No at job schedules 'touch /run/rapport.done'. "
+        "Check with at -c <number>.",
+        fr="Aucune tâche at ne planifie 'touch /run/rapport.done'. "
+        "Vérifie avec at -c <numéro>.",
     )

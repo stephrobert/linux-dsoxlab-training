@@ -12,7 +12,7 @@ from __future__ import annotations
 
 import pytest
 
-from conftest import lab_host
+from conftest import lab_host, message
 
 TARGET_HOST = "alma-rhcsa-1.lab"
 
@@ -25,16 +25,21 @@ def host():
 def test_sshd_config_valid(host):
     """sshd -t doit réussir : la config n'a plus d'erreur (un reload est sûr)."""
     result = host.run("sshd -t")
-    assert result.rc == 0, (
-        "sshd -t échoue encore : la config sshd a toujours une directive "
-        f"invalide (corrige MaxAuthTries).\n{result.stderr}"
+    assert result.rc == 0, message(
+        en="sshd -t still fails: the sshd configuration still has an "
+        f"invalid directive (fix MaxAuthTries).\n{result.stderr}",
+        fr="sshd -t échoue encore : la config sshd a toujours une directive "
+        f"invalide (corrige MaxAuthTries).\n{result.stderr}",
     )
 
 
 @pytest.mark.garde_fou
 def test_sshd_running(host):
     """Le service sshd doit tourner."""
-    assert host.service("sshd").is_running, "sshd doit être actif."
+    assert host.service("sshd").is_running, message(
+        en="sshd must be active.",
+        fr="sshd doit être actif.",
+    )
 
 
 def test_no_invalid_value_left(host):
@@ -42,8 +47,9 @@ def test_no_invalid_value_left(host):
     out = host.check_output(
         "cat /etc/ssh/sshd_config.d/99-lab.conf 2>/dev/null || true"
     )
-    assert "beaucoup-trop" not in out, (
-        "La valeur invalide « beaucoup-trop » est encore présente."
+    assert "beaucoup-trop" not in out, message(
+        en="The invalid value \"beaucoup-trop\" is still present.",
+        fr="La valeur invalide « beaucoup-trop » est encore présente.",
     )
 
 
@@ -51,8 +57,9 @@ def test_maxauthtries_is_a_number(host):
     """MaxAuthTries doit avoir une valeur numérique valide (effective)."""
     out = host.check_output("sshd -T 2>/dev/null | grep -i '^maxauthtries'")
     parts = out.split()
-    assert len(parts) == 2 and parts[1].isdigit(), (
-        f"MaxAuthTries doit être un nombre valide et effectif (vu : {out!r})."
+    assert len(parts) == 2 and parts[1].isdigit(), message(
+        en=f"MaxAuthTries must be a valid and effective number (seen: {out!r}).",
+        fr=f"MaxAuthTries doit être un nombre valide et effectif (vu : {out!r}).",
     )
 
 
@@ -68,8 +75,11 @@ def test_permitrootlogin_no_is_effective(host):
     result = host.run("sshd -T 2>/dev/null | grep -i '^permitrootlogin'")
     parts = result.stdout.split()
     value = parts[-1].lower() if parts else ""
-    assert value == "no", (
-        "PermitRootLogin doit être effectif à « no » (vérifié avec sshd -T). "
+    assert value == "no", message(
+        en="PermitRootLogin must effectively be \"no\" (checked with sshd -T). "
+        f"Seen: {result.stdout.strip()!r}. If the output is empty, sshd -T "
+        "is still refusing the configuration.",
+        fr="PermitRootLogin doit être effectif à « no » (vérifié avec sshd -T). "
         f"Vu : {result.stdout.strip()!r}. Si la sortie est vide, c'est que "
-        "sshd -T refuse encore la configuration."
+        "sshd -T refuse encore la configuration.",
     )

@@ -11,7 +11,7 @@ from __future__ import annotations
 
 import pytest
 
-from conftest import lab_host
+from conftest import lab_host, message
 
 TARGET_HOST = "ubuntu-lfcs-1.lab"
 
@@ -24,22 +24,25 @@ def host():
 def test_ufw_active(host):
     """ufw doit être actif."""
     status = host.check_output("ufw status")
-    assert status.splitlines()[0].strip() == "Status: active", (
-        f"ufw doit être actif (vu : {status.splitlines()[0]!r}). sudo ufw enable"
+    assert status.splitlines()[0].strip() == "Status: active", message(
+        en=f"ufw must be active (seen: {status.splitlines()[0]!r}). sudo ufw enable",
+        fr=f"ufw doit être actif (vu : {status.splitlines()[0]!r}). sudo ufw enable",
     )
 
 
 def test_http_allowed(host):
     """Le service http (80/tcp) doit être autorisé."""
     status = host.check_output("ufw status")
-    assert "80/tcp" in status or "http" in status.lower(), (
-        "http (80/tcp) doit être autorisé : sudo ufw allow http"
+    assert "80/tcp" in status or "http" in status.lower(), message(
+        en="http (80/tcp) must be allowed: sudo ufw allow http",
+        fr="http (80/tcp) doit être autorisé : sudo ufw allow http",
     )
 
 
 def test_ssh_still_allowed(host):
     """OpenSSH doit rester autorisé (accès de gestion)."""
     status = host.check_output("ufw status")
-    assert "OpenSSH" in status or "22/tcp" in status, (
-        "OpenSSH doit rester autorisé — ne le retire jamais."
+    assert "OpenSSH" in status or "22/tcp" in status, message(
+        en="OpenSSH must stay allowed. Never remove it.",
+        fr="OpenSSH doit rester autorisé — ne le retire jamais.",
     )

@@ -11,7 +11,7 @@ from __future__ import annotations
 
 import pytest
 
-from conftest import lab_host
+from conftest import lab_host, message
 
 TARGET_HOST = "alma-rhcsa-1.lab"
 
@@ -24,15 +24,23 @@ def host():
 @pytest.mark.garde_fou
 def test_selinux_enforcing(host):
     """SELinux doit rester enforcing."""
-    assert host.check_output("getenforce").strip() == "Enforcing"
+    mode = host.check_output("getenforce").strip()
+    assert mode == "Enforcing", message(
+        en=f"SELinux must stay Enforcing (seen: {mode!r}). Disabling it would "
+        "make the test pass without the context ever being fixed.",
+        fr=f"SELinux doit rester Enforcing (vu : {mode!r}). Le désactiver ferait "
+        "passer le test sans que le contexte ait été corrigé.",
+    )
 
 
 def test_live_context(host):
     """Le fichier doit porter le type httpd_sys_content_t (actif)."""
     ctx = host.check_output("ls -Z /srv/labweb/index.html")
-    assert "httpd_sys_content_t" in ctx, (
-        f"/srv/labweb/index.html doit être httpd_sys_content_t (vu : {ctx!r}). "
-        "restorecon -Rv /srv/labweb après la règle fcontext"
+    assert "httpd_sys_content_t" in ctx, message(
+        en=f"/srv/labweb/index.html must be httpd_sys_content_t (seen: {ctx!r}). "
+        "restorecon -Rv /srv/labweb after the fcontext rule",
+        fr=f"/srv/labweb/index.html doit être httpd_sys_content_t (vu : {ctx!r}). "
+        "restorecon -Rv /srv/labweb après la règle fcontext",
     )
 
 
@@ -40,7 +48,9 @@ def test_fcontext_rule_persistent(host):
     """Une règle fcontext persistante doit exister (survit au relabel)."""
     out = host.check_output("semanage fcontext -l")
     rule_lines = [line for line in out.splitlines() if "/srv/labweb" in line]
-    assert rule_lines and "httpd_sys_content_t" in rule_lines[0], (
-        "Une règle semanage fcontext /srv/labweb → httpd_sys_content_t doit "
-        "exister (sinon perdu au relabel). chcon seul ne suffit pas."
+    assert rule_lines and "httpd_sys_content_t" in rule_lines[0], message(
+        en="A semanage fcontext rule /srv/labweb → httpd_sys_content_t must "
+        "exist (otherwise lost at relabel). chcon alone is not enough.",
+        fr="Une règle semanage fcontext /srv/labweb → httpd_sys_content_t doit "
+        "exister (sinon perdu au relabel). chcon seul ne suffit pas.",
     )

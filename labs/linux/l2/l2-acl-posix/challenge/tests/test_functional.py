@@ -11,7 +11,7 @@ from __future__ import annotations
 
 import pytest
 
-from conftest import lab_host
+from conftest import lab_host, message
 
 TARGET_HOST = "alma-rhcsa-1.lab"
 DIR = "/srv/projet"
@@ -32,18 +32,22 @@ def _facl(host, path: str) -> list[str]:
 def test_user_acl_on_file(host):
     """carol doit avoir rw via ACL sur report.txt."""
     entries = _facl(host, FILE)
-    assert "user:carol:rw-" in entries, (
-        "Il manque l'ACL utilisateur carol:rw- sur report.txt. "
-        f"setfacl -m u:carol:rw {FILE}\ngetfacl : {entries}"
+    assert "user:carol:rw-" in entries, message(
+        en="The user ACL carol:rw- on report.txt is missing. "
+        f"setfacl -m u:carol:rw {FILE}\ngetfacl: {entries}",
+        fr="Il manque l'ACL utilisateur carol:rw- sur report.txt. "
+        f"setfacl -m u:carol:rw {FILE}\ngetfacl : {entries}",
     )
 
 
 def test_group_acl_on_dir(host):
     """auditors doit avoir r-x via ACL sur le répertoire."""
     entries = _facl(host, DIR)
-    assert "group:auditors:r-x" in entries, (
-        "Il manque l'ACL groupe auditors:r-x sur le répertoire. "
-        f"setfacl -m g:auditors:rx {DIR}\ngetfacl : {entries}"
+    assert "group:auditors:r-x" in entries, message(
+        en="The group ACL auditors:r-x on the directory is missing. "
+        f"setfacl -m g:auditors:rx {DIR}\ngetfacl: {entries}",
+        fr="Il manque l'ACL groupe auditors:r-x sur le répertoire. "
+        f"setfacl -m g:auditors:rx {DIR}\ngetfacl : {entries}",
     )
 
 
@@ -54,7 +58,9 @@ def test_default_acl_on_dir(host):
         e.startswith("default:group:auditors:") and "r" in e.split(":")[-1]
         for e in entries
     )
-    assert has_default, (
-        "Il manque l'ACL par défaut default:group:auditors:r-- sur le "
-        f"répertoire (héritage). setfacl -m d:g:auditors:r {DIR}\ngetfacl : {entries}"
+    assert has_default, message(
+        en="The default ACL default:group:auditors:r-- on the "
+        f"directory is missing (inheritance). setfacl -m d:g:auditors:r {DIR}\ngetfacl: {entries}",
+        fr="Il manque l'ACL par défaut default:group:auditors:r-- sur le "
+        f"répertoire (héritage). setfacl -m d:g:auditors:r {DIR}\ngetfacl : {entries}",
     )

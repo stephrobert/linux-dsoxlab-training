@@ -11,7 +11,7 @@ from __future__ import annotations
 
 import pytest
 
-from conftest import lab_host
+from conftest import lab_host, message
 
 TARGET_HOST = "alma-rhcsa-1.lab"
 SERVICE = "labworker"
@@ -25,21 +25,25 @@ def host():
 @pytest.mark.garde_fou
 def test_service_running(host):
     """Le service labworker doit tourner."""
-    assert host.service(SERVICE).is_running, (
-        "labworker doit être actif (après restart avec la nouvelle priorité)."
+    assert host.service(SERVICE).is_running, message(
+        en="labworker must be active (after a restart with the new priority).",
+        fr="labworker doit être actif (après restart avec la nouvelle priorité).",
     )
 
 
 def test_process_nice_is_10(host):
     """Le processus du service doit tourner à nice 10 (priorité abaissée)."""
     pid = host.check_output("systemctl show -p MainPID --value %s", SERVICE).strip()
-    assert pid.isdigit() and pid != "0", (
-        f"MainPID de labworker introuvable (vu : {pid!r}) — le service tourne-t-il ?"
+    assert pid.isdigit() and pid != "0", message(
+        en=f"MainPID of labworker cannot be found (seen: {pid!r}). Is the service running?",
+        fr=f"MainPID de labworker introuvable (vu : {pid!r}) — le service tourne-t-il ?",
     )
     ni = host.check_output("ps -o ni= -p %s", pid).strip()
-    assert ni == "10", (
-        f"Le processus de labworker doit tourner à nice 10 (vu : {ni!r}). "
-        "Ajoute Nice=10 à l'unit puis daemon-reload + restart."
+    assert ni == "10", message(
+        en=f"The labworker process must run at nice 10 (seen: {ni!r}). "
+        "Add Nice=10 to the unit, then daemon-reload and restart.",
+        fr=f"Le processus de labworker doit tourner à nice 10 (vu : {ni!r}). "
+        "Ajoute Nice=10 à l'unit puis daemon-reload + restart.",
     )
 
 
@@ -49,8 +53,11 @@ def test_nice_in_unit_config(host):
         "grep -rhs -i 'Nice=' /etc/systemd/system/labworker.service "
         "/etc/systemd/system/labworker.service.d/ 2>/dev/null || true"
     )
-    assert "10" in out.replace(" ", ""), (
-        "Nice=10 doit figurer dans l'unit ou un drop-in "
+    assert "10" in out.replace(" ", ""), message(
+        en="Nice=10 must appear in the unit or in a drop-in "
+        "(otherwise the priority would be lost on restart). Seen:\n"
+        f"{out}",
+        fr="Nice=10 doit figurer dans l'unit ou un drop-in "
         "(sinon la priorité serait perdue au redémarrage). Vu :\n"
-        f"{out}"
+        f"{out}",
     )

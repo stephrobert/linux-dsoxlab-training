@@ -10,7 +10,7 @@ from __future__ import annotations
 
 import pytest
 
-from conftest import lab_host
+from conftest import lab_host, message
 
 TARGET_HOST = "alma-rhcsa-1.lab"
 
@@ -25,9 +25,11 @@ def test_container_running(host):
     state = host.check_output(
         "podman inspect -f '{{.State.Running}}' web"
     ).strip()
-    assert state == "true", (
-        f"Le conteneur web doit tourner (State.Running vu : {state!r}). "
-        "podman run -d --name web ... sleep infinity"
+    assert state == "true", message(
+        en=f"The web container must be running (State.Running seen: {state!r}). "
+        "podman run -d --name web … sleep infinity",
+        fr=f"Le conteneur web doit tourner (State.Running vu : {state!r}). "
+        "podman run -d --name web ... sleep infinity",
     )
 
 
@@ -36,6 +38,7 @@ def test_container_image(host):
     image = host.check_output(
         "podman inspect -f '{{.ImageName}}' web"
     ).strip()
-    assert "ubi9/ubi-micro" in image, (
-        f"Le conteneur web doit utiliser ubi9/ubi-micro (vu : {image!r})."
+    assert "ubi9/ubi-micro" in image, message(
+        en=f"The web container must use ubi9/ubi-micro (seen: {image!r}).",
+        fr=f"Le conteneur web doit utiliser ubi9/ubi-micro (vu : {image!r}).",
     )

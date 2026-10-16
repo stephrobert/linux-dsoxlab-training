@@ -12,7 +12,7 @@ from __future__ import annotations
 
 import pytest
 
-from conftest import lab_host
+from conftest import lab_host, message
 
 TARGET_HOST = "alma-rhcsa-1.lab"
 CONN = "lab-static"
@@ -26,17 +26,20 @@ def host():
 def test_method_is_manual(host):
     """La connexion doit être en IPv4 manual (statique)."""
     method = host.check_output("nmcli -g ipv4.method con show %s", CONN).strip()
-    assert method == "manual", (
-        f"ipv4.method attendu 'manual' (vu : {method!r}). "
-        "nmcli con add ... ipv4.method manual"
+    assert method == "manual", message(
+        en=f"ipv4.method 'manual' expected (seen: {method!r}). "
+        "nmcli con add … ipv4.method manual",
+        fr=f"ipv4.method attendu 'manual' (vu : {method!r}). "
+        "nmcli con add ... ipv4.method manual",
     )
 
 
 def test_static_address(host):
     """L'adresse statique 192.0.2.50/24 doit être configurée."""
     addrs = host.check_output("nmcli -g ipv4.addresses con show %s", CONN).strip()
-    assert "192.0.2.50/24" in addrs, (
-        f"ipv4.addresses doit contenir 192.0.2.50/24 (vu : {addrs!r})."
+    assert "192.0.2.50/24" in addrs, message(
+        en=f"ipv4.addresses must contain 192.0.2.50/24 (seen: {addrs!r}).",
+        fr=f"ipv4.addresses doit contenir 192.0.2.50/24 (vu : {addrs!r}).",
     )
 
 
@@ -45,15 +48,18 @@ def test_profile_persisted_on_disk(host):
     profile = host.file(
         "/etc/NetworkManager/system-connections/lab-static.nmconnection"
     )
-    assert profile.exists, (
-        "Le profil /etc/NetworkManager/system-connections/lab-static.nmconnection "
-        "doit exister (persistance reboot)."
+    assert profile.exists, message(
+        en="The profile /etc/NetworkManager/system-connections/lab-static.nmconnection "
+        "must exist (persistence across reboots).",
+        fr="Le profil /etc/NetworkManager/system-connections/lab-static.nmconnection "
+        "doit exister (persistance reboot).",
     )
 
 
 def test_address_is_live(host):
     """L'adresse doit être active sur lab0."""
     out = host.check_output("ip -4 addr show lab0")
-    assert "192.0.2.50" in out, (
-        f"lab0 doit porter 192.0.2.50 en live. Actif : nmcli con up {CONN}"
+    assert "192.0.2.50" in out, message(
+        en=f"lab0 must carry 192.0.2.50 live. Activate it: nmcli con up {CONN}",
+        fr=f"lab0 doit porter 192.0.2.50 en live. Actif : nmcli con up {CONN}",
     )

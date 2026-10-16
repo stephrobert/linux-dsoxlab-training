@@ -11,7 +11,7 @@ from __future__ import annotations
 
 import pytest
 
-from conftest import lab_host
+from conftest import lab_host, message
 
 TARGET_HOST = "alma-rhcsa-1.lab"
 
@@ -25,17 +25,20 @@ def host():
 def test_selinux_enforcing(host):
     """SELinux doit rester enforcing (désactiver n'est pas la solution)."""
     mode = host.check_output("getenforce").strip()
-    assert mode == "Enforcing", (
-        f"SELinux doit rester Enforcing (vu : {mode!r})."
+    assert mode == "Enforcing", message(
+        en=f"SELinux must stay Enforcing (seen: {mode!r}).",
+        fr=f"SELinux doit rester Enforcing (vu : {mode!r}).",
     )
 
 
 def test_boolean_on(host):
     """Le booléen httpd_can_network_connect doit être on."""
     out = host.check_output("getsebool httpd_can_network_connect").strip()
-    assert out.endswith("on"), (
-        f"httpd_can_network_connect doit être on (vu : {out!r}). "
-        "setsebool -P httpd_can_network_connect on"
+    assert out.endswith("on"), message(
+        en=f"httpd_can_network_connect must be on (seen: {out!r}). "
+        "setsebool -P httpd_can_network_connect on",
+        fr=f"httpd_can_network_connect doit être on (vu : {out!r}). "
+        "setsebool -P httpd_can_network_connect on",
     )
 
 
@@ -46,7 +49,9 @@ def test_port_labeled(host):
         line for line in out.splitlines()
         if line.startswith("http_port_t") and "tcp" in line
     ]
-    assert http_lines and "8404" in " ".join(http_lines), (
-        "8404/tcp doit être étiqueté http_port_t "
-        "(semanage port -a -t http_port_t -p tcp 8404)."
+    assert http_lines and "8404" in " ".join(http_lines), message(
+        en="8404/tcp must be labelled http_port_t "
+        "(semanage port -a -t http_port_t -p tcp 8404).",
+        fr="8404/tcp doit être étiqueté http_port_t "
+        "(semanage port -a -t http_port_t -p tcp 8404).",
     )

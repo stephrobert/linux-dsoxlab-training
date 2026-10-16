@@ -11,7 +11,7 @@ from __future__ import annotations
 
 import pytest
 
-from conftest import lab_host
+from conftest import lab_host, message
 
 TARGET_HOST = "alma-rhcsa-1.lab"
 
@@ -24,9 +24,11 @@ def host():
 def test_getent_resolves_directory_user(host):
     """getent passwd alice doit résoudre l'utilisateur de l'annuaire (uid 10001)."""
     out = host.check_output("getent passwd alice").strip()
-    assert out.startswith("alice:") and ":10001:" in out, (
-        f"getent passwd alice doit renvoyer l'utilisateur LDAP uid 10001 "
-        f"(vu : {out!r}). Vérifie sssd.conf + authselect + le service sssd."
+    assert out.startswith("alice:") and ":10001:" in out, message(
+        en=f"getent passwd alice must return the LDAP user with uid 10001 "
+        f"(seen: {out!r}). Check sssd.conf, authselect and the sssd service.",
+        fr=f"getent passwd alice doit renvoyer l'utilisateur LDAP uid 10001 "
+        f"(vu : {out!r}). Vérifie sssd.conf + authselect + le service sssd.",
     )
 
 
@@ -34,24 +36,29 @@ def test_getent_resolves_directory_user(host):
 def test_alice_is_not_local(host):
     """alice ne doit PAS être un compte local (/etc/passwd) — elle vient de LDAP."""
     local = host.check_output("getent -s files passwd alice || true").strip()
-    assert local == "", (
-        f"alice ne doit pas exister en local (/etc/passwd), elle vient de "
-        f"l'annuaire (vu : {local!r})."
+    assert local == "", message(
+        en=f"alice must not exist locally (/etc/passwd), she comes from "
+        f"the directory (seen: {local!r}).",
+        fr=f"alice ne doit pas exister en local (/etc/passwd), elle vient de "
+        f"l'annuaire (vu : {local!r}).",
     )
 
 
 def test_id_alice(host):
     """id alice doit fonctionner."""
     out = host.check_output("id alice").strip()
-    assert "uid=10001(alice)" in out, (
-        f"id alice doit renvoyer uid=10001(alice) (vu : {out!r})."
+    assert "uid=10001(alice)" in out, message(
+        en=f"id alice must return uid=10001(alice) (seen: {out!r}).",
+        fr=f"id alice doit renvoyer uid=10001(alice) (vu : {out!r}).",
     )
 
 
 def test_authselect_profile_is_sssd(host):
     """NSS/PAM doivent être basculés sur SSSD via authselect."""
     out = host.check_output("authselect current").strip()
-    assert "sssd" in out, (
-        f"Le profil authselect actif doit être sssd (vu : {out!r}). "
-        "authselect select sssd with-mkhomedir --force"
+    assert "sssd" in out, message(
+        en=f"The active authselect profile must be sssd (seen: {out!r}). "
+        "authselect select sssd with-mkhomedir --force",
+        fr=f"Le profil authselect actif doit être sssd (vu : {out!r}). "
+        "authselect select sssd with-mkhomedir --force",
     )

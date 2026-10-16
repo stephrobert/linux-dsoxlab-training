@@ -28,7 +28,7 @@ import time
 
 import pytest
 
-from conftest import lab_host, lab_host_ip
+from conftest import lab_host, lab_host_ip, message
 
 SERVEUR = "alma-rhcsa-1.lab"
 CLIENT = "alma-rhcsa-2.lab"
@@ -66,12 +66,15 @@ def _page(client, ip: str, timeout: int = 10) -> tuple[str, str]:
 def test_le_contenu_vit_sur_un_volume_dedie(serveur):
     """Le contenu servi ne doit pas être sur la racine, et le montage doit tenir."""
     monte = serveur.run(f"findmnt -n {DOCROOT}")
-    assert monte.rc == 0, (
-        f"{DOCROOT} n'est pas un point de montage : le contenu est posé sur la "
-        "racine, ce que la consigne d'exploitation interdit."
+    assert monte.rc == 0, message(
+        en=f"{DOCROOT} is not a mount point: the content sits on the "
+        "root filesystem, which the operating instruction forbids.",
+        fr=f"{DOCROOT} n'est pas un point de montage : le contenu est posé sur la "
+        "racine, ce que la consigne d'exploitation interdit.",
     )
-    assert "vg_app" in monte.stdout or "/dev/mapper/" in monte.stdout, (
-        f"{DOCROOT} est monté, mais pas depuis un volume logique : {monte.stdout.strip()}"
+    assert "vg_app" in monte.stdout or "/dev/mapper/" in monte.stdout, message(
+        en=f"{DOCROOT} is mounted, but not from a logical volume: {monte.stdout.strip()}",
+        fr=f"{DOCROOT} est monté, mais pas depuis un volume logique : {monte.stdout.strip()}",
     )
 
     fstab = serveur.file("/etc/fstab").content_string
@@ -79,9 +82,11 @@ def test_le_contenu_vit_sur_un_volume_dedie(serveur):
         x for x in fstab.splitlines()
         if not x.strip().startswith("#") and len(x.split()) >= 2 and x.split()[1] == DOCROOT
     ]
-    assert lignes, (
-        f"Aucune entrée fstab pour {DOCROOT} : le volume ne serait pas remonté "
-        "au redémarrage."
+    assert lignes, message(
+        en=f"No fstab entry for {DOCROOT}: the volume would not be remounted "
+        "at boot.",
+        fr=f"Aucune entrée fstab pour {DOCROOT} : le volume ne serait pas remonté "
+        "au redémarrage.",
     )
 
 
@@ -89,17 +94,23 @@ def test_le_contenu_vit_sur_un_volume_dedie(serveur):
 def test_le_service_tourne_sous_un_compte_dedie(serveur):
     """Ni root, ni un compte de connexion : un compte système sans shell."""
     compte = serveur.run("id -u cotisation")
-    assert compte.rc == 0, "Le compte de service `cotisation` n'existe pas."
+    assert compte.rc == 0, message(
+        en="The `cotisation` service account does not exist.",
+        fr="Le compte de service `cotisation` n'existe pas.",
+    )
 
     shell = serveur.check_output("getent passwd cotisation").split(":")[-1].strip()
-    assert shell in ("/sbin/nologin", "/usr/sbin/nologin", "/bin/false"), (
-        f"Le compte de service a `{shell}` comme shell : il peut ouvrir une "
-        "session, ce qui n'a pas lieu d'être pour un compte applicatif."
+    assert shell in ("/sbin/nologin", "/usr/sbin/nologin", "/bin/false"), message(
+        en=f"The service account has `{shell}` as its shell: it can open a "
+        "session, which has no place for an application account.",
+        fr=f"Le compte de service a `{shell}` comme shell : il peut ouvrir une "
+        "session, ce qui n'a pas lieu d'être pour un compte applicatif.",
     )
 
     proprio = serveur.check_output(f"stat -c %U {DOCROOT}").strip()
-    assert proprio == "cotisation", (
-        f"{DOCROOT} appartient à `{proprio}` et non au compte de service."
+    assert proprio == "cotisation", message(
+        en=f"{DOCROOT} belongs to `{proprio}` and not to the service account.",
+        fr=f"{DOCROOT} appartient à `{proprio}` et non au compte de service.",
     )
 
     # Le titre de ce test promet que le SERVICE tourne sous un compte dédié.
@@ -113,18 +124,24 @@ def test_le_service_tourne_sous_un_compte_dedie(serveur):
     # ce sont les workers qui doivent porter un compte non privilégié.
     comptes = set(serveur.run("ps -o user:32= -C nginx").stdout.split())
     travailleurs = comptes - {"root"}
-    assert travailleurs, (
-        "Tous les processus du service web tournent sous root. La consigne "
+    assert travailleurs, message(
+        en="Every process of the web service runs as root. The operating "
+        "instruction asks for a service account: a web server that "
+        "serves files has no need whatsoever for root's privileges.",
+        fr="Tous les processus du service web tournent sous root. La consigne "
         "d'exploitation demande un compte de service : un serveur web qui "
-        "sert des fichiers n'a aucun besoin des privilèges de root."
+        "sert des fichiers n'a aucun besoin des privilèges de root.",
     )
     for nom in sorted(travailleurs):
         ligne = serveur.run(f"getent passwd {nom}").stdout
         shell_worker = ligne.split(":")[-1].strip() if ligne else ""
-        assert shell_worker in ("/sbin/nologin", "/usr/sbin/nologin", "/bin/false"), (
-            f"Le service tourne sous `{nom}`, dont le shell est "
+        assert shell_worker in ("/sbin/nologin", "/usr/sbin/nologin", "/bin/false"), message(
+            en=f"The service runs as `{nom}`, whose shell is "
+            f"`{shell_worker or 'unknown'}`: that is not a service "
+            "account, it is a login account.",
+            fr=f"Le service tourne sous `{nom}`, dont le shell est "
             f"`{shell_worker or 'inconnu'}` : ce n'est pas un compte de "
-            "service, c'est un compte de connexion."
+            "service, c'est un compte de connexion.",
         )
 
 
@@ -132,11 +149,15 @@ def test_le_service_tourne_sous_un_compte_dedie(serveur):
 def test_service_actif_persistant_et_a_l_ecoute(serveur):
     """Actif ne suffit pas : ce qui compte est ce qui revient au boot."""
     actif = serveur.run("systemctl is-active nginx").stdout.strip()
-    assert actif == "active", f"Le service web n'est pas actif (état : {actif})."
+    assert actif == "active", message(
+        en=f"The web service is not active (state: {actif}).",
+        fr=f"Le service web n'est pas actif (état : {actif}).",
+    )
 
     au_boot = serveur.run("systemctl is-enabled nginx").stdout.strip()
-    assert au_boot == "enabled", (
-        f"Le service web est `{au_boot}` : il ne redémarrerait pas au boot."
+    assert au_boot == "enabled", message(
+        en=f"The web service is `{au_boot}`: it would not restart at boot.",
+        fr=f"Le service web est `{au_boot}` : il ne redémarrerait pas au boot.",
     )
 
     # On lit la COLONNE « Local Address:Port », pas la ligne entière. Chercher
@@ -156,12 +177,17 @@ def test_service_actif_persistant_et_a_l_ecoute(serveur):
         adresse = local.rsplit(":", 1)[0]
         (ouvert if adresse in ("0.0.0.0", "*", "[::]") else boucle).append(local)
 
-    assert ouvert, (
-        f"Le port {PORT} n'est écouté que sur {boucle} : personne ne peut "
+    assert ouvert, message(
+        en=f"Port {PORT} is only listened on at {boucle}: nobody can "
+        f"reach it from the network. Output of `ss -lnt`:\n{ecoutes}"
+        if boucle else
+        f"Nothing listens on port {PORT} on the network side. Output of `ss -lnt`:\n"
+        f"{ecoutes}",
+        fr=f"Le port {PORT} n'est écouté que sur {boucle} : personne ne peut "
         f"l'atteindre depuis le réseau. Sortie de `ss -lnt` :\n{ecoutes}"
         if boucle else
         f"Rien n'écoute sur le port {PORT} côté réseau. Sortie de `ss -lnt` :\n"
-        f"{ecoutes}"
+        f"{ecoutes}",
     )
 
 
@@ -175,9 +201,11 @@ def test_selinux_enforcing_port_etiquete_et_contexte_durable(serveur):
     test lance `restorecon` avant de conclure, ce qu'un `chcon` ne survit pas.
     """
     mode = serveur.check_output("getenforce").strip()
-    assert mode == "Enforcing", (
-        f"SELinux est en `{mode}`. Livrer en production avec SELinux désarmé "
-        "n'est pas une mise en production."
+    assert mode == "Enforcing", message(
+        en=f"SELinux is `{mode}`. Shipping to production with SELinux disarmed "
+        "is not shipping to production.",
+        fr=f"SELinux est en `{mode}`. Livrer en production avec SELinux désarmé "
+        "n'est pas une mise en production.",
     )
 
     ports = serveur.check_output("semanage port -l | grep '^http_port_t'")
@@ -185,21 +213,26 @@ def test_selinux_enforcing_port_etiquete_et_contexte_durable(serveur):
     # Un split sur les espaces seuls rend « 8080, » et le test échouerait sur
     # un état pourtant correct.
     declares = {x.strip(",") for x in ports.replace(",", " ").split()}
-    assert str(PORT) in declares, (
-        f"Le port {PORT} n'est pas étiqueté `http_port_t` : {ports.strip()}"
+    assert str(PORT) in declares, message(
+        en=f"Port {PORT} is not labelled `http_port_t`: {ports.strip()}",
+        fr=f"Le port {PORT} n'est pas étiqueté `http_port_t` : {ports.strip()}",
     )
 
     regles = serveur.run(f"semanage fcontext -l | grep -F '{DOCROOT}'").stdout
-    assert "httpd_sys_content_t" in regles, (
-        f"Aucune règle `semanage fcontext` ne couvre {DOCROOT} : un `chcon` "
-        "seul serait effacé au premier réétiquetage."
+    assert "httpd_sys_content_t" in regles, message(
+        en=f"No `semanage fcontext` rule covers {DOCROOT}: a `chcon` "
+        "alone would be erased at the first relabelling.",
+        fr=f"Aucune règle `semanage fcontext` ne couvre {DOCROOT} : un `chcon` "
+        "seul serait effacé au premier réétiquetage.",
     )
 
     serveur.run(f"restorecon -R {DOCROOT}")
     apres = serveur.check_output(f"ls -Zd {DOCROOT}")
-    assert "httpd_sys_content_t" in apres, (
-        "Après `restorecon`, le contexte est retombé : la correction n'était "
-        "pas durable."
+    assert "httpd_sys_content_t" in apres, message(
+        en="After `restorecon`, the context fell back: the fix was not "
+        "durable.",
+        fr="Après `restorecon`, le contexte est retombé : la correction n'était "
+        "pas durable.",
     )
 
 
@@ -207,9 +240,11 @@ def test_selinux_enforcing_port_etiquete_et_contexte_durable(serveur):
 def test_le_pare_feu_ouvre_le_port_de_facon_permanente(serveur):
     """Une règle posée sans --permanent disparaît au premier rechargement."""
     actif = serveur.run("systemctl is-active firewalld").stdout.strip()
-    assert actif == "active", (
-        f"firewalld est `{actif}`. Rendre le service joignable en arrêtant le "
-        "pare-feu n'est pas une livraison, c'est une régression."
+    assert actif == "active", message(
+        en=f"firewalld is `{actif}`. Making the service reachable by stopping the "
+        "firewall is not a delivery, it is a regression.",
+        fr=f"firewalld est `{actif}`. Rendre le service joignable en arrêtant le "
+        "pare-feu n'est pas une livraison, c'est une régression.",
     )
 
     permanent = serveur.check_output("firewall-cmd --permanent --list-all")
@@ -221,10 +256,13 @@ def test_le_pare_feu_ouvre_le_port_de_facon_permanente(serveur):
     for ligne in permanent.splitlines():
         if ligne.strip().startswith("ports:"):
             ports = set(ligne.split(":", 1)[1].split())
-    assert f"{PORT}/tcp" in ports, (
-        f"Le port {PORT}/tcp n'est pas ouvert de façon permanente. Une règle "
+    assert f"{PORT}/tcp" in ports, message(
+        en=f"Port {PORT}/tcp is not open permanently. A rule "
+        "set without `--permanent` disappears at the next reload.\n"
+        f"Permanent configuration read:\n{permanent}",
+        fr=f"Le port {PORT}/tcp n'est pas ouvert de façon permanente. Une règle "
         "posée sans `--permanent` disparaît au prochain rechargement.\n"
-        f"Configuration permanente lue :\n{permanent}"
+        f"Configuration permanente lue :\n{permanent}",
     )
 
 
@@ -232,22 +270,28 @@ def test_le_pare_feu_ouvre_le_port_de_facon_permanente(serveur):
 def test_le_client_obtient_la_page(client, ip_serveur):
     """Le verdict, pris comme un utilisateur le prendrait."""
     code, corps = _page(client, ip_serveur)
-    assert code == "200", (
-        f"Le client obtient {code or 'aucune réponse'} sur "
-        f"http://{ip_serveur}:{PORT}/ au lieu de 200."
+    assert code == "200", message(
+        en=f"The client gets {code or 'no answer'} on "
+        f"http://{ip_serveur}:{PORT}/ instead of 200.",
+        fr=f"Le client obtient {code or 'aucune réponse'} sur "
+        f"http://{ip_serveur}:{PORT}/ au lieu de 200.",
     )
-    assert MARQUEUR in corps, (
-        f"Le serveur répond mais ne sert pas la livraison : le marqueur "
-        f"{MARQUEUR} est absent."
+    assert MARQUEUR in corps, message(
+        en=f"The server answers but does not serve the delivery: marker "
+        f"{MARQUEUR} is absent.",
+        fr=f"Le serveur répond mais ne sert pas la livraison : le marqueur "
+        f"{MARQUEUR} est absent.",
     )
 
 
 @pytest.mark.points(5)
 def test_le_journal_survit_au_redemarrage(serveur):
     """Sans /var/log/journal, le journal repart de zéro à chaque boot."""
-    assert serveur.file("/var/log/journal").is_directory, (
-        "/var/log/journal n'existe pas : journald garde tout en mémoire et "
-        "perd l'historique au redémarrage, exactement quand on en a besoin."
+    assert serveur.file("/var/log/journal").is_directory, message(
+        en="/var/log/journal does not exist: journald keeps everything in memory and "
+        "loses the history at reboot, exactly when it is needed.",
+        fr="/var/log/journal n'existe pas : journald garde tout en mémoire et "
+        "perd l'historique au redémarrage, exactement quand on en a besoin.",
     )
 
 
@@ -261,13 +305,17 @@ def test_sshd_refuse_le_mot_de_passe_et_le_compte_root(serveur):
     l'intérêt de lire `sshd -T` plutôt que le fichier qu'on vient d'écrire.
     """
     effectif = serveur.check_output("sshd -T").lower()
-    assert "passwordauthentication no" in effectif, (
-        "sshd accepte encore l'authentification par mot de passe. Vérifiez "
+    assert "passwordauthentication no" in effectif, message(
+        en="sshd still accepts password authentication. Check "
+        "with `sshd -T`, not with the file you have just written: another "
+        "drop-in may win.",
+        fr="sshd accepte encore l'authentification par mot de passe. Vérifiez "
         "avec `sshd -T`, pas avec le fichier que vous venez d'écrire : un "
-        "autre drop-in peut gagner."
+        "autre drop-in peut gagner.",
     )
-    assert "permitrootlogin no" in effectif, (
-        "sshd accepte encore la connexion directe du compte root."
+    assert "permitrootlogin no" in effectif, message(
+        en="sshd still accepts root logging in directly.",
+        fr="sshd accepte encore la connexion directe du compte root.",
     )
 
 
@@ -275,21 +323,26 @@ def test_sshd_refuse_le_mot_de_passe_et_le_compte_root(serveur):
 def test_la_sauvegarde_est_planifiee_et_a_deja_tourne(serveur):
     """Une sauvegarde qui n'a jamais produit d'archive n'est pas une sauvegarde."""
     actif = serveur.run("systemctl is-active cotisation-sauvegarde.timer").stdout.strip()
-    assert actif == "active", (
-        f"La minuterie de sauvegarde est `{actif}`."
+    assert actif == "active", message(
+        en=f"The backup timer is `{actif}`.",
+        fr=f"La minuterie de sauvegarde est `{actif}`.",
     )
     au_boot = serveur.run("systemctl is-enabled cotisation-sauvegarde.timer").stdout.strip()
-    assert au_boot == "enabled", (
-        f"La minuterie est `{au_boot}` : elle ne reviendrait pas au boot."
+    assert au_boot == "enabled", message(
+        en=f"The timer is `{au_boot}`: it would not come back at boot.",
+        fr=f"La minuterie est `{au_boot}` : elle ne reviendrait pas au boot.",
     )
 
     archives = serveur.run(
         "find /srv/sauvegardes -type f -size +0 2>/dev/null"
     ).stdout.split()
-    assert archives, (
-        "Aucune archive non vide dans /srv/sauvegardes : la minuterie est en "
+    assert archives, message(
+        en="No non-empty archive in /srv/sauvegardes: the timer is in "
+        "place but has never produced anything. Trigger it once to "
+        "prove it.",
+        fr="Aucune archive non vide dans /srv/sauvegardes : la minuterie est en "
         "place mais n'a jamais rien produit. Déclenchez-la une fois pour le "
-        "prouver."
+        "prouver.",
     )
 
     # Une archive qui ne contient pas la livraison n'est pas une sauvegarde.
@@ -302,11 +355,15 @@ def test_la_sauvegarde_est_planifiee_et_a_deja_tourne(serveur):
         f"  tar -xOf \"$f\" 2>/dev/null | grep -q {MARQUEUR} && exit 0; "
         "done; exit 1"
     )
-    assert contenu.rc == 0, (
-        "Les fichiers de /srv/sauvegardes ne contiennent pas la livraison : "
+    assert contenu.rc == 0, message(
+        en="The files in /srv/sauvegardes do not contain the delivery: "
+        f"marker {MARQUEUR} cannot be found, neither in clear text nor inside "
+        "a tar archive. A backup that does not back up the content "
+        "is not one.",
+        fr="Les fichiers de /srv/sauvegardes ne contiennent pas la livraison : "
         f"le marqueur {MARQUEUR} est introuvable, aussi bien en clair que dans "
         "une archive tar. Une sauvegarde qui ne sauvegarde pas le contenu "
-        "n'en est pas une."
+        "n'en est pas une.",
     )
 
 
@@ -330,7 +387,12 @@ def test_tout_revient_apres_un_redemarrage(client, ip_serveur):
         if code == "200" and MARQUEUR in corps:
             return
     pytest.fail(
-        f"Deux minutes après le redémarrage, le client obtient toujours "
+        message(
+        en=f"Two minutes after the reboot, the client still gets "
+        f"{code or 'no answer'}. Something was not made "
+        "persistent: the mount, the service, the firewall or the SELinux label.",
+        fr=f"Deux minutes après le redémarrage, le client obtient toujours "
         f"{code or 'aucune réponse'}. Quelque chose n'a pas été rendu "
-        "persistant : montage, service, pare-feu ou étiquette SELinux."
+        "persistant : montage, service, pare-feu ou étiquette SELinux.",
+    )
     )

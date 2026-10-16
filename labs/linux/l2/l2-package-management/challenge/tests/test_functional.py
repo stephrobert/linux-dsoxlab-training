@@ -11,7 +11,7 @@ from __future__ import annotations
 
 import pytest
 
-from conftest import lab_host
+from conftest import lab_host, message
 
 TARGET_HOST = "alma-rhcsa-1.lab"
 
@@ -23,20 +23,23 @@ def host():
 
 def test_tree_installed(host):
     """Le paquet tree doit être installé."""
-    assert host.package("tree").is_installed, (
-        "Le paquet 'tree' doit être installé : sudo dnf install -y tree"
+    assert host.package("tree").is_installed, message(
+        en="The 'tree' package must be installed: sudo dnf install -y tree",
+        fr="Le paquet 'tree' doit être installé : sudo dnf install -y tree",
     )
 
 
 def test_zip_removed(host):
     """Le paquet zip doit avoir été retiré."""
-    assert not host.package("zip").is_installed, (
-        "Le paquet 'zip' doit être retiré : sudo dnf remove -y zip"
+    assert not host.package("zip").is_installed, message(
+        en="The 'zip' package must be removed: sudo dnf remove -y zip",
+        fr="Le paquet 'zip' doit être retiré : sudo dnf remove -y zip",
     )
 
 
 def test_tree_command_available(host):
     """La commande tree doit être utilisable (le paquet fournit bien le binaire)."""
-    assert host.run("command -v tree").rc == 0, (
-        "La commande 'tree' doit être disponible après installation."
+    assert host.run("command -v tree").rc == 0, message(
+        en="The 'tree' command must be available once installed.",
+        fr="La commande 'tree' doit être disponible après installation.",
     )

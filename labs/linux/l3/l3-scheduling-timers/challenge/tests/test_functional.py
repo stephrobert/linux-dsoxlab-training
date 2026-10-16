@@ -11,7 +11,7 @@ from __future__ import annotations
 
 import pytest
 
-from conftest import lab_host
+from conftest import lab_host, message
 
 TARGET_HOST = "alma-rhcsa-1.lab"
 
@@ -25,24 +25,31 @@ def test_units_on_disk(host):
     """Le service et le timer doivent exister sous /etc/systemd/system."""
     for unit in ("labbackup.service", "labbackup.timer"):
         f = host.file(f"/etc/systemd/system/{unit}")
-        assert f.exists, f"/etc/systemd/system/{unit} doit exister."
+        assert f.exists, message(
+            en=f"/etc/systemd/system/{unit} must exist.",
+            fr=f"/etc/systemd/system/{unit} doit exister.",
+        )
 
 
 def test_timer_has_oncalendar(host):
     """Le timer doit déclarer un planning OnCalendar."""
     timer = host.file("/etc/systemd/system/labbackup.timer").content_string
-    assert "OnCalendar" in timer, (
-        "labbackup.timer doit avoir un OnCalendar= dans sa section [Timer]."
+    assert "OnCalendar" in timer, message(
+        en="labbackup.timer must have an OnCalendar= in its [Timer] section.",
+        fr="labbackup.timer doit avoir un OnCalendar= dans sa section [Timer].",
     )
 
 
 def test_timer_enabled_and_active(host):
     """labbackup.timer doit être enabled (persistance) ET actif."""
     timer = host.service("labbackup.timer")
-    assert timer.is_enabled, (
-        "labbackup.timer doit être enabled (sinon perdu au reboot) : "
-        "systemctl enable labbackup.timer"
+    assert timer.is_enabled, message(
+        en="labbackup.timer must be enabled (otherwise lost at reboot): "
+        "systemctl enable labbackup.timer",
+        fr="labbackup.timer doit être enabled (sinon perdu au reboot) : "
+        "systemctl enable labbackup.timer",
     )
-    assert timer.is_running, (
-        "labbackup.timer doit être actif : systemctl start labbackup.timer"
+    assert timer.is_running, message(
+        en="labbackup.timer must be active: systemctl start labbackup.timer",
+        fr="labbackup.timer doit être actif : systemctl start labbackup.timer",
     )

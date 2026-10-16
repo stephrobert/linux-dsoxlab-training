@@ -1,5 +1,12 @@
-# First terminal session
+# Première session dans le terminal / First terminal session
+#
+# Remplis chaque champ avec la valeur réelle de ta machine.
 # Fill in each field with the actual value from your system.
+#
+# N'efface pas ces lignes d'en-tête : édite ce fichier, ne le recrée pas avec
+# une redirection « > », qui en effacerait tout le contenu.
+# Do not erase these header lines: edit this file, do not recreate it with a
+# « > » redirection, which would wipe everything in it.
 
 USER: VOTRE_RÉPONSE_ICI
 MACHINE: VOTRE_RÉPONSE_ICI

@@ -13,7 +13,7 @@ from __future__ import annotations
 
 import pytest
 
-from conftest import lab_host
+from conftest import lab_host, message
 
 CLIENT_HOST = "alma-rhcsa-1.lab"
 MOUNT = "/mnt/nfs"
@@ -38,40 +38,49 @@ def _fstab_line(host) -> str | None:
 
 def test_mounted(host):
     """/mnt/nfs doit être monté (l'export NFS du serveur)."""
-    assert host.mount_point(MOUNT).exists, (
-        f"{MOUNT} n'est pas monté. Après l'entrée fstab : sudo mount -a"
+    assert host.mount_point(MOUNT).exists, message(
+        en=f"{MOUNT} is not mounted. After the fstab entry: sudo mount -a",
+        fr=f"{MOUNT} n'est pas monté. Après l'entrée fstab : sudo mount -a",
     )
 
 
 def test_type_is_nfs(host):
     """Le montage doit être de type NFS."""
     fstype = host.check_output("findmnt -no FSTYPE %s", MOUNT)
-    assert fstype.startswith("nfs"), (
-        f"{MOUNT} doit être un montage NFS (vu : {fstype!r})."
+    assert fstype.startswith("nfs"), message(
+        en=f"{MOUNT} must be an NFS mount (seen: {fstype!r}).",
+        fr=f"{MOUNT} doit être un montage NFS (vu : {fstype!r}).",
     )
 
 
 def test_served_file_readable(host):
     """Le fichier servi par le serveur doit être lisible via le montage."""
     f = host.file(f"{MOUNT}/hello.txt")
-    assert f.exists, (
-        f"{MOUNT}/hello.txt introuvable : le montage NFS ne sert pas le contenu "
-        "du serveur (mauvais export, ou montage échoué)."
+    assert f.exists, message(
+        en=f"{MOUNT}/hello.txt cannot be found: the NFS mount does not serve the "
+        "server's content (wrong export, or failed mount).",
+        fr=f"{MOUNT}/hello.txt introuvable : le montage NFS ne sert pas le contenu "
+        "du serveur (mauvais export, ou montage échoué).",
     )
 
 
 def test_fstab_persistent_netdev(host):
     """L'entrée fstab doit être persistante avec _netdev (montage réseau)."""
     line = _fstab_line(host)
-    assert line is not None, (
-        f"Aucune entrée fstab pour {MOUNT}. Ajoute : "
-        "<serveur>:/srv/export /mnt/nfs nfs _netdev,defaults 0 0"
+    assert line is not None, message(
+        en=f"No fstab entry for {MOUNT}. Add: "
+        "<server>:/srv/export /mnt/nfs nfs _netdev,defaults 0 0",
+        fr=f"Aucune entrée fstab pour {MOUNT}. Ajoute : "
+        "<serveur>:/srv/export /mnt/nfs nfs _netdev,defaults 0 0",
     )
     fields = line.split()
-    assert len(fields) >= 4 and fields[2].startswith("nfs"), (
-        f"L'entrée fstab de {MOUNT} doit être de type nfs (vu : {line!r})."
+    assert len(fields) >= 4 and fields[2].startswith("nfs"), message(
+        en=f"The fstab entry for {MOUNT} must be of type nfs (seen: {line!r}).",
+        fr=f"L'entrée fstab de {MOUNT} doit être de type nfs (vu : {line!r}).",
     )
-    assert "_netdev" in fields[3].split(","), (
-        "L'option _netdev est requise pour un montage réseau (attend le réseau "
-        f"au boot). Vu : {fields[3]!r}."
+    assert "_netdev" in fields[3].split(","), message(
+        en="The _netdev option is required for a network mount (it waits for the network "
+        f"at boot). Seen: {fields[3]!r}.",
+        fr="L'option _netdev est requise pour un montage réseau (attend le réseau "
+        f"au boot). Vu : {fields[3]!r}.",
     )

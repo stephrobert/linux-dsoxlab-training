@@ -11,7 +11,7 @@ from __future__ import annotations
 
 import pytest
 
-from conftest import lab_host
+from conftest import lab_host, message
 
 TARGET_HOST = "ubuntu-lfcs-1.lab"
 
@@ -23,22 +23,25 @@ def host():
 
 def test_tree_installed(host):
     """Le paquet tree doit être installé."""
-    assert host.package("tree").is_installed, (
-        "tree doit être installé : sudo apt-get install -y tree"
+    assert host.package("tree").is_installed, message(
+        en="tree must be installed: sudo apt-get install -y tree",
+        fr="tree doit être installé : sudo apt-get install -y tree",
     )
 
 
 def test_tree_on_hold(host):
     """tree doit être figé (hold)."""
     holds = host.check_output("apt-mark showhold").split()
-    assert "tree" in holds, (
-        "tree doit être figé : sudo apt-mark hold tree (vérifie apt-mark showhold)"
+    assert "tree" in holds, message(
+        en="tree must be held: sudo apt-mark hold tree (check with apt-mark showhold)",
+        fr="tree doit être figé : sudo apt-mark hold tree (vérifie apt-mark showhold)",
     )
 
 
 def test_dpkg_owns_file(host):
     """dpkg doit rattacher /usr/bin/tree au paquet tree."""
     out = host.check_output("dpkg -S /usr/bin/tree")
-    assert "tree" in out, (
-        "dpkg -S /usr/bin/tree doit renvoyer le paquet tree."
+    assert "tree" in out, message(
+        en="dpkg -S /usr/bin/tree must return the tree package.",
+        fr="dpkg -S /usr/bin/tree doit renvoyer le paquet tree.",
     )

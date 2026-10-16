@@ -11,7 +11,7 @@ from __future__ import annotations
 
 import pytest
 
-from conftest import lab_host
+from conftest import lab_host, message
 
 TARGET_HOST = "alma-rhcsa-1.lab"
 
@@ -24,25 +24,33 @@ def host():
 def test_timezone(host):
     """Le fuseau doit être Europe/Paris."""
     tz = host.check_output("timedatectl show -p Timezone --value").strip()
-    assert tz == "Europe/Paris", (
-        f"Fuseau attendu Europe/Paris (vu : {tz!r}). "
-        "timedatectl set-timezone Europe/Paris"
+    assert tz == "Europe/Paris", message(
+        en=f"Timezone Europe/Paris expected (seen: {tz!r}). "
+        "timedatectl set-timezone Europe/Paris",
+        fr=f"Fuseau attendu Europe/Paris (vu : {tz!r}). "
+        "timedatectl set-timezone Europe/Paris",
     )
 
 
 def test_ntp_enabled(host):
     """Le NTP doit être activé via timedatectl."""
     ntp = host.check_output("timedatectl show -p NTP --value").strip()
-    assert ntp == "yes", (
-        f"NTP attendu 'yes' (vu : {ntp!r}). timedatectl set-ntp true"
+    assert ntp == "yes", message(
+        en=f"NTP 'yes' expected (seen: {ntp!r}). timedatectl set-ntp true",
+        fr=f"NTP attendu 'yes' (vu : {ntp!r}). timedatectl set-ntp true",
     )
 
 
 def test_chronyd_running_and_enabled(host):
     """chronyd doit tourner ET être enabled (persistance reboot)."""
     svc = host.service("chronyd")
-    assert svc.is_running, "chronyd doit tourner : systemctl start chronyd"
-    assert svc.is_enabled, (
-        "chronyd doit être enabled (sinon perdu au reboot) : "
-        "systemctl enable chronyd"
+    assert svc.is_running, message(
+        en="chronyd must be running: systemctl start chronyd",
+        fr="chronyd doit tourner : systemctl start chronyd",
+    )
+    assert svc.is_enabled, message(
+        en="chronyd must be enabled (otherwise lost at reboot): "
+        "systemctl enable chronyd",
+        fr="chronyd doit être enabled (sinon perdu au reboot) : "
+        "systemctl enable chronyd",
     )

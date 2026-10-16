@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import pytest
 
-from conftest import lab_host
+from conftest import lab_host, message
 
 TARGET_HOST = "alma-rhcsa-1.lab"
 SWAPFILE = "/swapfile"
@@ -23,12 +23,17 @@ def host():
 def test_swapfile_exists_and_secure(host):
     """Le swap file doit exister et être en 0600 root:root (critère sécurité)."""
     f = host.file(SWAPFILE)
-    assert f.exists, f"{SWAPFILE} doit exister : sudo dd if=/dev/zero of={SWAPFILE} bs=1M count=256"
-    assert f.user == "root" and f.group == "root", (
-        f"{SWAPFILE} doit appartenir à root:root (vu : {f.user}:{f.group})."
+    assert f.exists, message(
+        en=f"{SWAPFILE} must exist: sudo dd if=/dev/zero of={SWAPFILE} bs=1M count=256",
+        fr=f"{SWAPFILE} doit exister : sudo dd if=/dev/zero of={SWAPFILE} bs=1M count=256",
     )
-    assert f.mode == 0o600, (
-        f"{SWAPFILE} doit être en 0600 (vu : {oct(f.mode)}). sudo chmod 0600 {SWAPFILE}"
+    assert f.user == "root" and f.group == "root", message(
+        en=f"{SWAPFILE} must belong to root:root (seen: {f.user}:{f.group}).",
+        fr=f"{SWAPFILE} doit appartenir à root:root (vu : {f.user}:{f.group}).",
+    )
+    assert f.mode == 0o600, message(
+        en=f"{SWAPFILE} must be mode 0600 (seen: {oct(f.mode)}). sudo chmod 0600 {SWAPFILE}",
+        fr=f"{SWAPFILE} doit être en 0600 (vu : {oct(f.mode)}). sudo chmod 0600 {SWAPFILE}",
     )
 
 
@@ -40,12 +45,17 @@ def test_swapfile_size(host):
     `fallocate` et `dd` n'arrondissent pas de la même façon.
     """
     out = host.run(f"stat -c %s {SWAPFILE}")
-    assert out.rc == 0, f"{SWAPFILE} introuvable."
+    assert out.rc == 0, message(
+        en=f"{SWAPFILE} cannot be found.",
+        fr=f"{SWAPFILE} introuvable.",
+    )
     taille = int(out.stdout.strip())
     attendu = 256 * 1024 * 1024
-    assert abs(taille - attendu) <= 1024 * 1024, (
-        f"{SWAPFILE} doit faire 256 MiB (vu : {taille // (1024 * 1024)} MiB). "
-        f"sudo dd if=/dev/zero of={SWAPFILE} bs=1M count=256"
+    assert abs(taille - attendu) <= 1024 * 1024, message(
+        en=f"{SWAPFILE} must be 256 MiB (seen: {taille // (1024 * 1024)} MiB). "
+        f"sudo dd if=/dev/zero of={SWAPFILE} bs=1M count=256",
+        fr=f"{SWAPFILE} doit faire 256 MiB (vu : {taille // (1024 * 1024)} MiB). "
+        f"sudo dd if=/dev/zero of={SWAPFILE} bs=1M count=256",
     )
 
 
@@ -55,9 +65,11 @@ def test_swap_active(host):
     # Comparaison ligne à ligne : cherché en sous-chaîne, « /swapfile » serait
     # trouvé dans un « /swapfile2 » resté d'un autre essai.
     actifs = [x.strip() for x in out.stdout.splitlines() if x.strip()]
-    assert SWAPFILE in actifs, (
-        f"{SWAPFILE} doit être actif. Après mkswap : sudo swapon {SWAPFILE}. "
-        f"Swaps actifs : {actifs or 'aucun'}."
+    assert SWAPFILE in actifs, message(
+        en=f"{SWAPFILE} must be active. After mkswap: sudo swapon {SWAPFILE}. "
+        f"Active swaps: {actifs or 'none'}.",
+        fr=f"{SWAPFILE} doit être actif. Après mkswap : sudo swapon {SWAPFILE}. "
+        f"Swaps actifs : {actifs or 'aucun'}.",
     )
 
 
@@ -68,18 +80,22 @@ def test_swap_persistent_fstab(host):
         SWAPFILE in line and "swap" in line and not line.lstrip().startswith("#")
         for line in fstab.splitlines()
     )
-    assert has_line, (
-        "Ajoutez une entrée swap pour /swapfile dans /etc/fstab : "
-        "/swapfile none swap sw 0 0"
+    assert has_line, message(
+        en="Add a swap entry for /swapfile in /etc/fstab: "
+        "/swapfile none swap sw 0 0",
+        fr="Ajoutez une entrée swap pour /swapfile dans /etc/fstab : "
+        "/swapfile none swap sw 0 0",
     )
 
 
 def test_swappiness_is_ten(host):
     """vm.swappiness doit valoir 10, et le rester après un redémarrage."""
     out = host.run("sysctl -n vm.swappiness")
-    assert out.stdout.strip() == "10", (
-        f"vm.swappiness doit valoir 10 (vu : {out.stdout.strip()}). "
-        "Posez-le dans /etc/sysctl.d/99-swappiness.conf puis sysctl -p."
+    assert out.stdout.strip() == "10", message(
+        en=f"vm.swappiness must be 10 (seen: {out.stdout.strip()}). "
+        "Set it in /etc/sysctl.d/99-swappiness.conf then run sysctl -p.",
+        fr=f"vm.swappiness doit valoir 10 (vu : {out.stdout.strip()}). "
+        "Posez-le dans /etc/sysctl.d/99-swappiness.conf puis sysctl -p.",
     )
 
     # Le titre de ce test promet une règle DURABLE. Sans cette seconde moitié,
@@ -89,9 +105,13 @@ def test_swappiness_is_ten(host):
         "grep -rqs '^[[:space:]]*vm\\.swappiness[[:space:]]*=' "
         "/etc/sysctl.conf /etc/sysctl.d/ /usr/lib/sysctl.d/"
     )
-    assert declaree.rc == 0, (
-        "vm.swappiness vaut bien 10, mais aucun fichier de /etc/sysctl.d/ ne "
+    assert declaree.rc == 0, message(
+        en="vm.swappiness is indeed 10, but no file in /etc/sysctl.d/ "
+        "declares it: the value was set by hand and will disappear at the "
+        "first reboot. Write it into "
+        "/etc/sysctl.d/99-swappiness.conf.",
+        fr="vm.swappiness vaut bien 10, mais aucun fichier de /etc/sysctl.d/ ne "
         "le déclare : la valeur a été posée à la main et disparaîtra au "
         "premier redémarrage. Écrivez-la dans "
-        "/etc/sysctl.d/99-swappiness.conf."
+        "/etc/sysctl.d/99-swappiness.conf.",
     )

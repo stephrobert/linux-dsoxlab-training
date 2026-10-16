@@ -12,7 +12,7 @@ from __future__ import annotations
 
 import pytest
 
-from conftest import lab_host
+from conftest import lab_host, message
 
 TARGET_HOST = "alma-rhcsa-1.lab"
 MOUNT = "/srv/data"
@@ -26,9 +26,11 @@ def host():
 @pytest.mark.garde_fou
 def test_filesystem_still_mounted(host):
     """/srv/data doit rester monté (on ne résout pas en démontant/effaçant tout)."""
-    assert host.mount_point(MOUNT).exists, (
-        f"{MOUNT} doit rester monté. Le but est de libérer de l'espace, "
-        "pas de démonter le filesystem."
+    assert host.mount_point(MOUNT).exists, message(
+        en=f"{MOUNT} must stay mounted. The point is to free space, "
+        "not to unmount the filesystem.",
+        fr=f"{MOUNT} doit rester monté. Le but est de libérer de l'espace, "
+        "pas de démonter le filesystem.",
     )
 
 
@@ -38,9 +40,11 @@ def test_usage_below_50_percent(host):
         "df --output=pcent %s | tail -1 | tr -dc '0-9'", MOUNT
     )
     pct = int(pct_raw) if pct_raw.isdigit() else 100
-    assert pct < 50, (
-        f"{MOUNT} est encore occupé à {pct}%. Trouve le gros consommateur "
-        "(du -h --max-depth=1 /srv/data) et supprime-le pour repasser sous 50 %."
+    assert pct < 50, message(
+        en=f"{MOUNT} is still {pct}% full. Find the big consumer "
+        "(du -h --max-depth=1 /srv/data) and delete it to get back under 50%.",
+        fr=f"{MOUNT} est encore occupé à {pct}%. Trouve le gros consommateur "
+        "(du -h --max-depth=1 /srv/data) et supprime-le pour repasser sous 50 %.",
     )
 
 
@@ -48,7 +52,9 @@ def test_usage_below_50_percent(host):
 def test_legit_data_kept(host):
     """Le fichier légitime app.log doit être conservé."""
     f = host.file(f"{MOUNT}/app.log")
-    assert f.exists, (
-        f"{MOUNT}/app.log a disparu : ne supprime que le superflu (le cache), "
-        "pas les données légitimes."
+    assert f.exists, message(
+        en=f"{MOUNT}/app.log has disappeared: delete only what is superfluous (the cache), "
+        "not legitimate data.",
+        fr=f"{MOUNT}/app.log a disparu : ne supprime que le superflu (le cache), "
+        "pas les données légitimes.",
     )
