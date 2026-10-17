@@ -1,0 +1,41 @@
+id: ebpf-durcir-sysctl
+title: "Harden eBPF with sysctl: block unprivileged users and make it stick across reboots"
+description: "An audit found eBPF wide open: unprivileged users may call bpf() and the JIT compiler is not hardened. Set kernel.unprivileged_bpf_disabled and net.core.bpf_jit_harden to 2, make both survive a reload of the sysctl configuration despite a forgotten debug file, and prove with a real bpf() call as an unprivileged user that the kernel now refuses."
+section: ebpf
+lab_type: lab
+level: l4
+track:
+  - securiser
+skills:
+  - ebpf
+  - sysctl
+  - hardening
+  - persistence
+  - kernel-parameters
+difficulty: intermediate
+estimated_time: 25m
+runtime:
+  type: vm
+  # On reste sur le poste : c'est à l'apprenant de taper son ssh vers
+  # la machine du lab, et dsoxlab n'est installé que sur le poste.
+  session: local
+  default: rhel
+  snapshot_required: false
+  targets:
+    - name: rhel
+      host: alma-rhcsa-1.lab
+      label_en: "AlmaLinux 10 (kernel 6.12)"
+      label_fr: "AlmaLinux 10 (noyau 6.12)"
+    - name: ubuntu
+      host: ubuntu-lfcs-1.lab
+      label_en: "Ubuntu 24.04 (kernel 6.8)"
+      label_fr: "Ubuntu 24.04 (noyau 6.8)"
+distros:
+  - almalinux10
+  - rhel10
+  - ubuntu24.04
+doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/ebpf/durcissement/durcir-ebpf/
+validation:
+  functional: true
+  security: true
+  persistence_after_reboot: true

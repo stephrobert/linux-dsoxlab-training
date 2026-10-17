@@ -1,5 +1,5 @@
 {
-  "genere_le": "2026-10-17 07:16:01",
+  "genere_le": "2026-10-17 07:44:09",
   "act": "act version 0.2.84",
   "dsoxlab": "dsoxlab 0.4.0",
   "labs": {
@@ -123,6 +123,18 @@
       "duree_s": 31.9,
       "traces": [],
       "pourquoi": ""
+    },
+    "ebpf-durcir-sysctl": {
+      "id": "ebpf-durcir-sysctl",
+      "chemin": "linux/ebpf/ebpf-durcir-sysctl",
+      "verdict": "VALIDE",
+      "score_avant": 0,
+      "score_apres": 100,
+      "tests": "5/5",
+      "duree_s": 29.9,
+      "traces": [],
+      "pourquoi": "",
+      "date": "2026-10-17"
     },
     "ebpf-tracer-bcc": {
       "id": "ebpf-tracer-bcc",

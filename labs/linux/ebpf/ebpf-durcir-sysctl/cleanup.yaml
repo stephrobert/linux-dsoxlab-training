@@ -1,0 +1,128 @@
+---
+# Reset idempotent : remet /etc/sysctl.d et /etc/sysctl.conf tels que le setup
+# les a trouvés (les fichiers ajoutés par l'apprenant partent, ceux qu'il a
+# modifiés, renommés ou supprimés reviennent), puis remet à chaud les deux
+# valeurs d'origine de la VM. Joué par dsoxlab clean.
+- name: Cleanup ebpf-durcir-sysctl lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  vars:
+    coffre: /opt/lab-ebpf-sysctl
+  tasks:
+    - name: Remove the debug file of the lab
+      ansible.builtin.file:
+        path: /etc/sysctl.d/99-debug-bpf.conf
+        state: absent
+
+    - name: Is the saved original state there?
+      ansible.builtin.stat:
+        path: "{{ coffre }}/sysctl.d.orig"
+      register: copie
+
+    - name: List what /etc/sysctl.d holds now
+      ansible.builtin.find:
+        paths: /etc/sysctl.d
+        file_type: any
+        hidden: true
+      register: presents
+      when: copie.stat.exists
+
+    - name: List what /etc/sysctl.d held at the start
+      ansible.builtin.find:
+        paths: "{{ coffre }}/sysctl.d.orig"
+        file_type: any
+        hidden: true
+      register: origine
+      when: copie.stat.exists
+
+    - name: Remove the files the learner added
+      ansible.builtin.file:
+        path: "{{ item.path }}"
+        state: absent
+      loop: "{{ presents.files }}"
+      loop_control:
+        label: "{{ item.path }}"
+      when:
+        - copie.stat.exists
+        - not item.isdir
+        - (item.path | basename) not in (origine.files | map(attribute='path') | map('basename') | list)
+
+    - name: Put back the original files (modified, renamed or deleted ones)
+      ansible.builtin.command:
+        cmd: cp -a --remove-destination {{ coffre }}/sysctl.d.orig/. /etc/sysctl.d/
+      changed_when: true
+      when: copie.stat.exists
+
+    - name: Is the original /etc/sysctl.conf saved?
+      ansible.builtin.stat:
+        path: "{{ coffre }}/sysctl.conf.orig"
+      register: conf_copie
+
+    - name: Put back the original /etc/sysctl.conf
+      ansible.builtin.command:
+        cmd: cp -a --remove-destination {{ coffre }}/sysctl.conf.orig /etc/sysctl.conf
+      changed_when: true
+      when: conf_copie.stat.exists
+
+    - name: Put the SELinux contexts back where there is SELinux
+      ansible.builtin.shell:
+        cmd: command -v restorecon >/dev/null 2>&1 && restorecon -R /etc/sysctl.d /etc/sysctl.conf || true
+        chdir: /
+      changed_when: false
+
+    - name: Are the original runtime values saved?
+      ansible.builtin.stat:
+        path: "{{ coffre }}/valeurs.orig"
+      register: valeurs_copie
+
+    - name: Read the original runtime values
+      ansible.builtin.slurp:
+        src: "{{ coffre }}/valeurs.orig"
+      register: valeurs_brutes
+      when: valeurs_copie.stat.exists
+
+    - name: Work out the values to put back
+      ansible.builtin.set_fact:
+        unpriv_origine: "{{ (valeurs_brutes.content | b64decode).splitlines() | select('match', '^kernel.unprivileged_bpf_disabled=') | first | split('=') | last }}"
+        jit_origine: "{{ (valeurs_brutes.content | b64decode).splitlines() | select('match', '^net.core.bpf_jit_harden=') | first | split('=') | last }}"
+      when: valeurs_copie.stat.exists
+
+    - name: Read the current value of kernel.unprivileged_bpf_disabled
+      ansible.builtin.command:
+        cmd: sysctl -n kernel.unprivileged_bpf_disabled
+      register: unpriv_actuel
+      changed_when: false
+
+    - name: Put the JIT hardening back to its original value
+      ansible.builtin.command:
+        cmd: sysctl -w net.core.bpf_jit_harden={{ jit_origine }}
+      changed_when: true
+      when: valeurs_copie.stat.exists
+
+    - name: Put kernel.unprivileged_bpf_disabled back to its original value
+      ansible.builtin.command:
+        cmd: sysctl -w kernel.unprivileged_bpf_disabled={{ unpriv_origine }}
+      changed_when: true
+      when:
+        - valeurs_copie.stat.exists
+        - (unpriv_actuel.stdout | trim) != unpriv_origine
+        - (unpriv_actuel.stdout | trim) != "1"
+
+    # La valeur 1 ne se rétracte pas : on garde le coffre, pour qu'un nouveau
+    # reset après redémarrage retrouve les valeurs d'origine.
+    - name: The setting is locked at 1, only a reboot can undo it
+      ansible.builtin.fail:
+        msg: >-
+          kernel.unprivileged_bpf_disabled vaut 1 : le noyau refuse de le
+          modifier avant un redémarrage. Les fichiers sont restaurés ; redémarre
+          la VM, puis relance « dsoxlab reset ebpf-durcir-sysctl ».
+      when:
+        - valeurs_copie.stat.exists
+        - (unpriv_actuel.stdout | trim) == "1"
+        - unpriv_origine != "1"
+
+    - name: Remove the work directory (original state)
+      ansible.builtin.file:
+        path: "{{ coffre }}"
+        state: absent
