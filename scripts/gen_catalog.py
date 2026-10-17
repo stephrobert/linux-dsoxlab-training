@@ -35,6 +35,31 @@ def _runtime_label(lab: dict) -> str:
     return str(rt.get("type", "shell"))
 
 
+def _titres_de_sections(lang: str) -> dict[str, str]:
+    """Les titres de sections dans une langue, appariés par `id`.
+
+    La surcharge `meta.<lang>.yml` porte le français ; son absence n'est pas
+    une erreur, c'est le cas de la langue par défaut. L'appariement se fait par
+    `id` et JAMAIS par position, comme dsoxlab le fait depuis la 0.1.54 : un
+    bloc inséré au milieu ne décale donc rien.
+    """
+    if lang == "en":
+        return {}
+    fichier = ROOT / f"meta.{lang}.yml"
+    if not fichier.exists():
+        return {}
+    try:
+        traduit = lire_yaml(fichier)
+    except YamlIllisible as exc:
+        print(f"  surcharge {lang} ignorée : {exc}", file=sys.stderr)
+        return {}
+    return {
+        str(s.get("id", "")): str(s.get("title", ""))
+        for s in (traduit.get("sections") or [])
+        if s.get("title")
+    }
+
+
 def _rows_by_section() -> list[tuple[str, str, list[dict]]]:
     """Retourne [(section_id, section_title, [lab_dict, ...]), ...] dans l'ordre meta.yml."""
     try:
@@ -107,8 +132,9 @@ def _guide_cell(lab: dict, lang: str) -> str:
 def _table(lang: str) -> str:
     head = HEAD[lang]
     lines: list[str] = []
+    titres = _titres_de_sections(lang)
     for _sid, stitle, labs in _rows_by_section():
-        lines.append(f"### {stitle}")
+        lines.append(f"### {titres.get(_sid) or stitle}")
         lines.append("")
         lines.append("| " + " | ".join(head) + " |")
         lines.append("|" + "|".join(["---"] * len(head)) + "|")
