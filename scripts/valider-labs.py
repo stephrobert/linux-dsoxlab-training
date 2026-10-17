@@ -56,7 +56,6 @@ from __future__ import annotations
 import argparse
 import json
 import os
-import re
 import shutil
 import subprocess
 import sys
@@ -65,6 +64,7 @@ from dataclasses import asdict, dataclass, field
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+import verdict_check
 from isolation_vm import IsolationEteinte, hotes_du_lab, snapshot_reset
 from lecture_yaml import YamlIllisible, lire_yaml
 
@@ -73,13 +73,6 @@ LABS = RACINE / "labs"
 SOLUTIONS = RACINE / "solution"
 VERDICTS = RACINE / "validation-labs.json"
 VAULT = RACINE / ".vault-pass"
-
-# `dsoxlab check` affiche « Score : 87 / 100 pts » ; on lit le premier nombre.
-SCORE = re.compile(r"Score\s*:\s*(\d+)\s*/\s*100")
-TESTS = re.compile(r"Tests\s*:\s*[^\d]*(\d+)/(\d+)")
-
-# Un lab qui skippe n'est ni validé ni rouge : il n'a pas pu être joué.
-MARQUES_DE_SKIP = ("skipped", "SKIPPED", "Lab non joué")
 
 
 @dataclass
@@ -111,14 +104,20 @@ def _dsoxlab(*args: str, timeout: int = 900) -> subprocess.CompletedProcess[str]
     )
 
 
-def _score(sortie: str) -> int | None:
-    trouve = SCORE.search(sortie)
-    return int(trouve.group(1)) if trouve else None
+def _check(identifiant: str) -> dict:
+    """Le `check` du lab, lu dans le CONTRAT et non dans l'encadré du terminal.
 
+    `verdict_check.lire` rend `status`, le seul champ qui puisse servir de
+    verdict : `ok` dit « aucun test n'a échoué », ce qui est vrai d'une suite
+    entièrement skippée, et `score` vaut alors 0 sans que rien ait tourné.
 
-def _tests(sortie: str) -> str | None:
-    trouve = TESTS.search(sortie)
-    return f"{trouve.group(1)}/{trouve.group(2)}" if trouve else None
+    Une lecture impossible n'est PAS rattrapée : elle signifie que l'outil est
+    trop ancien ou cassé, et non que le lab est fautif. Marquer 400 labs rouges
+    pour un défaut d'outil serait le pire des deux maux, donc la campagne
+    s'arrête en nommant le geste.
+    """
+    res = _dsoxlab("check", identifiant, "--json")
+    return verdict_check.lire(res.stdout)
 
 
 def _conteneurs() -> set[str]:
@@ -221,24 +220,22 @@ def valider(identifiant: str, lab: Path) -> Verdict:
             return v
 
         # Sens « 0 » : les tests doivent échouer sur l'état de départ.
-        premier = _dsoxlab("check", identifiant)
-        sortie = premier.stdout + premier.stderr
-        if any(m in sortie for m in MARQUES_DE_SKIP) and _score(sortie) is None:
-            v.verdict = "SKIP"
-            v.pourquoi = "le lab se skippe : prérequis absent (service ou compte)"
+        premier = _check(identifiant)
+        if not verdict_check.a_mesure(premier):
+            # Ni vert ni rouge : le poste n'était pas prêt, pas le lab.
+            v.verdict = verdict_check.SKIP
+            v.pourquoi = (
+                "avant le travail, " + verdict_check.pourquoi_rien_mesure(premier)
+            )
             return v
 
-        v.score_avant = _score(sortie)
-        if v.score_avant is None:
-            v.verdict = "ROUGE"
-            v.pourquoi = f"aucun score lisible au premier check : {sortie[-300:]}"
-            return v
-        if v.score_avant != 0:
+        v.score_avant = premier["score"]
+        if premier["passed"] != 0:
             v.verdict = "ROUGE"
             v.pourquoi = (
-                f"le lab rend {v.score_avant}/100 AVANT tout travail. Un test vert "
-                "sur l'état de départ n'est pas un test, c'est une hypothèse du "
-                "setup."
+                f"{premier['passed']} test(s) sur {premier['total']} passent "
+                "AVANT tout travail. Un test vert sur l'état de départ n'est "
+                "pas un test, c'est une hypothèse du setup."
             )
             return v
 
@@ -249,26 +246,27 @@ def valider(identifiant: str, lab: Path) -> Verdict:
             v.pourquoi = souci
             return v
 
-        second = _dsoxlab("check", identifiant)
-        sortie = second.stdout + second.stderr
-        v.score_apres = _score(sortie)
-        v.tests = _tests(sortie)
+        second = _check(identifiant)
+        if not verdict_check.a_mesure(second):
+            v.verdict = verdict_check.SKIP
+            v.pourquoi = (
+                "après la solution, " + verdict_check.pourquoi_rien_mesure(second)
+            )
+            return v
+        v.score_apres = second["score"]
+        v.tests = f"{second['passed']}/{second['total']}"
 
         # On juge sur les TESTS, pas sur le score. Mesuré le 2026-09-25 :
         # `essential-commands` rendait 8/8 tests et 90/100, parce qu'un indice
         # de coût 10 avait été révélé sur ce poste le 24. Le score porte
         # l'historique local de l'apprenant, le lab n'y est pour rien, et un
         # validateur qui le lit accuse un lab juste.
-        reussis, total = (v.tests or "0/0").split("/")
-        if not total or total == "0":
-            v.verdict = "ROUGE"
-            v.pourquoi = f"aucun test lisible après la solution : {sortie[-300:]}"
-            return v
-        if reussis != total:
+        if second["passed"] != second["total"]:
             v.verdict = "ROUGE"
             v.pourquoi = (
-                f"la solution de référence ne passe que {v.tests} tests. Soit "
-                "elle est fausse, soit un test exige l'impossible."
+                f"la solution de référence ne passe que {v.tests} tests"
+                + (f" ({', '.join(second['echecs'])})" if second["echecs"] else "")
+                + ". Soit elle est fausse, soit un test exige l'impossible."
             )
             return v
 
@@ -343,12 +341,22 @@ def main() -> int:
         if not enregistres:
             print("aucun verdict enregistré : lancez le script sans --check", file=sys.stderr)
             return 1
-        rouges = [i for i, v in enregistres.items() if v.get("verdict") == "ROUGE"]
+        # Trois issues, et deux conclusions distinctes : un ROUGE est un
+        # défaut DU LAB, un SKIP est une mesure qui n'a pas eu lieu sur CE
+        # POSTE. Un catalogue sans rouge n'est pas prouvé pour autant.
+        rouges = [i for i, v in enregistres.items()
+                  if v.get("verdict") == verdict_check.ROUGE]
+        skips = [i for i, v in enregistres.items()
+                 if v.get("verdict") == verdict_check.SKIP]
         if rouges:
             print(f"{len(rouges)} lab(s) ROUGE : {rouges}", file=sys.stderr)
-            return 1
-        print(f"{len(enregistres)} labs, aucun ROUGE")
-        return 0
+            return verdict_check.RC_UN_ROUGE
+        if skips:
+            print(f"{len(skips)} lab(s) à remesurer (le poste, pas le lab) : "
+                  f"{skips}", file=sys.stderr)
+            return verdict_check.RC_UN_SKIP
+        print(f"{len(enregistres)} labs, tous VALIDE")
+        return verdict_check.RC_TOUT_VALIDE
 
     if not VAULT.is_file():
         print(".vault-pass absent : les solutions ne peuvent pas être déchiffrées.", file=sys.stderr)
