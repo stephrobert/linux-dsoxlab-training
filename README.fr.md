@@ -1,4 +1,4 @@
-# Linux DevSecOps Training — RHCSA + LFCS
+# Formation Linux DevSecOps : RHCSA et LFCS
 
 **Language:** [English](./README.md) · [Français](./README.fr.md)
 
@@ -115,7 +115,7 @@ uv tool upgrade dsoxlab        # met à jour la CLI (ou : pipx upgrade dsoxlab)
 ```
 
 Tes réponses en cours vivent dans le `challenge/work/` de chaque lab, qui est
-gitignoré — `git pull` apporte donc les nouveaux labs sans jamais toucher à ton
+gitignoré ; `git pull` apporte donc les nouveaux labs sans jamais toucher à ton
 travail.
 
 ## Comment ça marche
@@ -329,7 +329,7 @@ ci-dessous est générée à partir des vrais `lab.yaml` : lance
 | `lfcs-storage-quotas` | Activer les quotas utilisateur XFS et imposer une limite | l2 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/references-complementaires/quotas/) |
 | `lfcs-mount-cifs` | Monter un partage SMB/CIFS de façon persistante et sûre | l2 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/services/stockage/smb/) |
 
-### Drills — conditions d'examen
+### Drills : conditions d'examen
 
 | Lab (id) | Titre | Niveau | Certif | Runtime | Guide compagnon |
 |---|---|---|---|---|---|
@@ -338,9 +338,9 @@ ci-dessous est générée à partir des vrais `lab.yaml` : lance
 | `drill-systemd` | Drill : unités systemd, timers et planification en conditions d'examen | l3 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/systemd/) |
 | `drill-storage` | Drill : partitions, LVM et swap en conditions d'examen | l2 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/lvm/) |
 | `drill-packages` | Drill : gestion des paquets en conditions d'examen | l2 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/maintenir/paquets/) |
-| `drill-firewall` | Drill — pare-feu en conditions d'examen | l4 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/securiser/reseaux/) |
-| `drill-selinux` | Drill — SELinux en conditions d'examen | l4 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/securiser/durcissement/selinux/) |
-| `drill-apparmor` | Drill — AppArmor en conditions d'examen | l4 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/securiser/durcissement/apparmor/) |
+| `drill-firewall` | Drill pare-feu en conditions d'examen | l4 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/securiser/reseaux/) |
+| `drill-selinux` | Drill SELinux en conditions d'examen | l4 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/securiser/durcissement/selinux/) |
+| `drill-apparmor` | Drill AppArmor en conditions d'examen | l4 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/securiser/durcissement/apparmor/) |
 | `drill-network` | Drill : réseau statique en conditions d'examen | l4 | RHCSA · LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/reseau/netplan/) |
 
 ### Capstones

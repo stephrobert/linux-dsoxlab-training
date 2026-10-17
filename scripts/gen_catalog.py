@@ -75,7 +75,7 @@ def _certif_cell(lab: dict) -> str:
     """Rend les certifications visées (certification_tags), ex. « RHCSA · LFCS »."""
     tags = lab.get("certification_tags") or []
     if not tags:
-        return "—"
+        return "-"
     return " · ".join(str(t).upper() for t in tags)
 
 
@@ -97,7 +97,7 @@ def _doc_url_en() -> dict[str, str]:
 def _guide_cell(lab: dict, lang: str) -> str:
     url = lab.get("doc_url", "")
     if not url:
-        return "—"
+        return "-"
     if lang == "en":
         en = _doc_url_en().get(url)
         return f"[guide]({en})" if en else f"[guide (FR)]({url})"
