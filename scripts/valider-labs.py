@@ -75,8 +75,11 @@ VERDICTS = RACINE / "validation-labs.json"
 VAULT = RACINE / ".vault-pass"
 
 # `dsoxlab check` affiche « Score : 87 / 100 pts » ; on lit le premier nombre.
-SCORE = re.compile(r"Score\s*:\s*(\d+)\s*/\s*100")
-TESTS = re.compile(r"Tests\s*:\s*[^\d]*(\d+)/(\d+)")
+# dsoxlab >= 0.4 : l'encadré « Résultat » affiche « 0 / 100 pts » puis
+# « 0/4 tests » ; les versions antérieures écrivaient « Score : 87 / 100 pts »
+# et « Tests : ... 3/4 ». On lit les deux formes.
+SCORE = re.compile(r"(?:Score\s*:\s*|│\s+)(\d+)\s*/\s*100")
+TESTS = re.compile(r"Tests\s*:\s*[^\d]*(\d+)/(\d+)|(\d+)/(\d+)\s+tests")
 
 # Un lab qui skippe n'est ni validé ni rouge : il n'a pas pu être joué.
 MARQUES_DE_SKIP = ("skipped", "SKIPPED", "Lab non joué")
@@ -118,7 +121,10 @@ def _score(sortie: str) -> int | None:
 
 def _tests(sortie: str) -> str | None:
     trouve = TESTS.search(sortie)
-    return f"{trouve.group(1)}/{trouve.group(2)}" if trouve else None
+    if not trouve:
+        return None
+    reussis, total = (trouve.group(1), trouve.group(2)) if trouve.group(1) else (trouve.group(3), trouve.group(4))
+    return f"{reussis}/{total}"
 
 
 def _conteneurs() -> set[str]:
