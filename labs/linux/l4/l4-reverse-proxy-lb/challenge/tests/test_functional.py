@@ -11,7 +11,7 @@ from __future__ import annotations
 
 import pytest
 
-from conftest import lab_host
+from conftest import lab_host, message
 
 TARGET_HOST = "alma-rhcsa-1.lab"
 
@@ -24,25 +24,33 @@ def host():
 def test_haproxy_running_and_enabled(host):
     """haproxy doit tourner ET être enabled (persistance reboot)."""
     svc = host.service("haproxy")
-    assert svc.is_running, "haproxy doit tourner : systemctl start haproxy"
-    assert svc.is_enabled, (
-        "haproxy doit être enabled (sinon perdu au reboot) : "
-        "systemctl enable haproxy"
+    assert svc.is_running, message(
+        en="haproxy must be running: systemctl start haproxy",
+        fr="haproxy doit tourner : systemctl start haproxy",
+    )
+    assert svc.is_enabled, message(
+        en="haproxy must be enabled (otherwise lost at reboot): "
+        "systemctl enable haproxy",
+        fr="haproxy doit être enabled (sinon perdu au reboot) : "
+        "systemctl enable haproxy",
     )
 
 
 def test_config_has_frontend_and_backend(host):
     """La conf doit déclarer un frontend et un backend avec un server."""
     cfg = host.file("/etc/haproxy/haproxy.cfg").content_string
-    assert "frontend" in cfg and "backend" in cfg and "server" in cfg, (
-        "haproxy.cfg doit contenir un frontend, un backend et une ligne server."
+    assert "frontend" in cfg and "backend" in cfg and "server" in cfg, message(
+        en="haproxy.cfg must contain a frontend, a backend and a server line.",
+        fr="haproxy.cfg doit contenir un frontend, un backend et une ligne server.",
     )
 
 
 def test_request_through_proxy(host):
     """Une requête à travers le proxy doit renvoyer la page du backend."""
     body = host.check_output("curl -s http://localhost/")
-    assert "backend-ok" in body, (
-        f"curl http://localhost/ doit renvoyer 'backend-ok' via le proxy "
-        f"(vu : {body!r}). Le frontend doit router vers le backend."
+    assert "backend-ok" in body, message(
+        en=f"curl http://localhost/ must return 'backend-ok' through the proxy "
+        f"(seen: {body!r}). The frontend must route to the backend.",
+        fr=f"curl http://localhost/ doit renvoyer 'backend-ok' via le proxy "
+        f"(vu : {body!r}). Le frontend doit router vers le backend.",
     )

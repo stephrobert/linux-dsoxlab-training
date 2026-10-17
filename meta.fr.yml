@@ -1,0 +1,66 @@
+# Surcharge française du catalogue, lue par dsoxlab (0.1.54) et par les
+# générateurs de README. Elle ne porte QUE `repo.title`,
+# `repo.description` et les `title` / `description` des sections,
+# appariés par `id` et jamais par position : un bloc inséré au milieu ne
+# décale donc rien.
+#
+# La langue par défaut de l'outil est l'anglais : `meta.yml` porte
+# l'anglais, ce fichier le français. Jusqu'au 2026-10-17, ce dépôt n'avait
+# pas de surcharge et son `meta.yml` portait le français : une session
+# anglaise lisait donc « Fondamentaux (l1) » et « Réseau, Sécurité &
+# Conteneurs (l4) ».
+
+repo:
+  title: "Linux DevSecOps Training: RHCSA + LFCS 2026"
+  description: >-
+    Plateforme de labs pédagogiques pour la formation Linux du blog Stéphane
+    Robert. Couvre les certifications RHCSA EX200v10 (RHEL 10) et LFCS 2026
+    (multi-distrib). Chaque lab est jumelé à une page MDX du site.
+
+sections:
+  - id: l1
+    title: "Fondamentaux (l1)"
+    description: >-
+      Découvrir Linux, le shell, les fichiers — runtime: shell.
+
+  - id: l2
+    title: "Exploiter + Maintenir (l2)"
+    description: >-
+      Scripts, services, paquets, réseau, sécurité de base — runtime: vm.
+
+  - id: l3
+    title: "Services + Dépannage (l3)"
+    description: >-
+      systemd, planification, journaux, noyau, récupération — runtime: vm.
+
+  - id: l4
+    title: "Réseau, Sécurité & Conteneurs (l4)"
+    description: >-
+      chrony, NetworkManager, firewalld, SSH, SELinux, podman — runtime: vm.
+
+  - id: ebpf
+    title: "eBPF : tracer et durcir (approfondissement)"
+    description: >-
+      Observer le noyau avec eBPF (BCC, bpftrace) puis s'en servir pour
+      durcir. Approfondissement de la formation Linux, joué sur AlmaLinux 10
+      et Ubuntu 24.04 (noyaux 6.x avec BTF), runtime: vm.
+
+  - id: lfcs
+    title: "Variantes Debian/Ubuntu"
+    description: >-
+      Le delta Debian du LFCS : les objectifs que le curriculum RHEL de l1-l4
+      ne couvre pas (apt, ufw, AppArmor, netplan…). La vue LFCS complète passe
+      par certification_tags, pas par cette section.
+
+  - id: drills
+    title: "Drills : conditions d'examen"
+    description: >-
+      Exercices courts en conditions d'examen : plusieurs tâches, sans
+      indices, chronométrés. Partagés entre RHCSA et LFCS via
+      certification_tags et joués sur la distrib de ton choix (dsoxlab check
+      --target rhel|ubuntu).
+
+  - id: capstones
+    title: "Capstones"
+    description: >-
+      Synthèses transverses — projets de fin de bloc.

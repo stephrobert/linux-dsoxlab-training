@@ -13,7 +13,7 @@ from __future__ import annotations
 
 import pytest
 
-from conftest import lab_host
+from conftest import lab_host, message
 
 TARGET_HOST = "alma-rhcsa-1.lab"
 MOUNT_POINT = "/autofs"
@@ -31,8 +31,9 @@ def host():
 @pytest.mark.garde_fou
 def test_autofs_running(host):
     """Le service autofs doit tourner."""
-    assert host.service("autofs").is_running, (
-        "autofs doit être démarré : systemctl enable --now autofs"
+    assert host.service("autofs").is_running, message(
+        en="autofs must be started: systemctl enable --now autofs",
+        fr="autofs doit être démarré : systemctl enable --now autofs",
     )
 
 
@@ -47,20 +48,27 @@ def test_master_map(host):
         "grep -rhs -e '^[[:space:]]*/autofs' "
         "/etc/auto.master /etc/auto.master.d/"
     ).stdout.strip()
-    assert declared, (
-        "Aucune carte maître active ne déclare /autofs. Crée "
-        "/etc/auto.master.d/lab.autofs : /autofs  /etc/auto.lab"
+    assert declared, message(
+        en="No active master map declares /autofs. Create "
+        "/etc/auto.master.d/lab.autofs: /autofs  /etc/auto.lab",
+        fr="Aucune carte maître active ne déclare /autofs. Crée "
+        "/etc/auto.master.d/lab.autofs : /autofs  /etc/auto.lab",
     )
 
 
 def test_mount_map(host):
     """La carte de montage doit décrire la clé 'data' en xfs."""
     f = host.file("/etc/auto.lab")
-    assert f.exists, "La carte de montage /etc/auto.lab manque."
+    assert f.exists, message(
+        en="The mount map /etc/auto.lab is missing.",
+        fr="La carte de montage /etc/auto.lab manque.",
+    )
     content = f.content_string
-    assert "data" in content and "xfs" in content, (
-        "La carte /etc/auto.lab doit décrire 'data' en fstype xfs vers le "
-        f"disque. Vu :\n{content}"
+    assert "data" in content and "xfs" in content, message(
+        en="The map /etc/auto.lab must describe 'data' with fstype xfs pointing at the "
+        f"disk. Seen:\n{content}",
+        fr="La carte /etc/auto.lab doit décrire 'data' en fstype xfs vers le "
+        f"disque. Vu :\n{content}",
     )
 
 
@@ -80,21 +88,27 @@ def test_ondemand_mount_works(host):
     """
     # 1. C'est cet accès qui déclenche le montage.
     marker = host.run("cat /autofs/data/marker.txt 2>&1")
-    assert MARKER in marker.stdout, (
-        f"Accéder à {KEY} doit monter le disque et rendre marker.txt lisible "
-        f"(automontage à la demande). Obtenu :\n{marker.stdout or marker.stderr}"
+    assert MARKER in marker.stdout, message(
+        en=f"Accessing {KEY} must mount the disk and make marker.txt readable "
+        f"(on-demand automount). Got:\n{marker.stdout or marker.stderr}",
+        fr=f"Accéder à {KEY} doit monter le disque et rendre marker.txt lisible "
+        f"(automontage à la demande). Obtenu :\n{marker.stdout or marker.stderr}",
     )
 
     # 2. Le chemin est géré par l'automonteur, pas monté à la main.
     parent = host.run("findmnt -no FSTYPE %s", MOUNT_POINT).stdout.strip()
-    assert parent == "autofs", (
-        f"{MOUNT_POINT} doit être un point de montage de type 'autofs' : sans "
+    assert parent == "autofs", message(
+        en=f"{MOUNT_POINT} must be a mount point of type 'autofs': without "
+        "that, the mount is not on demand, it is a static mount. "
+        f"findmnt sees {parent!r} there.",
+        fr=f"{MOUNT_POINT} doit être un point de montage de type 'autofs' : sans "
         "cela le montage n'est pas à la demande, c'est un mount statique. "
-        f"findmnt y voit {parent!r}."
+        f"findmnt y voit {parent!r}.",
     )
 
     # 3. Et le filesystem monté sous la clé est bien le XFS du disque.
     fstype = host.run("findmnt -no FSTYPE %s", KEY).stdout.strip()
-    assert fstype == "xfs", (
-        f"{KEY} doit être monté en xfs une fois déclenché. Vu : {fstype!r}."
+    assert fstype == "xfs", message(
+        en=f"{KEY} must be mounted as xfs once triggered. Seen: {fstype!r}.",
+        fr=f"{KEY} doit être monté en xfs une fois déclenché. Vu : {fstype!r}.",
     )

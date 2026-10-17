@@ -14,7 +14,7 @@ from __future__ import annotations
 
 import pytest
 
-from conftest import lab_host, lab_target_host
+from conftest import lab_host, lab_target_host, message
 
 TARGET_HOST = lab_target_host("alma-rhcsa-1.lab")
 
@@ -34,14 +34,20 @@ def _show(host, unit: str, prop: str) -> str:
 def test_task1_service_with_restart_policy(host):
     """labapi : activée, démarrée, et redémarrant en cas d'échec."""
     svc = host.service("labapi")
-    assert svc.is_enabled, (
-        "labapi.service n'est pas enabled : elle ne reviendrait pas au reboot."
+    assert svc.is_enabled, message(
+        en="labapi.service is not enabled: it would not come back at reboot.",
+        fr="labapi.service n'est pas enabled : elle ne reviendrait pas au reboot.",
     )
-    assert svc.is_running, "labapi.service n'est pas démarrée."
+    assert svc.is_running, message(
+        en="labapi.service is not started.",
+        fr="labapi.service n'est pas démarrée.",
+    )
     restart = _show(host, "labapi.service", "Restart")
-    assert restart == "on-failure", (
-        "labapi.service doit redémarrer en cas d'échec (Restart=on-failure). "
-        f"Vu : {restart!r}."
+    assert restart == "on-failure", message(
+        en="labapi.service must restart on failure (Restart=on-failure). "
+        f"Seen: {restart!r}.",
+        fr="labapi.service doit redémarrer en cas d'échec (Restart=on-failure). "
+        f"Vu : {restart!r}.",
     )
 
 
@@ -49,8 +55,14 @@ def test_task1_service_with_restart_policy(host):
 def test_task2_weekly_timer(host):
     """labclean.timer : activé, actif, déclenché le lundi à 04:00."""
     timer = host.service("labclean.timer")
-    assert timer.is_enabled, "labclean.timer n'est pas enabled."
-    assert timer.is_running, "labclean.timer n'est pas actif."
+    assert timer.is_enabled, message(
+        en="labclean.timer is not enabled.",
+        fr="labclean.timer n'est pas enabled.",
+    )
+    assert timer.is_running, message(
+        en="labclean.timer is not active.",
+        fr="labclean.timer n'est pas actif.",
+    )
     cal = _show(host, "labclean.timer", "TimersCalendar")
     # TimersCalendar vaut « { OnCalendar=... ; next_elapse=Mon 2026-... } » :
     # chercher « Mon » dans la chaîne entière donnerait un faux positif un jour
@@ -59,17 +71,24 @@ def test_task2_weekly_timer(host):
     oncal = " ; ".join(
         bloc.split(";", 1)[0].strip() for bloc in cal.split("OnCalendar=")[1:]
     )
-    assert "04:00" in oncal, (
-        f"Le timer doit se déclencher à 04:00. Vu : {oncal!r} (brut : {cal!r})"
+    assert "04:00" in oncal, message(
+        en=f"The timer must fire at 04:00. Seen: {oncal!r} (raw: {cal!r})",
+        fr=f"Le timer doit se déclencher à 04:00. Vu : {oncal!r} (brut : {cal!r})",
     )
-    assert "Mon" in oncal, (
-        f"Le timer doit se déclencher le lundi (Mon). Vu : {oncal!r} "
-        f"(brut : {cal!r})"
+    assert "Mon" in oncal, message(
+        en=f"The timer must fire on Monday (Mon). Seen: {oncal!r} "
+        f"(raw: {cal!r})",
+        fr=f"Le timer doit se déclencher le lundi (Mon). Vu : {oncal!r} "
+        f"(brut : {cal!r})",
     )
     unit = host.file("/etc/systemd/system/labclean.service")
-    assert unit.exists, "L'unité labclean.service est absente."
-    assert "labclean.sh" in unit.content_string, (
-        "labclean.service doit exécuter /usr/local/bin/labclean.sh."
+    assert unit.exists, message(
+        en="The labclean.service unit is missing.",
+        fr="L'unité labclean.service est absente.",
+    )
+    assert "labclean.sh" in unit.content_string, message(
+        en="labclean.service must run /usr/local/bin/labclean.sh.",
+        fr="labclean.service doit exécuter /usr/local/bin/labclean.sh.",
     )
 
 
@@ -77,17 +96,20 @@ def test_task2_weekly_timer(host):
 def test_task3_cron_job(host):
     """opsuser doit avoir une tâche cron toutes les 15 minutes."""
     cron = host.check_output("crontab -u opsuser -l 2>/dev/null || true")
-    assert "labclean.sh" in cron, (
-        f"Aucune tâche cron d'opsuser n'appelle labclean.sh. Vu : {cron!r}"
+    assert "labclean.sh" in cron, message(
+        en=f"No cron job of opsuser calls labclean.sh. Seen: {cron!r}",
+        fr=f"Aucune tâche cron d'opsuser n'appelle labclean.sh. Vu : {cron!r}",
     )
     ligne = next(
         (ligne for ligne in cron.splitlines()
          if "labclean.sh" in ligne and not ligne.strip().startswith("#")),
         "",
     )
-    assert ligne.split()[0] == "*/15", (
-        "La tâche doit tourner toutes les 15 minutes (*/15 en champ minute). "
-        f"Vu : {ligne!r}"
+    assert ligne.split()[0] == "*/15", message(
+        en="The job must run every 15 minutes (*/15 in the minute field). "
+        f"Seen: {ligne!r}",
+        fr="La tâche doit tourner toutes les 15 minutes (*/15 en champ minute). "
+        f"Vu : {ligne!r}",
     )
 
 
@@ -95,9 +117,11 @@ def test_task3_cron_job(host):
 def test_task4_default_boot_target(host):
     """La cible de démarrage par défaut doit être multi-user (pas graphical)."""
     cible = host.check_output("systemctl get-default")
-    assert cible == "multi-user.target", (
-        "Un serveur ne doit pas démarrer en graphical.target : la cible par "
-        f"défaut doit être multi-user.target. Vu : {cible!r}."
+    assert cible == "multi-user.target", message(
+        en="A server must not boot into graphical.target: the default "
+        f"target must be multi-user.target. Seen: {cible!r}.",
+        fr="Un serveur ne doit pas démarrer en graphical.target : la cible par "
+        f"défaut doit être multi-user.target. Vu : {cible!r}.",
     )
 
 
@@ -105,13 +129,17 @@ def test_task4_default_boot_target(host):
 def test_task5_service_masked(host):
     """labdanger doit être MASQUÉ : disable ne suffit pas."""
     etat = host.run("systemctl is-enabled labdanger.service").stdout.strip()
-    assert etat == "masked", (
-        "labdanger.service doit être MASQUÉ. Un simple disable le laisserait "
+    assert etat == "masked", message(
+        en="labdanger.service must be MASKED. A plain disable would leave it "
+        "startable by hand or through a dependency; masking links it to "
+        f"/dev/null. Seen: {etat!r}.",
+        fr="labdanger.service doit être MASQUÉ. Un simple disable le laisserait "
         "démarrable à la main ou par dépendance ; le masquage le lie à "
-        f"/dev/null. Vu : {etat!r}."
+        f"/dev/null. Vu : {etat!r}.",
     )
     # Preuve : même un démarrage explicite doit échouer.
     res = host.run("systemctl start labdanger.service")
-    assert res.rc != 0, (
-        "labdanger.service a démarré alors qu'il devait être masqué."
+    assert res.rc != 0, message(
+        en="labdanger.service started although it was supposed to be masked.",
+        fr="labdanger.service a démarré alors qu'il devait être masqué.",
     )

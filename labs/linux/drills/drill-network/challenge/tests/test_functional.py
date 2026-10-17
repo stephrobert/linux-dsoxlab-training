@@ -15,7 +15,7 @@ from __future__ import annotations
 
 import pytest
 
-from conftest import lab_host, lab_target_host
+from conftest import lab_host, lab_target_host, message
 
 TARGET_HOST = lab_target_host("alma-rhcsa-1.lab")
 IFACE = "lab0"
@@ -48,10 +48,13 @@ def _reload_network(host):
 def test_task1_static_address(host):
     """lab0 doit porter 203.0.113.20/24 APRÈS un rechargement."""
     out = host.check_output("ip -4 addr show %s 2>/dev/null || true", IFACE)
-    assert "203.0.113.20" in out, (
-        f"{IFACE} ne porte pas 203.0.113.20 après un rechargement du réseau : "
+    assert "203.0.113.20" in out, message(
+        en=f"{IFACE} does not carry 203.0.113.20 after a network reload: "
+        "the address was not declared persistently (an ip addr add "
+        f"does not survive). Seen:\n{out}",
+        fr=f"{IFACE} ne porte pas 203.0.113.20 après un rechargement du réseau : "
         "l'adresse n'a pas été déclarée de façon persistante (un ip addr add "
-        f"ne survit pas). Vu :\n{out}"
+        f"ne survit pas). Vu :\n{out}",
     )
 
 
@@ -62,12 +65,15 @@ def test_task2_static_route(host):
     ligne = next(
         (entree for entree in routes.splitlines() if "192.0.2.0/24" in entree), ""
     )
-    assert ligne, (
-        f"La route vers 192.0.2.0/24 est absente après un rechargement. "
-        f"Vu :\n{routes}"
+    assert ligne, message(
+        en=f"The route to 192.0.2.0/24 is missing after a reload. "
+        f"Seen:\n{routes}",
+        fr=f"La route vers 192.0.2.0/24 est absente après un rechargement. "
+        f"Vu :\n{routes}",
     )
-    assert "203.0.113.1" in ligne, (
-        f"La route doit passer via 203.0.113.1. Vu : {ligne!r}"
+    assert "203.0.113.1" in ligne, message(
+        en=f"The route must go via 203.0.113.1. Seen: {ligne!r}",
+        fr=f"La route doit passer via 203.0.113.1. Vu : {ligne!r}",
     )
 
 
@@ -75,9 +81,11 @@ def test_task2_static_route(host):
 def test_task3_mtu(host):
     """lab0 doit porter un MTU de 1400 APRÈS un rechargement."""
     out = host.check_output("ip link show %s", IFACE)
-    assert "mtu 1400" in out, (
-        f"{IFACE} doit porter un MTU de 1400, déclaré de façon persistante. "
-        f"Vu :\n{out}"
+    assert "mtu 1400" in out, message(
+        en=f"{IFACE} must carry an MTU of 1400, declared persistently. "
+        f"Seen:\n{out}",
+        fr=f"{IFACE} doit porter un MTU de 1400, déclaré de façon persistante. "
+        f"Vu :\n{out}",
     )
 
 
@@ -85,7 +93,9 @@ def test_task3_mtu(host):
 def test_task4_name_resolution(host):
     """lab-net.lab doit résoudre localement vers 203.0.113.20."""
     out = host.check_output("getent hosts lab-net.lab || true")
-    assert "203.0.113.20" in out, (
-        "Le nom lab-net.lab ne résout pas vers 203.0.113.20. Aucun DNS n'est "
-        f"disponible : c'est /etc/hosts qui doit le déclarer. Vu : {out!r}"
+    assert "203.0.113.20" in out, message(
+        en="The name lab-net.lab does not resolve to 203.0.113.20. No DNS is "
+        f"available: /etc/hosts is what must declare it. Seen: {out!r}",
+        fr="Le nom lab-net.lab ne résout pas vers 203.0.113.20. Aucun DNS n'est "
+        f"disponible : c'est /etc/hosts qui doit le déclarer. Vu : {out!r}",
     )

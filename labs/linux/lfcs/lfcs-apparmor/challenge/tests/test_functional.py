@@ -13,7 +13,7 @@ import json
 
 import pytest
 
-from conftest import lab_host
+from conftest import lab_host, message
 
 TARGET_HOST = "ubuntu-lfcs-1.lab"
 
@@ -31,8 +31,9 @@ def _status(host) -> dict:
 def test_apparmor_active(host):
     """AppArmor doit être actif avec des profils chargés."""
     profiles = _status(host).get("profiles", {})
-    assert profiles, (
-        "AppArmor doit être actif avec des profils chargés (aa-status)."
+    assert profiles, message(
+        en="AppArmor must be active with profiles loaded (aa-status).",
+        fr="AppArmor doit être actif avec des profils chargés (aa-status).",
     )
 
 
@@ -40,7 +41,9 @@ def test_ping_profile_complain(host):
     """Le profil ping doit être en mode complain."""
     profiles = _status(host).get("profiles", {})
     mode = profiles.get("ping")
-    assert mode == "complain", (
-        f"Le profil ping doit être en complain (vu : {mode!r}). "
-        "sudo aa-complain /etc/apparmor.d/bin.ping"
+    assert mode == "complain", message(
+        en=f"The ping profile must be in complain (seen: {mode!r}). "
+        "sudo aa-complain /etc/apparmor.d/bin.ping",
+        fr=f"Le profil ping doit être en complain (vu : {mode!r}). "
+        "sudo aa-complain /etc/apparmor.d/bin.ping",
     )

@@ -1,0 +1,217 @@
+---
+# État initial : bpftool et bpftrace sont installés (les installer n'est pas le
+# sujet du lab) et un service systemd au nom anodin, enabled, Restart=always,
+# charge un programme bpftrace sur un tracepoint. Le type du programme est
+# MESURÉ après son chargement (bpftool perf show, puis bpftool prog show id),
+# pas supposé : il est rangé avec le nom du service dans /opt/lab-ebpf-inventaire
+# (root, 0700), là où les tests le lisent. Les programmes que le système charge
+# avant le service (systemd, noyau) sont relevés une seule fois : ils servent de
+# garde-fou. Joué par dsoxlab run.
+- name: Setup ebpf-inventaire-bpftool lab
+  hosts: lab_target
+  become: true
+  gather_facts: true
+  vars:
+    coffre: /opt/lab-ebpf-inventaire
+    paquets_debian: [bpftrace, linux-tools-common, "linux-tools-{{ ansible_kernel }}"]
+    paquets_redhat: [bpftool, bpftrace]
+    paquets: "{{ paquets_debian if ansible_os_family == 'Debian' else paquets_redhat }}"
+  tasks:
+    - name: Read the installed packages
+      ansible.builtin.package_facts:
+        manager: auto
+
+    - name: Work directory for the lab ground truth (root only)
+      ansible.builtin.file:
+        path: "{{ coffre }}"
+        state: directory
+        owner: root
+        group: root
+        mode: "0700"
+
+    # Écrit une seule fois : un setup rejoué sans cleanup ne doit pas prendre
+    # pour état de départ des paquets que ce même setup vient d'installer. La
+    # liste est COMPLÈTE : bpftool et bpftrace tirent des dépendances (par
+    # exemple un client debuginfod) que seul un différentiel sait reprendre.
+    - name: Remember every package installed at the start
+      ansible.builtin.copy:
+        dest: "{{ coffre }}/.paquets-avant"
+        content: "{{ ansible_facts.packages.keys() | sort | join('\n') }}\n"
+        owner: root
+        group: root
+        mode: "0600"
+        force: false
+
+    - name: Stop any carrier service left by a previous run
+      ansible.builtin.shell:
+        cmd: systemctl stop 'telemetrie-sys-*.service' 2>/dev/null || true
+        chdir: /
+      changed_when: false
+
+    - name: Find the units and links left by a previous run
+      ansible.builtin.find:
+        paths: [/etc/systemd/system, /run/systemd/system, /usr/local/lib/systemd/system]
+        patterns: "telemetrie-sys-*.service"
+        file_type: any
+        recurse: true
+      register: anciennes
+
+    - name: Remove the units and links left by a previous run
+      ansible.builtin.file:
+        path: "{{ item.path }}"
+        state: absent
+      loop: "{{ anciennes.files }}"
+      loop_control:
+        label: "{{ item.path }}"
+
+    - name: Install the missing tracking tools (RedHat)
+      ansible.builtin.dnf:
+        name: "{{ paquets | reject('in', ansible_facts.packages) | list }}"
+        state: present
+      when:
+        - ansible_os_family == "RedHat"
+        - (paquets | reject('in', ansible_facts.packages) | list) | length > 0
+
+    - name: Install the missing tracking tools (Debian)
+      ansible.builtin.apt:
+        name: "{{ paquets | reject('in', ansible_facts.packages) | list }}"
+        state: present
+        update_cache: true
+      when:
+        - ansible_os_family == "Debian"
+        - (paquets | reject('in', ansible_facts.packages) | list) | length > 0
+
+    - name: Reload systemd after the removal of old units
+      ansible.builtin.systemd_service:
+        daemon_reload: true
+
+    - name: Read the programs the system loads by itself
+      ansible.builtin.command:
+        cmd: bpftool -j prog show
+      register: programmes_systeme
+      changed_when: false
+
+    # Une ligne « type nom » par programme, sans doublon : les identifiants et
+    # les nombres de programmes bougent (systemd en recharge à chaque
+    # daemon-reload), les paires type/nom restent.
+    - name: Remember the legitimate programs (written once)
+      ansible.builtin.copy:
+        dest: "{{ coffre }}/.programmes-legitimes"
+        content: |
+          {% for p in (programmes_systeme.stdout | from_json) | map(attribute='type') | zip((programmes_systeme.stdout | from_json) | map(attribute='name', default='-')) | map('join', ' ') | unique | sort %}
+          {{ p }}
+          {% endfor %}
+        owner: root
+        group: root
+        mode: "0600"
+        force: false
+
+    - name: Draw a random suffix for the service name
+      ansible.builtin.shell:
+        cmd: od -An -N2 -tx1 /dev/urandom | tr -d " \n"
+        chdir: /
+      register: tirage
+      changed_when: false
+
+    - name: Fix the names for this run
+      ansible.builtin.set_fact:
+        nom_service: "telemetrie-sys-{{ tirage.stdout | trim }}"
+
+    - name: Directory of the collector program
+      ansible.builtin.file:
+        path: /usr/local/lib/telemetrie
+        state: directory
+        owner: root
+        group: root
+        mode: "0755"
+
+    - name: The bpftrace program of the collector (a tracepoint probe)
+      ansible.builtin.copy:
+        dest: /usr/local/lib/telemetrie/collecte.bt
+        owner: root
+        group: root
+        mode: "0644"
+        content: |
+          // Compte les nouveaux programmes lancés, par nom de commande.
+          tracepoint:sched:sched_process_exec
+          {
+            @lances[comm] = count();
+          }
+
+    - name: The unit that runs it
+      ansible.builtin.copy:
+        dest: "/etc/systemd/system/{{ nom_service }}.service"
+        owner: root
+        group: root
+        mode: "0644"
+        content: |
+          [Unit]
+          Description=Collecteur de telemetrie systeme
+
+          [Service]
+          ExecStart=/usr/bin/bpftrace /usr/local/lib/telemetrie/collecte.bt
+          Restart=always
+
+          [Install]
+          WantedBy=multi-user.target
+
+    - name: Start the carrier service and enable it at boot
+      ansible.builtin.systemd_service:
+        name: "{{ nom_service }}.service"
+        daemon_reload: true
+        enabled: true
+        state: restarted
+
+    - name: Main PID of the carrier service
+      ansible.builtin.command:
+        cmd: "systemctl show -p MainPID --value {{ nom_service }}.service"
+      register: pid_principal
+      changed_when: false
+
+    - name: Wait until the kernel holds the program of that process
+      ansible.builtin.command:
+        cmd: bpftool -j perf show
+      register: sonde
+      changed_when: false
+      retries: 20
+      delay: 1
+      until: >-
+        ((sonde.stdout | from_json) if sonde.stdout else [])
+        | selectattr('pid', 'equalto', pid_principal.stdout | trim | int)
+        | list | length > 0
+
+    - name: Identify the loaded program from its process
+      ansible.builtin.set_fact:
+        prog_id: "{{ (sonde.stdout | from_json | selectattr('pid', 'equalto', pid_principal.stdout | trim | int) | first).prog_id }}"
+
+    - name: Measure the type of the loaded program
+      ansible.builtin.command:
+        cmd: "bpftool -j prog show id {{ prog_id }}"
+      register: programme
+      changed_when: false
+
+    - name: Ground truth (what the learner has to find)
+      ansible.builtin.copy:
+        dest: "{{ coffre }}/.verite"
+        owner: root
+        group: root
+        mode: "0600"
+        content: |
+          service={{ nom_service }}.service
+          type={{ (programme.stdout | from_json).type }}
+          programme={{ (programme.stdout | from_json).name | regex_replace('_[0-9]+$', '') }}
+
+    - name: No answer yet
+      ansible.builtin.file:
+        path: /var/tmp/reponse-inventaire-bpf.txt
+        state: absent
+
+    - name: Brief the learner
+      ansible.builtin.debug:
+        msg: >-
+          Cette machine charge des programmes eBPF dans le noyau, et l'un
+          d'eux n'a pas été déployé par l'équipe. Fais l'inventaire avec
+          bpftool, retrouve le service qui le porte, arrête-le pour de bon.
+          L'énoncé est décrit par « dsoxlab challenge ebpf-inventaire-bpftool »,
+          la méthode par « dsoxlab course ebpf-inventaire-bpftool », les
+          indices par « dsoxlab hint ebpf-inventaire-bpftool ».

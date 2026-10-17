@@ -12,7 +12,7 @@ from __future__ import annotations
 
 import pytest
 
-from conftest import lab_host
+from conftest import lab_host, message
 
 TARGET_HOST = "alma-rhcsa-1.lab"
 DROPIN = "/etc/sudoers.d/operators"
@@ -25,8 +25,9 @@ def host():
 
 def test_dropin_exists(host):
     """Le drop-in sudoers pour operators doit exister."""
-    assert host.file(DROPIN).exists, (
-        f"{DROPIN} manquant. Crée la délégation dans /etc/sudoers.d/."
+    assert host.file(DROPIN).exists, message(
+        en=f"{DROPIN} is missing. Create the delegation in /etc/sudoers.d/.",
+        fr=f"{DROPIN} manquant. Crée la délégation dans /etc/sudoers.d/.",
     )
 
 
@@ -34,23 +35,30 @@ def test_dropin_exists(host):
 def test_sudoers_syntax_valid(host):
     """L'ensemble sudoers (drop-in inclus) doit être syntaxiquement valide."""
     rc = host.run("visudo -c").rc
-    assert rc == 0, (
-        "visudo -c échoue. Deux causes possibles : une syntaxe invalide (un "
+    assert rc == 0, message(
+        en="visudo -c fails. Two possible causes: invalid syntax (a "
+        "broken drop-in can block ALL sudo), or wrong permissions on the "
+        "drop-in. visudo -f leaves the file at 0640 and visudo -c requires 0440: "
+        "check ls -l /etc/sudoers.d/ before looking for a typo.",
+        fr="visudo -c échoue. Deux causes possibles : une syntaxe invalide (un "
         "drop-in cassé peut bloquer TOUT sudo), ou de mauvais droits sur le "
         "drop-in. visudo -f laisse le fichier en 0640 et visudo -c exige 0440 : "
-        "vérifie ls -l /etc/sudoers.d/ avant de chercher une faute de frappe."
+        "vérifie ls -l /etc/sudoers.d/ avant de chercher une faute de frappe.",
     )
 
 
 def test_ops_can_run_systemctl_nopasswd(host):
     """La politique effective d'ops doit autoriser systemctl sans mot de passe."""
     out = host.check_output("sudo -l -U ops")
-    assert "/usr/bin/systemctl" in out, (
-        "ops doit pouvoir lancer /usr/bin/systemctl via sudo "
-        f"(sudo -l -U ops ne le montre pas).\n{out}"
+    assert "/usr/bin/systemctl" in out, message(
+        en="ops must be able to run /usr/bin/systemctl through sudo "
+        f"(sudo -l -U ops does not show it).\n{out}",
+        fr="ops doit pouvoir lancer /usr/bin/systemctl via sudo "
+        f"(sudo -l -U ops ne le montre pas).\n{out}",
     )
-    assert "NOPASSWD" in out, (
-        "systemctl doit être autorisé SANS mot de passe (NOPASSWD) pour ops."
+    assert "NOPASSWD" in out, message(
+        en="systemctl must be allowed WITHOUT a password (NOPASSWD) for ops.",
+        fr="systemctl doit être autorisé SANS mot de passe (NOPASSWD) pour ops.",
     )
 
 
@@ -63,6 +71,10 @@ def test_delegation_is_limited(host):
         stripped = line.strip()
         if stripped.endswith(") ALL") and "systemctl" not in stripped:
             pytest.fail(
-                "ops a un sudo trop large (tout est permis). Restreins la "
-                f"délégation à /usr/bin/systemctl.\nLigne : {stripped!r}"
+                message(
+                en="ops has too broad a sudo (everything is allowed). Narrow the "
+                f"delegation down to /usr/bin/systemctl.\nLine: {stripped!r}",
+                fr="ops a un sudo trop large (tout est permis). Restreins la "
+                f"délégation à /usr/bin/systemctl.\nLigne : {stripped!r}",
+            )
             )

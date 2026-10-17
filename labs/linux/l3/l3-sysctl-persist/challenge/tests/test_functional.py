@@ -11,7 +11,7 @@ from __future__ import annotations
 
 import pytest
 
-from conftest import lab_host
+from conftest import lab_host, message
 
 TARGET_HOST = "alma-rhcsa-1.lab"
 PARAMS = {
@@ -29,9 +29,11 @@ def host():
 def test_live_value(host, param, expected):
     """La valeur active du paramètre noyau doit être durcie."""
     val = host.check_output("sysctl -n %s", param).strip()
-    assert val == expected, (
-        f"{param} doit valoir {expected} en live (vu : {val!r}). "
-        "Après édition du drop-in : sudo sysctl --system"
+    assert val == expected, message(
+        en=f"{param} must be {expected} live (seen: {val!r}). "
+        "After editing the drop-in: sudo sysctl --system",
+        fr=f"{param} doit valoir {expected} en live (vu : {val!r}). "
+        "Après édition du drop-in : sudo sysctl --system",
     )
 
 
@@ -42,7 +44,9 @@ def test_persisted_in_sysctl_d(host):
         "/etc/sysctl.conf 2>/dev/null || true"
     )
     for param in PARAMS:
-        assert param in out, (
-            f"{param} doit être déclaré dans /etc/sysctl.d/ (sinon perdu au "
-            f"reboot). Contenu vu :\n{out}"
+        assert param in out, message(
+            en=f"{param} must be declared in /etc/sysctl.d/ (otherwise lost at "
+            f"reboot). Contents seen:\n{out}",
+            fr=f"{param} doit être déclaré dans /etc/sysctl.d/ (sinon perdu au "
+            f"reboot). Contenu vu :\n{out}",
         )

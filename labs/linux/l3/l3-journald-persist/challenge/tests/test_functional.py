@@ -12,7 +12,7 @@ from __future__ import annotations
 
 import pytest
 
-from conftest import lab_host
+from conftest import lab_host, message
 
 TARGET_HOST = "alma-rhcsa-1.lab"
 
@@ -24,8 +24,9 @@ def host():
 
 def test_journal_dir_exists(host):
     """/var/log/journal doit exister (répertoire du stockage persistant)."""
-    assert host.file("/var/log/journal").is_directory, (
-        "/var/log/journal doit exister : sudo mkdir -p /var/log/journal"
+    assert host.file("/var/log/journal").is_directory, message(
+        en="/var/log/journal must exist: sudo mkdir -p /var/log/journal",
+        fr="/var/log/journal doit exister : sudo mkdir -p /var/log/journal",
     )
 
 
@@ -36,9 +37,11 @@ def test_storage_persistent_config(host):
         "/etc/systemd/journald.conf /etc/systemd/journald.conf.d/ 2>/dev/null || true"
     )
     values = [line.split("=", 1)[1].strip() for line in out.splitlines() if "=" in line]
-    assert "persistent" in values, (
-        "La config doit contenir Storage=persistent (journald.conf ou un "
-        f"drop-in journald.conf.d/). Valeurs vues : {values}"
+    assert "persistent" in values, message(
+        en="The configuration must contain Storage=persistent (journald.conf or a "
+        f"journald.conf.d/ drop-in). Values seen: {values}",
+        fr="La config doit contenir Storage=persistent (journald.conf ou un "
+        f"drop-in journald.conf.d/). Valeurs vues : {values}",
     )
 
 
@@ -47,7 +50,9 @@ def test_persistent_journal_written(host):
     count = host.check_output(
         "find /var/log/journal -name '*.journal' 2>/dev/null | wc -l"
     )
-    assert count.strip().isdigit() and int(count) >= 1, (
-        "Aucun fichier .journal sous /var/log/journal : après Storage=persistent, "
-        "redémarre systemd-journald (et journalctl --flush) pour qu'il écrive sur disque."
+    assert count.strip().isdigit() and int(count) >= 1, message(
+        en="No .journal file under /var/log/journal: after Storage=persistent, "
+        "restart systemd-journald (and run journalctl --flush) so that it writes to disk.",
+        fr="Aucun fichier .journal sous /var/log/journal : après Storage=persistent, "
+        "redémarre systemd-journald (et journalctl --flush) pour qu'il écrive sur disque.",
     )

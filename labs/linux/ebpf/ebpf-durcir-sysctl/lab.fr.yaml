@@ -1,0 +1,3 @@
+id: ebpf-durcir-sysctl
+title: "Durcir eBPF avec sysctl : fermer l'accès aux utilisateurs et rendre le réglage durable"
+description: "Un audit a trouvé eBPF grand ouvert : un utilisateur ordinaire peut appeler bpf() et le compilateur JIT n'est pas durci. Passer kernel.unprivileged_bpf_disabled et net.core.bpf_jit_harden à 2, faire survivre les deux réglages à un rechargement de la configuration sysctl malgré un fichier de debug oublié, et prouver par un vrai appel bpf() d'un utilisateur sans privilège que le noyau refuse désormais."

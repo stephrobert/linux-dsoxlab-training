@@ -11,7 +11,7 @@ from __future__ import annotations
 
 import pytest
 
-from conftest import lab_host
+from conftest import lab_host, message
 
 TARGET_HOST = "alma-rhcsa-1.lab"
 
@@ -24,16 +24,23 @@ def host():
 def test_directory_group_and_setgid(host):
     """/srv/partage : répertoire, groupe devteam, mode set-GID + g+w."""
     d = host.file("/srv/partage")
-    assert d.is_directory, "/srv/partage doit être un répertoire."
-    assert d.group == "devteam", (
-        f"/srv/partage doit avoir le groupe devteam (vu : {d.group}). "
-        "chgrp devteam /srv/partage"
+    assert d.is_directory, message(
+        en="/srv/partage must be a directory.",
+        fr="/srv/partage doit être un répertoire.",
     )
-    assert d.mode & 0o2000, (
-        f"Le bit set-GID doit être posé (mode vu : {oct(d.mode)}). chmod 2775"
+    assert d.group == "devteam", message(
+        en=f"/srv/partage must have the devteam group (seen: {d.group}). "
+        "chgrp devteam /srv/partage",
+        fr=f"/srv/partage doit avoir le groupe devteam (vu : {d.group}). "
+        "chgrp devteam /srv/partage",
     )
-    assert d.mode & 0o0020, (
-        "Le groupe doit avoir le droit d'écriture (g+w) — mode 2775."
+    assert d.mode & 0o2000, message(
+        en=f"The set-GID bit must be set (mode seen: {oct(d.mode)}). chmod 2775",
+        fr=f"Le bit set-GID doit être posé (mode vu : {oct(d.mode)}). chmod 2775",
+    )
+    assert d.mode & 0o0020, message(
+        en="The group must have write permission (g+w), that is mode 2775.",
+        fr="Le groupe doit avoir le droit d'écriture (g+w) — mode 2775.",
     )
 
 
@@ -41,9 +48,14 @@ def test_new_file_inherits_group(host):
     """Un fichier créé par un membre doit hériter du groupe devteam (set-GID)."""
     host.run("rm -f /srv/partage/probe")
     res = host.run("runuser -u alice -- touch /srv/partage/probe")
-    assert res.rc == 0, f"Création du témoin échouée : {res.stderr}"
+    assert res.rc == 0, message(
+        en=f"Creating the witness file failed: {res.stderr}",
+        fr=f"Création du témoin échouée : {res.stderr}",
+    )
     probe = host.file("/srv/partage/probe")
-    assert probe.group == "devteam", (
-        f"Un fichier créé dans /srv/partage doit hériter du groupe devteam "
-        f"(vu : {probe.group}) — c'est l'effet du bit set-GID."
+    assert probe.group == "devteam", message(
+        en=f"A file created in /srv/partage must inherit the devteam group "
+        f"(seen: {probe.group}), which is the effect of the set-GID bit.",
+        fr=f"Un fichier créé dans /srv/partage doit hériter du groupe devteam "
+        f"(vu : {probe.group}) — c'est l'effet du bit set-GID.",
     )

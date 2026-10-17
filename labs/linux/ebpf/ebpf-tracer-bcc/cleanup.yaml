@@ -1,0 +1,105 @@
+---
+# Reset idempotent : retire le service mystère, son programme, son fichier, la
+# réponse de l apprenant, puis remet les paquets dans l état où le setup les a
+# trouvés (ceux qu il a retirés reviennent, ceux que l apprenant a ajoutés
+# repartent). Joué par dsoxlab clean.
+- name: Cleanup ebpf-tracer-bcc lab
+  hosts: lab_target
+  become: true
+  gather_facts: true
+  vars:
+    outils_debian: [bpfcc-tools, python3-bpfcc, libbpfcc, bpftrace]
+    outils_redhat: [bcc-tools, python3-bcc, bpftrace, bpftool]
+    outils: "{{ outils_debian if ansible_os_family == 'Debian' else outils_redhat }}"
+    suivis: "{{ outils + (['kernel-devel'] if ansible_os_family == 'RedHat' else []) }}"
+  tasks:
+    - name: Stop and disable the mystery service
+      ansible.builtin.shell:
+        cmd: systemctl disable --now lab-mystere 2>/dev/null || true
+        chdir: /
+      changed_when: false
+
+    - name: Find the mystery programs
+      ansible.builtin.find:
+        paths: /usr/local/sbin
+        patterns: "agent-*"
+        file_type: file
+      register: programmes
+
+    - name: Remove the mystery programs
+      ansible.builtin.file:
+        path: "{{ item.path }}"
+        state: absent
+      loop: "{{ programmes.files }}"
+      loop_control:
+        label: "{{ item.path }}"
+
+    - name: Remove the unit
+      ansible.builtin.file:
+        path: /etc/systemd/system/lab-mystere.service
+        state: absent
+
+    - name: Reload systemd after the unit removal
+      ansible.builtin.systemd_service:
+        daemon_reload: true
+
+    - name: Remove the data directory of the service
+      ansible.builtin.file:
+        path: /var/lib/lab-mystere
+        state: absent
+
+    - name: Remove the learner answer
+      ansible.builtin.file:
+        path: /var/tmp/reponse-ebpf.txt
+        state: absent
+
+    - name: Is the initial package list known?
+      ansible.builtin.stat:
+        path: /opt/lab-ebpf/.paquets-initiaux
+      register: liste_initiale
+
+    - name: Read the initial package list
+      ansible.builtin.slurp:
+        src: /opt/lab-ebpf/.paquets-initiaux
+      register: initiaux_brut
+      when: liste_initiale.stat.exists
+
+    - name: Read the installed packages
+      ansible.builtin.package_facts:
+        manager: auto
+
+    - name: Work out what to remove and what to put back
+      ansible.builtin.set_fact:
+        initiaux: "{{ (initiaux_brut.content | b64decode).split() if liste_initiale.stat.exists else [] }}"
+
+    - name: Remove the packages the learner added
+      ansible.builtin.package:
+        name: "{{ suivis | select('in', ansible_facts.packages) | reject('in', initiaux) | list }}"
+        state: absent
+      when:
+        - liste_initiale.stat.exists
+        - (suivis | select('in', ansible_facts.packages) | reject('in', initiaux) | list) | length > 0
+
+    - name: Put back the packages the setup removed (Debian)
+      ansible.builtin.apt:
+        name: "{{ initiaux | intersect(outils) | reject('in', ansible_facts.packages) | list }}"
+        state: present
+        update_cache: true
+      when:
+        - ansible_os_family == "Debian"
+        - liste_initiale.stat.exists
+        - (initiaux | intersect(outils) | reject('in', ansible_facts.packages) | list) | length > 0
+
+    - name: Put back the packages the setup removed (RedHat)
+      ansible.builtin.dnf:
+        name: "{{ initiaux | intersect(outils) | reject('in', ansible_facts.packages) | list }}"
+        state: present
+      when:
+        - ansible_os_family == "RedHat"
+        - liste_initiale.stat.exists
+        - (initiaux | intersect(outils) | reject('in', ansible_facts.packages) | list) | length > 0
+
+    - name: Remove the work directory (ground truth and state)
+      ansible.builtin.file:
+        path: /opt/lab-ebpf
+        state: absent

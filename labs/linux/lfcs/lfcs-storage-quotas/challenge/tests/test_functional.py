@@ -13,7 +13,7 @@ from __future__ import annotations
 
 import pytest
 
-from conftest import lab_host
+from conftest import lab_host, message
 
 TARGET_HOST = "ubuntu-lfcs-1.lab"
 MOUNT = "/srv/data"
@@ -44,49 +44,62 @@ def _fstab_line(host) -> str | None:
 
 def test_mounted_from_dedicated_disk(host):
     """/srv/data doit être monté depuis /dev/vdb, en XFS."""
-    assert host.mount_point(MOUNT).exists, (
-        f"{MOUNT} n'est pas monté. Formate {DEVICE} en XFS puis monte-le."
+    assert host.mount_point(MOUNT).exists, message(
+        en=f"{MOUNT} is not mounted. Format {DEVICE} as XFS then mount it.",
+        fr=f"{MOUNT} n'est pas monté. Formate {DEVICE} en XFS puis monte-le.",
     )
     source, fstype = host.check_output(
         "findmnt -no SOURCE,FSTYPE %s", MOUNT
     ).split()
-    assert source == DEVICE, (
-        f"{MOUNT} doit être monté depuis {DEVICE} (vu : {source!r})."
+    assert source == DEVICE, message(
+        en=f"{MOUNT} must be mounted from {DEVICE} (seen: {source!r}).",
+        fr=f"{MOUNT} doit être monté depuis {DEVICE} (vu : {source!r}).",
     )
-    assert fstype == "xfs", (
-        f"{MOUNT} doit être un système de fichiers XFS (vu : {fstype!r})."
+    assert fstype == "xfs", message(
+        en=f"{MOUNT} must be an XFS filesystem (seen: {fstype!r}).",
+        fr=f"{MOUNT} doit être un système de fichiers XFS (vu : {fstype!r}).",
     )
 
 
 def test_user_quota_enforced(host):
     """Les quotas utilisateur doivent être actifs ET appliqués sur le montage."""
     state = host.check_output('xfs_quota -x -c "state -u" %s', MOUNT)
-    assert "Accounting: ON" in state, (
-        "La comptabilité des quotas utilisateur est OFF : le montage n'a pas "
-        "été fait avec l'option uquota. Vu :\n" + state
+    assert "Accounting: ON" in state, message(
+        en="User quota accounting is OFF: the mount was not done "
+        "with the uquota option. Seen:\n" + state,
+        fr="La comptabilité des quotas utilisateur est OFF : le montage n'a pas "
+        "été fait avec l'option uquota. Vu :\n" + state,
     )
-    assert "Enforcement: ON" in state, (
-        "L'application des quotas utilisateur est OFF : la limite ne serait "
-        "jamais imposée. Vu :\n" + state
+    assert "Enforcement: ON" in state, message(
+        en="User quota enforcement is OFF: the limit would "
+        "never be imposed. Seen:\n" + state,
+        fr="L'application des quotas utilisateur est OFF : la limite ne serait "
+        "jamais imposée. Vu :\n" + state,
     )
 
 
 def test_fstab_persistent_with_quota_option(host):
     """L'entrée fstab doit rendre le montage ET les quotas persistants."""
     line = _fstab_line(host)
-    assert line is not None, (
-        f"Aucune entrée fstab pour {MOUNT} : le montage disparaîtrait au "
-        f"reboot. Ajoute : {DEVICE} {MOUNT} xfs defaults,uquota 0 0"
+    assert line is not None, message(
+        en=f"No fstab entry for {MOUNT}: the mount would disappear at "
+        f"reboot. Add: {DEVICE} {MOUNT} xfs defaults,uquota 0 0",
+        fr=f"Aucune entrée fstab pour {MOUNT} : le montage disparaîtrait au "
+        f"reboot. Ajoute : {DEVICE} {MOUNT} xfs defaults,uquota 0 0",
     )
     fields = line.split()
-    assert len(fields) >= 4 and fields[2] == "xfs", (
-        f"L'entrée fstab de {MOUNT} doit être de type xfs (vu : {line!r})."
+    assert len(fields) >= 4 and fields[2] == "xfs", message(
+        en=f"The fstab entry for {MOUNT} must be of type xfs (seen: {line!r}).",
+        fr=f"L'entrée fstab de {MOUNT} doit être de type xfs (vu : {line!r}).",
     )
     opts = fields[3].split(",")
-    assert any(o in ("uquota", "usrquota", "quota") for o in opts), (
-        "L'entrée fstab doit porter l'option de quota utilisateur (uquota), "
+    assert any(o in ("uquota", "usrquota", "quota") for o in opts), message(
+        en="The fstab entry must carry the user quota option (uquota), "
+        "otherwise the quotas are lost at reboot. That is THE trap. "
+        f"Seen: {fields[3]!r}.",
+        fr="L'entrée fstab doit porter l'option de quota utilisateur (uquota), "
         "sinon les quotas sont perdus au reboot — c'est LE piège. "
-        f"Vu : {fields[3]!r}."
+        f"Vu : {fields[3]!r}.",
     )
 
 
@@ -97,18 +110,25 @@ def test_devops_block_limit_applied(host):
         (ligne for ligne in report.splitlines() if ligne.split() and ligne.split()[0] == QUOTA_USER),
         None,
     )
-    assert line is not None, (
-        f"L'utilisateur {QUOTA_USER} n'apparaît pas dans le rapport de quotas. "
+    assert line is not None, message(
+        en=f"User {QUOTA_USER} does not appear in the quota report. "
+        f'Impose the limit: xfs_quota -x -c "limit bsoft=40m bhard=50m '
+        f'{QUOTA_USER}" {MOUNT}. Seen:\n{report}' ,
+        fr=f"L'utilisateur {QUOTA_USER} n'apparaît pas dans le rapport de quotas. "
         f'Impose la limite : xfs_quota -x -c "limit bsoft=40m bhard=50m '
-        f'{QUOTA_USER}" {MOUNT}. Vu :\n{report}'
+        f'{QUOTA_USER}" {MOUNT}. Vu :\n{report}',
     )
     fields = line.split()
     soft, hard = int(fields[2]), int(fields[3])
-    assert soft == BSOFT_KB, (
-        f"Le quota souple de {QUOTA_USER} doit être 40M ({BSOFT_KB} blocs de "
-        f"1K), vu : {soft}."
+    assert soft == BSOFT_KB, message(
+        en=f"The soft quota of {QUOTA_USER} must be 40M ({BSOFT_KB} blocks of "
+        f"1K), seen: {soft}.",
+        fr=f"Le quota souple de {QUOTA_USER} doit être 40M ({BSOFT_KB} blocs de "
+        f"1K), vu : {soft}.",
     )
-    assert hard == BHARD_KB, (
-        f"Le quota dur de {QUOTA_USER} doit être 50M ({BHARD_KB} blocs de 1K), "
-        f"vu : {hard}."
+    assert hard == BHARD_KB, message(
+        en=f"The hard quota of {QUOTA_USER} must be 50M ({BHARD_KB} blocks of 1K), "
+        f"seen: {hard}.",
+        fr=f"Le quota dur de {QUOTA_USER} doit être 50M ({BHARD_KB} blocs de 1K), "
+        f"vu : {hard}.",
     )

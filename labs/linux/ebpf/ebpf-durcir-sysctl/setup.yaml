@@ -1,0 +1,114 @@
+---
+# État initial : eBPF grand ouvert. kernel.unprivileged_bpf_disabled=0 et
+# net.core.bpf_jit_harden=0 à chaud, et un piège réaliste : un fichier de debug
+# oublié (/etc/sysctl.d/99-debug-bpf.conf) qui remet unprivileged_bpf_disabled
+# à 0 à chaque démarrage, donc à chaque rechargement. Les valeurs d'origine de
+# la VM et une copie de /etc/sysctl.d sont rangées une seule fois dans
+# /opt/lab-ebpf-sysctl (root, 0700) : le cleanup les restaure à l'identique.
+# Joué par dsoxlab run.
+- name: Setup ebpf-durcir-sysctl lab
+  hosts: lab_target
+  become: true
+  gather_facts: false
+  vars:
+    coffre: /opt/lab-ebpf-sysctl
+  tasks:
+    - name: Work directory for the original state (root only)
+      ansible.builtin.file:
+        path: "{{ coffre }}"
+        state: directory
+        owner: root
+        group: root
+        mode: "0700"
+
+    - name: Is the original state already saved?
+      ansible.builtin.stat:
+        path: "{{ coffre }}/sysctl.d.orig"
+      register: copie_faite
+
+    # Sauvegarde faite une seule fois : un setup rejoué sans cleanup ne doit pas
+    # prendre pour état d'origine ce que l'apprenant a déjà écrit.
+    - name: Save the original /etc/sysctl.d (names, links, modes)
+      ansible.builtin.command:
+        cmd: cp -a /etc/sysctl.d {{ coffre }}/sysctl.d.orig
+      changed_when: true
+      when: not copie_faite.stat.exists
+
+    - name: Save the original /etc/sysctl.conf
+      ansible.builtin.command:
+        cmd: cp -a /etc/sysctl.conf {{ coffre }}/sysctl.conf.orig
+        removes: /etc/sysctl.conf
+      changed_when: true
+      when: not copie_faite.stat.exists
+
+    - name: Read the current value of kernel.unprivileged_bpf_disabled
+      ansible.builtin.command:
+        cmd: sysctl -n kernel.unprivileged_bpf_disabled
+      register: unpriv_actuel
+      changed_when: false
+
+    - name: Read the current value of net.core.bpf_jit_harden
+      ansible.builtin.command:
+        cmd: sysctl -n net.core.bpf_jit_harden
+      register: jit_actuel
+      changed_when: false
+
+    - name: Remember the original runtime values (written once)
+      ansible.builtin.copy:
+        dest: "{{ coffre }}/valeurs.orig"
+        owner: root
+        group: root
+        mode: "0600"
+        force: false
+        content: |
+          kernel.unprivileged_bpf_disabled={{ unpriv_actuel.stdout | trim }}
+          net.core.bpf_jit_harden={{ jit_actuel.stdout | trim }}
+
+    # La valeur 1 est irréversible jusqu'au redémarrage : on le dit au lieu
+    # de laisser sysctl répondre « Operation not permitted » sans explication.
+    - name: A previous run locked the setting at 1, only a reboot can undo it
+      ansible.builtin.fail:
+        msg: >-
+          kernel.unprivileged_bpf_disabled vaut 1 : le noyau refuse toute
+          modification avant un redémarrage de la machine. Redémarre la VM,
+          puis relance « dsoxlab reset ebpf-durcir-sysctl ».
+      when: (unpriv_actuel.stdout | trim) == "1"
+
+    - name: Leave eBPF wide open at runtime (unprivileged callers allowed)
+      ansible.builtin.command:
+        cmd: sysctl -w kernel.unprivileged_bpf_disabled=0
+      changed_when: (unpriv_actuel.stdout | trim) != "0"
+
+    - name: Leave the JIT hardening off at runtime
+      ansible.builtin.command:
+        cmd: sysctl -w net.core.bpf_jit_harden=0
+      changed_when: (jit_actuel.stdout | trim) != "0"
+
+    - name: The forgotten debug file (puts the setting back to 0 at every load)
+      ansible.builtin.copy:
+        dest: /etc/sysctl.d/99-debug-bpf.conf
+        owner: root
+        group: root
+        mode: "0644"
+        content: |
+          # Posé pendant la session de profilage de la semaine dernière :
+          # l'outil du prestataire lançait ses sondes sans être root.
+          # À retirer quand le profilage est terminé.
+          kernel.unprivileged_bpf_disabled = 0
+
+    - name: Check the starting state (both settings open, as announced)
+      ansible.builtin.command:
+        cmd: sysctl -n kernel.unprivileged_bpf_disabled net.core.bpf_jit_harden
+      register: depart
+      changed_when: false
+      failed_when: depart.stdout_lines != ["0", "0"]
+
+    - name: Brief the learner
+      ansible.builtin.debug:
+        msg: >-
+          Un audit signale que cette machine laisse eBPF grand ouvert. Corrige
+          les deux réglages noyau concernés, pour de bon : ils doivent résister
+          à un rechargement de la configuration. L'énoncé est décrit par
+          « dsoxlab challenge ebpf-durcir-sysctl », la méthode par
+          « dsoxlab course ebpf-durcir-sysctl », les indices par
+          « dsoxlab hint ebpf-durcir-sysctl ».

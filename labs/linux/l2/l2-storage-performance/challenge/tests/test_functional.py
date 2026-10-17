@@ -11,7 +11,7 @@ from __future__ import annotations
 
 import pytest
 
-from conftest import lab_host
+from conftest import lab_host, message
 
 TARGET_HOST = "alma-rhcsa-1.lab"
 MOUNT = "/srv/data"
@@ -37,28 +37,34 @@ def _fstab_line(host) -> str | None:
 @pytest.mark.garde_fou
 def test_mounted(host):
     """/srv/data doit rester monté."""
-    assert host.mount_point(MOUNT).exists, (
-        f"{MOUNT} n'est pas monté. Après avoir édité fstab : mount -o remount {MOUNT}"
+    assert host.mount_point(MOUNT).exists, message(
+        en=f"{MOUNT} is not mounted. After editing fstab: mount -o remount {MOUNT}",
+        fr=f"{MOUNT} n'est pas monté. Après avoir édité fstab : mount -o remount {MOUNT}",
     )
 
 
 def test_noatime_active(host):
     """Le montage réel de /srv/data doit inclure l'option noatime."""
     opts = host.check_output("findmnt -no OPTIONS %s", MOUNT)
-    assert "noatime" in opts.split(","), (
-        f"noatime n'est pas actif sur {MOUNT} (options : {opts}). "
-        f"Ajoute-le puis : mount -o remount {MOUNT}"
+    assert "noatime" in opts.split(","), message(
+        en=f"noatime is not active on {MOUNT} (options: {opts}). "
+        f"Add it then: mount -o remount {MOUNT}",
+        fr=f"noatime n'est pas actif sur {MOUNT} (options : {opts}). "
+        f"Ajoute-le puis : mount -o remount {MOUNT}",
     )
 
 
 def test_noatime_persistent_in_fstab(host):
     """L'option noatime doit figurer dans /etc/fstab (persistance après reboot)."""
     line = _fstab_line(host)
-    assert line is not None, (
-        f"Aucune entrée fstab non commentée pour {MOUNT}."
+    assert line is not None, message(
+        en=f"No uncommented fstab entry for {MOUNT}.",
+        fr=f"Aucune entrée fstab non commentée pour {MOUNT}.",
     )
     options = line.split()[3] if len(line.split()) >= 4 else ""
-    assert "noatime" in options.split(","), (
-        f"L'entrée fstab de {MOUNT} doit inclure noatime dans ses options "
-        f"(vu : {options!r}), sinon le réglage ne survit pas au reboot."
+    assert "noatime" in options.split(","), message(
+        en=f"The fstab entry for {MOUNT} must include noatime in its options "
+        f"(seen: {options!r}), otherwise the setting does not survive a reboot.",
+        fr=f"L'entrée fstab de {MOUNT} doit inclure noatime dans ses options "
+        f"(vu : {options!r}), sinon le réglage ne survit pas au reboot.",
     )

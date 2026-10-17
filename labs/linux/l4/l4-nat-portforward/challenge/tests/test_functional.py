@@ -11,7 +11,7 @@ from __future__ import annotations
 
 import pytest
 
-from conftest import lab_host
+from conftest import lab_host, message
 
 TARGET_HOST = "alma-rhcsa-1.lab"
 
@@ -24,8 +24,9 @@ def host():
 def test_ip_forward_live(host):
     """Le routage IP doit être actif."""
     val = host.check_output("sysctl -n net.ipv4.ip_forward").strip()
-    assert val == "1", (
-        f"net.ipv4.ip_forward doit valoir 1 (vu : {val!r}) — préalable au NAT."
+    assert val == "1", message(
+        en=f"net.ipv4.ip_forward must be 1 (seen: {val!r}), a prerequisite for NAT.",
+        fr=f"net.ipv4.ip_forward doit valoir 1 (vu : {val!r}) — préalable au NAT.",
     )
 
 
@@ -34,36 +35,44 @@ def test_ip_forward_persistent(host):
     out = host.check_output(
         "grep -rhs ip_forward /etc/sysctl.d/ /etc/sysctl.conf 2>/dev/null || true"
     )
-    assert "net.ipv4.ip_forward" in out and "1" in out, (
-        "net.ipv4.ip_forward=1 doit être dans /etc/sysctl.d/ (sinon perdu au "
-        f"reboot). Vu :\n{out}"
+    assert "net.ipv4.ip_forward" in out and "1" in out, message(
+        en="net.ipv4.ip_forward=1 must be in /etc/sysctl.d/ (otherwise lost at "
+        f"reboot). Seen:\n{out}",
+        fr="net.ipv4.ip_forward=1 doit être dans /etc/sysctl.d/ (sinon perdu au "
+        f"reboot). Vu :\n{out}",
     )
 
 
 def test_dnat_rule(host):
     """Le ruleset doit contenir la redirection de port (DNAT)."""
     ruleset = host.check_output("nft list ruleset")
-    assert "dport 8080 dnat to 192.0.2.20:80" in ruleset, (
-        "La règle prerouting 'tcp dport 8080 dnat to 192.0.2.20:80' doit exister."
+    assert "dport 8080 dnat to 192.0.2.20:80" in ruleset, message(
+        en="The prerouting rule 'tcp dport 8080 dnat to 192.0.2.20:80' must exist.",
+        fr="La règle prerouting 'tcp dport 8080 dnat to 192.0.2.20:80' doit exister.",
     )
 
 
 def test_masquerade_rule(host):
     """Le ruleset doit contenir le masquerade (SNAT)."""
     ruleset = host.check_output("nft list ruleset")
-    assert "192.0.2.20 masquerade" in ruleset, (
-        "La règle postrouting '192.0.2.20 masquerade' doit exister."
+    assert "192.0.2.20 masquerade" in ruleset, message(
+        en="The postrouting rule '192.0.2.20 masquerade' must exist.",
+        fr="La règle postrouting '192.0.2.20 masquerade' doit exister.",
     )
 
 
 def test_ruleset_persistent(host):
     """Le ruleset doit persister : service nftables activé + include RHEL."""
-    assert host.service("nftables").is_enabled, (
-        "nftables.service doit être enabled (sinon les règles disparaissent au "
-        "reboot). systemctl enable nftables"
+    assert host.service("nftables").is_enabled, message(
+        en="nftables.service must be enabled (otherwise the rules disappear at "
+        "reboot). systemctl enable nftables",
+        fr="nftables.service doit être enabled (sinon les règles disparaissent au "
+        "reboot). systemctl enable nftables",
     )
     conf = host.file("/etc/sysconfig/nftables.conf")
-    assert conf.exists and "lab-nat.nft" in conf.content_string, (
-        "Le ruleset de lab doit être inclus dans /etc/sysconfig/nftables.conf "
-        "(persistance)."
+    assert conf.exists and "lab-nat.nft" in conf.content_string, message(
+        en="The lab ruleset must be included in /etc/sysconfig/nftables.conf "
+        "(persistence).",
+        fr="Le ruleset de lab doit être inclus dans /etc/sysconfig/nftables.conf "
+        "(persistance).",
     )

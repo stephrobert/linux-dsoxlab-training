@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import pytest
 
-from conftest import lab_host
+from conftest import lab_host, message
 
 TARGET_HOST = "alma-rhcsa-1.lab"
 
@@ -21,43 +21,55 @@ def _disk(host) -> str:
 def test_disk_is_luks2(host):
     """Le disque doit être formaté en LUKS version 2."""
     disk = _disk(host)
-    assert disk, "/root/luks-disk.env introuvable (lab non préparé ?)."
+    assert disk, message(
+        en="/root/luks-disk.env cannot be found (lab not prepared?).",
+        fr="/root/luks-disk.env introuvable (lab non préparé ?).",
+    )
     out = host.run(f"cryptsetup luksDump {disk} 2>/dev/null")
-    assert out.rc == 0, f"{disk} n'est pas un volume LUKS (cryptsetup luksFormat manquant ?)."
-    assert "Version:" in out.stdout, (
-        f"{disk} ne présente pas d'en-tête LUKS lisible."
+    assert out.rc == 0, message(
+        en=f"{disk} is not a LUKS volume (cryptsetup luksFormat missing?).",
+        fr=f"{disk} n'est pas un volume LUKS (cryptsetup luksFormat manquant ?).",
+    )
+    assert "Version:" in out.stdout, message(
+        en=f"{disk} presents no readable LUKS header.",
+        fr=f"{disk} ne présente pas d'en-tête LUKS lisible.",
     )
     # On lit la VALEUR du champ, pas une fenêtre de caractères : cryptsetup
     # aligne la colonne avec des espaces puis une tabulation, si bien que le
     # chiffre tombait en 9e position et échappait à une tranche [:8]. Le
     # volume était bien en LUKS2, seul le test se trompait.
     version = out.stdout.split("Version:", 1)[1].splitlines()[0].strip()
-    assert version == "2", (
-        f"Le volume doit être en LUKS2 (--type luks2), version lue : {version!r}."
+    assert version == "2", message(
+        en=f"The volume must be LUKS2 (--type luks2), version read: {version!r}.",
+        fr=f"Le volume doit être en LUKS2 (--type luks2), version lue : {version!r}.",
     )
 
 
 def test_mapping_open(host):
     """Le volume doit être ouvert sous /dev/mapper/coffre."""
-    assert host.file("/dev/mapper/coffre").exists, (
-        "Ouvrez le volume : cryptsetup open <disque> coffre."
+    assert host.file("/dev/mapper/coffre").exists, message(
+        en="Open the volume: cryptsetup open <disk> coffre.",
+        fr="Ouvrez le volume : cryptsetup open <disque> coffre.",
     )
 
 
 def test_mounted(host):
     """Le volume déchiffré doit être monté sur /mnt/coffre."""
     out = host.run("findmnt -n /mnt/coffre")
-    assert "/dev/mapper/coffre" in out.stdout, (
-        "Montez /dev/mapper/coffre sur /mnt/coffre (mkfs.xfs puis mount)."
+    assert "/dev/mapper/coffre" in out.stdout, message(
+        en="Mount /dev/mapper/coffre on /mnt/coffre (mkfs.xfs then mount).",
+        fr="Montez /dev/mapper/coffre sur /mnt/coffre (mkfs.xfs puis mount).",
     )
 
 
 def test_crypttab_declared(host):
     """L'entrée doit figurer dans /etc/crypttab (persistance)."""
     ct = host.file("/etc/crypttab")
-    assert ct.exists, (
-        "/etc/crypttab n'existe pas : le volume ne serait pas rouvert au "
-        "démarrage."
+    assert ct.exists, message(
+        en="/etc/crypttab does not exist: the volume would not be reopened at "
+        "boot.",
+        fr="/etc/crypttab n'existe pas : le volume ne serait pas rouvert au "
+        "démarrage.",
     )
     # On lit le NOM DE MAPPING, premier champ d'une ligne active, plutôt que
     # de chercher « coffre » dans tout le fichier : un commentaire laissé par
@@ -67,8 +79,11 @@ def test_crypttab_declared(host):
         for ligne in ct.content_string.splitlines()
         if ligne.strip() and not ligne.strip().startswith("#")
     }
-    assert "coffre" in noms, (
-        "Déclarez le volume dans /etc/crypttab "
+    assert "coffre" in noms, message(
+        en="Declare the volume in /etc/crypttab "
+        "(coffre UUID=… /root/luks.key luks). Declared mappings: "
+        f"{sorted(noms) or 'none'}.",
+        fr="Déclarez le volume dans /etc/crypttab "
         "(coffre UUID=... /root/luks.key luks). Mappings déclarés : "
-        f"{sorted(noms) or 'aucun'}."
+        f"{sorted(noms) or 'aucun'}.",
     )

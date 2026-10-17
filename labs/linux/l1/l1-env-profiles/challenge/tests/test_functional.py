@@ -13,6 +13,8 @@ import os
 import pathlib
 import subprocess
 
+from conftest import message
+
 WORK = pathlib.Path(".")
 ENV = WORK / "env.sh"
 SEP = "\x1f"
@@ -29,7 +31,10 @@ def _source_and_read(expr: str) -> subprocess.CompletedProcess[str]:
 
 
 def test_env_file_exists() -> None:
-    assert ENV.exists(), "env.sh manquant. Crée-le dans challenge/work/."
+    assert ENV.exists(), message(
+        en="env.sh is missing. Create it in challenge/work/.",
+        fr="env.sh manquant. Crée-le dans challenge/work/.",
+    )
 
 
 def test_variables_after_source() -> None:
@@ -38,11 +43,19 @@ def test_variables_after_source() -> None:
         f'printf "%s{SEP}%s{SEP}%s" "$PROJET" "$EDITOR" "$GREETING"'
     )
     projet, editor, greeting = res.stdout.split(SEP)
-    assert projet == "dsoxlab", f"PROJET doit valoir 'dsoxlab', obtenu {projet!r}."
-    assert editor == "vim", f"EDITOR doit valoir 'vim', obtenu {editor!r}."
-    assert greeting == "Bienvenue sur dsoxlab", (
-        "GREETING doit réutiliser $PROJET : GREETING=\"Bienvenue sur $PROJET\". "
-        f"Obtenu {greeting!r}."
+    assert projet == "dsoxlab", message(
+        en=f"PROJET must be 'dsoxlab', got {projet!r}.",
+        fr=f"PROJET doit valoir 'dsoxlab', obtenu {projet!r}.",
+    )
+    assert editor == "vim", message(
+        en=f"EDITOR must be 'vim', got {editor!r}.",
+        fr=f"EDITOR doit valoir 'vim', obtenu {editor!r}.",
+    )
+    assert greeting == "Bienvenue sur dsoxlab", message(
+        en="GREETING must reuse $PROJET: GREETING=\"Bienvenue sur $PROJET\". "
+        f"Got {greeting!r}.",
+        fr="GREETING doit réutiliser $PROJET : GREETING=\"Bienvenue sur $PROJET\". "
+        f"Obtenu {greeting!r}.",
     )
 
 
@@ -51,17 +64,22 @@ def test_path_prepended_with_bin() -> None:
     res = _source_and_read('printf "%s" "${PATH%%:*}"')
     first = res.stdout
     expected = os.path.join(os.getcwd(), "bin")
-    assert first == expected, (
-        f"La 1re entrée de PATH doit être {expected!r} (préfixe $PWD/bin), "
-        f"obtenu {first!r}. Utilise : export PATH=\"$PWD/bin:$PATH\"."
+    assert first == expected, message(
+        en=f"The 1st entry of PATH must be {expected!r} ($PWD/bin prefix), "
+        f"got {first!r}. Use: export PATH=\"$PWD/bin:$PATH\".",
+        fr=f"La 1re entrée de PATH doit être {expected!r} (préfixe $PWD/bin), "
+        f"obtenu {first!r}. Utilise : export PATH=\"$PWD/bin:$PATH\".",
     )
 
 
 def test_variables_are_exported() -> None:
     """Un processus enfant hérite de PROJET : la variable est bien exportée."""
     res = _source_and_read('bash -c \'printf "%s" "$PROJET"\'')
-    assert res.stdout == "dsoxlab", (
-        "PROJET doit être EXPORTé pour qu'un processus enfant le voie "
+    assert res.stdout == "dsoxlab", message(
+        en="PROJET must be EXPORTed for a child process to see it "
+        "(export PROJET=…, not just PROJET=…). "
+        f"The child saw {res.stdout!r}.",
+        fr="PROJET doit être EXPORTé pour qu'un processus enfant le voie "
         "(export PROJET=..., pas seulement PROJET=...). "
-        f"L'enfant a vu {res.stdout!r}."
+        f"L'enfant a vu {res.stdout!r}.",
     )

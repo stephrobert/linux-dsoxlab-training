@@ -12,7 +12,7 @@ from __future__ import annotations
 
 import pytest
 
-from conftest import lab_host
+from conftest import lab_host, message
 
 TARGET_HOST = "alma-rhcsa-1.lab"
 MIB = 1024 * 1024
@@ -30,7 +30,10 @@ def disk(host) -> str:
     for line in out.splitlines():
         if line.startswith("DISK="):
             return line.split("=", 1)[1].strip()
-    pytest.fail("/root/part-disk.env introuvable ou sans DISK= (setup non joué ?)")
+    pytest.fail(message(
+        en="/root/part-disk.env cannot be found, or has no DISK= (setup not played?)",
+        fr="/root/part-disk.env introuvable ou sans DISK= (setup non joué ?)",
+    ))
 
 
 def _partitions(host, disk: str) -> list[str]:
@@ -42,38 +45,52 @@ def _partitions(host, disk: str) -> list[str]:
 def test_gpt_label(host, disk):
     """Le disque doit porter une table de partition GPT."""
     pttype = host.check_output("blkid -s PTTYPE -o value %s || true", disk)
-    assert pttype == "gpt", (
-        f"{disk} doit avoir une table GPT (vu : {pttype!r}). "
-        f"Utilise : parted -s {disk} mklabel gpt"
+    assert pttype == "gpt", message(
+        en=f"{disk} must have a GPT table (seen: {pttype!r}). "
+        f"Use: parted -s {disk} mklabel gpt",
+        fr=f"{disk} doit avoir une table GPT (vu : {pttype!r}). "
+        f"Utilise : parted -s {disk} mklabel gpt",
     )
 
 
 def test_two_partitions(host, disk):
     """Le disque doit avoir au moins deux partitions."""
     parts = _partitions(host, disk)
-    assert len(parts) >= 2, (
-        f"Le disque doit avoir 2 partitions, trouvé {len(parts)} : {parts}. "
-        "Crée-les avec parted mkpart, puis partprobe."
+    assert len(parts) >= 2, message(
+        en=f"The disk must have 2 partitions, found {len(parts)}: {parts}. "
+        "Create them with parted mkpart, then partprobe.",
+        fr=f"Le disque doit avoir 2 partitions, trouvé {len(parts)} : {parts}. "
+        "Crée-les avec parted mkpart, puis partprobe.",
     )
 
 
 def test_partition1_is_512mib(host, disk):
     """La 1re partition doit faire ~512 Mio."""
     parts = _partitions(host, disk)
-    assert parts, "Aucune partition trouvée."
+    assert parts, message(
+        en="No partition found.",
+        fr="Aucune partition trouvée.",
+    )
     size = int(host.check_output("lsblk -bno SIZE /dev/%s", parts[0]))
-    assert 509 * MIB <= size <= 515 * MIB, (
-        f"La 1re partition doit faire ~512 Mio (vue : {size // MIB} Mio). "
-        f"parted -s {disk} mkpart primary 1MiB 513MiB"
+    assert 509 * MIB <= size <= 515 * MIB, message(
+        en=f"The 1st partition must be about 512 MiB (seen: {size // MIB} MiB). "
+        f"parted -s {disk} mkpart primary 1MiB 513MiB",
+        fr=f"La 1re partition doit faire ~512 Mio (vue : {size // MIB} Mio). "
+        f"parted -s {disk} mkpart primary 1MiB 513MiB",
     )
 
 
 def test_partition2_is_1gib(host, disk):
     """La 2e partition doit faire ~1 Gio."""
     parts = _partitions(host, disk)
-    assert len(parts) >= 2, "Deuxième partition absente."
+    assert len(parts) >= 2, message(
+        en="Second partition missing.",
+        fr="Deuxième partition absente.",
+    )
     size = int(host.check_output("lsblk -bno SIZE /dev/%s", parts[1]))
-    assert 1021 * MIB <= size <= 1027 * MIB, (
-        f"La 2e partition doit faire ~1 Gio (vue : {size // MIB} Mio). "
-        f"parted -s {disk} mkpart primary 513MiB 1537MiB"
+    assert 1021 * MIB <= size <= 1027 * MIB, message(
+        en=f"The 2nd partition must be about 1 GiB (seen: {size // MIB} MiB). "
+        f"parted -s {disk} mkpart primary 513MiB 1537MiB",
+        fr=f"La 2e partition doit faire ~1 Gio (vue : {size // MIB} Mio). "
+        f"parted -s {disk} mkpart primary 513MiB 1537MiB",
     )

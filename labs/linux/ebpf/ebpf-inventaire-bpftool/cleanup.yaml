@@ -1,0 +1,108 @@
+---
+# Reset idempotent : arrête le service porteur et ce qu'il a chargé, retire son
+# unité (y compris un masquage ou un lien laissé par l'apprenant), son programme
+# bpftrace, la réponse de l'apprenant, puis remet les paquets dans l'état où le
+# setup les a trouvés (tout paquet arrivé depuis repart, dépendances comprises).
+# Joué par dsoxlab clean.
+- name: Cleanup ebpf-inventaire-bpftool lab
+  hosts: lab_target
+  become: true
+  gather_facts: true
+  vars:
+    coffre: /opt/lab-ebpf-inventaire
+  tasks:
+    - name: Stop the carrier services (even masked or removed ones)
+      ansible.builtin.shell:
+        cmd: systemctl stop 'telemetrie-sys-*.service' 2>/dev/null || true
+        chdir: /
+      changed_when: false
+
+    # Un bpftrace lancé à la main pendant l'exploration, ou resté orphelin
+    # après le retrait d'une unité en marche, garderait son programme chargé.
+    - name: Stop the bpftrace processes of the lab
+      ansible.builtin.shell:
+        cmd: pkill -x bpftrace || true
+        chdir: /
+      changed_when: false
+
+    - name: Find the units and links of the carrier service
+      ansible.builtin.find:
+        paths: [/etc/systemd/system, /run/systemd/system, /usr/local/lib/systemd/system]
+        patterns: "telemetrie-sys-*.service"
+        file_type: any
+        recurse: true
+      register: unites
+
+    - name: Remove the units and links of the carrier service
+      ansible.builtin.file:
+        path: "{{ item.path }}"
+        state: absent
+      loop: "{{ unites.files }}"
+      loop_control:
+        label: "{{ item.path }}"
+
+    - name: Reload systemd after the unit removal
+      ansible.builtin.systemd_service:
+        daemon_reload: true
+
+    - name: Clear a failed state left by the stopped service
+      ansible.builtin.shell:
+        cmd: systemctl reset-failed 'telemetrie-sys-*.service' 2>/dev/null || true
+        chdir: /
+      changed_when: false
+
+    - name: Remove the collector program
+      ansible.builtin.file:
+        path: /usr/local/lib/telemetrie
+        state: absent
+
+    - name: Remove the learner answer
+      ansible.builtin.file:
+        path: /var/tmp/reponse-inventaire-bpf.txt
+        state: absent
+
+    - name: Is the initial package list known?
+      ansible.builtin.stat:
+        path: "{{ coffre }}/.paquets-avant"
+      register: liste_initiale
+
+    - name: Read the initial package list
+      ansible.builtin.slurp:
+        src: "{{ coffre }}/.paquets-avant"
+      register: initiaux_brut
+      when: liste_initiale.stat.exists
+
+    - name: Read the installed packages
+      ansible.builtin.package_facts:
+        manager: auto
+
+    # Tout ce qui est arrivé depuis le setup repart, dépendances comprises.
+    # Les clés GPG importées par le gestionnaire de paquets ne sont pas retirées.
+    - name: Work out what was added since the setup
+      ansible.builtin.set_fact:
+        ajoutes: >-
+          {{ (ansible_facts.packages.keys() | list)
+             | difference((initiaux_brut.content | b64decode).split())
+             | reject('equalto', 'gpg-pubkey') | list
+             if liste_initiale.stat.exists else [] }}
+
+    - name: Remove the packages added since the setup (RedHat)
+      ansible.builtin.dnf:
+        name: "{{ ajoutes }}"
+        state: absent
+      when:
+        - ansible_os_family == "RedHat"
+        - ajoutes | length > 0
+
+    - name: Remove the packages added since the setup (Debian)
+      ansible.builtin.apt:
+        name: "{{ ajoutes }}"
+        state: absent
+      when:
+        - ansible_os_family == "Debian"
+        - ajoutes | length > 0
+
+    - name: Remove the work directory (ground truth and state)
+      ansible.builtin.file:
+        path: "{{ coffre }}"
+        state: absent

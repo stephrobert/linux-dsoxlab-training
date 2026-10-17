@@ -1,0 +1,3 @@
+id: ebpf-inventaire-bpftool
+title: "Inventorier les programmes eBPF chargés avec bpftool et arrêter le service qui en porte un"
+description: "Un service au nom anodin charge un programme eBPF dans le noyau. Lister les programmes avec bpftool, trouver le processus et le service systemd qui portent l'inconnu, nommer son type, puis arrêter ce service et l'empêcher de revenir, sans toucher aux programmes que systemd charge."
