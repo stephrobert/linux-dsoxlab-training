@@ -207,6 +207,7 @@ sections:
     labs:
       - linux/ebpf/ebpf-tracer-bcc
       - linux/ebpf/ebpf-durcir-sysctl
+      - linux/ebpf/ebpf-inventaire-bpftool
 
   - id: lfcs
     title: "Variantes Debian/Ubuntu"

@@ -324,6 +324,7 @@ ci-dessous est générée à partir des vrais `lab.yaml` : lance
 |---|---|---|---|---|---|
 | `ebpf-tracer-bcc` | Démasquer un processus mystère avec les outils de traçage eBPF | l4 | — | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/ebpf/tracer/bpftrace/) |
 | `ebpf-durcir-sysctl` | Durcir eBPF avec sysctl : fermer l'accès aux utilisateurs et rendre le réglage durable | l4 | — | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/ebpf/durcissement/durcir-ebpf/) |
+| `ebpf-inventaire-bpftool` | Inventorier les programmes eBPF chargés avec bpftool et arrêter le service qui en porte un | l4 | — | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/ebpf/durcissement/surface-attaque-bpf/) |
 
 ### Variantes Debian/Ubuntu
 
@@ -359,7 +360,7 @@ ci-dessous est générée à partir des vrais `lab.yaml` : lance
 | `rhcsa-mock-exam` | Examen blanc RHCSA EX200 (20 tâches sur 2 VM) | l2 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/certifications/rhcsa/) |
 | `lfcs-mock-exam` | Examen blanc LFCS (17 tâches sur Ubuntu 24.04) | l2 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/certifications/lfcs/) |
 
-_88 labs, table générée par `scripts/gen_catalog.py`._
+_89 labs, table générée par `scripts/gen_catalog.py`._
 <!-- LABS:END -->
 
 ## Contribuer et licence
