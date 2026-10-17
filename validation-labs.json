@@ -1,7 +1,7 @@
 {
-  "genere_le": "2026-10-12 20:38:51",
+  "genere_le": "2026-10-17 07:16:01",
   "act": "act version 0.2.84",
-  "dsoxlab": "dsoxlab 0.3.5",
+  "dsoxlab": "dsoxlab 0.4.0",
   "labs": {
     "capstone-mise-en-production": {
       "id": "capstone-mise-en-production",
@@ -123,6 +123,18 @@
       "duree_s": 31.9,
       "traces": [],
       "pourquoi": ""
+    },
+    "ebpf-tracer-bcc": {
+      "id": "ebpf-tracer-bcc",
+      "chemin": "linux/ebpf/ebpf-tracer-bcc",
+      "verdict": "VALIDE",
+      "score_avant": 0,
+      "score_apres": 100,
+      "tests": "4/4",
+      "duree_s": 114.4,
+      "traces": [],
+      "pourquoi": "",
+      "date": "2026-10-17"
     },
     "l1-bash-script": {
       "id": "l1-bash-script",

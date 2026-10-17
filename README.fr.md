@@ -318,6 +318,12 @@ ci-dessous est générée à partir des vrais `lab.yaml` : lance
 | `l4-reverse-proxy-lb` | Répartir la charge d'un backend web avec HAProxy | l4 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/services/reseau/haproxy/) |
 | `l4-bridge-bonding` | Agréger des liens : un bond active-backup sous un bridge avec nmcli | l4 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/reseau/bond-bridge/) |
 
+### eBPF : tracer et durcir (approfondissement)
+
+| Lab (id) | Titre | Niveau | Certif | Runtime | Guide compagnon |
+|---|---|---|---|---|---|
+| `ebpf-tracer-bcc` | Démasquer un processus mystère avec les outils de traçage eBPF | l4 | — | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/ebpf/tracer/bpftrace/) |
+
 ### Variantes Debian/Ubuntu
 
 | Lab (id) | Titre | Niveau | Certif | Runtime | Guide compagnon |
@@ -352,7 +358,7 @@ ci-dessous est générée à partir des vrais `lab.yaml` : lance
 | `rhcsa-mock-exam` | Examen blanc RHCSA EX200 (20 tâches sur 2 VM) | l2 | RHCSA | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/certifications/rhcsa/) |
 | `lfcs-mock-exam` | Examen blanc LFCS (17 tâches sur Ubuntu 24.04) | l2 | LFCS | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/certifications/lfcs/) |
 
-_86 labs, table générée par `scripts/gen_catalog.py`._
+_87 labs, table générée par `scripts/gen_catalog.py`._
 <!-- LABS:END -->
 
 ## Contribuer et licence
