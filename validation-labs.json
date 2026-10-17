@@ -1,7 +1,7 @@
 {
-  "genere_le": "2026-10-12 20:38:51",
+  "genere_le": "2026-10-17 08:21:20",
   "act": "act version 0.2.84",
-  "dsoxlab": "dsoxlab 0.3.5",
+  "dsoxlab": "dsoxlab 0.4.1",
   "labs": {
     "capstone-mise-en-production": {
       "id": "capstone-mise-en-production",
@@ -123,6 +123,42 @@
       "duree_s": 31.9,
       "traces": [],
       "pourquoi": ""
+    },
+    "ebpf-durcir-sysctl": {
+      "id": "ebpf-durcir-sysctl",
+      "chemin": "linux/ebpf/ebpf-durcir-sysctl",
+      "verdict": "VALIDE",
+      "score_avant": 0,
+      "score_apres": 100,
+      "tests": "5/5",
+      "duree_s": 29.9,
+      "traces": [],
+      "pourquoi": "",
+      "date": "2026-10-17"
+    },
+    "ebpf-inventaire-bpftool": {
+      "id": "ebpf-inventaire-bpftool",
+      "chemin": "linux/ebpf/ebpf-inventaire-bpftool",
+      "verdict": "VALIDE",
+      "score_avant": 0,
+      "score_apres": 100,
+      "tests": "6/6",
+      "duree_s": 80.3,
+      "traces": [],
+      "pourquoi": "",
+      "date": "2026-10-17"
+    },
+    "ebpf-tracer-bcc": {
+      "id": "ebpf-tracer-bcc",
+      "chemin": "linux/ebpf/ebpf-tracer-bcc",
+      "verdict": "VALIDE",
+      "score_avant": 0,
+      "score_apres": 100,
+      "tests": "4/4",
+      "duree_s": 114.4,
+      "traces": [],
+      "pourquoi": "",
+      "date": "2026-10-17"
     },
     "l1-bash-script": {
       "id": "l1-bash-script",

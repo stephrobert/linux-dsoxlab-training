@@ -201,6 +201,14 @@ sections:
       - linux/l4/l4-reverse-proxy-lb
       - linux/l4/l4-bridge-bonding
 
+  - id: ebpf
+    title: "eBPF : tracer et durcir (approfondissement)"
+    description: "Observer le noyau avec eBPF (BCC, bpftrace) puis s'en servir pour durcir. Approfondissement de la formation Linux, joué sur AlmaLinux 10 et Ubuntu 24.04 (noyaux 6.x avec BTF), runtime: vm."
+    labs:
+      - linux/ebpf/ebpf-tracer-bcc
+      - linux/ebpf/ebpf-durcir-sysctl
+      - linux/ebpf/ebpf-inventaire-bpftool
+
   - id: lfcs
     title: "Variantes Debian/Ubuntu"
     description: "Le delta Debian du LFCS : les objectifs que le curriculum RHEL de l1-l4 ne couvre pas (apt, ufw, AppArmor, netplan…). La vue LFCS complète passe par certification_tags, pas par cette section."

@@ -1,0 +1,162 @@
+---
+# État initial : un service lab-mystere fait tourner un script au nom tiré au
+# hasard, qui écrit toutes les 3 secondes dans un fichier caché (ouvert puis
+# refermé aussitôt, donc invisible à lsof). Les outils de traçage sont ABSENTS :
+# les installer fait partie du travail. La vérité reste dans /opt/lab-ebpf
+# (root, 0600), là où les tests la lisent. Joué par dsoxlab run.
+- name: Setup ebpf-tracer-bcc lab
+  hosts: lab_target
+  become: true
+  gather_facts: true
+  vars:
+    # Les outils que l apprenant doit installer : on les retire s ils sont là.
+    outils_debian: [bpfcc-tools, python3-bpfcc, libbpfcc, bpftrace]
+    outils_redhat: [bcc-tools, python3-bcc, bpftrace, bpftool]
+    outils: "{{ outils_debian if ansible_os_family == 'Debian' else outils_redhat }}"
+    # kernel-devel arrive en dépendance de bcc-tools sur RHEL : le cleanup le
+    # retire s il n était pas là au départ.
+    suivis: "{{ outils + (['kernel-devel'] if ansible_os_family == 'RedHat' else []) }}"
+  tasks:
+    - name: Read the installed packages
+      ansible.builtin.package_facts:
+        manager: auto
+
+    - name: Work directory for the lab ground truth (root only)
+      ansible.builtin.file:
+        path: /opt/lab-ebpf
+        state: directory
+        owner: root
+        group: root
+        mode: "0700"
+
+    # Écrit une seule fois : un setup rejoué sans cleanup ne doit pas prendre
+    # pour état de départ des paquets que l apprenant vient d installer.
+    - name: Remember which tracked packages were already there
+      ansible.builtin.copy:
+        dest: /opt/lab-ebpf/.paquets-initiaux
+        content: "{{ suivis | select('in', ansible_facts.packages) | join('\n') }}\n"
+        owner: root
+        group: root
+        mode: "0600"
+        force: false
+
+    - name: Stop any previous mystery service
+      ansible.builtin.shell:
+        cmd: systemctl stop lab-mystere 2>/dev/null || true
+        chdir: /
+      changed_when: false
+
+    - name: Remove the tracing tools (installing them is part of the job)
+      ansible.builtin.package:
+        name: "{{ outils | select('in', ansible_facts.packages) | list }}"
+        state: absent
+      when: (outils | select('in', ansible_facts.packages) | list) | length > 0
+
+    - name: Draw a random program name and a random hidden file name
+      ansible.builtin.shell:
+        cmd: printf "%s %s" "$(od -An -N3 -tx1 /dev/urandom | tr -d " \n")" "$(od -An -N4 -tx1 /dev/urandom | tr -d " \n")"
+        chdir: /
+      register: tirage
+      changed_when: false
+
+    - name: Fix the names for this run
+      ansible.builtin.set_fact:
+        nom_programme: "agent-{{ tirage.stdout.split()[0] }}"
+        fichier_cache: "/var/lib/lab-mystere/.cache-{{ tirage.stdout.split()[1] }}"
+
+    - name: Data directory of the mystery service
+      ansible.builtin.file:
+        path: /var/lib/lab-mystere
+        state: directory
+        owner: root
+        group: root
+        mode: "0755"
+
+    - name: The mystery program (random name, root only)
+      ansible.builtin.copy:
+        dest: "/usr/local/sbin/{{ nom_programme }}"
+        owner: root
+        group: root
+        mode: "0700"
+        content: |
+          #!/bin/bash
+          # Collecteur interne : une mesure toutes les 3 secondes.
+          cible="{{ fichier_cache }}"
+          while true; do
+            date +%s >> "$cible"
+            sleep 3
+          done
+
+    - name: The unit that runs it
+      ansible.builtin.copy:
+        dest: /etc/systemd/system/lab-mystere.service
+        owner: root
+        group: root
+        mode: "0644"
+        content: |
+          [Unit]
+          Description=Collecteur de mesures interne
+
+          [Service]
+          ExecStart=/usr/local/sbin/{{ nom_programme }}
+          Restart=always
+
+          [Install]
+          WantedBy=multi-user.target
+
+    - name: Start the mystery service
+      ansible.builtin.systemd_service:
+        name: lab-mystere
+        daemon_reload: true
+        enabled: true
+        state: restarted
+
+    - name: Let the program write its first line
+      ansible.builtin.pause:
+        seconds: 4
+
+    - name: Fingerprint of the program
+      ansible.builtin.stat:
+        path: "/usr/local/sbin/{{ nom_programme }}"
+        checksum_algorithm: sha256
+      register: empreinte
+
+    - name: Start time of the service (to detect a restart)
+      ansible.builtin.command: systemctl show lab-mystere -p ActiveEnterTimestampMonotonic --value
+      register: demarrage
+      changed_when: false
+
+    - name: Ground truth (what the learner has to find)
+      ansible.builtin.copy:
+        dest: /opt/lab-ebpf/.verite
+        owner: root
+        group: root
+        mode: "0600"
+        content: |
+          binaire={{ nom_programme }}
+          fichier={{ fichier_cache }}
+
+    - name: State to prove the service was left untouched
+      ansible.builtin.copy:
+        dest: /opt/lab-ebpf/.etat
+        owner: root
+        group: root
+        mode: "0600"
+        content: |
+          empreinte={{ empreinte.stat.checksum }}
+          demarrage={{ demarrage.stdout }}
+
+    - name: No answer yet
+      ansible.builtin.file:
+        path: /var/tmp/reponse-ebpf.txt
+        state: absent
+
+    - name: Brief the learner
+      ansible.builtin.debug:
+        msg: >-
+          Un service tourne sur cette machine et écrit régulièrement dans un
+          fichier caché. Trouve le nom du programme et le chemin du fichier
+          avec les outils de traçage eBPF. L'énoncé est décrit par
+          « dsoxlab challenge ebpf-tracer-bcc », la méthode par
+          « dsoxlab course ebpf-tracer-bcc », les indices par
+          « dsoxlab hint ebpf-tracer-bcc ».

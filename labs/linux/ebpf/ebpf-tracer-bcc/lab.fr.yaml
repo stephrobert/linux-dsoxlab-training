@@ -1,0 +1,3 @@
+id: ebpf-tracer-bcc
+title: "Démasquer un processus mystère avec les outils de traçage eBPF"
+description: "Un processus caché écrit dans un fichier caché toutes les quelques secondes. Installer les outils de traçage BCC (ou bpftrace), observer les appels openat et execve du noyau, puis nommer le programme et le fichier, prouvé par la comparaison de ta réponse avec la vérité de la machine."
