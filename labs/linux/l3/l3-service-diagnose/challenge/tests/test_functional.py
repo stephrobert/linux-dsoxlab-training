@@ -12,7 +12,7 @@ from __future__ import annotations
 
 import pytest
 
-from conftest import lab_host, lab_target_host
+from conftest import lab_host, lab_target_host, message
 
 # Lab MULTI-DISTRIB : le diagnostic d'un service en crash-loop est identique
 # sur RHEL et Debian (unité systemd + journal), d'où les deux targets du
@@ -31,41 +31,55 @@ def host():
 
 def test_config_file_exists(host):
     f = host.file(CONFIG_FILE)
-    assert f.exists, (
-        f"{CONFIG_FILE} doit exister — votre solution a-t-elle créé "
-        "/etc/demo-crashloop/config.yml ?"
+    assert f.exists, message(
+        en=f"{CONFIG_FILE} must exist. Did your solution create "
+        "/etc/demo-crashloop/config.yml?",
+        fr=f"{CONFIG_FILE} doit exister — votre solution a-t-elle créé "
+        "/etc/demo-crashloop/config.yml ?",
     )
-    assert f.is_file
+    assert f.is_file, message(
+        en=f"{CONFIG_FILE} exists but is not a regular file.",
+        fr=f"{CONFIG_FILE} existe mais n'est pas un fichier ordinaire.",
+    )
 
 
 def test_config_file_permissions(host):
     f = host.file(CONFIG_FILE)
-    assert f.user == "root", (
-        f"{CONFIG_FILE} doit appartenir à root (vu : {f.user}). "
-        "Sur la VM, exécute : sudo chown root:root /etc/demo-crashloop/config.yml"
+    assert f.user == "root", message(
+        en=f"{CONFIG_FILE} must belong to root (seen: {f.user}). "
+        "On the VM, run: sudo chown root:root /etc/demo-crashloop/config.yml",
+        fr=f"{CONFIG_FILE} doit appartenir à root (vu : {f.user}). "
+        "Sur la VM, exécute : sudo chown root:root /etc/demo-crashloop/config.yml",
     )
-    assert f.group == "root", (
-        f"{CONFIG_FILE} doit appartenir au groupe root (vu : {f.group})."
+    assert f.group == "root", message(
+        en=f"{CONFIG_FILE} must belong to the root group (seen: {f.group}).",
+        fr=f"{CONFIG_FILE} doit appartenir au groupe root (vu : {f.group}).",
     )
-    assert f.mode == 0o644, (
-        f"{CONFIG_FILE} doit avoir le mode 0o644 (vu : {oct(f.mode)}). "
-        "Sur la VM, exécute : sudo chmod 0644 /etc/demo-crashloop/config.yml"
+    assert f.mode == 0o644, message(
+        en=f"{CONFIG_FILE} must have mode 0o644 (seen: {oct(f.mode)}). "
+        "On the VM, run: sudo chmod 0644 /etc/demo-crashloop/config.yml",
+        fr=f"{CONFIG_FILE} doit avoir le mode 0o644 (vu : {oct(f.mode)}). "
+        "Sur la VM, exécute : sudo chmod 0644 /etc/demo-crashloop/config.yml",
     )
 
 
 def test_config_file_has_port(host):
     content = host.file(CONFIG_FILE).content_string
-    assert "port:" in content, (
-        f"{CONFIG_FILE} doit contenir une ligne `port: <numero>`. "
-        f"Vu : {content[:100]!r}"
+    assert "port:" in content, message(
+        en=f"{CONFIG_FILE} must contain a `port: <number>` line. "
+        f"Seen: {content[:100]!r}",
+        fr=f"{CONFIG_FILE} doit contenir une ligne `port: <numero>`. "
+        f"Vu : {content[:100]!r}",
     )
 
 
 def test_service_is_active(host):
     svc = host.service(SERVICE_NAME)
-    assert svc.is_running, (
-        f"{SERVICE_NAME} doit être actif. Vérifiez `systemctl status "
-        f"{SERVICE_NAME}` sur la VM."
+    assert svc.is_running, message(
+        en=f"{SERVICE_NAME} must be active. Check `systemctl status "
+        f"{SERVICE_NAME}` on the VM.",
+        fr=f"{SERVICE_NAME} doit être actif. Vérifiez `systemctl status "
+        f"{SERVICE_NAME}` sur la VM.",
     )
 
 
@@ -73,10 +87,13 @@ def test_service_is_active(host):
 def test_service_is_enabled(host):
     """Critère persistence_after_reboot RHCSA — `enabled` au boot."""
     svc = host.service(SERVICE_NAME)
-    assert svc.is_enabled, (
-        f"{SERVICE_NAME} doit être enabled (persistance reboot). "
+    assert svc.is_enabled, message(
+        en=f"{SERVICE_NAME} must be enabled (persistence across reboots). "
+        f"On the VM, run: sudo systemctl enable {SERVICE_NAME} "
+        f"(or `systemctl enable --now`, which combines enable and start).",
+        fr=f"{SERVICE_NAME} doit être enabled (persistance reboot). "
         f"Sur la VM, exécute : sudo systemctl enable {SERVICE_NAME} "
-        f"(ou bien `systemctl enable --now` qui combine enable + start)."
+        f"(ou bien `systemctl enable --now` qui combine enable + start).",
     )
 
 
@@ -90,8 +107,11 @@ def test_service_not_crash_looping(host):
     substate = host.check_output(
         "systemctl show -p SubState --value %s", SERVICE_NAME
     ).strip()
-    assert substate == "running", (
-        f"{SERVICE_NAME} doit être stable (SubState 'running'), vu : "
+    assert substate == "running", message(
+        en=f"{SERVICE_NAME} must be stable (SubState 'running'), seen: "
+        f"{substate!r}. A service in a crash loop shows 'auto-restart' or "
+        "'failed': fix its cause (the missing configuration) and restart it.",
+        fr=f"{SERVICE_NAME} doit être stable (SubState 'running'), vu : "
         f"{substate!r}. Un service en crash-loop affiche 'auto-restart' ou "
-        "'failed' — corrige sa cause (la config manquante) et redémarre-le."
+        "'failed' — corrige sa cause (la config manquante) et redémarre-le.",
     )

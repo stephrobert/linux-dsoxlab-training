@@ -11,7 +11,7 @@ from __future__ import annotations
 
 import pytest
 
-from conftest import lab_host
+from conftest import lab_host, message
 
 TARGET_HOST = "alma-rhcsa-1.lab"
 
@@ -24,7 +24,9 @@ def host():
 def test_default_target_is_multi_user(host):
     """La cible par défaut doit être multi-user.target."""
     default = host.check_output("systemctl get-default")
-    assert default.strip() == "multi-user.target", (
-        f"La cible par défaut doit être multi-user.target (vue : {default!r}). "
-        "systemctl set-default multi-user.target"
+    assert default.strip() == "multi-user.target", message(
+        en=f"The default target must be multi-user.target (seen: {default!r}). "
+        "systemctl set-default multi-user.target",
+        fr=f"La cible par défaut doit être multi-user.target (vue : {default!r}). "
+        "systemctl set-default multi-user.target",
     )

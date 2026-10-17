@@ -7,6 +7,8 @@ import re
 
 import pytest
 
+from conftest import message
+
 WORK = pathlib.Path(".")
 PLACEHOLDER = "VOTRE_RÉPONSE_ICI"
 
@@ -37,7 +39,10 @@ def get_answers(text: str) -> list[str]:
 def test_absolute_copy_exists():
     """backup/absolute/source.txt must exist"""
     assert ABSOLUTE_COPY.exists(), (
-        f"{ABSOLUTE_COPY} not found — copy source.txt using an absolute path"
+        message(
+            en=f"{ABSOLUTE_COPY} not found: copy source.txt using an absolute path",
+            fr=f"{ABSOLUTE_COPY} est introuvable : copie source.txt avec un chemin absolu",
+        )
     )
 
 
@@ -46,7 +51,10 @@ def test_absolute_copy_exists():
 def test_relative_copy_exists():
     """backup/relative/source.txt must exist"""
     assert RELATIVE_COPY.exists(), (
-        f"{RELATIVE_COPY} not found — copy source.txt using a relative path"
+        message(
+            en=f"{RELATIVE_COPY} not found: copy source.txt using a relative path",
+            fr=f"{RELATIVE_COPY} est introuvable : copie source.txt avec un chemin relatif",
+        )
     )
 
 
@@ -54,7 +62,10 @@ def test_relative_copy_exists():
 # ── T4 — No placeholder (5 pts) ──────────────────────────────────────────────
 @pytest.mark.points(5)
 def test_no_placeholder():
-    assert PLACEHOLDER not in read_puzzles(), "puzzles.txt still contains VOTRE_RÉPONSE_ICI"
+    assert PLACEHOLDER not in read_puzzles(), message(
+        en=f"puzzles.txt still contains {PLACEHOLDER}",
+        fr=f"puzzles.txt contient encore {PLACEHOLDER}",
+    )
 
 
 # ── T5-T9 — Puzzle answers correct (12 pts each = 60 pts) ────────────────────
@@ -67,8 +78,14 @@ def test_no_placeholder():
 def test_puzzle_answer(idx: int, pattern: str):
     """Each puzzle answer must match the expected relative path"""
     answers = get_answers(read_puzzles())
-    assert len(answers) >= idx, f"Puzzle {idx} answer not found"
+    assert len(answers) >= idx, message(
+        en=f"Answer to puzzle {idx} not found",
+        fr=f"La réponse à l'énigme {idx} est introuvable",
+    )
     answer = answers[idx - 1]
     assert re.fullmatch(pattern, answer, re.IGNORECASE), (
-        f"Puzzle {idx}: expected pattern '{pattern}', got '{answer}'"
+        message(
+            en=f"Puzzle {idx}: pattern '{pattern}' expected, got '{answer}'",
+            fr=f"Énigme {idx} : motif '{pattern}' attendu, obtenu '{answer}'",
+        )
     )

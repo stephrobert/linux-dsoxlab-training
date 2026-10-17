@@ -6,6 +6,8 @@ import pathlib
 
 import pytest
 
+from conftest import message
+
 WORK = pathlib.Path(".")
 BASE = WORK / "projet"
 
@@ -31,7 +33,10 @@ REQUIRED_FILES = [
 @pytest.mark.points(10)
 def test_projet_dir_exists():
     """challenge/work/projet/ must exist"""
-    assert BASE.is_dir(), "projet/ directory not found — run: mkdir -p projet/src ..."
+    assert BASE.is_dir(), message(
+            en="projet/ directory not found. Run: mkdir -p projet/src …",
+            fr="Le répertoire projet/ est introuvable. Lance : mkdir -p projet/src …",
+        )
 
 
 # ── T2-T5 — Required directories (30 pts total, 7-8 pts each) ────────────────
@@ -39,7 +44,10 @@ def test_projet_dir_exists():
 @pytest.mark.parametrize("dirpath", REQUIRED_DIRS, ids=[d.name for d in REQUIRED_DIRS])
 def test_required_directory(dirpath):
     """Each required subdirectory must exist"""
-    assert dirpath.is_dir(), f"Directory missing: {dirpath.relative_to(WORK)}"
+    assert dirpath.is_dir(), message(
+            en=f"Directory missing: {dirpath.relative_to(WORK)}",
+            fr=f"Répertoire manquant : {dirpath.relative_to(WORK)}",
+        )
 
 
 # ── T6-T10 — Required files (60 pts total, 12 pts each) ──────────────────────
@@ -51,4 +59,7 @@ def test_required_directory(dirpath):
 )
 def test_required_file(filepath):
     """Each required file must exist"""
-    assert filepath.exists(), f"File missing: {filepath.relative_to(WORK)}"
+    assert filepath.exists(), message(
+            en=f"File missing: {filepath.relative_to(WORK)}",
+            fr=f"Fichier manquant : {filepath.relative_to(WORK)}",
+        )

@@ -13,6 +13,8 @@ import pathlib
 import re
 import shutil
 
+from conftest import message
+
 WORK = pathlib.Path(".")
 ANSWER_FILE = WORK / "choix-distro.txt"
 PLACEHOLDER = "VOTRE_RÉPONSE_ICI"
@@ -28,8 +30,9 @@ FAMILY_MANAGERS = {
 
 
 def _read() -> str:
-    assert ANSWER_FILE.exists(), (
-        "choix-distro.txt introuvable — lance : dsoxlab run l1-choose-distro"
+    assert ANSWER_FILE.exists(), message(
+        en="choix-distro.txt cannot be found. Run: dsoxlab run l1-choose-distro",
+        fr="choix-distro.txt introuvable — lance : dsoxlab run l1-choose-distro",
     )
     return ANSWER_FILE.read_text(encoding="utf-8")
 
@@ -76,9 +79,11 @@ def _real_manager() -> str:
 # ── Présence & complétude ─────────────────────────────────────────────────────
 
 def test_no_placeholder() -> None:
-    assert PLACEHOLDER not in _read(), (
-        f"Le fichier contient encore '{PLACEHOLDER}'. Renseigne les 3 champs "
-        "avec ce que ta machine expose réellement."
+    assert PLACEHOLDER not in _read(), message(
+        en=f"The file still contains '{PLACEHOLDER}'. Fill in the 3 fields "
+        "with what your machine actually exposes.",
+        fr=f"Le fichier contient encore '{PLACEHOLDER}'. Renseigne les 3 champs "
+        "avec ce que ta machine expose réellement.",
     )
 
 
@@ -88,27 +93,40 @@ def test_family_matches_real() -> None:
     """FAMILY doit être la famille réelle de ta distribution (via /etc/os-release)."""
     value = _field(_read(), "FAMILY").lower()
     real = _real_family()
-    assert value, (
-        "Champ FAMILY vide. Lance : grep -E '^ID=|^ID_LIKE=' /etc/os-release"
+    assert value, message(
+        en="FAMILY field empty. Run: grep -E '^ID=|^ID_LIKE=' /etc/os-release",
+        fr="Champ FAMILY vide. Lance : grep -E '^ID=|^ID_LIKE=' /etc/os-release",
     )
-    assert real, "/etc/os-release illisible (cas rare)."
-    assert value == real, (
-        f"FAMILY vaut '{value}' mais ta machine est de la famille '{real}'. "
-        "Déduis-la de ID / ID_LIKE dans /etc/os-release."
+    assert real, message(
+        en="/etc/os-release cannot be read (a rare case).",
+        fr="/etc/os-release illisible (cas rare).",
+    )
+    assert value == real, message(
+        en=f"FAMILY is '{value}' but your machine belongs to the '{real}' family. "
+        "Derive it from ID / ID_LIKE in /etc/os-release.",
+        fr=f"FAMILY vaut '{value}' mais ta machine est de la famille '{real}'. "
+        "Déduis-la de ID / ID_LIKE dans /etc/os-release.",
     )
 
 
 def test_package_manager_is_real() -> None:
     """PACKAGE_MANAGER doit être un gestionnaire réellement présent sur la machine."""
     value = _field(_read(), "PACKAGE_MANAGER").lower()
-    assert value, "Champ PACKAGE_MANAGER vide. Cherche apt, dnf, zypper, pacman, apk…"
-    assert value in KNOWN_MANAGERS, (
-        f"'{value}' n'est pas un gestionnaire de paquets connu. "
-        f"Attendus : {', '.join(sorted(KNOWN_MANAGERS))}."
+    assert value, message(
+        en="PACKAGE_MANAGER field empty. Look for apt, dnf, zypper, pacman, apk…",
+        fr="Champ PACKAGE_MANAGER vide. Cherche apt, dnf, zypper, pacman, apk…",
     )
-    assert shutil.which(value), (
-        f"'{value}' n'est pas installé sur cette machine. Cite celui qui existe "
-        "réellement ici (teste avec `which apt`, `which dnf`…)."
+    assert value in KNOWN_MANAGERS, message(
+        en=f"'{value}' is not a known package manager. "
+        f"Expected: {', '.join(sorted(KNOWN_MANAGERS))}.",
+        fr=f"'{value}' n'est pas un gestionnaire de paquets connu. "
+        f"Attendus : {', '.join(sorted(KNOWN_MANAGERS))}.",
+    )
+    assert shutil.which(value), message(
+        en=f"'{value}' is not installed on this machine. Name the one that actually "
+        "exists here (test with `which apt`, `which dnf`…).",
+        fr=f"'{value}' n'est pas installé sur cette machine. Cite celui qui existe "
+        "réellement ici (teste avec `which apt`, `which dnf`…).",
     )
 
 
@@ -116,14 +134,19 @@ def test_install_cmd_uses_real_manager() -> None:
     """INSTALL_CMD doit utiliser le gestionnaire réel de la machine."""
     value = _field(_read(), "INSTALL_CMD").lower()
     real_mgr = _real_manager()
-    assert value, (
-        "Champ INSTALL_CMD vide. Écris la commande d'installation d'un paquet "
-        "avec le gestionnaire de ta machine."
+    assert value, message(
+        en="INSTALL_CMD field empty. Write the command that installs a package "
+        "with your machine's manager.",
+        fr="Champ INSTALL_CMD vide. Écris la commande d'installation d'un paquet "
+        "avec le gestionnaire de ta machine.",
     )
-    assert real_mgr and real_mgr in value, (
-        f"INSTALL_CMD ('{value}') doit utiliser le gestionnaire réel de cette "
-        f"machine : '{real_mgr}'. Ex. : {real_mgr} install <paquet>."
+    assert real_mgr and real_mgr in value, message(
+        en=f"INSTALL_CMD ('{value}') must use this machine's real manager: "
+        f"'{real_mgr}'. For example: {real_mgr} install <package>.",
+        fr=f"INSTALL_CMD ('{value}') doit utiliser le gestionnaire réel de cette "
+        f"machine : '{real_mgr}'. Ex. : {real_mgr} install <paquet>.",
     )
-    assert re.search(r"install|add|-s\b", value), (
-        "INSTALL_CMD doit être une commande d'INSTALLATION (install / add / -S)."
+    assert re.search(r"install|add|-s\b", value), message(
+        en="INSTALL_CMD must be an INSTALL command (install / add / -S).",
+        fr="INSTALL_CMD doit être une commande d'INSTALLATION (install / add / -S).",
     )

@@ -11,7 +11,7 @@ from __future__ import annotations
 
 import pytest
 
-from conftest import lab_host
+from conftest import lab_host, message
 
 TARGET_HOST = "alma-rhcsa-1.lab"
 PROFILE = "throughput-performance"
@@ -25,24 +25,29 @@ def host():
 @pytest.mark.garde_fou
 def test_tuned_running(host):
     """Le service tuned doit tourner."""
-    assert host.service("tuned").is_running, (
-        "tuned doit être actif : systemctl enable --now tuned"
+    assert host.service("tuned").is_running, message(
+        en="tuned must be active: systemctl enable --now tuned",
+        fr="tuned doit être actif : systemctl enable --now tuned",
     )
 
 
 def test_active_profile(host):
     """Le profil actif doit être throughput-performance."""
     out = host.check_output("tuned-adm active")
-    assert PROFILE in out, (
-        f"Le profil tuned actif doit être {PROFILE} (vu : {out!r}). "
-        f"tuned-adm profile {PROFILE}"
+    assert PROFILE in out, message(
+        en=f"The active tuned profile must be {PROFILE} (seen: {out!r}). "
+        f"tuned-adm profile {PROFILE}",
+        fr=f"Le profil tuned actif doit être {PROFILE} (vu : {out!r}). "
+        f"tuned-adm profile {PROFILE}",
     )
 
 
 def test_profile_persisted(host):
     """Le profil doit être enregistré (persistance après reboot)."""
     content = host.file("/etc/tuned/active_profile").content_string.strip()
-    assert content == PROFILE, (
-        f"/etc/tuned/active_profile doit contenir {PROFILE} (vu : {content!r}) "
-        "pour survivre au reboot."
+    assert content == PROFILE, message(
+        en=f"/etc/tuned/active_profile must contain {PROFILE} (seen: {content!r}) "
+        "to survive a reboot.",
+        fr=f"/etc/tuned/active_profile doit contenir {PROFILE} (vu : {content!r}) "
+        "pour survivre au reboot.",
     )

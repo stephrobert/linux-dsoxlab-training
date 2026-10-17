@@ -5,7 +5,7 @@ import re
 
 import pytest
 
-from conftest import lab_host
+from conftest import lab_host, message
 
 TARGET_HOST = "alma-rhcsa-1.lab"
 
@@ -34,15 +34,21 @@ def _champs(sortie: str) -> dict[str, str]:
 def test_array_is_raid1_active(host):
     """/dev/md0 doit être un RAID 1 actif avec 2 disques."""
     out = host.run("mdadm --detail /dev/md0 2>/dev/null")
-    assert out.rc == 0, "/dev/md0 introuvable : créez le RAID avec mdadm --create."
+    assert out.rc == 0, message(
+        en="/dev/md0 cannot be found: create the RAID with mdadm --create.",
+        fr="/dev/md0 introuvable : créez le RAID avec mdadm --create.",
+    )
 
     champs = _champs(out.stdout)
-    assert champs.get("Raid Level") == "raid1", (
-        f"Le niveau doit être raid1, lu : {champs.get('Raid Level')!r}."
+    assert champs.get("Raid Level") == "raid1", message(
+        en=f"The level must be raid1, read: {champs.get('Raid Level')!r}.",
+        fr=f"Le niveau doit être raid1, lu : {champs.get('Raid Level')!r}.",
     )
-    assert champs.get("Active Devices") == "2", (
-        f"Le RAID doit compter 2 disques actifs, lu : "
-        f"{champs.get('Active Devices')!r}."
+    assert champs.get("Active Devices") == "2", message(
+        en=f"The RAID must count 2 active disks, read: "
+        f"{champs.get('Active Devices')!r}.",
+        fr=f"Le RAID doit compter 2 disques actifs, lu : "
+        f"{champs.get('Active Devices')!r}.",
     )
 
     # L'ancienne version acceptait « State : clean » OU la présence du mot
@@ -50,19 +56,28 @@ def test_array_is_raid1_active(host):
     # ce mot, la seconde branche était toujours vraie et le test ne pouvait
     # pas échouer : une grappe dégradée passait (red team du 2026-09-15).
     etat = champs.get("State", "")
-    assert etat, "État de la grappe illisible dans `mdadm --detail`."
+    assert etat, message(
+        en="The array's state cannot be read from `mdadm --detail`.",
+        fr="État de la grappe illisible dans `mdadm --detail`.",
+    )
     fautifs = [m for m in ("degraded", "failed", "inactive") if m in etat.lower()]
-    assert not fautifs, (
-        f"La grappe n'est pas saine, son état est « {etat} ». Un RAID 1 avec "
+    assert not fautifs, message(
+        en=f"The array is not healthy, its state is \"{etat}\". A RAID 1 with "
+        "a missing disk still works: that is precisely why the state must be "
+        "looked at, not only whether the mount answers.",
+        fr=f"La grappe n'est pas saine, son état est « {etat} ». Un RAID 1 avec "
         "un disque manquant fonctionne encore : c'est précisément pour cela "
-        "qu'il faut regarder l'état, pas seulement si le montage répond."
+        "qu'il faut regarder l'état, pas seulement si le montage répond.",
     )
 
 
 def test_array_mounted(host):
     """Le RAID doit être monté sur /mnt/raid."""
     out = host.run("findmnt -n /mnt/raid")
-    assert "/dev/md0" in out.stdout, "Montez /dev/md0 sur /mnt/raid (mkfs.xfs puis mount)."
+    assert "/dev/md0" in out.stdout, message(
+        en="Mount /dev/md0 on /mnt/raid (mkfs.xfs then mount).",
+        fr="Montez /dev/md0 sur /mnt/raid (mkfs.xfs puis mount).",
+    )
 
 
 def test_array_persistent(host):
@@ -72,10 +87,13 @@ def test_array_persistent(host):
     # dont la grappe a été nommée, et « /dev/md127 » si elle a été réassemblée
     # sans mdadm.conf. On accepte les trois : ce qui compte est qu'une ligne
     # ARRAY déclare la grappe, pas la forme exacte de son nom.
-    assert conf.exists, (
-        "Ajoutez l'array à /etc/mdadm.conf : mdadm --detail --scan >> /etc/mdadm.conf"
+    assert conf.exists, message(
+        en="Add the array to /etc/mdadm.conf: mdadm --detail --scan >> /etc/mdadm.conf",
+        fr="Ajoutez l'array à /etc/mdadm.conf : mdadm --detail --scan >> /etc/mdadm.conf",
     )
-    assert re.search(r"^ARRAY\s+/dev/md/?\d+", conf.content_string, re.MULTILINE), (
-        "Aucune ligne ARRAY dans /etc/mdadm.conf. "
-        "Ajoutez-la : mdadm --detail --scan >> /etc/mdadm.conf"
+    assert re.search(r"^ARRAY\s+/dev/md/?\d+", conf.content_string, re.MULTILINE), message(
+        en="No ARRAY line in /etc/mdadm.conf. "
+        "Add it: mdadm --detail --scan >> /etc/mdadm.conf",
+        fr="Aucune ligne ARRAY dans /etc/mdadm.conf. "
+        "Ajoutez-la : mdadm --detail --scan >> /etc/mdadm.conf",
     )

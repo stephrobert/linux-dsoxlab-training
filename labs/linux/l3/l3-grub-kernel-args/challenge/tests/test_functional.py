@@ -11,7 +11,7 @@ from __future__ import annotations
 
 import pytest
 
-from conftest import lab_host
+from conftest import lab_host, message
 
 TARGET_HOST = "alma-rhcsa-1.lab"
 
@@ -24,16 +24,20 @@ def host():
 def test_default_kernel_has_param(host):
     """Le noyau par défaut doit avoir panic=10 dans ses arguments."""
     info = host.check_output("grubby --info=DEFAULT")
-    assert "panic=10" in info, (
-        "panic=10 doit être sur le noyau par défaut : "
-        'grubby --update-kernel=ALL --args="panic=10"'
+    assert "panic=10" in info, message(
+        en="panic=10 must be on the default kernel: "
+        'grubby --update-kernel=ALL --args="panic=10"' ,
+        fr="panic=10 doit être sur le noyau par défaut : "
+        'grubby --update-kernel=ALL --args="panic=10"',
     )
 
 
 def test_default_grub_persists_param(host):
     """/etc/default/grub doit contenir panic=10 (futurs noyaux)."""
     grub = host.file("/etc/default/grub").content_string
-    assert "panic=10" in grub, (
-        "panic=10 doit être dans GRUB_CMDLINE_LINUX de /etc/default/grub, "
-        "sinon perdu à la prochaine mise à jour du noyau."
+    assert "panic=10" in grub, message(
+        en="panic=10 must be in GRUB_CMDLINE_LINUX of /etc/default/grub, "
+        "otherwise it is lost at the next kernel update.",
+        fr="panic=10 doit être dans GRUB_CMDLINE_LINUX de /etc/default/grub, "
+        "sinon perdu à la prochaine mise à jour du noyau.",
     )

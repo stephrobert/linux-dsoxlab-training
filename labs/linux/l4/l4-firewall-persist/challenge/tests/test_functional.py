@@ -11,7 +11,7 @@ from __future__ import annotations
 
 import pytest
 
-from conftest import lab_host
+from conftest import lab_host, message
 
 TARGET_HOST = "alma-rhcsa-1.lab"
 
@@ -24,9 +24,11 @@ def host():
 def test_http_runtime(host):
     """http doit être ouvert dans la zone active (runtime)."""
     services = host.check_output("firewall-cmd --list-services").split()
-    assert "http" in services, (
-        f"http doit être dans les services runtime (vu : {services}). "
-        "firewall-cmd --permanent --add-service=http && firewall-cmd --reload"
+    assert "http" in services, message(
+        en=f"http must be among the runtime services (seen: {services}). "
+        "firewall-cmd --permanent --add-service=http && firewall-cmd --reload",
+        fr=f"http doit être dans les services runtime (vu : {services}). "
+        "firewall-cmd --permanent --add-service=http && firewall-cmd --reload",
     )
 
 
@@ -35,9 +37,11 @@ def test_http_permanent(host):
     services = host.check_output(
         "firewall-cmd --permanent --list-services"
     ).split()
-    assert "http" in services, (
-        f"http doit être permanent (vu : {services}). "
-        "firewall-cmd --permanent --add-service=http"
+    assert "http" in services, message(
+        en=f"http must be permanent (seen: {services}). "
+        "firewall-cmd --permanent --add-service=http",
+        fr=f"http doit être permanent (vu : {services}). "
+        "firewall-cmd --permanent --add-service=http",
     )
 
 
@@ -45,6 +49,7 @@ def test_http_permanent(host):
 def test_ssh_still_allowed(host):
     """ssh ne doit jamais être fermé (accès de gestion)."""
     services = host.check_output("firewall-cmd --list-services").split()
-    assert "ssh" in services, (
-        f"ssh doit rester autorisé (vu : {services}) — ne le ferme jamais."
+    assert "ssh" in services, message(
+        en=f"ssh must stay allowed (seen: {services}). Never close it.",
+        fr=f"ssh doit rester autorisé (vu : {services}) — ne le ferme jamais.",
     )

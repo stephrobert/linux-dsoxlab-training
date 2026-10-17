@@ -11,7 +11,7 @@ from __future__ import annotations
 
 import pytest
 
-from conftest import lab_host
+from conftest import lab_host, message
 
 TARGET_HOST = "alma-rhcsa-1.lab"
 
@@ -25,15 +25,20 @@ def host():
 def test_selinux_enforcing(host):
     """SELinux doit rester enforcing (le désactiver n'est pas la solution)."""
     mode = host.check_output("getenforce").strip()
-    assert mode == "Enforcing", f"SELinux doit rester Enforcing (vu : {mode!r})."
+    assert mode == "Enforcing", message(
+        en=f"SELinux must stay Enforcing (seen: {mode!r}).",
+        fr=f"SELinux doit rester Enforcing (vu : {mode!r}).",
+    )
 
 
 def test_context_restored(host):
     """Le fichier doit porter le type httpd_sys_content_t."""
     ctx = host.check_output("ls -Z /var/www/html/index.html")
-    assert "httpd_sys_content_t" in ctx, (
-        f"/var/www/html/index.html doit être httpd_sys_content_t (vu : {ctx!r}). "
-        "restorecon -v /var/www/html/index.html"
+    assert "httpd_sys_content_t" in ctx, message(
+        en=f"/var/www/html/index.html must be httpd_sys_content_t (seen: {ctx!r}). "
+        "restorecon -v /var/www/html/index.html",
+        fr=f"/var/www/html/index.html doit être httpd_sys_content_t (vu : {ctx!r}). "
+        "restorecon -v /var/www/html/index.html",
     )
 
 
@@ -42,7 +47,9 @@ def test_httpd_serves_200(host):
     code = host.check_output(
         "curl -s -o /dev/null -w '%{http_code}' http://localhost/index.html"
     ).strip()
-    assert code == "200", (
-        f"http://localhost/index.html doit renvoyer 200 (vu : {code!r}). "
-        "Tant que le contexte est faux, SELinux refuse et httpd renvoie 403."
+    assert code == "200", message(
+        en=f"http://localhost/index.html must return 200 (seen: {code!r}). "
+        "As long as the context is wrong, SELinux refuses and httpd returns 403.",
+        fr=f"http://localhost/index.html doit renvoyer 200 (vu : {code!r}). "
+        "Tant que le contexte est faux, SELinux refuse et httpd renvoie 403.",
     )
