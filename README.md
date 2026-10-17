@@ -317,9 +317,9 @@ to refresh it.
 
 | Lab (id) | Title | Level | Certif | Runtime | Companion guide |
 |---|---|---|---|---|---|
-| `ebpf-tracer-bcc` | Unmask a mystery process with eBPF tracing tools | l4 | — | vm | [guide (FR)](https://blog.stephane-robert.info/docs/admin-serveurs/linux/ebpf/tracer/bpftrace/) |
-| `ebpf-durcir-sysctl` | Harden eBPF with sysctl: block unprivileged users and make it stick across reboots | l4 | — | vm | [guide (FR)](https://blog.stephane-robert.info/docs/admin-serveurs/linux/ebpf/durcissement/durcir-ebpf/) |
-| `ebpf-inventaire-bpftool` | Inventory the loaded eBPF programs with bpftool and stop the service that carries one | l4 | — | vm | [guide (FR)](https://blog.stephane-robert.info/docs/admin-serveurs/linux/ebpf/durcissement/surface-attaque-bpf/) |
+| `ebpf-tracer-bcc` | Unmask a mystery process with eBPF tracing tools | l4 | - | vm | [guide (FR)](https://blog.stephane-robert.info/docs/admin-serveurs/linux/ebpf/tracer/bpftrace/) |
+| `ebpf-durcir-sysctl` | Harden eBPF with sysctl: block unprivileged users and make it stick across reboots | l4 | - | vm | [guide (FR)](https://blog.stephane-robert.info/docs/admin-serveurs/linux/ebpf/durcissement/durcir-ebpf/) |
+| `ebpf-inventaire-bpftool` | Inventory the loaded eBPF programs with bpftool and stop the service that carries one | l4 | - | vm | [guide (FR)](https://blog.stephane-robert.info/docs/admin-serveurs/linux/ebpf/durcissement/surface-attaque-bpf/) |
 
 ### Variantes Debian/Ubuntu
 

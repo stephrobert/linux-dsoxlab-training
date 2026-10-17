@@ -322,9 +322,9 @@ ci-dessous est générée à partir des vrais `lab.yaml` : lance
 
 | Lab (id) | Titre | Niveau | Certif | Runtime | Guide compagnon |
 |---|---|---|---|---|---|
-| `ebpf-tracer-bcc` | Démasquer un processus mystère avec les outils de traçage eBPF | l4 | — | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/ebpf/tracer/bpftrace/) |
-| `ebpf-durcir-sysctl` | Durcir eBPF avec sysctl : fermer l'accès aux utilisateurs et rendre le réglage durable | l4 | — | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/ebpf/durcissement/durcir-ebpf/) |
-| `ebpf-inventaire-bpftool` | Inventorier les programmes eBPF chargés avec bpftool et arrêter le service qui en porte un | l4 | — | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/ebpf/durcissement/surface-attaque-bpf/) |
+| `ebpf-tracer-bcc` | Démasquer un processus mystère avec les outils de traçage eBPF | l4 | - | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/ebpf/tracer/bpftrace/) |
+| `ebpf-durcir-sysctl` | Durcir eBPF avec sysctl : fermer l'accès aux utilisateurs et rendre le réglage durable | l4 | - | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/ebpf/durcissement/durcir-ebpf/) |
+| `ebpf-inventaire-bpftool` | Inventorier les programmes eBPF chargés avec bpftool et arrêter le service qui en porte un | l4 | - | vm | [guide](https://blog.stephane-robert.info/docs/admin-serveurs/linux/ebpf/durcissement/surface-attaque-bpf/) |
 
 ### Variantes Debian/Ubuntu
 
