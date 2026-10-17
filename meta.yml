@@ -6,7 +6,7 @@
 repo:
   id: linux-dsoxlab-training
   category: linux
-  title: "Linux DevSecOps Training — RHCSA + LFCS 2026"
+  title: "Linux DevSecOps Training: RHCSA + LFCS 2026"
   blog_url: "https://blog.stephane-robert.info/docs/admin-serveurs/linux/"
   # Où `dsoxlab support --issue` dépose le rapport d'un apprenant.
   #
@@ -221,7 +221,7 @@ sections:
       - linux/lfcs/lfcs-mount-cifs
 
   - id: drills
-    title: "Drills — conditions d'examen"
+    title: "Drills : conditions d'examen"
     description: "Exercices courts en conditions d'examen : plusieurs tâches, sans indices, chronométrés. Partagés entre RHCSA et LFCS via certification_tags et joués sur la distrib de ton choix (dsoxlab check --target rhel|ubuntu)."
     labs:
       - linux/drills/drill-essential-commands

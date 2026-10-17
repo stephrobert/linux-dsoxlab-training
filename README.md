@@ -1,4 +1,4 @@
-# Linux DevSecOps Training — RHCSA + LFCS
+# Linux DevSecOps Training: RHCSA and LFCS
 
 **Language:** [English](./README.md) · [Français](./README.fr.md)
 
@@ -332,7 +332,7 @@ to refresh it.
 | `lfcs-storage-quotas` | Enable XFS user quotas and enforce a limit | l2 | LFCS | vm | [guide](https://blog.stephane-robert.info/en/docs/linux/storage/quotas/) |
 | `lfcs-mount-cifs` | Mount an SMB/CIFS share persistently and safely | l2 | LFCS | vm | [guide](https://blog.stephane-robert.info/en/docs/linux/storage/smb/) |
 
-### Drills — conditions d'examen
+### Drills : conditions d'examen
 
 | Lab (id) | Title | Level | Certif | Runtime | Companion guide |
 |---|---|---|---|---|---|
