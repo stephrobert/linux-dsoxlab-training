@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**Quotas on the companion guide**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/references-complementaires/quotas/)
+[**Quotas on the companion guide**](https://www.stephane-robert.info/docs/admin-serveurs/linux/references-complementaires/quotas/)
 
 On XFS, quotas are enabled by a **mount option**, not by a service: `uquota`
 (users) or `gquota` (groups). `xfs_quota -x -c "state -u" <mount>` shows two

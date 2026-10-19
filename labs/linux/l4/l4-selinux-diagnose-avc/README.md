@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**SELinux on the companion guide**](https://blog.stephane-robert.info/docs/securiser/durcissement/selinux/)
+[**SELinux on the companion guide**](https://www.stephane-robert.info/docs/securiser/durcissement/selinux/)
 
 When a confined service is denied an access, SELinux logs an **AVC** in the audit
 log. `ausearch -m avc` extracts it, `audit2why` explains it, `sealert` translates

@@ -29,7 +29,7 @@ distros:
   - rhel10
   - almalinux10
   - ubuntu24.04
-doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/performances-disques/
+doc_url: https://www.stephane-robert.info/docs/admin-serveurs/linux/stockage/performances-disques/
 validation:
   functional: true
   security: false

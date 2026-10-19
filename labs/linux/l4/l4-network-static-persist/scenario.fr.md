@@ -13,4 +13,4 @@ fichier qui fait revenir l'adresse après un reboot. Encore faut-il que le profi
 soit non seulement créé, mais aussi actif : les deux se vérifient séparément.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/reseau/networkmanager/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/reseau/networkmanager/

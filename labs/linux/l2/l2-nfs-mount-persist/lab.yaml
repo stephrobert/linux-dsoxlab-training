@@ -31,7 +31,7 @@ distros:
   - rhel10
   - almalinux10
   - ubuntu24.04
-doc_url: https://blog.stephane-robert.info/docs/services/stockage/nfs/
+doc_url: https://www.stephane-robert.info/docs/services/stockage/nfs/
 validation:
   functional: true
   security: false

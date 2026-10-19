@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**Diagnostic TLS sur le guide compagnon**](https://blog.stephane-robert.info/docs/reseaux/fondamentaux/tls-diagnostic/)
+[**Diagnostic TLS sur le guide compagnon**](https://www.stephane-robert.info/docs/reseaux/fondamentaux/tls-diagnostic/)
 
 `openssl x509 -in cert -noout <sélecteur>` lit un certificat hors ligne :
 `-subject` (pour qui), `-issuer` (signé par), `-dates` (fenêtre de validité),

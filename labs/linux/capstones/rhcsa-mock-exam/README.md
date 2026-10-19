@@ -4,7 +4,7 @@
 No hints.** This mock exam is **RHCSA only**: it runs on two AlmaLinux 10, a
 server and a client, there is no Ubuntu target.
 
-[**RHCSA on the companion guide**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/certifications/rhcsa/)
+[**RHCSA on the companion guide**](https://www.stephane-robert.info/docs/admin-serveurs/linux/certifications/rhcsa/)
 
 ## What a mock exam is
 

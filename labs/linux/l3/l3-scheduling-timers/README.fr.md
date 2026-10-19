@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**Les timers systemd sur le guide compagnon**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/planification/timers/)
+[**Les timers systemd sur le guide compagnon**](https://www.stephane-robert.info/docs/admin-serveurs/linux/exploiter/planification/timers/)
 
 Une unité `.timer` déclenche un `.service` selon un planning. Le service est
 souvent `Type=oneshot` ; le `[Timer]` a `OnCalendar=` et son `[Install]` a

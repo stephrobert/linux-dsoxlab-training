@@ -11,4 +11,4 @@ Le journal d'audit garde la trace exacte du refus, et des outils savent la
 traduire en cause lisible. Désactiver SELinux n'est jamais la solution.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/securiser/durcissement/selinux/
+https://www.stephane-robert.info/docs/securiser/durcissement/selinux/

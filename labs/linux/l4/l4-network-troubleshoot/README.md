@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**Network diagnosis on the companion guide**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/reseau/diagnostic/)
+[**Network diagnosis on the companion guide**](https://www.stephane-robert.info/docs/admin-serveurs/linux/reseau/diagnostic/)
 
 When "it does not work", the question is not which command to run, but at which
 layer the failure sits. So you climb up in order: the link, the address, the

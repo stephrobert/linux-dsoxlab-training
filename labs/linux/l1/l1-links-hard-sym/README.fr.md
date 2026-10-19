@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**Naviguer dans les fichiers sur le guide compagnon**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/se-reperer-fichiers/navigation-fichiers/)
+[**Naviguer dans les fichiers sur le guide compagnon**](https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/se-reperer-fichiers/navigation-fichiers/)
 
 Un **lien physique** (`ln cible nom`) est un autre nom pour le même inode : mêmes
 données, compteur de liens qui augmente, et il survit à la suppression de

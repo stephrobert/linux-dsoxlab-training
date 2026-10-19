@@ -11,4 +11,4 @@ distingue dans un listing ordinaire. Il te faudra donc aussi savoir quoi
 demander au système pour prouver lequel est lequel.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/se-reperer-fichiers/navigation-fichiers/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/se-reperer-fichiers/navigation-fichiers/

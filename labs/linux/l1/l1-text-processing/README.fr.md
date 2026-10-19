@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**Transformer du texte sur le guide compagnon**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/transformer-texte/)
+[**Transformer du texte sur le guide compagnon**](https://www.stephane-robert.info/docs/admin-serveurs/linux/exploiter/transformer-texte/)
 
 `cut -d<sep> -f<N>` extrait la colonne N d'un fichier à champs délimités. `sort`
 ordonne les lignes (`-n` pour un tri numérique, `-u` pour dédoublonner au
@@ -12,8 +12,8 @@ standard, `wc` mesure, `sed 's/motif/remplacement/g'` réécrit un flux, et
 `awk -F<sep>` raisonne champ par champ et sait calculer. Tous se composent par
 tubes, et aucun ne modifie le fichier source.
 
-Guides complémentaires : [trier et compter](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/trier-compter/),
-[sed](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/sed/) et [awk](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/awk/).
+Guides complémentaires : [trier et compter](https://www.stephane-robert.info/docs/admin-serveurs/linux/exploiter/trier-compter/),
+[sed](https://www.stephane-robert.info/docs/admin-serveurs/linux/exploiter/sed/) et [awk](https://www.stephane-robert.info/docs/admin-serveurs/linux/exploiter/awk/).
 
 ## Le cours
 

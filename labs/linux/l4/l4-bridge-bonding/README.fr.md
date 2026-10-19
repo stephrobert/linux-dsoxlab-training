@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**Bond & bridge sur le guide compagnon**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/reseau/bond-bridge/)
+[**Bond & bridge sur le guide compagnon**](https://www.stephane-robert.info/docs/admin-serveurs/linux/reseau/bond-bridge/)
 
 Un **bond** agrège plusieurs liens en une seule interface logique, pour la
 redondance ou le débit ; un **bridge** est un commutateur logiciel qui met

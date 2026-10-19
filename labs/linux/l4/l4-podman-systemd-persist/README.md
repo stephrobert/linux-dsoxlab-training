@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**Quadlet on the companion guide**](https://blog.stephane-robert.info/docs/conteneurs/moteurs-conteneurs/podman/quadlet/)
+[**Quadlet on the companion guide**](https://www.stephane-robert.info/docs/conteneurs/moteurs-conteneurs/podman/quadlet/)
 
 Quadlet turns the `*.container` files dropped into a directory known to systemd
 into services, at `daemon-reload`. A `[Container]` section describes the image
@@ -340,5 +340,5 @@ Hence the troubleshooting order, from the most frequent to the rarest:
    port already taken, permission denied).
 
 Volumes, networks, dependencies between services and hardening are out of scope
-here: the [companion guide](https://blog.stephane-robert.info/docs/conteneurs/moteurs-conteneurs/podman/quadlet/)
+here: the [companion guide](https://www.stephane-robert.info/docs/conteneurs/moteurs-conteneurs/podman/quadlet/)
 covers them recipe by recipe.

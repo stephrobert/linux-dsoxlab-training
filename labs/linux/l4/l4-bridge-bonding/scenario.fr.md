@@ -16,4 +16,4 @@ offrir un domaine L2 unique. NetworkManager conserve chacun comme un profil de
 connexion sur disque, et c'est ce profil qui fait survivre le montage au reboot.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/reseau/bond-bridge/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/reseau/bond-bridge/

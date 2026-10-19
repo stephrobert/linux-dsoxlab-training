@@ -15,4 +15,4 @@ système de fichiers doit montrer les deux. Et c'est l'entrée dans `/etc/fstab`
 qui fait survivre l'ensemble à un reboot.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/references-complementaires/quotas/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/references-complementaires/quotas/

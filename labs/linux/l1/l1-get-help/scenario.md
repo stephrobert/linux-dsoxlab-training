@@ -11,4 +11,4 @@ is already installed on the machine. Validation compares your files to the real
 content of the log, so naming the right command is not enough.
 
 Method in the companion guide:
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/obtenir-aide/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/obtenir-aide/

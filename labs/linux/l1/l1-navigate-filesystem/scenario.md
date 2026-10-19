@@ -10,4 +10,4 @@ with the shell alone. Validation checks every path: a file with the right name i
 the wrong place does not count, and neither does an extra file.
 
 Method in the companion guide:
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/se-reperer-fichiers/navigation-fichiers/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/se-reperer-fichiers/navigation-fichiers/

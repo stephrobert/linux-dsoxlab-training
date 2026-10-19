@@ -4,7 +4,7 @@
 70/100. Aucun indice.** Cet examen blanc est **LFCS uniquement** : il se joue sur
 Ubuntu 24.04, il n'y a pas de cible AlmaLinux.
 
-[**Le LFCS sur le guide compagnon**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/certifications/lfcs/)
+[**Le LFCS sur le guide compagnon**](https://www.stephane-robert.info/docs/admin-serveurs/linux/certifications/lfcs/)
 
 ## Ce qu'est un examen blanc
 

@@ -11,4 +11,4 @@ C'est ce que veut dire aujourd'hui l'objectif RHCSA « démarrer un conteneur au
 boot », et pas un `podman run` bricolé dans rc.local.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/conteneurs/moteurs-conteneurs/podman/quadlet/
+https://www.stephane-robert.info/docs/conteneurs/moteurs-conteneurs/podman/quadlet/

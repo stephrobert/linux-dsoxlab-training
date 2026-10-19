@@ -9,4 +9,4 @@ disque. Une règle posée à chaud est perdue au premier reload comme au reboot.
 l'arrivée, **les deux** listes, runtime et permanent, doivent montrer `http`.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/securiser/reseaux/firewalld/
+https://www.stephane-robert.info/docs/securiser/reseaux/firewalld/

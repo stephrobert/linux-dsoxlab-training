@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**Arborescence Linux : à quoi sert chaque répertoire**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/se-reperer-fichiers/arborescence-fhs/)
+[**Arborescence Linux : à quoi sert chaque répertoire**](https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/se-reperer-fichiers/arborescence-fhs/)
 
 Le **Filesystem Hierarchy Standard** (FHS) est la convention qui dit où Linux
 range chaque type de fichier. Le guide le compare au plan d'un immeuble : chaque

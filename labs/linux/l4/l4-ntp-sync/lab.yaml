@@ -29,7 +29,7 @@ runtime:
 distros:
   - rhel10
   - almalinux10
-doc_url: https://blog.stephane-robert.info/docs/services/reseau/chrony/
+doc_url: https://www.stephane-robert.info/docs/services/reseau/chrony/
 validation:
   functional: true
   security: false

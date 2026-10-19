@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**Installer Linux dans une machine virtuelle**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/installer-vm/)
+[**Installer Linux dans une machine virtuelle**](https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/installer-vm/)
 
 Pour apprendre l'administration Linux, il faut un système sur lequel pratiquer.
 Le guide retient la **machine virtuelle** installée sur votre poste : vous

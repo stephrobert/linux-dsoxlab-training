@@ -41,7 +41,7 @@ distros:
   - rhel10
   - ubuntu24.04
   - debian12
-doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/lvm/
+doc_url: https://www.stephane-robert.info/docs/admin-serveurs/linux/stockage/lvm/
 validation:
   functional: true
   security: false

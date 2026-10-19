@@ -12,4 +12,4 @@ moindre privilège, c'est accorder exactement ce qui est nécessaire, et rien de
 plus.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/utilisateurs-droits-processus/modifier-droits/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/utilisateurs-droits-processus/modifier-droits/

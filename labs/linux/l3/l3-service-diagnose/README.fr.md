@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**Dépanner un service Linux qui ne démarre pas avec systemd**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/depanner/service-ne-demarre-pas/)
+[**Dépanner un service Linux qui ne démarre pas avec systemd**](https://www.stephane-robert.info/docs/admin-serveurs/linux/depanner/service-ne-demarre-pas/)
 
 Un service dont l'`ExecStart` échoue toujours pour la même raison, et qu'une
 directive `Restart=` relance sans fin, part en boucle de redémarrage. Le guide

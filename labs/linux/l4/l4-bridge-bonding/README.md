@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**Bond & bridge on the companion guide**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/reseau/bond-bridge/)
+[**Bond & bridge on the companion guide**](https://www.stephane-robert.info/docs/admin-serveurs/linux/reseau/bond-bridge/)
 
 A **bond** aggregates several links into a single logical interface, for
 redundancy or throughput; a **bridge** is a software switch that puts several

@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**tuned on the companion guide**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/tuned/)
+[**tuned on the companion guide**](https://www.stephane-robert.info/docs/admin-serveurs/linux/exploiter/tuned/)
 
 `tuned` applies a named bundle of kernel/sysfs tunings. `tuned-adm list` shows
 available profiles, `tuned-adm active` the current one, `tuned-adm profile

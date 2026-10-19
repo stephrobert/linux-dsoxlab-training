@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**Permissions & propriété sur le guide compagnon**](https://blog.stephane-robert.info/docs/securiser/durcissement/permissions-ownership/)
+[**Permissions & propriété sur le guide compagnon**](https://www.stephane-robert.info/docs/securiser/durcissement/permissions-ownership/)
 
 Sur un répertoire, le bit **set-GID** (`chmod g+s`, ou le `2` de tête d'un mode
 octal à quatre chiffres) fait hériter les nouveaux fichiers du groupe du

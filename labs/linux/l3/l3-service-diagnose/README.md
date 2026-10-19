@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**Troubleshoot a Linux service that does not start with systemd**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/depanner/service-ne-demarre-pas/)
+[**Troubleshoot a Linux service that does not start with systemd**](https://www.stephane-robert.info/docs/admin-serveurs/linux/depanner/service-ne-demarre-pas/)
 
 A service whose `ExecStart` always fails for the same reason, and which a
 `Restart=` directive restarts endlessly, goes into a restart loop. The guide

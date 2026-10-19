@@ -10,4 +10,4 @@ adjusting it afterwards. And the classic mistake hangs on one nuance: adding a
 supplementary group without wiping the ones the user already had.
 
 Method in the companion guide:
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/securiser/utilisateurs-groupes/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/securiser/utilisateurs-groupes/

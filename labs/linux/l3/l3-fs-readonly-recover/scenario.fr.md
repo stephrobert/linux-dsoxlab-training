@@ -11,4 +11,4 @@ deux : rendre `/srv/data` de nouveau inscriptible, et s'assurer que la
 déclaration est saine avant de tenter un redémarrage.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/depanner/systeme-fichiers-lecture-seule/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/depanner/systeme-fichiers-lecture-seule/

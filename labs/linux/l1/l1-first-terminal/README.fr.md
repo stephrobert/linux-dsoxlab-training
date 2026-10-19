@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**Ouvrir un terminal et comprendre le prompt**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/prompt-terminal/)
+[**Ouvrir un terminal et comprendre le prompt**](https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/prompt-terminal/)
 
 Avant même que vous ayez tapé une seule lettre, le terminal affiche déjà une
 ligne : l'**invite**, ou *prompt*. Le guide en donne la lecture : elle dit qui

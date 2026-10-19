@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**Durcir eBPF sur le guide compagnon**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/ebpf/durcissement/durcir-ebpf/)
+[**Durcir eBPF sur le guide compagnon**](https://www.stephane-robert.info/docs/admin-serveurs/linux/ebpf/durcissement/durcir-ebpf/)
 
 Le noyau Linux expose des centaines de réglages, lisibles et modifiables avec
 la commande `sysctl`. Certains décident de qui a le droit de faire quoi, par

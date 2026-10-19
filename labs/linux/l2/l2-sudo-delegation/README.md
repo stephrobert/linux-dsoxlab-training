@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**sudo on the companion guide**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/securiser/sudo/)
+[**sudo on the companion guide**](https://www.stephane-robert.info/docs/admin-serveurs/linux/securiser/sudo/)
 
 Put sudo policy in `/etc/sudoers.d/` drop-ins (mode `0440`). A rule reads
 `who where=(as-whom) commands`; `%group` targets a group, `NOPASSWD:` drops the

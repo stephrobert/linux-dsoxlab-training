@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**Choisir une distribution Linux serveur**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/distributions-serveur/)
+[**Choisir une distribution Linux serveur**](https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/distributions-serveur/)
 
 En contexte serveur, deux familles dominent : la famille **Debian** (Debian,
 Ubuntu Server) et la famille **Red Hat** (RHEL, Rocky Linux, AlmaLinux). Le
@@ -29,7 +29,7 @@ comparez.
 Tout ce qui ne se mesure pas depuis un poste (cycles de vie, tarifs, gouvernance)
 vient de deux pages du guide, citées à chaque fois : la page de référence liée
 ci-dessus et le comparatif
-[Debian vs Ubuntu vs AlmaLinux](https://blog.stephane-robert.info/docs/admin-serveurs/linux/distributions/comparatif/).
+[Debian vs Ubuntu vs AlmaLinux](https://www.stephane-robert.info/docs/admin-serveurs/linux/distributions/comparatif/).
 
 ### Le critère qui décide vraiment : la durée, et surtout le périmètre
 

@@ -11,4 +11,4 @@ and that is what makes it hold across reboots. What's left is picking the right
 one and switching to it.
 
 Method in the companion guide:
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/tuned/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/exploiter/tuned/

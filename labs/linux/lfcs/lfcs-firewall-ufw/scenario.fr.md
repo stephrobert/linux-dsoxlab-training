@@ -10,4 +10,4 @@ propre, distinct des règles qu'il contient : les deux comptent, et l'ordre dans
 lequel tu t'en occupes décide si tu gardes ta session ouverte ou non.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/securiser/reseaux/ufw/
+https://www.stephane-robert.info/docs/securiser/reseaux/ufw/

@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**systemd timers on the companion guide**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/planification/timers/)
+[**systemd timers on the companion guide**](https://www.stephane-robert.info/docs/admin-serveurs/linux/exploiter/planification/timers/)
 
 A `.timer` unit triggers a `.service` on a schedule. The service is often
 `Type=oneshot`; the `[Timer]` has `OnCalendar=` and its `[Install]` has

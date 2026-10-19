@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**autofs on the companion guide**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/autofs/)
+[**autofs on the companion guide**](https://www.stephane-robert.info/docs/admin-serveurs/linux/stockage/autofs/)
 
 autofs mounts a path only when it is accessed and unmounts it after an idle
 `--timeout`. A **master map** (`/etc/auto.master` or a file in

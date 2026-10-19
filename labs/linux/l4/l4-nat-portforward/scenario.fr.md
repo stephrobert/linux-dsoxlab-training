@@ -12,4 +12,4 @@ parcours d'un paquet. Enfin, une règle nftables posée à chaud meurt au reboot
 la persistance se configure ailleurs.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/securiser/reseaux/nat-port-forwarding/
+https://www.stephane-robert.info/docs/securiser/reseaux/nat-port-forwarding/

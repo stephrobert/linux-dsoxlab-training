@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**GRUB sur le guide compagnon**](https://blog.stephane-robert.info/docs/securiser/durcissement/grub/)
+[**GRUB sur le guide compagnon**](https://www.stephane-robert.info/docs/securiser/durcissement/grub/)
 
 `grubby --update-kernel=ALL --args="param"` ajoute un argument noyau aux noyaux
 installés ; `--remove-args` le retire ; `--info=DEFAULT` montre les arguments du

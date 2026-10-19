@@ -9,4 +9,4 @@ gone after a reboot. Making the setting active right now and making it durable
 are two distinct moves: the tests will look at both.
 
 Method in the companion guide:
-https://blog.stephane-robert.info/docs/securiser/durcissement/sysctl/
+https://www.stephane-robert.info/docs/securiser/durcissement/sysctl/

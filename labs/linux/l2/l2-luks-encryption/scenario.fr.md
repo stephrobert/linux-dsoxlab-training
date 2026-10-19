@@ -9,4 +9,4 @@ Le disque libre à traiter est désigné dans `/root/luks-disk.env`, et la clé 
 servira à l'ouvrir est déjà déposée sur la machine.
 
 Méthode dans le guide associé :
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/chiffrement-luks/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/stockage/chiffrement-luks/

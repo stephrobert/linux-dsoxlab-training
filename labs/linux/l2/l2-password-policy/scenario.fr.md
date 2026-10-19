@@ -10,4 +10,4 @@ complexité exigée à la saisie relèvent de trois mécanismes distincts, qu'il
 identifier avant de toucher au premier.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/securiser/utilisateurs-groupes/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/securiser/utilisateurs-groupes/

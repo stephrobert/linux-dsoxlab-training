@@ -11,4 +11,4 @@ répartition choisit lequel. À l'arrivée, une requête vers `http://localhost/
 cet hôte doit renvoyer la page du backend.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/services/reseau/haproxy/
+https://www.stephane-robert.info/docs/services/reseau/haproxy/

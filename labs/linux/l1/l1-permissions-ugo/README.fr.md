@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**Modifier les droits sur le guide compagnon**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/utilisateurs-droits-processus/modifier-droits/)
+[**Modifier les droits sur le guide compagnon**](https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/utilisateurs-droits-processus/modifier-droits/)
 
 Chaque fichier porte trois triplets de permissions (propriétaire, groupe,
 autres) avec lecture (4), écriture (2), exécution (1). `chmod` les pose en

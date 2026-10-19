@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**firewalld on the companion guide**](https://blog.stephane-robert.info/docs/securiser/reseaux/firewalld/)
+[**firewalld on the companion guide**](https://www.stephane-robert.info/docs/securiser/reseaux/firewalld/)
 
 `firewalld` filters by **zone** (default `public`). `firewall-cmd --add-service`
 changes runtime only (lost on reload/reboot); `--permanent` writes the zone

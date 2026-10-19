@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**Performances disques sur le guide compagnon**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/performances-disques/)
+[**Performances disques sur le guide compagnon**](https://www.stephane-robert.info/docs/admin-serveurs/linux/stockage/performances-disques/)
 
 Les options de montage changent le comportement d'un filesystem. `noatime`
 désactive les mises à jour de date d'accès, un gain courant pour les charges

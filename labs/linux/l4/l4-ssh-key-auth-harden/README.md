@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**SSH keys on the companion guide**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/ssh/cle-ssh/)
+[**SSH keys on the companion guide**](https://www.stephane-robert.info/docs/admin-serveurs/linux/exploiter/ssh/cle-ssh/)
 
 `sshd` enforces strict permissions on key files: `~/.ssh` must be `0700` and
 owned by the user, `authorized_keys` must be `0600` and owned by the user. Too

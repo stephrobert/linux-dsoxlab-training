@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**Naviguer et gérer des fichiers sous Linux**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/se-reperer-fichiers/navigation-fichiers/)
+[**Naviguer et gérer des fichiers sous Linux**](https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/se-reperer-fichiers/navigation-fichiers/)
 
 Trois commandes forment le trépied de la navigation : `pwd` dit où vous êtes,
 `cd` vous déplace, `ls` montre ce qu'il y a autour. Le guide en tire une règle :

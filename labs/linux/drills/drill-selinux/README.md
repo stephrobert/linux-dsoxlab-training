@@ -5,7 +5,7 @@
 
 ## Reminder
 
-[**SELinux: understand, troubleshoot and disable**](https://blog.stephane-robert.info/docs/securiser/durcissement/selinux/)
+[**SELinux: understand, troubleshoot and disable**](https://www.stephane-robert.info/docs/securiser/durcissement/selinux/)
 
 On top of classic access control (DAC, the `rwx` permissions), SELinux adds a
 **mandatory** control (MAC): every process and every resource carries a label,

@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**find on the companion guide**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/manipuler-fichiers-texte/rechercher-fichiers/)
+[**find on the companion guide**](https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/manipuler-fichiers-texte/rechercher-fichiers/)
 
 `find <path> <predicates>` walks a tree from a starting point and keeps only the
 objects that satisfy the given criteria: `-name` (pattern on the name), `-type`

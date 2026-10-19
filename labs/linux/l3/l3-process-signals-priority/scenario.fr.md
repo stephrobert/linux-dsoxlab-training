@@ -10,4 +10,4 @@ sur un processus déjà en cours. Mais un service géré par systemd repart de s
 définition à chaque redémarrage : une correction à chaud ne lui survit pas.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/processus/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/exploiter/processus/

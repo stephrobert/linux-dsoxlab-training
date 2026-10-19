@@ -11,4 +11,4 @@ comme cible par défaut, et c'est cette désignation, et elle seule, qui survit 
 reboot.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/demarrage-reboot/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/exploiter/demarrage-reboot/

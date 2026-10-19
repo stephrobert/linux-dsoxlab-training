@@ -11,4 +11,4 @@ quelque chose que les autres n'exigent pas, le réseau. Cette dépendance ne se
 devine pas toute seule au démarrage : elle se déclare.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/services/stockage/nfs/
+https://www.stephane-robert.info/docs/services/stockage/nfs/

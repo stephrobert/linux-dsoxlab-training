@@ -9,4 +9,4 @@ package's version so an upgrade leaves it alone; dpkg, underneath, can tell whic
 package a file belongs to. These are the Debian counterparts of `dnf` and `rpm`.
 
 Method in the companion guide:
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/maintenir/paquets/apt/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/maintenir/paquets/apt/

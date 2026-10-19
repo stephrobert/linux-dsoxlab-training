@@ -17,4 +17,4 @@ tout-up, donc le code de retour doit refléter le vrai comptage, pas une valeur
 codée en dur.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/scripts-bash/premier-script/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/exploiter/scripts-bash/premier-script/

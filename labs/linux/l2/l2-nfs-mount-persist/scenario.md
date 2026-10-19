@@ -11,4 +11,4 @@ something the others do not need, the network. Boot does not infer that
 dependency on its own: it has to be declared.
 
 Method in the companion guide:
-https://blog.stephane-robert.info/docs/services/stockage/nfs/
+https://www.stephane-robert.info/docs/services/stockage/nfs/

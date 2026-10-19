@@ -11,4 +11,4 @@ lines that produce them is up to you. Validation looks at the files you produced
 not at what you typed: a result crafted by hand will not match.
 
 Method in the companion guide:
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/anatomie-commande/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/anatomie-commande/

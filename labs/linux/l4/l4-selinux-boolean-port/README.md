@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**SELinux on the companion guide**](https://blog.stephane-robert.info/docs/securiser/durcissement/selinux/)
+[**SELinux on the companion guide**](https://www.stephane-robert.info/docs/securiser/durcissement/selinux/)
 
 Under enforcing SELinux, you grant access without turning it off. **Booleans**
 toggle predefined policy switches — `setsebool -P <bool> on` makes it persistent.

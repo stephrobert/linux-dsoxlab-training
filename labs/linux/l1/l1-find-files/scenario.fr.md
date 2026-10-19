@@ -9,4 +9,4 @@ sur autre chose que le nom. Reste à savoir quel critère demander pour chaque
 question, et comment l'exprimer.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/manipuler-fichiers-texte/rechercher-fichiers/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/manipuler-fichiers-texte/rechercher-fichiers/

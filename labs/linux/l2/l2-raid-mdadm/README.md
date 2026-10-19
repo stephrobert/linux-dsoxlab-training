@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**Software RAID with mdadm**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/raid-mdadm/)
+[**Software RAID with mdadm**](https://www.stephane-robert.info/docs/admin-serveurs/linux/stockage/raid-mdadm/)
 
 RAID 1 mirrors data across several disks: the array survives the loss of one
 disk. A spare can rebuild automatically. The array must be declared in

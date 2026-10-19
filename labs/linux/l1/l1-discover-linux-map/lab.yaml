@@ -25,7 +25,7 @@ distros:
 - debian12
 - ubuntu24.04
 - rhel10
-doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/notions/
+doc_url: https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/notions/
 validation:
   functional: true
   security: false

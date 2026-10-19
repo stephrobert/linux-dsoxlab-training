@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**Le RAID logiciel avec mdadm**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/raid-mdadm/)
+[**Le RAID logiciel avec mdadm**](https://www.stephane-robert.info/docs/admin-serveurs/linux/stockage/raid-mdadm/)
 
 Le RAID 1 duplique les données sur plusieurs disques : l'array survit à la perte
 d'un disque. Un spare peut reconstruire automatiquement. L'array doit être

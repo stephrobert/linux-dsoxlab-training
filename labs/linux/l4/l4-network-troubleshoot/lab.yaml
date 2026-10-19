@@ -29,7 +29,7 @@ runtime:
 distros:
   - rhel10
   - almalinux10
-doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/reseau/diagnostic/
+doc_url: https://www.stephane-robert.info/docs/admin-serveurs/linux/reseau/diagnostic/
 validation:
   functional: true
   security: false

@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**sudo sur le guide compagnon**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/securiser/sudo/)
+[**sudo sur le guide compagnon**](https://www.stephane-robert.info/docs/admin-serveurs/linux/securiser/sudo/)
 
 Mets la politique sudo dans des drop-ins `/etc/sudoers.d/` (mode `0440`). Une
 règle se lit `qui où=(en-tant-que) commandes` ; `%groupe` cible un groupe,

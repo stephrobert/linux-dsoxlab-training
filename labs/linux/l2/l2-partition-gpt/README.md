@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**Partitions on the companion guide**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/partitions/)
+[**Partitions on the companion guide**](https://www.stephane-robert.info/docs/admin-serveurs/linux/stockage/partitions/)
 
 A brand-new disk has no partition table: you must start by laying one down.
 `parted -s <disk> mklabel gpt` writes a GPT table, `mkpart` cuts a partition in

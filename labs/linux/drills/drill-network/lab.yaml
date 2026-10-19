@@ -48,7 +48,7 @@ distros:
   - rhel10
   - ubuntu24.04
   - debian12
-doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/reseau/netplan/
+doc_url: https://www.stephane-robert.info/docs/admin-serveurs/linux/reseau/netplan/
 validation:
   functional: true
   security: false

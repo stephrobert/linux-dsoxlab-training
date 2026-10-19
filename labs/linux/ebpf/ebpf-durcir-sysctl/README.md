@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**Hardening eBPF on the companion guide**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/ebpf/durcissement/durcir-ebpf/)
+[**Hardening eBPF on the companion guide**](https://www.stephane-robert.info/docs/admin-serveurs/linux/ebpf/durcissement/durcir-ebpf/)
 
 The Linux kernel exposes hundreds of settings, readable and changeable with the
 `sysctl` command. Some of them decide who is allowed to do what, for instance

@@ -10,4 +10,4 @@ that database, so the machine's real state is what counts, not the command you
 typed.
 
 Method in the companion guide:
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/maintenir/paquets/dnf/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/maintenir/paquets/dnf/

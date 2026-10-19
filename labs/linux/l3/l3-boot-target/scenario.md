@@ -9,4 +9,4 @@ display manager. The system marks one of them as the default target, and that
 designation, and only that, is what survives a reboot.
 
 Method in the companion guide:
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/demarrage-reboot/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/exploiter/demarrage-reboot/

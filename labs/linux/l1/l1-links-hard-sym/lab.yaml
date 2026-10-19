@@ -23,7 +23,7 @@ distros:
   - ubuntu24.04
   - rhel10
   - almalinux10
-doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/se-reperer-fichiers/navigation-fichiers/
+doc_url: https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/se-reperer-fichiers/navigation-fichiers/
 validation:
   functional: true
   security: false

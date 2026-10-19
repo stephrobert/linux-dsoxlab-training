@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**La surface d'attaque d'eBPF sur le guide compagnon**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/ebpf/durcissement/surface-attaque-bpf/)
+[**La surface d'attaque d'eBPF sur le guide compagnon**](https://www.stephane-robert.info/docs/admin-serveurs/linux/ebpf/durcissement/surface-attaque-bpf/)
 
 eBPF permet de charger de petits programmes dans le noyau Linux. Ils s'y
 exécutent avec des droits étendus, ce qui en fait un outil précieux pour

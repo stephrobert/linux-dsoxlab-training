@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**ufw sur le guide compagnon**](https://blog.stephane-robert.info/docs/securiser/reseaux/ufw/)
+[**ufw sur le guide compagnon**](https://www.stephane-robert.info/docs/securiser/reseaux/ufw/)
 
 `ufw allow <service|port>` ajoute une règle ; `ufw enable` active le pare-feu et le
 rend persistant au boot ; `ufw status` montre les règles. C'est le pendant Debian

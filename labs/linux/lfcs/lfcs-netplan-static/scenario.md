@@ -13,4 +13,4 @@ rendered to the network backend, nothing changes on the machine. And getting tha
 content wrong on a remote host means losing your hand on it.
 
 Method in the companion guide:
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/reseau/netplan/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/reseau/netplan/

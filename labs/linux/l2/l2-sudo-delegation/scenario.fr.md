@@ -10,4 +10,4 @@ fait tout l'intérêt de la délégation. Une erreur de syntaxe y est
 catastrophique : elle se valide avant de s'appliquer, jamais après.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/securiser/sudo/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/securiser/sudo/

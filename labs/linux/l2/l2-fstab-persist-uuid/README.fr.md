@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**Montages persistants sur le guide compagnon**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/montage-persistance/)
+[**Montages persistants sur le guide compagnon**](https://www.stephane-robert.info/docs/admin-serveurs/linux/stockage/montage-persistance/)
 
 `blkid` et `lsblk -f` montrent l'UUID d'un filesystem. Une ligne `/etc/fstab`
 (`<quoi> <où> <type> <options> <dump> <pass>`) le monte au démarrage. Référence

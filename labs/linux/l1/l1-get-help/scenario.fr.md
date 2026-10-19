@@ -12,4 +12,4 @@ te faut est déjà installé sur la machine. La validation compare tes fichiers 
 contenu réel du log, nommer la bonne commande ne suffit donc pas.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/obtenir-aide/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/obtenir-aide/

@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**Choosing a Linux server distribution**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/distributions-serveur/)
+[**Choosing a Linux server distribution**](https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/distributions-serveur/)
 
 In a server context, two families dominate: the **Debian** family (Debian,
 Ubuntu Server) and the **Red Hat** family (RHEL, Rocky Linux, AlmaLinux). The
@@ -29,7 +29,7 @@ machine and compare.
 Everything that cannot be measured from a workstation (life cycles, prices,
 governance) comes from two pages of the guide, cited each time: the reference
 page linked above and the comparison
-[Debian vs Ubuntu vs AlmaLinux](https://blog.stephane-robert.info/docs/admin-serveurs/linux/distributions/comparatif/).
+[Debian vs Ubuntu vs AlmaLinux](https://www.stephane-robert.info/docs/admin-serveurs/linux/distributions/comparatif/).
 
 ### The criterion that really decides: the duration, and above all the scope
 

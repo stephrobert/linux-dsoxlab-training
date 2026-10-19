@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**AppArmor on the companion guide**](https://blog.stephane-robert.info/docs/securiser/durcissement/apparmor/)
+[**AppArmor on the companion guide**](https://www.stephane-robert.info/docs/securiser/durcissement/apparmor/)
 
 AppArmor confines programs with per-binary profiles. `aa-status` lists loaded
 profiles and their mode; `aa-complain <profile>` switches a profile to learning

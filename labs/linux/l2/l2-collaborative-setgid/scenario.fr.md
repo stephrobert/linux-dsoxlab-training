@@ -11,4 +11,4 @@ dedans hérite du groupe du répertoire au lieu du groupe primaire de son créat
 la condition pour qu'un dossier partagé soit vraiment collaboratif.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/securiser/durcissement/permissions-ownership/
+https://www.stephane-robert.info/docs/securiser/durcissement/permissions-ownership/

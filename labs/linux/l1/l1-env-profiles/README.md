@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**Environment variables on the companion guide**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/efficace-shell/variables-environnement/)
+[**Environment variables on the companion guide**](https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/efficace-shell/variables-environnement/)
 
 `NAME=value` sets a shell variable; `export NAME` publishes it so child
 processes inherit it. `source file` runs a file in the *current* shell (so its

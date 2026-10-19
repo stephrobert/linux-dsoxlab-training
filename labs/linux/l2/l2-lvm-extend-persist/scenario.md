@@ -10,4 +10,4 @@ layers. Growing one is not enough, and until the other follows, the space you
 added stays invisible to the application.
 
 Method in the companion guide:
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/lvm/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/stockage/lvm/

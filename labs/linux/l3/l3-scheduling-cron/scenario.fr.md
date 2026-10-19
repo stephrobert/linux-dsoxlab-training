@@ -9,4 +9,4 @@ temps, puis *quoi*. Sa forme exacte n'est pas la même selon qu'elle est posée
 dans la crontab d'un utilisateur ou dans un fichier système.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/planification/cron/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/exploiter/planification/cron/

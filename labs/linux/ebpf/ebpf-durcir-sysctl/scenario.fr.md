@@ -20,4 +20,4 @@ qu'il appliquera après un rechargement de la configuration. Pas les commandes
 que tu auras tapées.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/ebpf/durcissement/durcir-ebpf/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/ebpf/durcissement/durcir-ebpf/

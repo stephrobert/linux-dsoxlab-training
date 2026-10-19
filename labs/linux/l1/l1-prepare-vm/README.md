@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**Install Linux in a virtual machine**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/installer-vm/)
+[**Install Linux in a virtual machine**](https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/installer-vm/)
 
 To learn Linux administration, you need a system to practise on. The guide
 settles on the **virtual machine** installed on your workstation: you get a

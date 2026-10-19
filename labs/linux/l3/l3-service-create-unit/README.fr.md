@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**Services systemd sur le guide compagnon**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/systemd/services/)
+[**Services systemd sur le guide compagnon**](https://www.stephane-robert.info/docs/admin-serveurs/linux/exploiter/systemd/services/)
 
 Une unit `.service` dans `/etc/systemd/system/` a des sections `[Unit]`,
 `[Service]` (`Type=`, `ExecStart=`, `Restart=`) et `[Install]` (`WantedBy=`).

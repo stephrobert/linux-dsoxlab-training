@@ -17,4 +17,4 @@ an answer that matches what is true on the machine, and a service left intact.
 Not the commands you typed.
 
 Method in the companion guide:
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/ebpf/tracer/bpftrace/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/ebpf/tracer/bpftrace/

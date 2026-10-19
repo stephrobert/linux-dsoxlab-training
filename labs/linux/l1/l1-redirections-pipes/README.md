@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**Redirections and pipes on the companion guide**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/manipuler-fichiers-texte/redirections-pipes/)
+[**Redirections and pipes on the companion guide**](https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/manipuler-fichiers-texte/redirections-pipes/)
 
 Every command has three streams: standard input (0), standard output (1) and
 standard error (2). `>` sends stdout to a file (overwrite), `>>` appends, `2>`

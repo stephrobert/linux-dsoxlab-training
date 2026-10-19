@@ -10,4 +10,4 @@ make `/srv/data` writable again, and make sure the declaration is sound before
 you would ever reboot.
 
 Method in the companion guide:
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/depanner/systeme-fichiers-lecture-seule/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/depanner/systeme-fichiers-lecture-seule/

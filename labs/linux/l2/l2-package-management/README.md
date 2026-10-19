@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**dnf on the companion guide**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/maintenir/paquets/dnf/)
+[**dnf on the companion guide**](https://www.stephane-robert.info/docs/admin-serveurs/linux/maintenir/paquets/dnf/)
 
 `dnf install <pkg>` adds a package and its dependencies; `dnf remove <pkg>` takes
 it out; `dnf list installed` and `rpm -q <pkg>` query what is present. `rpm -ql

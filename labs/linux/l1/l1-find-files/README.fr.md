@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**find sur le guide compagnon**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/manipuler-fichiers-texte/rechercher-fichiers/)
+[**find sur le guide compagnon**](https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/manipuler-fichiers-texte/rechercher-fichiers/)
 
 `find <chemin> <prédicats>` parcourt une arborescence à partir d'un point de
 départ et ne garde que les objets qui satisfont les critères donnés : `-name`

@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**Users & groups on the companion guide**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/securiser/utilisateurs-groupes/)
+[**Users & groups on the companion guide**](https://www.stephane-robert.info/docs/admin-serveurs/linux/securiser/utilisateurs-groupes/)
 
 `chage -M <max> -m <min> -W <warn> <user>` sets per-account aging (`chage -l`
 shows it). `/etc/login.defs` holds `PASS_MAX_DAYS` and friends — the defaults

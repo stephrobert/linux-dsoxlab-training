@@ -10,4 +10,4 @@ disparaît au redémarrage. Rendre le réglage actif tout de suite et le rendre
 durable sont deux gestes distincts : les tests regarderont les deux.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/securiser/durcissement/sysctl/
+https://www.stephane-robert.info/docs/securiser/durcissement/sysctl/

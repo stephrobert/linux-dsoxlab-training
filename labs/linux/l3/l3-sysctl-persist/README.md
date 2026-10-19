@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**sysctl hardening on the companion guide**](https://blog.stephane-robert.info/docs/securiser/durcissement/sysctl/)
+[**sysctl hardening on the companion guide**](https://www.stephane-robert.info/docs/securiser/durcissement/sysctl/)
 
 `sysctl -w key=value` changes a kernel parameter now (lost on reboot). A file
 in `/etc/sysctl.d/*.conf` (`key = value` per line) makes it persistent;

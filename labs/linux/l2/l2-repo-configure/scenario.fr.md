@@ -12,4 +12,4 @@ fichier, et comment demander à dnf de confirmer qu'il a bien pris le dépôt en
 compte.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/maintenir/paquets/dnf/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/maintenir/paquets/dnf/

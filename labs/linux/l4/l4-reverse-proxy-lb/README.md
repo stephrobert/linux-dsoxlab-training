@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**HAProxy on the companion guide**](https://blog.stephane-robert.info/docs/services/reseau/haproxy/)
+[**HAProxy on the companion guide**](https://www.stephane-robert.info/docs/services/reseau/haproxy/)
 
 HAProxy is an L7 proxy: a `frontend` binds a port, a `backend` lists the real
 `server`s and `balance`s the load between them. `haproxy -c -f <cfg>` validates
@@ -22,7 +22,7 @@ a client machine (`10.10.30.1`).
 ### Reverse proxy or load balancer: what separates them
 
 The two terms are often confused. The
-[Reverse proxy](https://blog.stephane-robert.info/docs/services/reseau/reverse-proxy/)
+[Reverse proxy](https://www.stephane-robert.info/docs/services/reseau/reverse-proxy/)
 guide tells them apart this way:
 
 | Concept | What it does |
@@ -183,7 +183,7 @@ scontext=system_u:system_r:httpd_t:s0 tcontext=system_u:object_r:unreserved_port
 A web server runs in the `httpd_t` domain, and by default that domain does not
 have the right to open an outgoing connection to an arbitrary port. The boolean
 that lifts this restriction is documented in the
-[SELinux](https://blog.stephane-robert.info/docs/securiser/durcissement/selinux/)
+[SELinux](https://www.stephane-robert.info/docs/securiser/durcissement/selinux/)
 guide:
 
 ```bash

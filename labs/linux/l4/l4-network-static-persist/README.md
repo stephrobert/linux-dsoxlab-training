@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**NetworkManager on the companion guide**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/reseau/networkmanager/)
+[**NetworkManager on the companion guide**](https://www.stephane-robert.info/docs/admin-serveurs/linux/reseau/networkmanager/)
 
 On RHEL, `NetworkManager` owns the interfaces. `nmcli con add` creates a
 connection profile; `ipv4.method manual` + `ipv4.addresses` sets a static

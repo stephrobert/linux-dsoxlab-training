@@ -11,4 +11,4 @@ systemd, un timer ne revient après un redémarrage que s'il a été activé pou
 cela.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/planification/timers/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/exploiter/planification/timers/

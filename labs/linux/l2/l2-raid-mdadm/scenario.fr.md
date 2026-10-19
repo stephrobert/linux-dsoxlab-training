@@ -10,4 +10,4 @@ droit de toucher. Il faut en tirer un miroir qui tienne le choc, et qui se
 retrouve intact après un redémarrage.
 
 Méthode dans le guide associé :
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/raid-mdadm/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/stockage/raid-mdadm/

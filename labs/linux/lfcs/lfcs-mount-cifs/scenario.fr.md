@@ -17,4 +17,4 @@ et un montage qui marche mais fuite un mot de passe est pire que pas de montage
 du tout.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/services/stockage/smb/
+https://www.stephane-robert.info/docs/services/stockage/smb/

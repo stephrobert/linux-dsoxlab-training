@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**at sur le guide compagnon**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/planification/at/)
+[**at sur le guide compagnon**](https://www.stephane-robert.info/docs/admin-serveurs/linux/exploiter/planification/at/)
 
 `at` met en file une commande à exécuter **une seule fois** plus tard, gérée par
 `atd`. Passe la commande sur l'entrée standard : `echo 'cmd' | at <heure>`. `atq`

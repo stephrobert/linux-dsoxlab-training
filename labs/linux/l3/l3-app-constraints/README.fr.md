@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**Limites de ressources sur le guide compagnon**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/processus/limites-ressources/)
+[**Limites de ressources sur le guide compagnon**](https://www.stephane-robert.info/docs/admin-serveurs/linux/exploiter/processus/limites-ressources/)
 
 `ulimit` montre et règle les limites du shell courant ; la politique durable est
 dans `/etc/security/limits.conf` et `/etc/security/limits.d/*.conf`, une règle

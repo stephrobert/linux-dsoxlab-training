@@ -11,4 +11,4 @@ Si Git réclame une identité, règle-la une fois :
 `git config user.name "Toi"` et `git config user.email "toi@example.com"`.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/developper/version/git/bases-git/
+https://www.stephane-robert.info/docs/developper/version/git/bases-git/

@@ -35,7 +35,7 @@ distros:
   - almalinux10
   - rhel10
   - ubuntu24.04
-doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/ebpf/tracer/bpftrace/
+doc_url: https://www.stephane-robert.info/docs/admin-serveurs/linux/ebpf/tracer/bpftrace/
 validation:
   functional: true
   security: false

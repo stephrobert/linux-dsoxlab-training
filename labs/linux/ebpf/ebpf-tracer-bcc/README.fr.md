@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**bpftrace sur le guide compagnon**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/ebpf/tracer/bpftrace/)
+[**bpftrace sur le guide compagnon**](https://www.stephane-robert.info/docs/admin-serveurs/linux/ebpf/tracer/bpftrace/)
 
 eBPF permet de charger de petits programmes dans le noyau pour **observer** ce
 qu'il fait : chaque fichier ouvert, chaque programme lancé, chaque connexion.

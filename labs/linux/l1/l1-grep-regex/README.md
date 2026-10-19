@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**Filter text with grep on the companion guide**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/manipuler-fichiers-texte/filtrer-texte/)
+[**Filter text with grep on the companion guide**](https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/manipuler-fichiers-texte/filtrer-texte/)
 
 `grep PATTERN file` keeps the lines that match. Regular expressions make the
 pattern precise: `^` and `$` anchor to the start/end of a line, `[0-9]` is a

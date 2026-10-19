@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**Navigate and manage files under Linux**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/se-reperer-fichiers/navigation-fichiers/)
+[**Navigate and manage files under Linux**](https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/se-reperer-fichiers/navigation-fichiers/)
 
 Three commands form the tripod of navigation: `pwd` says where you are, `cd`
 moves you, `ls` shows what is around. The guide draws a rule from it: after

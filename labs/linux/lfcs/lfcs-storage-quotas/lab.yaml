@@ -29,7 +29,7 @@ distros:
   - ubuntu24.04
   - debian12
   - rhel10
-doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/references-complementaires/quotas/
+doc_url: https://www.stephane-robert.info/docs/admin-serveurs/linux/references-complementaires/quotas/
 validation:
   functional: true
   security: false

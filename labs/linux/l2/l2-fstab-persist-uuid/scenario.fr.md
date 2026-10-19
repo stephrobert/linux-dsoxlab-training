@@ -16,4 +16,4 @@ remonte pas se découvre au pire moment, et l'outil que tout le monde cite ne
 voit pas tout.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/montage-persistance/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/stockage/montage-persistance/

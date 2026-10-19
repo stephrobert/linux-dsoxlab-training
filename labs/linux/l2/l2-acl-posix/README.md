@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**ACLs on the companion guide**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/securiser/acl/)
+[**ACLs on the companion guide**](https://www.stephane-robert.info/docs/admin-serveurs/linux/securiser/acl/)
 
 `setfacl -m u:<user>:<perms> <path>` adds a named-user entry, `g:<group>:` a
 named-group one. On a directory, `d:` (or `-d`) sets a **default** ACL that new

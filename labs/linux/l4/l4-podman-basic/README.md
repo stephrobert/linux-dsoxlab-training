@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**Podman on the companion guide**](https://blog.stephane-robert.info/docs/conteneurs/moteurs-conteneurs/podman/)
+[**Podman on the companion guide**](https://www.stephane-robert.info/docs/conteneurs/moteurs-conteneurs/podman/)
 
 `podman run -d --name <name> <image> <cmd>` runs a detached container.
 `podman ps` lists the running containers; `podman inspect -f '{{.State.Running}}'`
@@ -346,5 +346,5 @@ without discussion: on a shared machine, prefer the explicit removals.
 > lab runs 5.8, so the question does not arise yet.
 
 Networks, pods, Quadlet and image building are out of scope here: the
-[companion guide](https://blog.stephane-robert.info/docs/conteneurs/moteurs-conteneurs/podman/)
+[companion guide](https://www.stephane-robert.info/docs/conteneurs/moteurs-conteneurs/podman/)
 covers them chapter by chapter.

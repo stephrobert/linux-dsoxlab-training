@@ -12,4 +12,4 @@ is what brings the address back after a reboot. But the profile must not only
 exist, it must also be active: those are two separate checks.
 
 Method in the companion guide:
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/reseau/networkmanager/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/reseau/networkmanager/

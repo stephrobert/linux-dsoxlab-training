@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**Time synchronization with chrony on the companion guide**](https://blog.stephane-robert.info/docs/services/reseau/chrony/)
+[**Time synchronization with chrony on the companion guide**](https://www.stephane-robert.info/docs/services/reseau/chrony/)
 
 `chronyd` is the NTP client on RHEL-family systems. `timedatectl` shows and sets
 the timezone (`set-timezone`) and toggles network time (`set-ntp`). A service

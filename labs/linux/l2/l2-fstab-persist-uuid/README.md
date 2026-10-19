@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**Persistent mounts on the companion guide**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/montage-persistance/)
+[**Persistent mounts on the companion guide**](https://www.stephane-robert.info/docs/admin-serveurs/linux/stockage/montage-persistance/)
 
 `blkid` and `lsblk -f` show a filesystem's UUID. An `/etc/fstab` line
 (`<what> <where> <fstype> <options> <dump> <pass>`) mounts it at boot. Reference

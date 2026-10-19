@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**SELinux sur le guide compagnon**](https://blog.stephane-robert.info/docs/securiser/durcissement/selinux/)
+[**SELinux sur le guide compagnon**](https://www.stephane-robert.info/docs/securiser/durcissement/selinux/)
 
 Chaque fichier porte un **type** SELinux. Un service confiné ne touche que les
 fichiers dont le type est autorisé par sa politique : un démon de journalisation

@@ -20,4 +20,4 @@ si le service peut revenir, et si ta réponse nomme bien le service et le type d
 programme. Pas les commandes que tu auras tapées.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/ebpf/durcissement/surface-attaque-bpf/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/ebpf/durcissement/surface-attaque-bpf/

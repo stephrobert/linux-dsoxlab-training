@@ -9,4 +9,4 @@ qui l'exécutera à l'heure dite et l'oubliera. Contrairement à cron, elle ne s
 répète pas, et rien ne s'exécutera si ce démon ne tourne pas.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/planification/at/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/exploiter/planification/at/

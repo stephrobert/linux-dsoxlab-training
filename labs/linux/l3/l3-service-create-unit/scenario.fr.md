@@ -10,4 +10,4 @@ comment faire prendre en compte cette description par systemd, puis à distingue
 distincts.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/systemd/services/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/exploiter/systemd/services/

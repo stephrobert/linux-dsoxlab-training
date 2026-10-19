@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**cron sur le guide compagnon**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/planification/cron/)
+[**cron sur le guide compagnon**](https://www.stephane-robert.info/docs/admin-serveurs/linux/exploiter/planification/cron/)
 
 Une ligne cron commence par cinq champs de temps, `minute heure jour-du-mois
 mois jour-de-semaine`, puis la commande. Les fichiers système (`/etc/crontab`

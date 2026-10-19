@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**NAT & redirection de port sur le guide compagnon**](https://blog.stephane-robert.info/docs/securiser/reseaux/nat-port-forwarding/)
+[**NAT & redirection de port sur le guide compagnon**](https://www.stephane-robert.info/docs/securiser/reseaux/nat-port-forwarding/)
 
 Le routage exige `net.ipv4.ip_forward = 1` (persiste-le dans `/etc/sysctl.d/`).
 nftables fait le travail : une table `nat` avec une chaîne `prerouting`

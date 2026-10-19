@@ -10,4 +10,4 @@ always reads as three triads: owner, group and others. Least privilege means
 granting exactly what is required, and nothing more.
 
 Method in the companion guide:
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/utilisateurs-droits-processus/modifier-droits/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/utilisateurs-droits-processus/modifier-droits/

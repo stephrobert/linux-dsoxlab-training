@@ -10,4 +10,4 @@ droits `ugo`, sans toucher à ces derniers. Et ce dont héritent les fichiers cr
 plus tard ne se règle pas au même endroit que l'accès accordé aujourd'hui.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/securiser/acl/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/securiser/acl/

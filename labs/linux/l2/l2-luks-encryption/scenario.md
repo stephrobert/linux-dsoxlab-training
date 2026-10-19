@@ -8,4 +8,4 @@ The spare disk to work on is named in `/root/luks-disk.env`, and the key that
 will open it is already on the machine.
 
 Method in the companion guide:
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/chiffrement-luks/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/stockage/chiffrement-luks/

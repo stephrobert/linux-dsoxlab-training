@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**GRUB on the companion guide**](https://blog.stephane-robert.info/docs/securiser/durcissement/grub/)
+[**GRUB on the companion guide**](https://www.stephane-robert.info/docs/securiser/durcissement/grub/)
 
 `grubby --update-kernel=ALL --args="param"` adds a kernel argument to the
 installed kernels; `--remove-args` removes it; `--info=DEFAULT` shows the
