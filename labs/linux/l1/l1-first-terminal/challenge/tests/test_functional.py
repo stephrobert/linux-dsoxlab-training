@@ -59,7 +59,22 @@ def test_le_fichier_a_ete_edite_et_non_recree() -> None:
     recréer le fichier avec « > » donnait 100/100, et une contrainte annoncée
     que rien ne tient apprend à ignorer les contraintes.
     """
-    assert SENTINELLE_EN_TETE in _read(), message(
+    contenu = _read()
+    # Les DEUX moitiés de ce que le nom annonce. Le test ne gardait que la
+    # seconde, « non recréé », qui est vraie avant tout travail puisque le
+    # fichier de départ porte sa sentinelle : il rendait donc 1 point sur 6 à
+    # un apprenant qui n'avait rien fait, et le validateur du catalogue le
+    # refuse à juste titre (« un test vert sur l'état de départ n'est pas un
+    # test, c'est une hypothèse du setup »). Exiger aussi que le fichier ait
+    # été ÉDITÉ le rend faux au départ, vrai à l'arrivée, et toujours faux si
+    # le fichier a été recréé.
+    assert PLACEHOLDER not in contenu, message(
+        en="The file has not been edited yet: the four fields still hold "
+        f"'{PLACEHOLDER}'.",
+        fr="Le fichier n'a pas encore été édité : les quatre champs portent "
+        f"toujours '{PLACEHOLDER}'.",
+    )
+    assert SENTINELLE_EN_TETE in contenu, message(
         en="The provided header is gone from premiers-pas.txt. It only "
         "disappears when the file is RECREATED, typically with a `>` "
         "redirection, which wipes everything in it. Open the file in an editor "

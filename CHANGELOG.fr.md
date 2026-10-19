@@ -6,6 +6,48 @@ Tous les changements notables de ce projet sont consignés dans ce fichier. Le
 format s'appuie sur [Keep a Changelog](https://keepachangelog.com/), et le projet
 suit le [versionnage sémantique](https://semver.org/lang/fr/).
 
+## [0.2.2] - 2026-10-19
+
+### Corrigé
+
+- **`l1-first-terminal` rendait un point sur six avant tout travail.** Son test
+  `test_le_fichier_a_ete_edite_et_non_recree` ne vérifiait que la seconde
+  moitié de ce que son nom annonce : il contrôlait la survie de l'en-tête
+  fourni, vraie dès le fichier de départ, sans jamais vérifier que le fichier
+  avait été édité. Un apprenant qui n'avait rien fait partait donc avec 17
+  points, et le validateur du catalogue refuse cela à juste titre : « un test
+  vert sur l'état de départ n'est pas un test, c'est une hypothèse du setup ».
+
+  Le test exige maintenant les deux : le placeholder disparu et l'en-tête
+  intact. Il est donc faux au départ, vrai à l'arrivée, et toujours faux si le
+  fichier a été recréé par une redirection, ce qui était l'intention d'origine.
+
+- **La solution de `l3-service-diagnose` échouait une fois sur trois, et pas
+  pour une raison de configuration.** Elle corrigeait le fichier, puis
+  redémarrait le service. Mais l'unité avait épuisé son `StartLimitBurst` en
+  bouclant avant que la solution arrive, et systemd refuse alors de la
+  relancer pendant tout son `StartLimitIntervalSec`. Le message parlait d'un
+  « control process exited », ce qui envoie chercher le défaut dans la
+  configuration qu'on venait justement de réparer.
+
+  Un `systemctl reset-failed` précède désormais le redémarrage. C'est aussi le
+  geste que ce lab enseigne : un apprenant qui corrige la configuration sans
+  remettre le compteur à zéro se heurte au même mur. Mesuré avant et après :
+  1 VALIDE sur 3 passages, puis 4 sur 4.
+
+### Attestation
+
+- **Les 89 labs sont réattestés avec dsoxlab 0.5.4**, cycle complet sur VM
+  provisionnée et base figée, 0 avant le travail et 100 après.
+
+  La campagne précédente de la soirée avait inscrit un en-tête
+  `dsoxlab 0.1.85` dans le relevé, et il disait vrai : le `.venv` de ce dépôt
+  portait une installation `editable` de dsoxlab figée à cette version, et
+  `uv run` la préfère à celle du `PATH`. Les labs étaient donc éprouvés par un
+  moteur vieux de trois cents versions sans que rien ne le signale, hormis ce
+  champ que personne ne lisait. Le venv est nettoyé ; `pyproject.toml` ne
+  déclarait pas dsoxlab, c'était un résidu local et non un défaut du dépôt.
+
 ## [0.2.1] - 2026-10-19
 
 ### Modifié
