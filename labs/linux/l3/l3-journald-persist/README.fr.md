@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**Journaux systemd sur le guide compagnon**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/systemd/journaux/)
+[**Journaux systemd sur le guide compagnon**](https://www.stephane-robert.info/docs/admin-serveurs/linux/exploiter/systemd/journaux/)
 
 `systemd-journald` écrit soit dans `/run/log/journal` (en mémoire, perdu au
 redémarrage), soit sous `/var/log/journal` (sur disque). Le régime dépend de la

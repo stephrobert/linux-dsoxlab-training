@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**XFS sur le guide compagnon**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/xfs/)
+[**XFS sur le guide compagnon**](https://www.stephane-robert.info/docs/admin-serveurs/linux/stockage/xfs/)
 
 `mkfs.xfs <device>` crée un filesystem XFS ; `-L <label>` y appose un label
 (`-f` force par-dessus une signature existante). `blkid` et `lsblk -f` montrent

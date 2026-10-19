@@ -10,4 +10,4 @@ places on your machine and give their absolute path. Validation checks that each
 one truly exists where you claim it does.
 
 Method in the companion guide:
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/se-reperer-fichiers/arborescence-fhs/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/se-reperer-fichiers/arborescence-fhs/

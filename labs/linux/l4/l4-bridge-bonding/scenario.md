@@ -14,4 +14,4 @@ domain. NetworkManager keeps each one as a connection profile on disk, and that
 profile is what makes the whole thing survive a reboot.
 
 Method in the companion guide:
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/reseau/bond-bridge/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/reseau/bond-bridge/

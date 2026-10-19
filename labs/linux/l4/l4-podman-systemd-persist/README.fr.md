@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**Quadlet sur le guide compagnon**](https://blog.stephane-robert.info/docs/conteneurs/moteurs-conteneurs/podman/quadlet/)
+[**Quadlet sur le guide compagnon**](https://www.stephane-robert.info/docs/conteneurs/moteurs-conteneurs/podman/quadlet/)
 
 Quadlet transforme les fichiers `*.container` déposés dans un répertoire connu
 de systemd en services, au `daemon-reload`. Une section `[Container]` décrit
@@ -342,5 +342,5 @@ D'où l'ordre de dépannage, du plus fréquent au plus rare :
    introuvable, port déjà pris, refus de permission).
 
 Volumes, réseaux, dépendances entre services et durcissement sont hors sujet
-ici : le [guide compagnon](https://blog.stephane-robert.info/docs/conteneurs/moteurs-conteneurs/podman/quadlet/)
+ici : le [guide compagnon](https://www.stephane-robert.info/docs/conteneurs/moteurs-conteneurs/podman/quadlet/)
 les traite recette par recette.

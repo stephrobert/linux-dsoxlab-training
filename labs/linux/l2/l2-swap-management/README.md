@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**Manage swap on Linux**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/swap/)
+[**Manage swap on Linux**](https://www.stephane-robert.info/docs/admin-serveurs/linux/stockage/swap/)
 
 Swap is a disk area the kernel uses as an overflow for RAM: when memory
 fills up, idle pages are moved there. It absorbs spikes and enables

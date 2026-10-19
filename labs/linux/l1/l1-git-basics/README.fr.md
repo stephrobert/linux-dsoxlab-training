@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**Les bases de Git sur le guide compagnon**](https://blog.stephane-robert.info/docs/developper/version/git/bases-git/)
+[**Les bases de Git sur le guide compagnon**](https://www.stephane-robert.info/docs/developper/version/git/bases-git/)
 
 `git init` crée un dépôt, `git add <fichier>` indexe les changements,
 `git commit -m` enregistre un instantané, `git log` montre l'historique, et

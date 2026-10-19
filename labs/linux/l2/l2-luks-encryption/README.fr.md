@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**Le chiffrement de disque avec LUKS**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/chiffrement-luks/)
+[**Le chiffrement de disque avec LUKS**](https://www.stephane-robert.info/docs/admin-serveurs/linux/stockage/chiffrement-luks/)
 
 LUKS chiffre un périphérique bloc : sans la clé, les données sont illisibles.
 L'ordre est toujours format -> open -> mkfs sur le mapping -> mount. La

@@ -11,4 +11,4 @@ noyau garde sa vue de l'ancienne tant qu'on ne lui demande pas de la relire, ou
 tant que la machine n'a pas redémarré.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/partitions/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/stockage/partitions/

@@ -11,4 +11,4 @@ the others. It's AppArmor's answer to SELinux's enforcing/permissive — but per
 program, not per machine.
 
 Method in the companion guide:
-https://blog.stephane-robert.info/docs/securiser/durcissement/apparmor/
+https://www.stephane-robert.info/docs/securiser/durcissement/apparmor/

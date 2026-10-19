@@ -10,4 +10,4 @@ between those forms, and how to read what an image contains without ever running
 it, is the core of image management.
 
 Method in the companion guide:
-https://blog.stephane-robert.info/docs/conteneurs/images-conteneurs/
+https://www.stephane-robert.info/docs/conteneurs/images-conteneurs/

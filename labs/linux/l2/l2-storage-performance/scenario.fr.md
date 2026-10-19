@@ -12,4 +12,4 @@ actif tout de suite **et** persistant au redémarrage : ce sont deux gestes
 distincts.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/performances-disques/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/stockage/performances-disques/

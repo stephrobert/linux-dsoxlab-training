@@ -10,4 +10,4 @@ relancent openssl sur le certificat et comparent : un fichier tapé à la main o
 vide échoue.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/reseaux/fondamentaux/tls-diagnostic/
+https://www.stephane-robert.info/docs/reseaux/fondamentaux/tls-diagnostic/

@@ -11,4 +11,4 @@ est pour le système. N'invente rien et ne devine rien : la validation compare t
 réponses à l'état réel de la session.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/prompt-terminal/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/prompt-terminal/

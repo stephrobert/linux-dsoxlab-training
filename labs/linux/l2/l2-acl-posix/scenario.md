@@ -10,4 +10,4 @@ bits, without touching them. And what files created later inherit is not set in
 the same place as the access you grant today.
 
 Method in the companion guide:
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/securiser/acl/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/securiser/acl/

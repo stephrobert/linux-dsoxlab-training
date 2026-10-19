@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**ufw on the companion guide**](https://blog.stephane-robert.info/docs/securiser/reseaux/ufw/)
+[**ufw on the companion guide**](https://www.stephane-robert.info/docs/securiser/reseaux/ufw/)
 
 `ufw allow <service|port>` adds a rule; `ufw enable` turns the firewall on and
 makes it persistent at boot; `ufw status` shows the rules. It is the Debian

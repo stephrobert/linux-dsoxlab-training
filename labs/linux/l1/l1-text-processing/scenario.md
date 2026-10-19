@@ -9,4 +9,4 @@ The point: every tool in the chain does exactly one job. The whole difficulty is
 picking the right one for each question, and chaining them in the right order.
 
 Method in the companion guides:
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/transformer-texte/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/exploiter/transformer-texte/

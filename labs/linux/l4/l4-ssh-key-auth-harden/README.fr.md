@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**Les clés SSH sur le guide compagnon**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/ssh/cle-ssh/)
+[**Les clés SSH sur le guide compagnon**](https://www.stephane-robert.info/docs/admin-serveurs/linux/exploiter/ssh/cle-ssh/)
 
 `sshd` impose des permissions strictes sur les fichiers de clés : `~/.ssh` doit
 être `0700` et détenu par l'utilisateur, `authorized_keys` doit être `0600` et

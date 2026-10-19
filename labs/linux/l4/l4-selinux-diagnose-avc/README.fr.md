@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**SELinux sur le guide compagnon**](https://blog.stephane-robert.info/docs/securiser/durcissement/selinux/)
+[**SELinux sur le guide compagnon**](https://www.stephane-robert.info/docs/securiser/durcissement/selinux/)
 
 Quand un service confiné se voit refuser un accès, SELinux consigne un **AVC**
 dans le journal d'audit. `ausearch -m avc` l'en extrait, `audit2why` l'explique,

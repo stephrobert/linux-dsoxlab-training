@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**Write your first script on the companion guide**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/efficace-shell/premier-script/)
+[**Write your first script on the companion guide**](https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/efficace-shell/premier-script/)
 
 A script starts with a shebang (`#!/usr/bin/env bash`) and must be executable
 (`chmod +x`). `$1` is the first argument. A `while read` loop walks a file line

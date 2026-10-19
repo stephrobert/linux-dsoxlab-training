@@ -38,7 +38,7 @@ distros:
   - rhel10
   - almalinux10
   - ubuntu24.04
-doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/depanner/service-ne-demarre-pas/
+doc_url: https://www.stephane-robert.info/docs/admin-serveurs/linux/depanner/service-ne-demarre-pas/
 validation:
   functional: true
   security: false

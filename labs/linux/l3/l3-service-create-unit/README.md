@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**systemd services on the companion guide**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/systemd/services/)
+[**systemd services on the companion guide**](https://www.stephane-robert.info/docs/admin-serveurs/linux/exploiter/systemd/services/)
 
 A `.service` unit in `/etc/systemd/system/` has `[Unit]`, `[Service]`
 (`Type=`, `ExecStart=`, `Restart=`) and `[Install]` (`WantedBy=`) sections.

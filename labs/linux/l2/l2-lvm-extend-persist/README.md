@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**LVM on the companion guide**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/lvm/)
+[**LVM on the companion guide**](https://www.stephane-robert.info/docs/admin-serveurs/linux/stockage/lvm/)
 
 A logical volume can grow while it is mounted. The order matters: first
 `lvextend` the logical volume, then grow the **filesystem** on top

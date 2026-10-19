@@ -9,4 +9,4 @@ Two spare disks are attached to the machine; their device names are recorded in
 out of them is a mirror that holds up, and that is still there after a reboot.
 
 Method in the companion guide:
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/raid-mdadm/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/stockage/raid-mdadm/

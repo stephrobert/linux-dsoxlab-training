@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**Filtrer du texte avec grep sur le guide compagnon**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/manipuler-fichiers-texte/filtrer-texte/)
+[**Filtrer du texte avec grep sur le guide compagnon**](https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/manipuler-fichiers-texte/filtrer-texte/)
 
 `grep MOTIF fichier` garde les lignes qui correspondent. Les expressions
 régulières rendent le motif précis : `^` et `$` ancrent au début/à la fin d'une

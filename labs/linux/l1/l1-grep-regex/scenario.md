@@ -10,4 +10,4 @@ question it. Selecting lines, excluding them, extracting only part of a line, or
 returning nothing but a number are four distinct uses of a single tool.
 
 Method in the companion guide:
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/manipuler-fichiers-texte/filtrer-texte/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/manipuler-fichiers-texte/filtrer-texte/

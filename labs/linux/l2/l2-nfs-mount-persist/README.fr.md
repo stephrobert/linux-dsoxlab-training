@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**NFS sur le guide compagnon**](https://blog.stephane-robert.info/docs/services/stockage/nfs/)
+[**NFS sur le guide compagnon**](https://www.stephane-robert.info/docs/services/stockage/nfs/)
 
 Un serveur exporte un répertoire via `/etc/exports` ; un client le monte avec
 `mount -t nfs <serveur>:/chemin <point-de-montage>`. Un montage posé à la main

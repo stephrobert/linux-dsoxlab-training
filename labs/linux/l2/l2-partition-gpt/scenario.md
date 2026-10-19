@@ -10,4 +10,4 @@ keeps its view of the old one until you ask it to re-read the disk, or until the
 machine reboots.
 
 Method in the companion guide:
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/partitions/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/stockage/partitions/

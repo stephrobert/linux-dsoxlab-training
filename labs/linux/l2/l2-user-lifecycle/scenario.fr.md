@@ -10,4 +10,4 @@ chose que l'ajuster ensuite. Et l'erreur classique tient dans une nuance :
 ajouter un groupe secondaire sans effacer ceux que l'utilisateur avait déjà.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/securiser/utilisateurs-groupes/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/securiser/utilisateurs-groupes/

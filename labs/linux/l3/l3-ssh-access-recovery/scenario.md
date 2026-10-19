@@ -10,4 +10,4 @@ check its configuration *offline*, before any reload, and can also print the
 settings it would really apply. That reflex is what's missing here.
 
 Method in the companion guide:
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/depanner/perte-acces-ssh/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/depanner/perte-acces-ssh/

@@ -10,4 +10,4 @@ lisent cette base : c'est l'état réel de la machine qui compte, pas la command
 tapée.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/maintenir/paquets/dnf/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/maintenir/paquets/dnf/

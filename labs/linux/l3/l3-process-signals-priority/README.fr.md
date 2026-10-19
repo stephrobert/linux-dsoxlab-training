@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**Processus sur le guide compagnon**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/processus/)
+[**Processus sur le guide compagnon**](https://www.stephane-robert.info/docs/admin-serveurs/linux/exploiter/processus/)
 
 Les valeurs de nice vont de `-20` (priorité max) à `19` (min). `nice -n N cmd`
 démarre un processus à une priorité, `renice N -p PID` change celle d'un

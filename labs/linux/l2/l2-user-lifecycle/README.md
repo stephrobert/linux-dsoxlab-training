@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**Users & groups on the companion guide**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/securiser/utilisateurs-groupes/)
+[**Users & groups on the companion guide**](https://www.stephane-robert.info/docs/admin-serveurs/linux/securiser/utilisateurs-groupes/)
 
 `useradd -u <uid> -m -d <home> -s <shell> -g <primary> -G <supplementary> <name>`
 creates an account with a full identity. A user has **one single primary group**

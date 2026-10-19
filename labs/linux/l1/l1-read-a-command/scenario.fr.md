@@ -12,4 +12,4 @@ fichiers obtenus, pas ce que tu as tapé : un résultat fabriqué à la main ne
 collera pas.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/anatomie-commande/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/anatomie-commande/

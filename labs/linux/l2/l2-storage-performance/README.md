@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**Disk performance on the companion guide**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/performances-disques/)
+[**Disk performance on the companion guide**](https://www.stephane-robert.info/docs/admin-serveurs/linux/stockage/performances-disques/)
 
 Mount options change how a filesystem behaves. `noatime` disables access-time
 updates, a common win for read-heavy workloads or ones with many small files.

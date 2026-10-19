@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**Absolute and relative paths on Linux**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/se-reperer-fichiers/chemins-linux/)
+[**Absolute and relative paths on Linux**](https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/se-reperer-fichiers/chemins-linux/)
 
 Every command that touches a file must first know where it is. An **absolute**
 path starts with `/`: it starts from the root and designates the same location

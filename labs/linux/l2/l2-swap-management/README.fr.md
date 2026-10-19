@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**Gérer le swap sous Linux**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/swap/)
+[**Gérer le swap sous Linux**](https://www.stephane-robert.info/docs/admin-serveurs/linux/stockage/swap/)
 
 Le swap est un espace disque que le noyau utilise comme extension de la RAM :
 quand la mémoire se remplit, les pages inactives y sont déplacées. Il absorbe

@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**Redirections et pipes sur le guide compagnon**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/manipuler-fichiers-texte/redirections-pipes/)
+[**Redirections et pipes sur le guide compagnon**](https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/manipuler-fichiers-texte/redirections-pipes/)
 
 Chaque commande a trois flux : l'entrée standard (0), la sortie standard (1) et
 la sortie d'erreur (2). `>` envoie la sortie standard dans un fichier (écrase),

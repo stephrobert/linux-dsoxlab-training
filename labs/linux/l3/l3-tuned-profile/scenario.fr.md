@@ -11,4 +11,4 @@ disque, et c'est ce qui le fait tenir aux reboots. Reste à savoir lequel choisi
 et comment en changer.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/tuned/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/exploiter/tuned/

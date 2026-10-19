@@ -10,4 +10,4 @@ inherit the directory's group instead of the creator's primary group — the one
 thing that makes a shared folder truly collaborative.
 
 Method in the companion guide:
-https://blog.stephane-robert.info/docs/securiser/durcissement/permissions-ownership/
+https://www.stephane-robert.info/docs/securiser/durcissement/permissions-ownership/

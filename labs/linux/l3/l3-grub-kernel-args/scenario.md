@@ -10,4 +10,4 @@ move covers both, and on a distribution using BLS boot entries that is exactly
 where the trap springs.
 
 Method in the companion guide:
-https://blog.stephane-robert.info/docs/securiser/durcissement/grub/
+https://www.stephane-robert.info/docs/securiser/durcissement/grub/

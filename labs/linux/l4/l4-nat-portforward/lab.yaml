@@ -30,7 +30,7 @@ runtime:
 distros:
   - rhel10
   - almalinux10
-doc_url: https://blog.stephane-robert.info/docs/securiser/reseaux/nat-port-forwarding/
+doc_url: https://www.stephane-robert.info/docs/securiser/reseaux/nat-port-forwarding/
 validation:
   functional: true
   security: true

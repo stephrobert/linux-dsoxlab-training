@@ -4,7 +4,7 @@
 hints.** This mock exam is **LFCS only**: it is played on Ubuntu 24.04, there is
 no AlmaLinux target.
 
-[**LFCS on the companion guide**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/certifications/lfcs/)
+[**LFCS on the companion guide**](https://www.stephane-robert.info/docs/admin-serveurs/linux/certifications/lfcs/)
 
 ## What a mock exam is
 

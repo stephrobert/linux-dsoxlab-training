@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**SSSD + LDAP sur le guide compagnon**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/securiser/authentifier-ldap-sssd/)
+[**SSSD + LDAP sur le guide compagnon**](https://www.stephane-robert.info/docs/admin-serveurs/linux/securiser/authentifier-ldap-sssd/)
 
 SSSD est le démon client qui interroge un annuaire LDAP pour le compte du
 système. Sa configuration vit dans `/etc/sssd/sssd.conf` (mode `0600`

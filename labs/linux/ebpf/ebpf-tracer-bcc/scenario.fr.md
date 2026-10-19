@@ -18,4 +18,4 @@ fonctionnent vraiment, une réponse qui correspond à la réalité de la machine
 un service resté intact. Pas les commandes que tu auras tapées.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/ebpf/tracer/bpftrace/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/ebpf/tracer/bpftrace/

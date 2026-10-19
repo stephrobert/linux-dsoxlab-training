@@ -29,7 +29,7 @@ distros:
   - rhel10
   - almalinux10
   - ubuntu24.04
-doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/planification/timers/
+doc_url: https://www.stephane-robert.info/docs/admin-serveurs/linux/exploiter/planification/timers/
 validation:
   functional: true
   security: false

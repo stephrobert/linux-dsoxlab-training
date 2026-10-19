@@ -13,4 +13,4 @@ pas été rendu vers le backend réseau, rien ne change sur la machine. Et se
 tromper de contenu sur une machine distante, c'est perdre la main dessus.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/reseau/netplan/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/reseau/netplan/

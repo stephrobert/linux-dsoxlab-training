@@ -14,4 +14,4 @@ show both. And it is the `/etc/fstab` entry that makes the whole thing survive a
 reboot.
 
 Method in the companion guide:
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/references-complementaires/quotas/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/references-complementaires/quotas/

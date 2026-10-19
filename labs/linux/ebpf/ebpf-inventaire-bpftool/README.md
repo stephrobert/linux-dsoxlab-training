@@ -2,7 +2,7 @@
 
 ## Recap
 
-[**The eBPF attack surface in the companion guide (FR)**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/ebpf/durcissement/surface-attaque-bpf/)
+[**The eBPF attack surface in the companion guide (FR)**](https://www.stephane-robert.info/docs/admin-serveurs/linux/ebpf/durcissement/surface-attaque-bpf/)
 
 eBPF lets you load small programs into the Linux kernel. They run there with
 extended rights, which makes them a valuable observability tool and a prime place

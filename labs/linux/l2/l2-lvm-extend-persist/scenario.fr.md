@@ -10,4 +10,4 @@ distinctes. Agrandir l'une ne suffit pas, et tant que l'autre n'a pas suivi,
 l'espace ajouté reste invisible pour l'application.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/lvm/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/stockage/lvm/

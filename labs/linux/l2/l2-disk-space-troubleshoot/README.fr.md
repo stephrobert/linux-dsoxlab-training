@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**Espace disque sur le guide compagnon**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/espace-disque/)
+[**Espace disque sur le guide compagnon**](https://www.stephane-robert.info/docs/admin-serveurs/linux/stockage/espace-disque/)
 
 `df -h` liste les filesystems et leur occupation ; `du -h --max-depth=1 <dir>`
 montre ce que pèse chaque sous-répertoire, pour descendre jusqu'au coupable. Si

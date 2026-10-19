@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**Durcissement sysctl sur le guide compagnon**](https://blog.stephane-robert.info/docs/securiser/durcissement/sysctl/)
+[**Durcissement sysctl sur le guide compagnon**](https://www.stephane-robert.info/docs/securiser/durcissement/sysctl/)
 
 `sysctl -w clé=valeur` change un paramètre noyau maintenant (perdu au reboot). Un
 fichier dans `/etc/sysctl.d/*.conf` (`clé = valeur` par ligne) le rend

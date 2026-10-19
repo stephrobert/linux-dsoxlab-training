@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**Permissions & ownership on the companion guide**](https://blog.stephane-robert.info/docs/securiser/durcissement/permissions-ownership/)
+[**Permissions & ownership on the companion guide**](https://www.stephane-robert.info/docs/securiser/durcissement/permissions-ownership/)
 
 On a directory, the **set-GID** bit (`chmod g+s`, or the leading `2` of a
 four-digit octal mode) makes new files inherit the directory's group. Combined

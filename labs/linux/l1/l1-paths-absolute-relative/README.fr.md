@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**Chemins absolus et relatifs sous Linux**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/se-reperer-fichiers/chemins-linux/)
+[**Chemins absolus et relatifs sous Linux**](https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/se-reperer-fichiers/chemins-linux/)
 
 Toute commande qui touche un fichier doit d'abord savoir où il se trouve. Un
 chemin **absolu** commence par `/` : il part de la racine et désigne le même

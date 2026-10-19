@@ -8,4 +8,4 @@ The point: a cron line describes *when* first, through several time fields, then
 crontab or in a system file.
 
 Method in the companion guide:
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/planification/cron/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/exploiter/planification/cron/

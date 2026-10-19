@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**AppArmor sur le guide compagnon**](https://blog.stephane-robert.info/docs/securiser/durcissement/apparmor/)
+[**AppArmor sur le guide compagnon**](https://www.stephane-robert.info/docs/securiser/durcissement/apparmor/)
 
 AppArmor confine les programmes avec des profils par binaire. `aa-status` liste les
 profils chargés et leur mode ; `aa-complain <profil>` passe un profil en mode

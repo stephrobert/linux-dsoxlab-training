@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**XFS on the companion guide**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/xfs/)
+[**XFS on the companion guide**](https://www.stephane-robert.info/docs/admin-serveurs/linux/stockage/xfs/)
 
 `mkfs.xfs <device>` creates an XFS filesystem; `-L <label>` stamps a label
 (`-f` forces over an existing signature). `blkid` and `lsblk -f` show the type,

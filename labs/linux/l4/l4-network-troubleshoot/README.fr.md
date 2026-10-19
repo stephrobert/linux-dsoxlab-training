@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**Le diagnostic réseau sur le guide compagnon**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/reseau/diagnostic/)
+[**Le diagnostic réseau sur le guide compagnon**](https://www.stephane-robert.info/docs/admin-serveurs/linux/reseau/diagnostic/)
 
 Quand « ça ne marche pas », la question n'est pas quelle commande lancer, mais à
 quelle couche se situe la panne. On remonte donc dans l'ordre : le lien,

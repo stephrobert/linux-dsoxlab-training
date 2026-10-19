@@ -9,4 +9,4 @@ systemd to take that description into account, then telling "runs now" apart fro
 "comes back at the next boot": those are two distinct moves.
 
 Method in the companion guide:
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/systemd/services/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/exploiter/systemd/services/

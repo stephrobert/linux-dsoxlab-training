@@ -10,4 +10,4 @@ navigation problems to be worked out in your head, without running a single
 shell.
 
 Method in the companion guide:
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/se-reperer-fichiers/chemins-linux/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/se-reperer-fichiers/chemins-linux/

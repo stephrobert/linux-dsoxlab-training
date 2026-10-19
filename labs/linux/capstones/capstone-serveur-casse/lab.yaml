@@ -41,7 +41,7 @@ runtime:
 distros:
   - almalinux10
   - rhel10
-doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/depanner/
+doc_url: https://www.stephane-robert.info/docs/admin-serveurs/linux/depanner/
 validation:
   functional: true
   security: true

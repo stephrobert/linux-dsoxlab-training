@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**Boot and reboot on the companion guide**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/demarrage-reboot/)
+[**Boot and reboot on the companion guide**](https://www.stephane-robert.info/docs/admin-serveurs/linux/exploiter/demarrage-reboot/)
 
 systemd boots the system into a **target**, that is a set of units to activate.
 `systemctl get-default` displays the target used at boot,

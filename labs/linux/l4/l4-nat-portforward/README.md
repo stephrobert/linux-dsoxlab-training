@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**NAT & port forwarding on the companion guide**](https://blog.stephane-robert.info/docs/securiser/reseaux/nat-port-forwarding/)
+[**NAT & port forwarding on the companion guide**](https://www.stephane-robert.info/docs/securiser/reseaux/nat-port-forwarding/)
 
 Forwarding needs `net.ipv4.ip_forward = 1` (persist it in `/etc/sysctl.d/`).
 nftables does the work: a `nat` table with a `prerouting` chain (`dnat` = the

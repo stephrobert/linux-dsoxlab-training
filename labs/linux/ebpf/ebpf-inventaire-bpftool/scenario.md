@@ -19,4 +19,4 @@ whether the service can come back, and whether your answer names the service and
 the type of the program correctly. Not the commands you typed.
 
 Method in the companion guide:
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/ebpf/durcissement/surface-attaque-bpf/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/ebpf/durcissement/surface-attaque-bpf/

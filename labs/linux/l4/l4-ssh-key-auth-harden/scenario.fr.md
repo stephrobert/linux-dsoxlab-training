@@ -12,4 +12,4 @@ l'environnement est trop ouvert ou mal détenu, sans rien annoncer côté client
 c'est le piège qui fait perdre des heures.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/ssh/cle-ssh/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/exploiter/ssh/cle-ssh/

@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**Les quotas sur le guide compagnon**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/references-complementaires/quotas/)
+[**Les quotas sur le guide compagnon**](https://www.stephane-robert.info/docs/admin-serveurs/linux/references-complementaires/quotas/)
 
 Sur XFS, les quotas s'activent par une **option de montage**, pas par un service :
 `uquota` (utilisateurs) ou `gquota` (groupes). `xfs_quota -x -c "state -u"

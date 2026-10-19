@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**at on the companion guide**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/planification/at/)
+[**at on the companion guide**](https://www.stephane-robert.info/docs/admin-serveurs/linux/exploiter/planification/at/)
 
 `at` queues a command to run **once** at a later time, handled by `atd`. Feed the
 command on stdin: `echo 'cmd' | at <time>`. `atq` lists pending jobs, `at -c <n>`

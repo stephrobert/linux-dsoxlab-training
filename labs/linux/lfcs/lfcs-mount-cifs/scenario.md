@@ -16,4 +16,4 @@ The point: a mount that works today but breaks at reboot is not done, and a
 mount that works but leaks a password is worse than no mount at all.
 
 Method in the companion guide:
-https://blog.stephane-robert.info/docs/services/stockage/smb/
+https://www.stephane-robert.info/docs/services/stockage/smb/

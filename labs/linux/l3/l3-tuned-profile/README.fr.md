@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**tuned sur le guide compagnon**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/tuned/)
+[**tuned sur le guide compagnon**](https://www.stephane-robert.info/docs/admin-serveurs/linux/exploiter/tuned/)
 
 `tuned` applique un lot nommé de réglages noyau/sysfs. `tuned-adm list` affiche
 les profils disponibles, `tuned-adm active` le courant, `tuned-adm profile <nom>`

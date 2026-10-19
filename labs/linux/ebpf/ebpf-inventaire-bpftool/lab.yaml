@@ -34,7 +34,7 @@ distros:
   - almalinux10
   - rhel10
   - ubuntu24.04
-doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/ebpf/durcissement/surface-attaque-bpf/
+doc_url: https://www.stephane-robert.info/docs/admin-serveurs/linux/ebpf/durcissement/surface-attaque-bpf/
 validation:
   functional: true
   security: true

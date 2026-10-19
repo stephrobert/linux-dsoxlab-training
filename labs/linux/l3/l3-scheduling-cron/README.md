@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**cron on the companion guide**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/planification/cron/)
+[**cron on the companion guide**](https://www.stephane-robert.info/docs/admin-serveurs/linux/exploiter/planification/cron/)
 
 A cron line starts with five time fields, `minute hour day-of-month month
 day-of-week`, then the command. System files (`/etc/crontab` and

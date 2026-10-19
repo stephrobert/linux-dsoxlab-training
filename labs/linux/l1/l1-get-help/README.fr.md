@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**Obtenir de l'aide sous Linux**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/obtenir-aide/)
+[**Obtenir de l'aide sous Linux**](https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/obtenir-aide/)
 
 Personne ne retient toutes les options de toutes les commandes, et ce n'est pas
 la compétence attendue : un système Linux embarque sa propre documentation, et

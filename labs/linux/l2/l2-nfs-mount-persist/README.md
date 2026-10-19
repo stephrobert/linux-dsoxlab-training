@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**NFS on the companion guide**](https://blog.stephane-robert.info/docs/services/stockage/nfs/)
+[**NFS on the companion guide**](https://www.stephane-robert.info/docs/services/stockage/nfs/)
 
 A server exports a directory through `/etc/exports`; a client mounts it with
 `mount -t nfs <server>:/path <mount-point>`. A mount created by hand disappears

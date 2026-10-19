@@ -10,4 +10,4 @@ the RHCSA objective "start a container at boot" means today — not a hand-rolle
 `podman run` in rc.local.
 
 Method in the companion guide:
-https://blog.stephane-robert.info/docs/conteneurs/moteurs-conteneurs/podman/quadlet/
+https://www.stephane-robert.info/docs/conteneurs/moteurs-conteneurs/podman/quadlet/

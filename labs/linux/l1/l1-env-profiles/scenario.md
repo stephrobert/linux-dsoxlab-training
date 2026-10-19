@@ -18,4 +18,4 @@ The tests source your file in a subshell and launch a child process to confirm
 the variables are truly exported.
 
 Method in the companion guide:
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/efficace-shell/variables-environnement/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/efficace-shell/variables-environnement/

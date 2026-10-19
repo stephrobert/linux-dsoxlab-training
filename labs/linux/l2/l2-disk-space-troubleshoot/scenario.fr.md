@@ -13,4 +13,4 @@ lorsqu'il le relâche. Ici, rassure-toi, le coupable est bien un fichier présen
 sur le disque.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/espace-disque/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/stockage/espace-disque/

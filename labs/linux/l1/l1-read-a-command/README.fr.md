@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**Anatomie d'une commande Linux**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/anatomie-commande/)
+[**Anatomie d'une commande Linux**](https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/anatomie-commande/)
 
 Toute commande Linux suit le même schéma : `commande [options] [arguments]`.
 La **commande** est le programme à exécuter, les **options** modifient son

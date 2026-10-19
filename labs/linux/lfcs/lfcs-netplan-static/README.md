@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**netplan on the companion guide**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/reseau/netplan/)
+[**netplan on the companion guide**](https://www.stephane-robert.info/docs/admin-serveurs/linux/reseau/netplan/)
 
 netplan describes the network in `/etc/netplan/*.yaml`. A device gets
 `addresses:` for static IPs and `routes:` (`to:`/`via:`) for static routes.

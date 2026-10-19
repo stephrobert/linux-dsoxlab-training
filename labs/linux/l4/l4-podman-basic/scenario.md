@@ -9,4 +9,4 @@ state is read from Podman, not from your shell history. This is the foundation
 the container-persistence lab builds on.
 
 Method in the companion guide:
-https://blog.stephane-robert.info/docs/conteneurs/moteurs-conteneurs/podman/
+https://www.stephane-robert.info/docs/conteneurs/moteurs-conteneurs/podman/

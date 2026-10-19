@@ -10,4 +10,4 @@ de désigner ce dernier par un nom stable, plutôt que par un nom de périphéri
 fragile qui peut changer d'un démarrage à l'autre.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/xfs/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/stockage/xfs/

@@ -27,7 +27,7 @@ runtime:
 distros:
   - ubuntu24.04
   - debian12
-doc_url: https://blog.stephane-robert.info/docs/securiser/reseaux/ufw/
+doc_url: https://www.stephane-robert.info/docs/securiser/reseaux/ufw/
 validation:
   functional: true
   security: true

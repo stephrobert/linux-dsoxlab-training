@@ -14,4 +14,4 @@ prochain boot. Ce sont deux états distincts, tous deux lisibles dans ce que
 rapporte NetworkManager : à lire, pas à deviner.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/reseau/diagnostic/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/reseau/diagnostic/

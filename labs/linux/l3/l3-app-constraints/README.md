@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**Resource limits on the companion guide**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/processus/limites-ressources/)
+[**Resource limits on the companion guide**](https://www.stephane-robert.info/docs/admin-serveurs/linux/exploiter/processus/limites-ressources/)
 
 `ulimit` shows and sets the limits of the current shell; the durable policy is
 in `/etc/security/limits.conf` and `/etc/security/limits.d/*.conf`, one rule per

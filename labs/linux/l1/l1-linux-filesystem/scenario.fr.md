@@ -10,4 +10,4 @@ emplacements réels sur ta machine et d'en donner le chemin absolu. La validatio
 vérifie que chacun existe bien là où tu l'annonces.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/se-reperer-fichiers/arborescence-fhs/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/se-reperer-fichiers/arborescence-fhs/

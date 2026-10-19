@@ -11,4 +11,4 @@ aux autres. C'est sa réponse à l'enforcing et au permissive de SELinux, mais �
 maille du programme, pas de la machine.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/securiser/durcissement/apparmor/
+https://www.stephane-robert.info/docs/securiser/durcissement/apparmor/

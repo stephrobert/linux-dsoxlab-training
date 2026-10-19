@@ -29,7 +29,7 @@ runtime:
 distros:
   - rhel10
   - almalinux10
-doc_url: https://blog.stephane-robert.info/docs/conteneurs/images-conteneurs/
+doc_url: https://www.stephane-robert.info/docs/conteneurs/images-conteneurs/
 validation:
   functional: true
   security: false

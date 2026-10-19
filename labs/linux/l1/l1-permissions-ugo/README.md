@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**Change permissions on the companion guide**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/utilisateurs-droits-processus/modifier-droits/)
+[**Change permissions on the companion guide**](https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/utilisateurs-droits-processus/modifier-droits/)
 
 Every file carries three permission triads (owner, group, other) with read (4),
 write (2), execute (1). `chmod` sets them in octal (`chmod 664 file`) or

@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**HAProxy sur le guide compagnon**](https://blog.stephane-robert.info/docs/services/reseau/haproxy/)
+[**HAProxy sur le guide compagnon**](https://www.stephane-robert.info/docs/services/reseau/haproxy/)
 
 HAProxy est un proxy L7 : un `frontend` écoute un port, un `backend` liste les
 `server`s réels et `balance` la charge entre eux. `haproxy -c -f <cfg>` valide la
@@ -22,7 +22,7 @@ interrogée depuis un poste client (`10.10.30.1`).
 ### Proxy inverse ou répartiteur de charge : ce qui les sépare
 
 Les deux termes sont souvent confondus. Le guide
-[Reverse proxy](https://blog.stephane-robert.info/docs/services/reseau/reverse-proxy/)
+[Reverse proxy](https://www.stephane-robert.info/docs/services/reseau/reverse-proxy/)
 les distingue ainsi :
 
 | Concept | Ce qu'il fait |
@@ -183,7 +183,7 @@ scontext=system_u:system_r:httpd_t:s0 tcontext=system_u:object_r:unreserved_port
 Un serveur web tourne dans le domaine `httpd_t`, et par défaut ce domaine n'a pas
 le droit d'ouvrir une connexion sortante vers un port quelconque. Le booléen qui
 lève cette restriction est documenté dans le guide
-[SELinux](https://blog.stephane-robert.info/docs/securiser/durcissement/selinux/) :
+[SELinux](https://www.stephane-robert.info/docs/securiser/durcissement/selinux/) :
 
 ```bash
 getsebool httpd_can_network_connect     # httpd_can_network_connect --> off

@@ -10,4 +10,4 @@ The durable way, the one RHCSA expects, is to **declare the rule** that says
 which type this path must carry, then let the policy apply it.
 
 Method in the companion guide:
-https://blog.stephane-robert.info/docs/securiser/durcissement/selinux/
+https://www.stephane-robert.info/docs/securiser/durcissement/selinux/

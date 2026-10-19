@@ -12,4 +12,4 @@ d'identité depuis l'annuaire. Attention, il est pointilleux sur les permissions
 de sa propre configuration et refuse de démarrer si elles sont trop ouvertes.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/securiser/authentifier-ldap-sssd/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/securiser/authentifier-ldap-sssd/

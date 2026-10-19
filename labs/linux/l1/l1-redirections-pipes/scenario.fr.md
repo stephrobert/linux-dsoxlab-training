@@ -11,4 +11,4 @@ erreur emprunte un autre canal et lui échappe. Viser ce second canal et le
 fusionner avec le premier sont deux gestes distincts.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/manipuler-fichiers-texte/redirections-pipes/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/manipuler-fichiers-texte/redirections-pipes/

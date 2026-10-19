@@ -16,4 +16,4 @@ read its output and exit code; they even re-run it on an all-up file, so the
 exit code must reflect the real count, not a hard-coded value.
 
 Method in the companion guide:
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/scripts-bash/premier-script/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/exploiter/scripts-bash/premier-script/

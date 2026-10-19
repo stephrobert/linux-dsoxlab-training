@@ -45,7 +45,7 @@ distros:
   - rhel10
   - ubuntu24.04
   - debian12
-doc_url: https://blog.stephane-robert.info/docs/securiser/reseaux/
+doc_url: https://www.stephane-robert.info/docs/securiser/reseaux/
 validation:
   functional: true
   security: true

@@ -12,4 +12,4 @@ rechargement, et sait aussi afficher les réglages qu'il appliquerait réellemen
 C'est ce réflexe qui manque ici.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/depanner/perte-acces-ssh/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/depanner/perte-acces-ssh/

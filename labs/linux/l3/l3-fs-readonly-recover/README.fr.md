@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**Récupération filesystem en lecture seule sur le guide compagnon**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/depanner/systeme-fichiers-lecture-seule/)
+[**Récupération filesystem en lecture seule sur le guide compagnon**](https://www.stephane-robert.info/docs/admin-serveurs/linux/depanner/systeme-fichiers-lecture-seule/)
 
 `findmnt <mnt>` montre les options actives d'un montage (`ro` vs `rw`).
 `mount -o remount,rw <mnt>` le bascule sans démonter. Une mauvaise option dans

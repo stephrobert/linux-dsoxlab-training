@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**LVM sur le guide compagnon**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/lvm/)
+[**LVM sur le guide compagnon**](https://www.stephane-robert.info/docs/admin-serveurs/linux/stockage/lvm/)
 
 Un volume logique peut grandir alors qu'il est monté. L'ordre compte : d'abord
 `lvextend` sur le volume logique, ensuite l'agrandissement du **filesystem** par

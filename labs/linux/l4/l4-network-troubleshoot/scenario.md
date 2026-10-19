@@ -13,4 +13,4 @@ distinct states, both readable in what NetworkManager reports: to be read, not
 guessed.
 
 Method in the companion guide:
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/reseau/diagnostic/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/reseau/diagnostic/

@@ -10,4 +10,4 @@ Deux exigences vont de pair : cette soupape doit être là au prochain démarrag
 et le noyau ne doit y recourir qu'en dernier ressort.
 
 La méthode complète est dans le guide associé :
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/swap/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/stockage/swap/

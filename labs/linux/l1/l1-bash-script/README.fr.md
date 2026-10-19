@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**Écrire son premier script sur le guide compagnon**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/efficace-shell/premier-script/)
+[**Écrire son premier script sur le guide compagnon**](https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/efficace-shell/premier-script/)
 
 Un script commence par un shebang (`#!/usr/bin/env bash`) et doit être exécutable
 (`chmod +x`). `$1` est le premier argument. Une boucle `while read` parcourt un

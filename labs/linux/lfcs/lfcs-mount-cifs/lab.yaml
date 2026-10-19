@@ -32,7 +32,7 @@ distros:
   - ubuntu24.04
   - debian12
   - rhel10
-doc_url: https://blog.stephane-robert.info/docs/services/stockage/smb/
+doc_url: https://www.stephane-robert.info/docs/services/stockage/smb/
 validation:
   functional: true
   security: true

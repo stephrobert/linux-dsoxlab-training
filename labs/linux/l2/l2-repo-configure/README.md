@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**dnf on the companion guide**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/maintenir/paquets/dnf/)
+[**dnf on the companion guide**](https://www.stephane-robert.info/docs/admin-serveurs/linux/maintenir/paquets/dnf/)
 
 A repository is defined by an INI `.repo` file in `/etc/yum.repos.d/`: `[id]`,
 `name`, `baseurl` (or `mirrorlist`), `enabled`, `gpgcheck` and `gpgkey`. Keep

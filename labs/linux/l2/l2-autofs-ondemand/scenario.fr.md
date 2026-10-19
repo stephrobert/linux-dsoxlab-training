@@ -11,4 +11,4 @@ démonte de lui-même quand plus personne ne s'en sert. Encore faut-il lui décr
 ce qu'il doit monter, et sous quel chemin.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/autofs/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/stockage/autofs/

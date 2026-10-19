@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**Les images de conteneurs sur le guide compagnon**](https://blog.stephane-robert.info/docs/conteneurs/images-conteneurs/)
+[**Les images de conteneurs sur le guide compagnon**](https://www.stephane-robert.info/docs/conteneurs/images-conteneurs/)
 
 `podman pull <ref>` récupère une image depuis un registre ; `podman tag <src>
 <nom>` lui donne un nom local ; `podman save -o <fichier> <nom>` écrit une archive

@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**TLS diagnostics on the companion guide**](https://blog.stephane-robert.info/docs/reseaux/fondamentaux/tls-diagnostic/)
+[**TLS diagnostics on the companion guide**](https://www.stephane-robert.info/docs/reseaux/fondamentaux/tls-diagnostic/)
 
 `openssl x509 -in cert -noout <selector>` reads a certificate offline:
 `-subject` (who), `-issuer` (signed by), `-dates` (validity window),

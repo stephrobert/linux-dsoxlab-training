@@ -11,4 +11,4 @@ file, and the space only comes back when it lets go. Here, rest assured, the
 culprit really is a file sitting on disk.
 
 Method in the companion guide:
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/espace-disque/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/stockage/espace-disque/

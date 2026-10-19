@@ -10,4 +10,4 @@ complexity demanded at the prompt are three distinct mechanisms, and you need to
 identify them before touching the first one.
 
 Method in the companion guide:
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/securiser/utilisateurs-groupes/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/securiser/utilisateurs-groupes/

@@ -11,4 +11,4 @@ ports, on the other hand, must be **labeled**: without a label, a confined
 service simply has no right to bind them.
 
 Method in the companion guide:
-https://blog.stephane-robert.info/docs/securiser/durcissement/selinux/
+https://www.stephane-robert.info/docs/securiser/durcissement/selinux/

@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**SMB on the companion guide**](https://blog.stephane-robert.info/docs/services/stockage/smb/)
+[**SMB on the companion guide**](https://www.stephane-robert.info/docs/services/stockage/smb/)
 
 A CIFS mount needs the `cifs-utils` package and an authenticated share:
 `mount -t cifs //<server>/<share> <mountpoint> -o credentials=<file>`.

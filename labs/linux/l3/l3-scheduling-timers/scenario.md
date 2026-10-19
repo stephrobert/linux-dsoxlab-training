@@ -9,4 +9,4 @@ units, the second one carrying the schedule. And like any systemd unit, a timer
 only comes back after a reboot if it was enabled to do so.
 
 Method in the companion guide:
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/planification/timers/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/exploiter/planification/timers/

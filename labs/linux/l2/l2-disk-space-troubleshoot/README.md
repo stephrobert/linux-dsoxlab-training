@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**Disk space on the companion guide**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/espace-disque/)
+[**Disk space on the companion guide**](https://www.stephane-robert.info/docs/admin-serveurs/linux/stockage/espace-disque/)
 
 `df -h` lists filesystems and their usage; `du -h --max-depth=1 <dir>` shows how
 much each subdirectory holds, so you can walk down to the culprit. If `df` says

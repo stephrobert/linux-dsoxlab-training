@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**Variables d'environnement sur le guide compagnon**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/efficace-shell/variables-environnement/)
+[**Variables d'environnement sur le guide compagnon**](https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/efficace-shell/variables-environnement/)
 
 `NOM=valeur` définit une variable de shell ; `export NOM` la publie pour que les
 processus enfants en héritent. `source fichier` exécute un fichier dans le shell

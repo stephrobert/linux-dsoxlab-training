@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**firewalld sur le guide compagnon**](https://blog.stephane-robert.info/docs/securiser/reseaux/firewalld/)
+[**firewalld sur le guide compagnon**](https://www.stephane-robert.info/docs/securiser/reseaux/firewalld/)
 
 `firewalld` filtre par **zone** (défaut `public`). `firewall-cmd --add-service`
 change le runtime seulement (perdu au reload/reboot) ; `--permanent` écrit la

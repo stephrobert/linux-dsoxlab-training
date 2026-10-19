@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**SELinux on the companion guide**](https://blog.stephane-robert.info/docs/securiser/durcissement/selinux/)
+[**SELinux on the companion guide**](https://www.stephane-robert.info/docs/securiser/durcissement/selinux/)
 
 Every file carries a SELinux **type**. A confined service only touches the files
 whose type is allowed by its policy: a logging daemon writes into `var_log_t`, a

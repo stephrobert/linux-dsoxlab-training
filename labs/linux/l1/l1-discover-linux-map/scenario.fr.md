@@ -11,4 +11,4 @@ faits **réels** sur ta propre machine. La validation les compare à l'état du
 système : une valeur recopiée d'un tutoriel échoue.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/notions/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/notions/

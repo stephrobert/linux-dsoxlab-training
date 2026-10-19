@@ -10,4 +10,4 @@ anything. A syntax error there is catastrophic: it gets validated before it is
 applied, never after.
 
 Method in the companion guide:
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/securiser/sudo/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/securiser/sudo/

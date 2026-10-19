@@ -50,7 +50,7 @@ runtime:
 distros:
   - ubuntu24.04
   - debian12
-doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/certifications/lfcs/
+doc_url: https://www.stephane-robert.info/docs/admin-serveurs/linux/certifications/lfcs/
 validation:
   functional: true
   security: true

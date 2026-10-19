@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**Notions fondamentales Linux**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/notions/)
+[**Notions fondamentales Linux**](https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/notions/)
 
 Au sens strict, Linux est un **noyau** : le programme central écrit par Linus
 Torvalds en 1991, distribué sous licence GPL, qui gère le matériel, la mémoire,

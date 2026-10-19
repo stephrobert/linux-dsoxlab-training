@@ -4,7 +4,7 @@
 Aucun indice.** Cet examen blanc est **RHCSA uniquement** : il se joue sur deux
 AlmaLinux 10, un serveur et un client, il n'y a pas de cible Ubuntu.
 
-[**Le RHCSA sur le guide compagnon**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/certifications/rhcsa/)
+[**Le RHCSA sur le guide compagnon**](https://www.stephane-robert.info/docs/admin-serveurs/linux/certifications/rhcsa/)
 
 ## Ce qu'est un examen blanc
 

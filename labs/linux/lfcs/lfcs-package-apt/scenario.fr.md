@@ -11,4 +11,4 @@ dire à quel paquet appartient un fichier. Ce sont les pendants Debian de `dnf` 
 de `rpm`.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/maintenir/paquets/apt/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/maintenir/paquets/apt/

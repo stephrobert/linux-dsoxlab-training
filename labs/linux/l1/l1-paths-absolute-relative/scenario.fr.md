@@ -11,4 +11,4 @@ te met à l'épreuve sur des trajets à calculer de tête, sans exécuter le moi
 shell.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/se-reperer-fichiers/chemins-linux/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/se-reperer-fichiers/chemins-linux/

@@ -11,4 +11,4 @@ Savoir passer d'une forme à l'autre, et savoir lire ce que contient une image
 sans jamais l'exécuter, c'est le cœur de la gestion d'images.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/conteneurs/images-conteneurs/
+https://www.stephane-robert.info/docs/conteneurs/images-conteneurs/

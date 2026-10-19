@@ -10,4 +10,4 @@ Créer, lister, extraire, choisir la destination et n'extraire qu'un seul membre
 sont autant d'usages du même outil.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/manipuler-fichiers-texte/archives-compression/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/manipuler-fichiers-texte/archives-compression/

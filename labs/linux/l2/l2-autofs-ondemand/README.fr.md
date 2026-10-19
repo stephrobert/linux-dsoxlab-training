@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**autofs sur le guide compagnon**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/autofs/)
+[**autofs sur le guide compagnon**](https://www.stephane-robert.info/docs/admin-serveurs/linux/stockage/autofs/)
 
 autofs monte un chemin seulement à l'accès et le démonte après un `--timeout`
 d'inactivité. Une **carte maître** (`/etc/auto.master` ou un fichier de

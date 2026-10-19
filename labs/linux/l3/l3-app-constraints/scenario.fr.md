@@ -10,4 +10,4 @@ deux valeurs cohabitent : la limite souple, qui est le défaut appliqué, et la
 limite dure, qui est le plafond que l'utilisateur peut atteindre.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/processus/limites-ressources/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/exploiter/processus/limites-ressources/

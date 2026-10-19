@@ -20,4 +20,4 @@ même nom. Les tests sourcent ton fichier dans un sous-shell et lancent un
 processus enfant pour confirmer que les variables sont réellement exportées.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/efficace-shell/variables-environnement/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/efficace-shell/variables-environnement/

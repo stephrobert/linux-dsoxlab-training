@@ -10,4 +10,4 @@ difficulté est de choisir le bon pour chaque question, et de les enchaîner dan
 le bon ordre.
 
 Méthode dans les guides compagnons :
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/transformer-texte/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/exploiter/transformer-texte/

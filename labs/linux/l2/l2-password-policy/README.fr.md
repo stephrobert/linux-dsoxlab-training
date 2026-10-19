@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**Utilisateurs et groupes sur le guide compagnon**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/securiser/utilisateurs-groupes/)
+[**Utilisateurs et groupes sur le guide compagnon**](https://www.stephane-robert.info/docs/admin-serveurs/linux/securiser/utilisateurs-groupes/)
 
 `chage -M <max> -m <min> -W <warn> <user>` règle l'expiration par compte
 (`chage -l` l'affiche). `/etc/login.defs` contient `PASS_MAX_DAYS` et consorts —

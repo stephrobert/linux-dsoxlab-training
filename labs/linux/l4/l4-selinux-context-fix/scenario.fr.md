@@ -12,4 +12,4 @@ relabel du système. La façon durable, celle qu'attend le RHCSA, consiste à
 policy l'appliquer.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/securiser/durcissement/selinux/
+https://www.stephane-robert.info/docs/securiser/durcissement/selinux/

@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**SSSD + LDAP on the companion guide**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/securiser/authentifier-ldap-sssd/)
+[**SSSD + LDAP on the companion guide**](https://www.stephane-robert.info/docs/admin-serveurs/linux/securiser/authentifier-ldap-sssd/)
 
 SSSD is the client daemon that queries an LDAP directory on behalf of the
 system. Its configuration lives in `/etc/sssd/sssd.conf` (mode `0600` mandatory)

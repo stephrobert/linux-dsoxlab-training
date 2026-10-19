@@ -18,4 +18,4 @@ what it really refuses to an unprivileged user, and what it will apply after a
 reload of the configuration. Not the commands you typed.
 
 Method in the companion guide:
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/ebpf/durcissement/durcir-ebpf/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/ebpf/durcissement/durcir-ebpf/

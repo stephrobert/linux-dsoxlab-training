@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**Démarrage et reboot sur le guide compagnon**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/demarrage-reboot/)
+[**Démarrage et reboot sur le guide compagnon**](https://www.stephane-robert.info/docs/admin-serveurs/linux/exploiter/demarrage-reboot/)
 
 systemd démarre le système dans une **cible** (target), c'est-à-dire un ensemble
 d'unités à activer. `systemctl get-default` affiche la cible retenue au

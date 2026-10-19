@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**Archives et compression sur le guide compagnon**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/manipuler-fichiers-texte/archives-compression/)
+[**Archives et compression sur le guide compagnon**](https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/manipuler-fichiers-texte/archives-compression/)
 
 `tar` regroupe des fichiers dans une seule archive ; la compression est une
 option à part : `z` pour gzip, `j` pour bzip2. Verbes courants : `c` créer, `t`

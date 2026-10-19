@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**Podman sur le guide compagnon**](https://blog.stephane-robert.info/docs/conteneurs/moteurs-conteneurs/podman/)
+[**Podman sur le guide compagnon**](https://www.stephane-robert.info/docs/conteneurs/moteurs-conteneurs/podman/)
 
 `podman run -d --name <nom> <image> <cmd>` lance un conteneur détaché.
 `podman ps` liste les conteneurs actifs ; `podman inspect -f '{{.State.Running}}'`
@@ -345,5 +345,5 @@ sans discuter : sur une machine partagée, préférez les suppressions explicite
 > de ce lab est en 5.8, la question ne se pose pas encore.
 
 Réseaux, pods, Quadlet et construction d'images sont hors sujet ici : le
-[guide compagnon](https://blog.stephane-robert.info/docs/conteneurs/moteurs-conteneurs/podman/)
+[guide compagnon](https://www.stephane-robert.info/docs/conteneurs/moteurs-conteneurs/podman/)
 les traite chapitre par chapitre.

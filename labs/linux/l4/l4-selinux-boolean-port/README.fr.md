@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**SELinux sur le guide compagnon**](https://blog.stephane-robert.info/docs/securiser/durcissement/selinux/)
+[**SELinux sur le guide compagnon**](https://www.stephane-robert.info/docs/securiser/durcissement/selinux/)
 
 Sous SELinux enforcing, on accorde l'accès sans le désactiver. Les **booléens**
 basculent des interrupteurs de policy prédéfinis — `setsebool -P <bool> on` les

@@ -5,7 +5,7 @@
 
 ## Rappel
 
-[**SELinux : comprendre, dépanner et désactiver**](https://blog.stephane-robert.info/docs/securiser/durcissement/selinux/)
+[**SELinux : comprendre, dépanner et désactiver**](https://www.stephane-robert.info/docs/securiser/durcissement/selinux/)
 
 SELinux ajoute au contrôle d'accès classique (DAC, les droits `rwx`) un contrôle
 **obligatoire** (MAC) : chaque processus et chaque ressource porte une étiquette,

@@ -11,4 +11,4 @@ geste couvre les deux, et sur une distribution à entrées de démarrage BLS c'e
 précisément là que le piège se referme.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/securiser/durcissement/grub/
+https://www.stephane-robert.info/docs/securiser/durcissement/grub/

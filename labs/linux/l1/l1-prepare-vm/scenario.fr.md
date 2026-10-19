@@ -11,4 +11,4 @@ valeur est confrontée à l'état réel du système : une valeur plausible mais
 inventée échoue.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/installer-vm/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/installer-vm/

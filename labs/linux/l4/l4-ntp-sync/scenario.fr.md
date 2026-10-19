@@ -11,4 +11,4 @@ autant que maintenant : cette machine tient-elle son horloge par le réseau ?
 C'est cet état durable qui sera vérifié, pas les commandes que tu auras tapées.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/services/reseau/chrony/
+https://www.stephane-robert.info/docs/services/reseau/chrony/

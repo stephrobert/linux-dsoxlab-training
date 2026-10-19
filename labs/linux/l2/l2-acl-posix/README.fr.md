@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**ACL sur le guide compagnon**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/securiser/acl/)
+[**ACL sur le guide compagnon**](https://www.stephane-robert.info/docs/admin-serveurs/linux/securiser/acl/)
 
 `setfacl -m u:<user>:<droits> <chemin>` ajoute une entrée utilisateur nommé,
 `g:<groupe>:` une entrée groupe nommé. Sur un répertoire, `d:` (ou `-d`) pose une

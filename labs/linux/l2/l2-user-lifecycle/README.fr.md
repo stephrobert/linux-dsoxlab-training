@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**Utilisateurs et groupes sur le guide compagnon**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/securiser/utilisateurs-groupes/)
+[**Utilisateurs et groupes sur le guide compagnon**](https://www.stephane-robert.info/docs/admin-serveurs/linux/securiser/utilisateurs-groupes/)
 
 `useradd -u <uid> -m -d <home> -s <shell> -g <primaire> -G <secondaire> <nom>`
 crée un compte avec une identité complète. Un utilisateur a **un seul groupe

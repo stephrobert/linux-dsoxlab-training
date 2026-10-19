@@ -10,4 +10,4 @@ front of you. This lab asks you to **determine** it on your own machine, not to
 assume it: validation compares your answers to what the system actually exposes.
 
 Method in the companion guide:
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/distributions-serveur/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/distributions-serveur/

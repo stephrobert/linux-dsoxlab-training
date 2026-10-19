@@ -11,4 +11,4 @@ it off to make your life easier. What remains is finding where that file belongs
 and how to make dnf confirm it picked the repo up.
 
 Method in the companion guide:
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/maintenir/paquets/dnf/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/maintenir/paquets/dnf/

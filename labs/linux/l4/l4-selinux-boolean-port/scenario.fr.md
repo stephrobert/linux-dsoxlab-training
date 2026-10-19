@@ -12,4 +12,4 @@ explicitement le contraire. Les ports non standard, eux, doivent être
 droit de s'y attacher.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/securiser/durcissement/selinux/
+https://www.stephane-robert.info/docs/securiser/durcissement/selinux/

@@ -10,4 +10,4 @@ réglage : il faut que la configuration l'autorise, et que la destination soit
 prête à recevoir le journal.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/admin-serveurs/linux/exploiter/systemd/journaux/
+https://www.stephane-robert.info/docs/admin-serveurs/linux/exploiter/systemd/journaux/

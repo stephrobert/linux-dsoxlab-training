@@ -11,4 +11,4 @@ policy picks which one. In the end, a request to `http://localhost/` on this hos
 must return the backend's page.
 
 Method in the companion guide:
-https://blog.stephane-robert.info/docs/services/reseau/haproxy/
+https://www.stephane-robert.info/docs/services/reseau/haproxy/

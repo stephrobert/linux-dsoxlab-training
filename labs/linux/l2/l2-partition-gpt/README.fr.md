@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**Partitions sur le guide compagnon**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/stockage/partitions/)
+[**Partitions sur le guide compagnon**](https://www.stephane-robert.info/docs/admin-serveurs/linux/stockage/partitions/)
 
 Un disque neuf n'a aucune table de partitions : il faut commencer par en poser
 une. `parted -s <disque> mklabel gpt` écrit une table GPT, `mkpart` y découpe

@@ -9,4 +9,4 @@ se lit auprès de Podman, pas dans ton historique shell. C'est la fondation sur
 laquelle s'appuie le lab de persistance de conteneur.
 
 Méthode dans le guide compagnon :
-https://blog.stephane-robert.info/docs/conteneurs/moteurs-conteneurs/podman/
+https://www.stephane-robert.info/docs/conteneurs/moteurs-conteneurs/podman/

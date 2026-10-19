@@ -9,4 +9,4 @@ disk. A rule added live is lost at the first reload, and at reboot. In the end
 **both** lists, runtime and permanent, must show `http`.
 
 Method in the companion guide:
-https://blog.stephane-robert.info/docs/securiser/reseaux/firewalld/
+https://www.stephane-robert.info/docs/securiser/reseaux/firewalld/

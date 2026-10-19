@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**SMB sur le guide compagnon**](https://blog.stephane-robert.info/docs/services/stockage/smb/)
+[**SMB sur le guide compagnon**](https://www.stephane-robert.info/docs/services/stockage/smb/)
 
 Un montage CIFS demande le paquet `cifs-utils` et un partage authentifié :
 `mount -t cifs //<serveur>/<partage> <point-de-montage> -o credentials=<fichier>`.

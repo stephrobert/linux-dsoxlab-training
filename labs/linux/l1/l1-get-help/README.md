@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**Getting help under Linux**](https://blog.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/obtenir-aide/)
+[**Getting help under Linux**](https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/obtenir-aide/)
 
 Nobody remembers every option of every command, and that is not the expected
 skill: a Linux system carries its own documentation, and what is asked of you is

@@ -31,7 +31,7 @@ runtime:
 distros:
   - rhel10
   - almalinux10
-doc_url: https://blog.stephane-robert.info/docs/admin-serveurs/linux/securiser/authentifier-ldap-sssd/
+doc_url: https://www.stephane-robert.info/docs/admin-serveurs/linux/securiser/authentifier-ldap-sssd/
 validation:
   functional: true
   security: true

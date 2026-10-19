@@ -10,4 +10,4 @@ separate from the rules it holds: both count, and the order in which you deal
 with them decides whether you keep your session or not.
 
 Method in the companion guide:
-https://blog.stephane-robert.info/docs/securiser/reseaux/ufw/
+https://www.stephane-robert.info/docs/securiser/reseaux/ufw/
