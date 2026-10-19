@@ -24,6 +24,33 @@ qui n'en a pas.
 - **Une infrastructure provisionnée** : 69 lab(s) sont en `runtime: vm` sur le réseau `lab-linux`, et exigent `dsoxlab provision` avant la campagne, `dsoxlab destroy` après. Les hôtes attendus sont `alma-rhcsa-1.lab`, `alma-rhcsa-2.lab`, `ubuntu-lfcs-1.lab`.
 - De la mémoire libre réelle, et non celle qu'annonce `doctor` : détruire l'infra des autres dépôts AVANT de provisionner celle-ci, sinon les VM se disputent la RAM et les labs échouent par épuisement, ce qui ressemble à un défaut de lab.
 
+### L'étape sans laquelle le validateur refuse de jouer
+
+Ce catalogue isole ses labs par recouvrement qcow2 : chaque lab repart d'une VM
+neuve, sans quoi chacun noterait l'état laissé par le précédent.
+`scripts/rebase-vms.sh` fige cet état de départ, et **tout `dsoxlab provision`
+l'invalide** : un provisionnement recrée les domaines avec un UUID neuf, et
+libvirt refuse alors de restaurer l'ancien état mémoire.
+
+La séquence est donc contrainte, dans cet ordre :
+
+```bash
+dsoxlab provision                  # les VM du meta.yml
+bash scripts/rebase-vms.sh         # boot complet puis gel mémoire, quelques minutes
+mise exec -- uv run scripts/valider-labs.py
+dsoxlab destroy                    # en partant, pour libérer la RAM
+```
+
+**Sauter le rebase ne donne pas un faux vert, il donne un ROUGE qui parle
+d'autre chose.** Mesuré le 2026-10-19 sur `bdd` : « isolation impossible :
+db1.lab n'a pas de base figée ». Le message nomme le geste, mais un verdict
+ROUGE inscrit dans le relevé se lit ensuite comme un défaut de lab, alors que
+le lab n'a jamais été joué. C'est pour cette raison que ce relevé-là n'a pas
+été commité.
+
+Le rebase veut des VM **qui n'ont joué aucun lab** : juste après le
+provisionnement, donc, et pas au milieu d'une campagne.
+
 ## La commande
 
 ```bash

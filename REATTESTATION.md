@@ -23,6 +23,32 @@ that has none.
 - **Provisioned infrastructure**: 69 lab(s) are `runtime: vm` on the `lab-linux` network and require `dsoxlab provision` before the campaign and `dsoxlab destroy` after. Expected hosts: `alma-rhcsa-1.lab`, `alma-rhcsa-2.lab`, `ubuntu-lfcs-1.lab`.
 - Real free memory, not what `doctor` reports: destroy the other repositories' infrastructure BEFORE provisioning this one, or the VMs compete for RAM and labs fail by exhaustion, which looks like a lab defect.
 
+### The step without which the validator refuses to run
+
+This catalogue isolates its labs with qcow2 overlays: every lab starts from a
+fresh VM, otherwise each one would grade the state left by the previous one.
+`scripts/rebase-vms.sh` freezes that starting state, and **every
+`dsoxlab provision` invalidates it**: provisioning recreates the domains with a
+new UUID, and libvirt then refuses to restore the former memory state.
+
+The sequence is therefore fixed, in this order:
+
+```bash
+dsoxlab provision                  # the meta.yml VMs
+bash scripts/rebase-vms.sh         # full boot then memory freeze, a few minutes
+mise exec -- uv run scripts/valider-labs.py
+dsoxlab destroy                    # on the way out, to free the RAM
+```
+
+**Skipping the rebase does not produce a false green, it produces a RED about
+something else.** Measured on 2026-10-19 on `bdd`: "isolation impossible:
+db1.lab has no frozen base". The message names the gesture, but a RED verdict
+written into the record then reads as a lab defect, when the lab was never
+played at all. That is why that particular record was not committed.
+
+The rebase wants VMs that **have played no lab**: right after provisioning,
+then, and not in the middle of a campaign.
+
 ## The command
 
 ```bash
