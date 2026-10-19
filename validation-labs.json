@@ -1,7 +1,7 @@
 {
-  "genere_le": "2026-10-17 08:21:20",
+  "genere_le": "2026-10-19 21:16:20",
   "act": "act version 0.2.84",
-  "dsoxlab": "dsoxlab 0.4.1",
+  "dsoxlab": "dsoxlab 0.5.4",
   "labs": {
     "capstone-mise-en-production": {
       "id": "capstone-mise-en-production",
@@ -10,9 +10,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "10/10",
-      "duree_s": 240.0,
+      "duree_s": 236.3,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "capstone-serveur-casse": {
       "id": "capstone-serveur-casse",
@@ -21,9 +22,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "7/7",
-      "duree_s": 43.4,
+      "duree_s": 40.8,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "drill-apparmor": {
       "id": "drill-apparmor",
@@ -32,9 +34,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "4/4",
-      "duree_s": 28.1,
+      "duree_s": 25.0,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "drill-essential-commands": {
       "id": "drill-essential-commands",
@@ -43,9 +46,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "5/5",
-      "duree_s": 35.8,
+      "duree_s": 35.0,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "drill-firewall": {
       "id": "drill-firewall",
@@ -54,9 +58,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "5/5",
-      "duree_s": 81.1,
+      "duree_s": 79.9,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "drill-network": {
       "id": "drill-network",
@@ -67,7 +72,8 @@
       "tests": "4/4",
       "duree_s": 24.8,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "drill-packages": {
       "id": "drill-packages",
@@ -76,9 +82,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "5/5",
-      "duree_s": 36.5,
+      "duree_s": 36.3,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "drill-selinux": {
       "id": "drill-selinux",
@@ -87,9 +94,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "4/4",
-      "duree_s": 28.6,
+      "duree_s": 30.5,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "drill-storage": {
       "id": "drill-storage",
@@ -98,9 +106,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "5/5",
-      "duree_s": 28.2,
+      "duree_s": 26.9,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "drill-systemd": {
       "id": "drill-systemd",
@@ -109,9 +118,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "5/5",
-      "duree_s": 40.5,
+      "duree_s": 38.1,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "drill-users-groups": {
       "id": "drill-users-groups",
@@ -120,9 +130,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "5/5",
-      "duree_s": 31.9,
+      "duree_s": 29.6,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "ebpf-durcir-sysctl": {
       "id": "ebpf-durcir-sysctl",
@@ -131,10 +142,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "5/5",
-      "duree_s": 29.9,
+      "duree_s": 30.9,
       "traces": [],
       "pourquoi": "",
-      "date": "2026-10-17"
+      "date": "2026-10-19"
     },
     "ebpf-inventaire-bpftool": {
       "id": "ebpf-inventaire-bpftool",
@@ -143,10 +154,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "6/6",
-      "duree_s": 80.3,
+      "duree_s": 85.8,
       "traces": [],
       "pourquoi": "",
-      "date": "2026-10-17"
+      "date": "2026-10-19"
     },
     "ebpf-tracer-bcc": {
       "id": "ebpf-tracer-bcc",
@@ -155,10 +166,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "4/4",
-      "duree_s": 114.4,
+      "duree_s": 112.9,
       "traces": [],
       "pourquoi": "",
-      "date": "2026-10-17"
+      "date": "2026-10-19"
     },
     "l1-bash-script": {
       "id": "l1-bash-script",
@@ -167,10 +178,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "3/3",
-      "duree_s": 3.1,
+      "duree_s": 2.6,
       "traces": [],
       "pourquoi": "",
-      "date": "2026-10-12"
+      "date": "2026-10-19"
     },
     "l1-choose-distro": {
       "id": "l1-choose-distro",
@@ -179,10 +190,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "4/4",
-      "duree_s": 3.0,
+      "duree_s": 2.5,
       "traces": [],
       "pourquoi": "",
-      "date": "2026-10-12"
+      "date": "2026-10-19"
     },
     "l1-discover-linux-map": {
       "id": "l1-discover-linux-map",
@@ -191,10 +202,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "5/5",
-      "duree_s": 2.9,
+      "duree_s": 2.5,
       "traces": [],
       "pourquoi": "",
-      "date": "2026-10-12"
+      "date": "2026-10-19"
     },
     "l1-env-profiles": {
       "id": "l1-env-profiles",
@@ -203,10 +214,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "4/4",
-      "duree_s": 3.0,
+      "duree_s": 2.5,
       "traces": [],
       "pourquoi": "",
-      "date": "2026-10-12"
+      "date": "2026-10-19"
     },
     "l1-find-files": {
       "id": "l1-find-files",
@@ -215,10 +226,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "4/4",
-      "duree_s": 3.0,
+      "duree_s": 2.5,
       "traces": [],
       "pourquoi": "",
-      "date": "2026-10-12"
+      "date": "2026-10-19"
     },
     "l1-first-terminal": {
       "id": "l1-first-terminal",
@@ -226,11 +237,11 @@
       "verdict": "VALIDE",
       "score_avant": 0,
       "score_apres": 100,
-      "tests": "5/5",
-      "duree_s": 3.0,
+      "tests": "6/6",
+      "duree_s": 2.7,
       "traces": [],
       "pourquoi": "",
-      "date": "2026-10-12"
+      "date": "2026-10-19"
     },
     "l1-get-help": {
       "id": "l1-get-help",
@@ -239,10 +250,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "3/3",
-      "duree_s": 3.0,
+      "duree_s": 2.9,
       "traces": [],
       "pourquoi": "",
-      "date": "2026-10-12"
+      "date": "2026-10-19"
     },
     "l1-git-basics": {
       "id": "l1-git-basics",
@@ -251,10 +262,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "5/5",
-      "duree_s": 3.0,
+      "duree_s": 2.9,
       "traces": [],
       "pourquoi": "",
-      "date": "2026-10-12"
+      "date": "2026-10-19"
     },
     "l1-grep-regex": {
       "id": "l1-grep-regex",
@@ -266,7 +277,7 @@
       "duree_s": 2.9,
       "traces": [],
       "pourquoi": "",
-      "date": "2026-10-12"
+      "date": "2026-10-19"
     },
     "l1-links-hard-sym": {
       "id": "l1-links-hard-sym",
@@ -278,7 +289,7 @@
       "duree_s": 3.0,
       "traces": [],
       "pourquoi": "",
-      "date": "2026-10-12"
+      "date": "2026-10-19"
     },
     "l1-linux-filesystem": {
       "id": "l1-linux-filesystem",
@@ -290,7 +301,7 @@
       "duree_s": 3.0,
       "traces": [],
       "pourquoi": "",
-      "date": "2026-10-12"
+      "date": "2026-10-19"
     },
     "l1-navigate-filesystem": {
       "id": "l1-navigate-filesystem",
@@ -299,10 +310,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "10/10",
-      "duree_s": 3.0,
+      "duree_s": 3.2,
       "traces": [],
       "pourquoi": "",
-      "date": "2026-10-12"
+      "date": "2026-10-19"
     },
     "l1-paths-absolute-relative": {
       "id": "l1-paths-absolute-relative",
@@ -311,10 +322,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "8/8",
-      "duree_s": 3.0,
+      "duree_s": 3.4,
       "traces": [],
       "pourquoi": "",
-      "date": "2026-10-12"
+      "date": "2026-10-19"
     },
     "l1-permissions-ugo": {
       "id": "l1-permissions-ugo",
@@ -323,10 +334,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "4/4",
-      "duree_s": 3.0,
+      "duree_s": 3.5,
       "traces": [],
       "pourquoi": "",
-      "date": "2026-10-12"
+      "date": "2026-10-19"
     },
     "l1-prepare-vm": {
       "id": "l1-prepare-vm",
@@ -338,7 +349,7 @@
       "duree_s": 3.0,
       "traces": [],
       "pourquoi": "",
-      "date": "2026-10-12"
+      "date": "2026-10-19"
     },
     "l1-read-a-command": {
       "id": "l1-read-a-command",
@@ -347,10 +358,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "3/3",
-      "duree_s": 2.9,
+      "duree_s": 2.6,
       "traces": [],
       "pourquoi": "",
-      "date": "2026-10-12"
+      "date": "2026-10-19"
     },
     "l1-redirections-pipes": {
       "id": "l1-redirections-pipes",
@@ -359,10 +370,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "4/4",
-      "duree_s": 3.0,
+      "duree_s": 2.8,
       "traces": [],
       "pourquoi": "",
-      "date": "2026-10-12"
+      "date": "2026-10-19"
     },
     "l1-ssl-certificates": {
       "id": "l1-ssl-certificates",
@@ -371,10 +382,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "4/4",
-      "duree_s": 3.0,
+      "duree_s": 2.9,
       "traces": [],
       "pourquoi": "",
-      "date": "2026-10-12"
+      "date": "2026-10-19"
     },
     "l1-tar-archives": {
       "id": "l1-tar-archives",
@@ -383,10 +394,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "4/4",
-      "duree_s": 3.0,
+      "duree_s": 3.1,
       "traces": [],
       "pourquoi": "",
-      "date": "2026-10-12"
+      "date": "2026-10-19"
     },
     "l1-text-processing": {
       "id": "l1-text-processing",
@@ -395,10 +406,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "4/4",
-      "duree_s": 3.0,
+      "duree_s": 2.9,
       "traces": [],
       "pourquoi": "",
-      "date": "2026-10-12"
+      "date": "2026-10-19"
     },
     "l2-acl-posix": {
       "id": "l2-acl-posix",
@@ -407,9 +418,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "3/3",
-      "duree_s": 20.2,
+      "duree_s": 21.8,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "l2-autofs-ondemand": {
       "id": "l2-autofs-ondemand",
@@ -418,9 +430,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "4/4",
-      "duree_s": 24.6,
+      "duree_s": 24.8,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "l2-collaborative-setgid": {
       "id": "l2-collaborative-setgid",
@@ -429,9 +442,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "2/2",
-      "duree_s": 20.1,
+      "duree_s": 21.6,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "l2-disk-space-troubleshoot": {
       "id": "l2-disk-space-troubleshoot",
@@ -440,9 +454,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "3/3",
-      "duree_s": 20.0,
+      "duree_s": 19.3,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "l2-filesystem-create-xfs": {
       "id": "l2-filesystem-create-xfs",
@@ -451,9 +466,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "4/4",
-      "duree_s": 21.3,
+      "duree_s": 20.5,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "l2-fstab-persist-uuid": {
       "id": "l2-fstab-persist-uuid",
@@ -462,9 +478,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "6/6",
-      "duree_s": 23.2,
+      "duree_s": 21.8,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "l2-luks-encryption": {
       "id": "l2-luks-encryption",
@@ -473,9 +490,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "4/4",
-      "duree_s": 37.4,
+      "duree_s": 32.0,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "l2-lvm-extend-persist": {
       "id": "l2-lvm-extend-persist",
@@ -484,9 +502,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "4/4",
-      "duree_s": 19.3,
+      "duree_s": 18.3,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "l2-nfs-mount-persist": {
       "id": "l2-nfs-mount-persist",
@@ -495,9 +514,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "4/4",
-      "duree_s": 32.5,
+      "duree_s": 29.2,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "l2-package-management": {
       "id": "l2-package-management",
@@ -506,9 +526,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "3/3",
-      "duree_s": 26.1,
+      "duree_s": 24.8,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "l2-partition-gpt": {
       "id": "l2-partition-gpt",
@@ -517,9 +538,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "4/4",
-      "duree_s": 19.5,
+      "duree_s": 20.1,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "l2-password-policy": {
       "id": "l2-password-policy",
@@ -528,9 +550,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "5/5",
-      "duree_s": 21.5,
+      "duree_s": 19.6,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "l2-raid-mdadm": {
       "id": "l2-raid-mdadm",
@@ -539,9 +562,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "3/3",
-      "duree_s": 30.0,
+      "duree_s": 24.7,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "l2-repo-configure": {
       "id": "l2-repo-configure",
@@ -550,9 +574,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "5/5",
-      "duree_s": 18.1,
+      "duree_s": 16.9,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "l2-storage-performance": {
       "id": "l2-storage-performance",
@@ -561,9 +586,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "3/3",
-      "duree_s": 20.8,
+      "duree_s": 19.1,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "l2-sudo-delegation": {
       "id": "l2-sudo-delegation",
@@ -572,9 +598,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "4/4",
-      "duree_s": 19.5,
+      "duree_s": 18.2,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "l2-swap-management": {
       "id": "l2-swap-management",
@@ -583,9 +610,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "5/5",
-      "duree_s": 24.3,
+      "duree_s": 23.4,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "l2-user-lifecycle": {
       "id": "l2-user-lifecycle",
@@ -594,9 +622,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "4/4",
-      "duree_s": 20.3,
+      "duree_s": 19.9,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "l3-app-constraints": {
       "id": "l3-app-constraints",
@@ -605,9 +634,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "3/3",
-      "duree_s": 16.4,
+      "duree_s": 15.6,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "l3-boot-target": {
       "id": "l3-boot-target",
@@ -616,9 +646,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "1/1",
-      "duree_s": 14.0,
+      "duree_s": 13.3,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "l3-fs-readonly-recover": {
       "id": "l3-fs-readonly-recover",
@@ -627,9 +658,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "4/4",
-      "duree_s": 19.1,
+      "duree_s": 18.2,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "l3-grub-kernel-args": {
       "id": "l3-grub-kernel-args",
@@ -638,9 +670,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "2/2",
-      "duree_s": 17.2,
+      "duree_s": 16.6,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "l3-journald-persist": {
       "id": "l3-journald-persist",
@@ -649,9 +682,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "3/3",
-      "duree_s": 17.8,
+      "duree_s": 17.2,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "l3-process-signals-priority": {
       "id": "l3-process-signals-priority",
@@ -660,9 +694,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "3/3",
-      "duree_s": 19.2,
+      "duree_s": 19.4,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "l3-scheduling-at": {
       "id": "l3-scheduling-at",
@@ -671,9 +706,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "3/3",
-      "duree_s": 18.7,
+      "duree_s": 20.3,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "l3-scheduling-cron": {
       "id": "l3-scheduling-cron",
@@ -682,9 +718,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "2/2",
-      "duree_s": 17.2,
+      "duree_s": 17.1,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "l3-scheduling-timers": {
       "id": "l3-scheduling-timers",
@@ -693,9 +730,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "3/3",
-      "duree_s": 19.4,
+      "duree_s": 20.6,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "l3-service-create-unit": {
       "id": "l3-service-create-unit",
@@ -704,9 +742,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "3/3",
-      "duree_s": 19.5,
+      "duree_s": 18.7,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "l3-service-diagnose": {
       "id": "l3-service-diagnose",
@@ -717,7 +756,8 @@
       "tests": "6/6",
       "duree_s": 36.1,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "l3-ssh-access-recovery": {
       "id": "l3-ssh-access-recovery",
@@ -726,9 +766,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "5/5",
-      "duree_s": 18.4,
+      "duree_s": 18.3,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "l3-sysctl-persist": {
       "id": "l3-sysctl-persist",
@@ -737,9 +778,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "3/3",
-      "duree_s": 15.2,
+      "duree_s": 14.4,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "l3-tuned-profile": {
       "id": "l3-tuned-profile",
@@ -748,9 +790,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "3/3",
-      "duree_s": 22.4,
+      "duree_s": 21.8,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "l4-bridge-bonding": {
       "id": "l4-bridge-bonding",
@@ -759,9 +802,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "5/5",
-      "duree_s": 17.5,
+      "duree_s": 16.9,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "l4-firewall-persist": {
       "id": "l4-firewall-persist",
@@ -770,9 +814,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "3/3",
-      "duree_s": 19.0,
+      "duree_s": 17.8,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "l4-ldap-integration": {
       "id": "l4-ldap-integration",
@@ -781,9 +826,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "4/4",
-      "duree_s": 47.7,
+      "duree_s": 47.0,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "l4-nat-portforward": {
       "id": "l4-nat-portforward",
@@ -792,9 +838,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "5/5",
-      "duree_s": 23.5,
+      "duree_s": 22.4,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "l4-network-static-persist": {
       "id": "l4-network-static-persist",
@@ -803,9 +850,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "4/4",
-      "duree_s": 16.1,
+      "duree_s": 15.8,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "l4-network-troubleshoot": {
       "id": "l4-network-troubleshoot",
@@ -814,9 +862,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "3/3",
-      "duree_s": 14.4,
+      "duree_s": 13.9,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "l4-ntp-sync": {
       "id": "l4-ntp-sync",
@@ -825,9 +874,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "3/3",
-      "duree_s": 19.8,
+      "duree_s": 19.3,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "l4-podman-basic": {
       "id": "l4-podman-basic",
@@ -836,9 +886,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "2/2",
-      "duree_s": 49.6,
+      "duree_s": 48.3,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "l4-podman-images": {
       "id": "l4-podman-images",
@@ -847,9 +898,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "3/3",
-      "duree_s": 40.2,
+      "duree_s": 36.9,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "l4-podman-systemd-persist": {
       "id": "l4-podman-systemd-persist",
@@ -858,9 +910,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "3/3",
-      "duree_s": 51.5,
+      "duree_s": 49.0,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "l4-reverse-proxy-lb": {
       "id": "l4-reverse-proxy-lb",
@@ -869,9 +922,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "3/3",
-      "duree_s": 30.1,
+      "duree_s": 28.2,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "l4-selinux-boolean-port": {
       "id": "l4-selinux-boolean-port",
@@ -880,9 +934,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "3/3",
-      "duree_s": 21.1,
+      "duree_s": 20.1,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "l4-selinux-context-fix": {
       "id": "l4-selinux-context-fix",
@@ -891,9 +946,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "3/3",
-      "duree_s": 18.8,
+      "duree_s": 17.7,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "l4-selinux-diagnose-avc": {
       "id": "l4-selinux-diagnose-avc",
@@ -902,9 +958,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "3/3",
-      "duree_s": 20.0,
+      "duree_s": 18.5,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "l4-ssh-key-auth-harden": {
       "id": "l4-ssh-key-auth-harden",
@@ -913,9 +970,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "3/3",
-      "duree_s": 20.2,
+      "duree_s": 20.0,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "lfcs-apparmor": {
       "id": "lfcs-apparmor",
@@ -924,9 +982,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "2/2",
-      "duree_s": 22.4,
+      "duree_s": 21.1,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "lfcs-firewall-ufw": {
       "id": "lfcs-firewall-ufw",
@@ -935,9 +994,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "3/3",
-      "duree_s": 20.5,
+      "duree_s": 19.2,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "lfcs-mock-exam": {
       "id": "lfcs-mock-exam",
@@ -946,9 +1006,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "17/17",
-      "duree_s": 95.0,
+      "duree_s": 87.6,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "lfcs-mount-cifs": {
       "id": "lfcs-mount-cifs",
@@ -957,9 +1018,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "6/6",
-      "duree_s": 45.5,
+      "duree_s": 43.4,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "lfcs-netplan-static": {
       "id": "lfcs-netplan-static",
@@ -968,9 +1030,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "3/3",
-      "duree_s": 19.6,
+      "duree_s": 18.6,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "lfcs-package-apt": {
       "id": "lfcs-package-apt",
@@ -979,9 +1042,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "3/3",
-      "duree_s": 33.2,
+      "duree_s": 30.2,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "lfcs-storage-quotas": {
       "id": "lfcs-storage-quotas",
@@ -990,9 +1054,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "4/4",
-      "duree_s": 32.5,
+      "duree_s": 28.9,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     },
     "rhcsa-mock-exam": {
       "id": "rhcsa-mock-exam",
@@ -1001,9 +1066,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "20/20",
-      "duree_s": 131.4,
+      "duree_s": 125.5,
       "traces": [],
-      "pourquoi": ""
+      "pourquoi": "",
+      "date": "2026-10-19"
     }
   }
 }

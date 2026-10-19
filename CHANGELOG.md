@@ -6,6 +6,47 @@ All notable changes to this project are documented in this file. The format is
 based on [Keep a Changelog](https://keepachangelog.com/), and the project follows
 [Semantic Versioning](https://semver.org/).
 
+## [0.2.2] - 2026-10-19
+
+### Fixed
+
+- **`l1-first-terminal` awarded one point out of six before any work.** Its
+  `test_le_fichier_a_ete_edite_et_non_recree` only checked the second half of
+  what its name claims: it verified that the provided header survived, which
+  is true of the starting file, without ever checking that the file had been
+  edited. A learner who had done nothing therefore started at 17 points, and
+  the catalogue's validator rightly refuses that: "a test that is green on the
+  starting state is not a test, it is an assumption of the setup".
+
+  The test now requires both: the placeholder gone and the header intact. It
+  is therefore false at the start, true at the end, and still false if the
+  file was recreated through a redirection, which was the original intent.
+
+- **The `l3-service-diagnose` solution failed one run in three, and not for a
+  configuration reason.** It fixed the file, then restarted the service. But
+  the unit had exhausted its `StartLimitBurst` while crash-looping before the
+  solution arrived, and systemd then refuses to restart it for the whole
+  `StartLimitIntervalSec`. The message spoke of a "control process exited",
+  which sends people hunting in the configuration they had just repaired.
+
+  A `systemctl reset-failed` now precedes the restart. That is also the gesture
+  this lab teaches: a learner who fixes the configuration without resetting
+  the counter hits the same wall. Measured before and after: 1 VALID out of 3
+  runs, then 4 out of 4.
+
+### Attestation
+
+- **All 89 labs are re-attested with dsoxlab 0.5.4**, full cycle on provisioned
+  VMs with a frozen base, 0 before the work and 100 after.
+
+  The earlier campaign that evening wrote a `dsoxlab 0.1.85` header into the
+  record, and it was telling the truth: this repository's `.venv` held an
+  `editable` install of dsoxlab frozen at that version, and `uv run` prefers it
+  over the one on `PATH`. The labs were therefore being exercised by an engine
+  three hundred versions old with nothing to signal it, apart from that very
+  field nobody read. The venv is cleaned; `pyproject.toml` did not declare
+  dsoxlab, so this was a local leftover and not a repository defect.
+
 ## [0.2.1] - 2026-10-19
 
 ### Changed
