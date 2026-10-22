@@ -235,3 +235,31 @@ repos:
         language: system
         pass_filenames: false
         files: '^(pyproject\.toml|uv\.lock)$'
+
+      # Un verdict ne se commite pas avec ce qu'il mesure. Vecu le 2026-10-22
+      # dans deux catalogues, et dans les DEUX SENS : une correction du code
+      # partage commitee avec les verdicts qu'elle perimait est passee pour
+      # saine, et des labs reattestes sur une branche sont ressortis « a
+      # reattester » apres leur fusion en squash, contenu inchange.
+      #
+      # Le cas qui ne se rattrape JAMAIS : une PR squashee qui retouche un test
+      # APRES sa campagne. Le commit unique porte les deux et le squash a
+      # detruit ce qui les distinguait. Aucune mesure a posteriori ne peut le
+      # voir, ni une date, ni un diff entre deux arbres. Il ne reste qu'a
+      # l'empecher.
+      - id: verdicts-et-commun-separes
+        name: les verdicts ne sont pas commites avec ce qu'ils mesurent
+        entry: python3 tests/outils/verdicts_et_commun_separes.py
+        language: system
+        pass_filenames: false
+
+      # Le garde-fou ci-dessus est lui-meme eprouve, dans les DEUX sens :
+      # quatorze cas, ceux qu'il doit refuser et ceux qu'il doit laisser
+      # passer. Un garde-fou qui refuserait aussi les commits legitimes se
+      # contourne au bout de deux jours, et ne controle alors plus rien.
+      - id: garde-fou-des-verdicts-eprouve
+        name: le garde-fou des verdicts juge dans les deux sens
+        entry: uv run --no-project --with pytest --with pyyaml pytest tests/test_verdicts_et_commun_separes.py -q
+        language: system
+        pass_filenames: false
+        always_run: true
