@@ -240,8 +240,8 @@ to refresh it.
 | `l1-navigate-filesystem` | Navigate the filesystem | l1 | RHCSA · LFCS | shell | [guide](https://www.stephane-robert.info/en/docs/linux/fundamentals/navigate-filesystem/manage-files/) |
 | `l1-paths-absolute-relative` | Absolute and relative paths | l1 | RHCSA · LFCS | shell | [guide](https://www.stephane-robert.info/en/docs/linux/fundamentals/navigate-filesystem/absolute-relative-paths/) |
 | `l1-redirections-pipes` | Redirect streams and chain commands with pipes | l1 | RHCSA | shell | [guide](https://www.stephane-robert.info/en/docs/linux/fundamentals/files-and-text/redirections-pipes/) |
-| `l1-grep-regex` | Filter a log with grep and regular expressions | l1 | RHCSA · LFCS | shell | [guide](https://www.stephane-robert.info/en/docs/linux/fundamentals/files-and-text/filter-text/) |
-| `l1-text-processing` | Transform and aggregate text with cut, sort, uniq, sed and awk | l1 | RHCSA · LFCS | shell | [guide](https://www.stephane-robert.info/en/docs/linux/operate/cut-tr-paste/) |
+| `l1-grep-regex` | Filter a log with grep and regular expressions | l1 | RHCSA · LFCS | shell | [guide (FR)](https://www.stephane-robert.info/docs/admin-serveurs/linux/exploiter/regex-base/) |
+| `l1-text-processing` | Transform and aggregate text with cut, sort, uniq, sed and awk | l1 | RHCSA · LFCS | shell | [guide](https://www.stephane-robert.info/en/docs/linux/fundamentals/files-and-text/filter-text/) |
 | `l1-find-files` | Locate files with find by name, size and permissions | l1 | RHCSA · LFCS | shell | [guide](https://www.stephane-robert.info/en/docs/linux/fundamentals/files-and-text/find-files/) |
 | `l1-tar-archives` | Archive, compress and selectively extract with tar, gzip and bzip2 | l1 | RHCSA | shell | [guide](https://www.stephane-robert.info/en/docs/linux/fundamentals/files-and-text/archive-compress/) |
 | `l1-permissions-ugo` | Set exact file permissions with chmod (octal and symbolic) | l1 | RHCSA · LFCS | shell | [guide](https://www.stephane-robert.info/en/docs/linux/fundamentals/users-permissions-processes/change-permissions/) |
