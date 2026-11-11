@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**Transforming text on the companion guide**](https://www.stephane-robert.info/docs/admin-serveurs/linux/exploiter/transformer-texte/)
+[**Filtering and transforming text on the companion guide**](https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/manipuler-fichiers-texte/filtrer-texte/)
 
 `cut -d<sep> -f<N>` extracts column N from a file with delimited fields. `sort`
 orders the lines (`-n` for a numeric sort, `-u` to deduplicate along the way),

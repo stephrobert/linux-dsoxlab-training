@@ -2,7 +2,7 @@
 
 ## Rappel
 
-[**Transformer du texte sur le guide compagnon**](https://www.stephane-robert.info/docs/admin-serveurs/linux/exploiter/transformer-texte/)
+[**Filtrer et transformer du texte sur le guide compagnon**](https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/manipuler-fichiers-texte/filtrer-texte/)
 
 `cut -d<sep> -f<N>` extrait la colonne N d'un fichier à champs délimités. `sort`
 ordonne les lignes (`-n` pour un tri numérique, `-u` pour dédoublonner au
