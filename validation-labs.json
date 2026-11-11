@@ -1,7 +1,7 @@
 {
-  "genere_le": "2026-10-19 21:16:20",
+  "genere_le": "2026-11-11 13:07:14",
   "act": "act version 0.2.84",
-  "dsoxlab": "dsoxlab 0.5.4",
+  "dsoxlab": "dsoxlab 0.8.2",
   "labs": {
     "capstone-mise-en-production": {
       "id": "capstone-mise-en-production",
@@ -277,7 +277,7 @@
       "duree_s": 2.9,
       "traces": [],
       "pourquoi": "",
-      "date": "2026-10-19"
+      "date": "2026-11-11"
     },
     "l1-links-hard-sym": {
       "id": "l1-links-hard-sym",
@@ -406,10 +406,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "4/4",
-      "duree_s": 2.9,
+      "duree_s": 3.0,
       "traces": [],
       "pourquoi": "",
-      "date": "2026-10-19"
+      "date": "2026-11-11"
     },
     "l2-acl-posix": {
       "id": "l2-acl-posix",
