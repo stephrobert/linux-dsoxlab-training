@@ -245,7 +245,7 @@ to refresh it.
 | `l1-find-files` | Locate files with find by name, size and permissions | l1 | RHCSA · LFCS | shell | [guide](https://www.stephane-robert.info/en/docs/linux/fundamentals/files-and-text/find-files/) |
 | `l1-tar-archives` | Archive, compress and selectively extract with tar, gzip and bzip2 | l1 | RHCSA | shell | [guide](https://www.stephane-robert.info/en/docs/linux/fundamentals/files-and-text/archive-compress/) |
 | `l1-permissions-ugo` | Set exact file permissions with chmod (octal and symbolic) | l1 | RHCSA · LFCS | shell | [guide](https://www.stephane-robert.info/en/docs/linux/fundamentals/users-permissions-processes/change-permissions/) |
-| `l1-links-hard-sym` | Create hard and symbolic links and tell them apart | l1 | RHCSA | shell | [guide](https://www.stephane-robert.info/en/docs/linux/fundamentals/navigate-filesystem/manage-files/) |
+| `l1-links-hard-sym` | Create hard and symbolic links and tell them apart | l1 | RHCSA | shell | [guide (FR)](https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/se-reperer-fichiers/liens-fichiers/) |
 | `l1-bash-script` | Write a first Bash script: variables, a loop and a condition | l1 | RHCSA · LFCS | shell | [guide](https://www.stephane-robert.info/en/docs/linux/fundamentals/shell-efficiency/first-script/) |
 | `l1-git-basics` | Initialize a Git repo: commit, history and a branch | l1 | LFCS | shell | [guide (FR)](https://www.stephane-robert.info/docs/developper/version/git/bases-git/) |
 | `l1-env-profiles` | Environment variables: export, PATH and a sourced env file | l1 | LFCS | shell | [guide](https://www.stephane-robert.info/en/docs/linux/fundamentals/shell-efficiency/environment-variables/) |
