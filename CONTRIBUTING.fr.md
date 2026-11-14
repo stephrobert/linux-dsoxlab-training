@@ -30,7 +30,7 @@ précisément ce qui fait échouer les candidats RHCSA.
 ```text
 labs/linux/<section>/<lab>/
 ├── lab.yaml            # le contrat (id, level, runtime, validation…)
-├── lab.fr.yaml         # optionnel : surcharge FR du title/description UNIQUEMENT
+├── lab.fr.yaml         # optionnel : surcharge FR du title, de la description et des libellés de critères UNIQUEMENT
 ├── README.md / scenario.md
 ├── setup.yaml / cleanup.yaml       # labs VM
 ├── fixtures/           # matériel de départ (labs shell), copié par
