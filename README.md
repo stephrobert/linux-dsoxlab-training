@@ -91,7 +91,7 @@ storage. They need an active provider and provisioned infrastructure.
 ```bash
 dsoxlab use --provider kvm     # persisted for this repo
 dsoxlab provision              # creates the machines (a few minutes)
-dsoxlab status                 # check they answer
+dsoxlab infra status           # check they answer over SSH
 ```
 
 If a machine becomes unreachable, see
@@ -117,54 +117,27 @@ gitignored — so `git pull` brings new labs without ever touching your work.
 
 ## How it works
 
-### The declarative contract (two levels)
+### The engine, documented where it lives
 
-The catalog is described by data, not code — the `dsoxlab` engine stays
-domain-agnostic and reads two levels of files:
+This catalog is played by `dsoxlab`, which documents its own contract and
+commands. This README does not repeat them, so that it cannot drift when the
+engine changes (dsoxlab issue #201):
 
-- **`meta.yml`** at the repo root declares the repository identity, the
-  infrastructure topology (network, hosts, providers), and the **order** of
-  sections shown by `list-labs`.
-- **`lab.yaml`** per lab (under `labs/linux/<section>/<lab>/`) declares its
-  `skills`, `level`, `runtime` (shell/incus/kvm + target host), `distros`,
-  `doc_url`, and a `validation` block (`functional`, `security`,
-  `persistence_after_reboot`). An optional `lab.fr.yaml` overrides `title` and
-  `description` in French.
-
-`dsoxlab validate-structure` checks the whole contract: `meta.yml` is well
-formed, every referenced lab exists with a valid `lab.yaml`, every
-`runtime.host` points to a declared host, and every referenced test/script file
-is present.
-
-### The lab lifecycle
-
-A learner drives everything through the CLI; a typical run:
-
-```bash
-dsoxlab use --provider kvm            # pick an infra provider (VM labs)
-dsoxlab doctor                        # check the environment (Python, pytest, runtimes, labs)
-dsoxlab list-labs                     # browse the catalog
-dsoxlab show <id>                     # metadata + status of one lab
-dsoxlab run <id>                      # prepare & start the lab environment
-dsoxlab course <id>                   # read the guided course (optional)
-dsoxlab challenge <id>                # read the mission (no step-by-step)
-dsoxlab hint <id>                     # reveal a hint (deducted from the score)
-dsoxlab check <id>                    # run the tests, compute & record the score
-dsoxlab submit <id>                   # final submission, closes the session
-dsoxlab progress                      # per-block progress, average score
-```
-
-`run` is where the environment comes up. For a **shell** lab it creates the
-lab's `workdir` and copies the declared fixtures. For a **VM** lab it selects the
-target host (Terraform-provisioned) and applies the lab's setup with Ansible.
+- the contract: `meta.yml`, `lab.yaml`, `lab.<lang>.yaml`, the runtimes and
+  their fields: [contract](https://github.com/stephrobert/dsoxlab/blob/main/docs/contract-v1.md);
+- the commands and the life of a lab, from `run` to `check`:
+  [commands](https://github.com/stephrobert/dsoxlab/blob/main/docs/commands.md) and [playing a lab](https://github.com/stephrobert/dsoxlab/blob/main/docs/learner.md);
+- writing a lab, and what `validate-structure` checks:
+  [catalog author guide](https://github.com/stephrobert/dsoxlab/blob/main/docs/catalog-author.md).
 
 ### Runtimes
 
-| Runtime | Backend | What it gives you |
+This catalog uses the engine's two runtimes, `shell` and `vm`.
+
+| Runtime | Sections | What the lab asks for |
 |---|---|---|
-| `shell` | local shell | Fast, single-host exercises (files, text, permissions). No VM cost — tests run on your own machine and validate its real state. |
-| `incus` | Incus containers | Isolated Linux environments, quick to start. |
-| `kvm` | Terraform + libvirt | Full VMs, the only runtime that can prove **reboot/persistence** (systemd, firewall, SELinux, storage). |
+| `shell` | `l1` | A terminal on your own machine. Fast, single-host exercises (files, text, permissions); the tests validate the real state of your machine. |
+| `vm` | `l2` and beyond | Full virtual machines, the only way to prove **reboot/persistence** (systemd, firewall, SELinux, storage). The backend is the active provider, chosen among those `meta.yml` declares (`kvm`, `incus`, `outscale`). |
 
 VM labs are provisioned once with `dsoxlab provision` (Terraform) and torn down
 with `dsoxlab destroy`. Providers (KVM/Incus/Outscale) are interchangeable and

@@ -6,6 +6,19 @@ All notable changes to this project are documented in this file. The format is
 based on [Keep a Changelog](https://keepachangelog.com/), and the project follows
 [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Changed
+
+- The README no longer copies the dsoxlab engine documentation (contract,
+  lab life cycle): it links to the pages where the engine documents itself
+  (dsoxlab#201). Four statements that had become false are fixed: the
+  machines are checked with `dsoxlab infra status`, not `dsoxlab status`;
+  the field is `runtime.targets[].host`, not `runtime.host`; the runtimes
+  are `shell` and `vm` (`kvm`, `incus` and `outscale` are providers); the
+  starting material of a shell lab lives in `fixtures/`, and `run` copies
+  it into `challenge/work/`.
+
 ## [0.2.3] - 2026-10-23
 
 ### Added

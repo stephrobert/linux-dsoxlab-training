@@ -33,11 +33,12 @@ labs/linux/<section>/<lab>/
 ├── lab.fr.yaml         # optionnel : surcharge FR du title/description UNIQUEMENT
 ├── README.md / scenario.md
 ├── setup.yaml / cleanup.yaml       # labs VM
+├── fixtures/           # matériel de départ (labs shell), copié par
+│                       # `dsoxlab run` dans challenge/work/ (non versionné)
 └── challenge/
     ├── README.md       # la mission, sans pas-à-pas
     ├── hints.yaml      # indices à coût variable
-    ├── tests/test_functional.py    # la preuve : l'état du système
-    └── work/           # matériel de départ (labs shell)
+    └── tests/test_functional.py    # la preuve : l'état du système
 solution/…              # solution de référence, rejouée en CI pour se prouver
 ```
 
@@ -46,9 +47,11 @@ solution/…              # solution de référence, rejouée en CI pour se prou
 - **Partir d'une capacité, pas d'un guide.** Décris une capacité démontrable
   (« étendre un volume logique et prouver que le montage survit au reboot »),
   ouvre une issue, et cale le périmètre avant d'écrire.
-- **Choisir le runtime qu'impose le sujet :** VM (`kvm`/`incus`) pour tout ce qui
+- **Choisir le runtime qu'impose le sujet :** `vm` pour tout ce qui
   touche systemd, le pare-feu, SELinux, le démarrage ou le stockage persistant ;
-  `shell` pour les fichiers, le texte et les permissions.
+  `shell` pour les fichiers, le texte et les permissions. Le backend des VM
+  (`kvm`, `incus`, `outscale`) est le provider actif, pas un runtime : voir le
+  [contrat](https://github.com/stephrobert/dsoxlab/blob/main/docs/contract-v1.fr.md).
 - Fais pointer `doc_url` vers le vrai guide que le lab fait pratiquer.
 
 ## Vérifications locales (avant d'ouvrir une PR)
