@@ -11,4 +11,4 @@ open or wrongly owned, and says nothing on the client side — the trap that was
 hours.
 
 Method in the companion guide:
-https://www.stephane-robert.info/docs/admin-serveurs/linux/exploiter/ssh/cle-ssh/
+https://www.stephane-robert.info/en/docs/linux/operate/ssh/ssh-keys/

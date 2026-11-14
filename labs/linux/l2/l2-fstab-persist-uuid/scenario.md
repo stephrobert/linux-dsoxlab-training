@@ -16,4 +16,4 @@ discovered at the worst possible moment, and the one tool everybody quotes does
 not see everything.
 
 Method in the companion guide:
-https://www.stephane-robert.info/docs/admin-serveurs/linux/stockage/montage-persistance/
+https://www.stephane-robert.info/en/docs/linux/storage/mount-persistence/

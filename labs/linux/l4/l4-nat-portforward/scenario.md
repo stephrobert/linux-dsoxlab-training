@@ -12,4 +12,4 @@ packet's journey. And an nftables rule added live dies at reboot: persistence is
 configured elsewhere.
 
 Method in the companion guide:
-https://www.stephane-robert.info/docs/securiser/reseaux/nat-port-forwarding/
+https://www.stephane-robert.info/en/docs/linux/secure/nat-port-forwarding/

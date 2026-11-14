@@ -10,4 +10,4 @@ tests re-run openssl on the certificate and compare, so a hand-typed or empty
 file fails.
 
 Method in the companion guide:
-https://www.stephane-robert.info/docs/reseaux/fondamentaux/tls-diagnostic/
+https://www.stephane-robert.info/en/docs/networks/fundamentals/tls-diagnostics/

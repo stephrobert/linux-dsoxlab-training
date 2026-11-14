@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**Filtering and transforming text on the companion guide**](https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/manipuler-fichiers-texte/filtrer-texte/)
+[**Filtering and transforming text on the companion guide**](https://www.stephane-robert.info/en/docs/linux/fundamentals/files-and-text/filter-text/)
 
 `cut -d<sep> -f<N>` extracts column N from a file with delimited fields. `sort`
 orders the lines (`-n` for a numeric sort, `-u` to deduplicate along the way),
@@ -12,8 +12,8 @@ measures, `sed 's/pattern/replacement/g'` rewrites a stream, and `awk -F<sep>`
 reasons field by field and knows how to compute. They all compose through pipes,
 and none of them modifies the source file.
 
-Additional guides: [sorting and counting](https://www.stephane-robert.info/docs/admin-serveurs/linux/exploiter/trier-compter/),
-[sed](https://www.stephane-robert.info/docs/admin-serveurs/linux/exploiter/sed/) and [awk](https://www.stephane-robert.info/docs/admin-serveurs/linux/exploiter/awk/).
+Additional guides: [sorting and counting](https://www.stephane-robert.info/en/docs/linux/operate/sort-uniq-wc/),
+[sed](https://www.stephane-robert.info/en/docs/linux/operate/sed/) and [awk](https://www.stephane-robert.info/en/docs/linux/operate/awk/).
 
 ## The course
 

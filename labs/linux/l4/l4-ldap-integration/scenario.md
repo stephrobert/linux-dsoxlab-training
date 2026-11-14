@@ -11,4 +11,4 @@ from the directory. Beware, it is picky about the permissions of its own
 configuration and refuses to start if they are too open.
 
 Method in the companion guide:
-https://www.stephane-robert.info/docs/admin-serveurs/linux/securiser/authentifier-ldap-sssd/
+https://www.stephane-robert.info/en/docs/linux/secure/ldap-sssd/

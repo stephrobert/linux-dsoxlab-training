@@ -10,4 +10,4 @@ updates. What remains is working out how to make it effective right away **and**
 persistent across a reboot: those are two distinct moves.
 
 Method in the companion guide:
-https://www.stephane-robert.info/docs/admin-serveurs/linux/stockage/performances-disques/
+https://www.stephane-robert.info/en/docs/linux/storage/disk-performance/

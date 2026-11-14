@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**apt on the companion guide**](https://www.stephane-robert.info/docs/admin-serveurs/linux/maintenir/paquets/apt/)
+[**apt on the companion guide**](https://www.stephane-robert.info/en/docs/linux/maintain/packages/apt/)
 
 `apt-get install|remove` manages packages and their dependencies; `apt-mark hold`
 freezes a version so that `apt upgrade` skips it (`apt-mark showhold` lists the

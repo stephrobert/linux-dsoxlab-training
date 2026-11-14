@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**Disk encryption with LUKS**](https://www.stephane-robert.info/docs/admin-serveurs/linux/stockage/chiffrement-luks/)
+[**Disk encryption with LUKS**](https://www.stephane-robert.info/en/docs/linux/storage/luks-encryption/)
 
 LUKS encrypts a block device: without the key, the data is unreadable. The
 order is always format -> open -> mkfs on the mapping -> mount. Persistence is

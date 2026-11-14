@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**Lost SSH access on the companion guide**](https://www.stephane-robert.info/docs/admin-serveurs/linux/depanner/perte-acces-ssh/)
+[**Lost SSH access on the companion guide**](https://www.stephane-robert.info/en/docs/linux/troubleshoot/lost-ssh-access/)
 
 sshd reads `/etc/ssh/sshd_config` and the drop-ins under
 `/etc/ssh/sshd_config.d/`. `sshd -t` validates the config offline — a broken

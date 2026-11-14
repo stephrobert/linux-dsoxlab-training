@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**systemd journals on the companion guide**](https://www.stephane-robert.info/docs/admin-serveurs/linux/exploiter/systemd/journaux/)
+[**systemd journals on the companion guide**](https://www.stephane-robert.info/en/docs/linux/operate/systemd/journald/)
 
 `systemd-journald` writes either in `/run/log/journal` (in memory, lost at
 reboot) or under `/var/log/journal` (on disk). Which regime applies depends on

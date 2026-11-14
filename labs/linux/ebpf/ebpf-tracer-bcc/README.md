@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**bpftrace on the companion guide**](https://www.stephane-robert.info/docs/admin-serveurs/linux/ebpf/tracer/bpftrace/)
+[**bpftrace on the companion guide**](https://www.stephane-robert.info/en/docs/linux/going-deeper/ebpf/trace/bpftrace/)
 
 eBPF lets you load small programs into the kernel to **observe** what it does:
 every file opened, every program launched, every connection. Nothing is changed

@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**Linux fundamentals**](https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/notions/)
+[**Linux fundamentals**](https://www.stephane-robert.info/en/docs/linux/fundamentals/discover-linux/linux-basics/)
 
 Strictly speaking, Linux is a **kernel**: the central program written by Linus
 Torvalds in 1991, distributed under the GPL licence, which manages the hardware,
