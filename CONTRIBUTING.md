@@ -30,14 +30,15 @@ candidates.
 ```text
 labs/linux/<section>/<lab>/
 ├── lab.yaml            # the contract (id, level, runtime, validation…)
-├── lab.fr.yaml         # optional: French override of title/description ONLY
+├── lab.fr.yaml         # optional: French override of title, description and criteria labels ONLY
 ├── README.md / scenario.md
 ├── setup.yaml / cleanup.yaml       # VM labs
+├── fixtures/           # starting material (shell labs), copied by
+│                       # `dsoxlab run` into challenge/work/ (not versioned)
 └── challenge/
     ├── README.md       # the mission, no step-by-step
     ├── hints.yaml      # cost-weighted hints
-    ├── tests/test_functional.py    # the proof: system state
-    └── work/           # starting material (shell labs)
+    └── tests/test_functional.py    # the proof: system state
 solution/…              # reference solution, replayed in CI to prove itself
 ```
 
@@ -46,9 +47,11 @@ solution/…              # reference solution, replayed in CI to prove itself
 - **Start from a capability, not a guide.** Describe a demonstrable capability
   ("extend a logical volume and prove the mount survives a reboot"), open an
   issue, and agree on scope before writing.
-- **Pick the runtime the subject demands:** VM (`kvm`/`incus`) for anything
+- **Pick the runtime the subject demands:** `vm` for anything
   touching systemd, the firewall, SELinux, boot, or persistent storage; `shell`
-  for files, text, and permissions.
+  for files, text, and permissions. The VM backend (`kvm`, `incus`,
+  `outscale`) is the active provider, not a runtime: see the
+  [contract](https://github.com/stephrobert/dsoxlab/blob/main/docs/contract-v1.md).
 - Point `doc_url` at the real guide the lab makes the learner practice.
 
 ## Local checks (before opening a PR)
