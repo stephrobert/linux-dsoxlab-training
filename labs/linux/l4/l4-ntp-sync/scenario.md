@@ -10,4 +10,4 @@ now: does this host keep its clock from the network? That lasting state is what
 gets checked, not the commands you typed.
 
 Method in the companion guide:
-https://www.stephane-robert.info/docs/services/reseau/chrony/
+https://www.stephane-robert.info/en/docs/linux/networking/chrony/

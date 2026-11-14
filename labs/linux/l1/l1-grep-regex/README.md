@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**Basic regular expressions on the companion guide**](https://www.stephane-robert.info/docs/admin-serveurs/linux/exploiter/regex-base/)
+[**Basic regular expressions on the companion guide**](https://www.stephane-robert.info/en/docs/linux/operate/regex-basics/)
 
 `grep PATTERN file` keeps the lines that match. Regular expressions make the
 pattern precise: `^` and `$` anchor to the start/end of a line, `[0-9]` is a

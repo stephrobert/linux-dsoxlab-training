@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**Container images on the companion guide**](https://www.stephane-robert.info/docs/conteneurs/images-conteneurs/)
+[**Container images on the companion guide**](https://www.stephane-robert.info/docs/conteneurs/images-conteneurs/) (in French)
 
 `podman pull <ref>` fetches an image from a registry; `podman tag <src>
 <name>` gives it a local name; `podman save -o <file> <name>` writes a portable

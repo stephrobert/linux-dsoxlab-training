@@ -11,4 +11,4 @@ from its definition on every restart: an on-the-fly correction does not survive
 it.
 
 Method in the companion guide:
-https://www.stephane-robert.info/docs/admin-serveurs/linux/exploiter/processus/
+https://www.stephane-robert.info/en/docs/linux/operate/processes/

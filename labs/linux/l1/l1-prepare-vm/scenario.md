@@ -10,4 +10,4 @@ checked against the real state of the system: a plausible but invented value
 fails.
 
 Method in the companion guide:
-https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/installer-vm/
+https://www.stephane-robert.info/en/docs/linux/fundamentals/discover-linux/install-vm/

@@ -9,4 +9,4 @@ run it at the stated time and forget it. Unlike cron it does not repeat, and
 nothing runs at all if that daemon is not running.
 
 Method in the companion guide:
-https://www.stephane-robert.info/docs/admin-serveurs/linux/exploiter/planification/at/
+https://www.stephane-robert.info/en/docs/linux/operate/scheduling/at/

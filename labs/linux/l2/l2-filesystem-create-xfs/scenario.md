@@ -10,4 +10,4 @@ to that filesystem by a stable name instead of a fragile device name that can
 change from one boot to the next.
 
 Method in the companion guide:
-https://www.stephane-robert.info/docs/admin-serveurs/linux/stockage/xfs/
+https://www.stephane-robert.info/en/docs/linux/storage/xfs/

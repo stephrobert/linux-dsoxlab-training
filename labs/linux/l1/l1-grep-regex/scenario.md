@@ -10,4 +10,4 @@ question it. Selecting lines, excluding them, extracting only part of a line, or
 returning nothing but a number are four distinct uses of a single tool.
 
 Method in the companion guide:
-https://www.stephane-robert.info/docs/admin-serveurs/linux/exploiter/regex-base/
+https://www.stephane-robert.info/en/docs/linux/operate/regex-basics/

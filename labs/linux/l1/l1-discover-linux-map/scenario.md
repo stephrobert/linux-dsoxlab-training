@@ -10,4 +10,4 @@ This lab does not ask you to recite definitions, it asks you to record four
 the system: a value copied from a tutorial fails.
 
 Method in the companion guide:
-https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/notions/
+https://www.stephane-robert.info/en/docs/linux/fundamentals/discover-linux/linux-basics/

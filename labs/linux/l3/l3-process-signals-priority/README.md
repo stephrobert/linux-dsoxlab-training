@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**Processes on the companion guide**](https://www.stephane-robert.info/docs/admin-serveurs/linux/exploiter/processus/)
+[**Processes on the companion guide**](https://www.stephane-robert.info/en/docs/linux/operate/processes/)
 
 Nice values run from `-20` (highest priority) to `19` (lowest). `nice -n N cmd`
 starts a process at a priority, `renice N -p PID` changes the one of a running

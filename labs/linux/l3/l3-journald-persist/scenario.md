@@ -10,4 +10,4 @@ setting: the configuration has to allow it, and the destination has to be ready
 to hold the journal.
 
 Method in the companion guide:
-https://www.stephane-robert.info/docs/admin-serveurs/linux/exploiter/systemd/journaux/
+https://www.stephane-robert.info/en/docs/linux/operate/systemd/journald/

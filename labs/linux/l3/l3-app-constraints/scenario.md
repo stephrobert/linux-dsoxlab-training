@@ -10,4 +10,4 @@ coexist: the soft limit, which is the default in force, and the hard limit, whic
 is the ceiling a user can raise up to.
 
 Method in the companion guide:
-https://www.stephane-robert.info/docs/admin-serveurs/linux/exploiter/processus/limites-ressources/
+https://www.stephane-robert.info/en/docs/linux/operate/processes/resource-limits/

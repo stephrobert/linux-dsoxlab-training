@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**Read-only filesystem recovery on the companion guide**](https://www.stephane-robert.info/docs/admin-serveurs/linux/depanner/systeme-fichiers-lecture-seule/)
+[**Read-only filesystem recovery on the companion guide**](https://www.stephane-robert.info/en/docs/linux/troubleshoot/read-only-filesystem/)
 
 `findmnt <mnt>` shows the live options of a mount (`ro` vs `rw`).
 `mount -o remount,rw <mnt>` switches it without unmounting. A bad option in

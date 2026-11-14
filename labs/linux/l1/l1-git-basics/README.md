@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**Git basics on the companion guide**](https://www.stephane-robert.info/docs/developper/version/git/bases-git/)
+[**Git basics on the companion guide**](https://www.stephane-robert.info/docs/developper/version/git/bases-git/) (in French)
 
 `git init` creates a repository, `git add <file>` stages changes, `git commit -m`
 records a snapshot, `git log` shows history, and `git switch -c <name>` (or

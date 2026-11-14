@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**Linux filesystem hierarchy: what each directory is for**](https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/se-reperer-fichiers/arborescence-fhs/)
+[**Linux filesystem hierarchy: what each directory is for**](https://www.stephane-robert.info/en/docs/linux/fundamentals/navigate-filesystem/filesystem-hierarchy/)
 
 The **Filesystem Hierarchy Standard** (FHS) is the convention that says where
 Linux files each type of file. The guide compares it to the plan of a building:

@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**Anatomy of a Linux command**](https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/anatomie-commande/)
+[**Anatomy of a Linux command**](https://www.stephane-robert.info/en/docs/linux/fundamentals/discover-linux/command-anatomy/)
 
 Every Linux command follows the same pattern: `command [options] [arguments]`.
 The **command** is the program to run, the **options** modify its behaviour, the

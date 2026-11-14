@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**Hard and symbolic links on the companion guide**](https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/se-reperer-fichiers/liens-fichiers/)
+[**Hard and symbolic links on the companion guide**](https://www.stephane-robert.info/en/docs/linux/fundamentals/navigate-filesystem/hard-symbolic-links/)
 
 A **hard link** (`ln target name`) is another name for the same inode: same data,
 link count goes up, and it survives deleting the original. A **symbolic link**

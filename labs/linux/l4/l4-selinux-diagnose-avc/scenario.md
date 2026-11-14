@@ -11,4 +11,4 @@ log keeps the exact trace of the denial, and tools exist to turn it into a
 readable cause. Disabling SELinux is never the fix.
 
 Method in the companion guide:
-https://www.stephane-robert.info/docs/securiser/durcissement/selinux/
+https://www.stephane-robert.info/en/docs/linux/secure/selinux/

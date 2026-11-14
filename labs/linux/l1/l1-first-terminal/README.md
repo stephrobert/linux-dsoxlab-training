@@ -2,7 +2,7 @@
 
 ## Reminder
 
-[**Opening a terminal and understanding the prompt**](https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/prompt-terminal/)
+[**Opening a terminal and understanding the prompt**](https://www.stephane-robert.info/en/docs/linux/fundamentals/discover-linux/terminal-prompt/)
 
 Before you have typed a single letter, the terminal already shows a line: the
 **prompt**. The guide explains how to read it: it says who you are, on which
