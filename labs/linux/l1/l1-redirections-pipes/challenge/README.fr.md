@@ -1,11 +1,28 @@
-# Challenge — l1-redirections-pipes
+# Trier un journal avec le shell seul
 
-## Mission
+## La situation
+
+Tu as `journal.log`, un petit journal applicatif. Sans aucun éditeur, avec
+uniquement des redirections et des pipes, tu dois extraire quelques faits dans
+des fichiers séparés : combien de lignes, lesquelles sont des erreurs, ce
+qu'affiche une commande qui échoue sur la sortie d'erreur, et à quoi ressemble
+la sortie complète d'une commande (standard + erreur) fusionnée.
+
+Le piège : une redirection ordinaire ne capture que la sortie standard. Une
+erreur emprunte un autre canal et lui échappe. Viser ce second canal et le
+fusionner avec le premier sont deux gestes distincts.
+
+Méthode dans le guide compagnon :
+https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/manipuler-fichiers-texte/redirections-pipes/
+
+## Ce qui est demandé
+
+### Mission
 
 À partir de `journal.log` (dans `challenge/work/`), produis quatre fichiers avec
 les bons opérateurs de redirection.
 
-## Objectif (fichiers à produire)
+### Objectif (fichiers à produire)
 
 1. `total.txt` : le **nombre de lignes** de `journal.log`.
 2. `erreurs.txt` : uniquement les lignes contenant **`ERROR`**.
@@ -19,12 +36,12 @@ Le nom `inexistant.txt` n'est pas un détail : la validation le cherche dans le
 message d'erreur, car le message du système, lui, change avec la langue du
 poste. Les commandes, elles, restent à ton choix.
 
-## Contraintes
+### Contraintes
 
 - Aucun éditeur : uniquement des redirections (`>`, `2>`, `2>&1`) et des pipes (`|`).
 - La validation lit le **contenu réel** des fichiers, pas la commande tapée.
 
-## Validation
+### Validation
 
 ```bash
 dsoxlab check l1-redirections-pipes

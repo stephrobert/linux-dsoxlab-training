@@ -1,18 +1,18 @@
-# Carte de découverte Linux
+# Carte de découverte Linux / Linux discovery map
 #
 # Explore TA machine avec les commandes indiquées, puis renseigne chaque champ
-# avec la VRAIE valeur trouvée sur ton système — pas un exemple recopié.
-# Les concepts (à quoi sert un noyau, une distribution) sont expliqués dans le
-# cours ; ici, on prouve que tu as réellement exploré ton système.
+# avec la VRAIE valeur trouvée sur ton système, pas un exemple recopié.
+# Explore YOUR machine with the commands shown, then fill in each field with the
+# REAL value found on your system, not a copied example.
 
 # uname -r
-KERNEL: VOTRE_RÉPONSE_ICI
+KERNEL: <value>
 
-# grep '^ID=' /etc/os-release     (ou : . /etc/os-release ; echo $ID)
-DISTRO_ID: VOTRE_RÉPONSE_ICI
+# grep '^ID=' /etc/os-release     (. /etc/os-release ; echo $ID)
+DISTRO_ID: <value>
 
-# ls /etc        → cite UN fichier réellement présent dans /etc
-ETC_FILE: VOTRE_RÉPONSE_ICI
+# ls /etc        → UN fichier réellement présent / ONE file really there
+ETC_FILE: <value>
 
-# ls /var/log    → cite UN fichier réellement présent dans /var/log
-LOG_FILE: VOTRE_RÉPONSE_ICI
+# ls /var/log    → UN fichier réellement présent / ONE file really there
+LOG_FILE: <value>

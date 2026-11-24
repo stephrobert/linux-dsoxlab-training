@@ -15,7 +15,7 @@ from conftest import message
 
 WORK = pathlib.Path(".")
 ANSWER_FILE = WORK / "fhs.txt"
-PLACEHOLDER = "VOTRE_RÉPONSE_ICI"
+PLACEHOLDER = "<value>"
 
 
 def _read() -> str:

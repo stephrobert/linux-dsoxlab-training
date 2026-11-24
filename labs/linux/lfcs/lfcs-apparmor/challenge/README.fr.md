@@ -1,21 +1,38 @@
-# Challenge — lfcs-apparmor
+# AppArmor, le contrôle d'accès obligatoire de Debian
 
-## Mission
+## La situation
+
+Là où RHEL utilise SELinux, Debian et Ubuntu utilisent **AppArmor** : des profils
+par programme qui confinent ce qu'un binaire peut faire. Un profil tourne en
+**enforce** (violations bloquées) ou en **complain** (violations seulement
+journalisées, le mode apprentissage utilisé pour régler un profil).
+
+L'idée : AppArmor se pilote profil par profil. On peut mettre un profil en
+apprentissage, le remettre en enforce ou le décharger complètement sans toucher
+aux autres. C'est sa réponse à l'enforcing et au permissive de SELinux, mais à la
+maille du programme, pas de la machine.
+
+Méthode dans le guide compagnon :
+https://www.stephane-robert.info/docs/securiser/durcissement/apparmor/
+
+## Ce qui est demandé
+
+### Mission
 
 Passe le profil AppArmor `ping` en mode complain.
 
-## Objectif (état attendu)
+### Objectif (état attendu)
 
 1. AppArmor est actif avec des profils chargés.
 2. Le profil `ping` est en mode `complain` (`aa-status`).
 
-## Contraintes
+### Contraintes
 
 - Utilise l'outillage AppArmor (`aa-complain`), pas SELinux.
 - Ne désactive pas AppArmor globalement — bascule ce seul profil.
 - On lit `aa-status --json`.
 
-## Validation
+### Validation
 
 ```bash
 dsoxlab check lfcs-apparmor

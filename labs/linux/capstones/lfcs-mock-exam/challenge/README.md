@@ -1,4 +1,35 @@
-# LFCS Capstone — Mock Exam
+# The LFCS exam, under exam conditions
+
+## The situation
+
+This capstone is not a lab: it is a **mock exam**. No hints, no step-by-step, a
+clock, and a passing score. It covers the **5 official LFCS domains** in their
+real weights:
+
+| Domain | Weight | Tasks |
+|---|---|---|
+| Essential Commands | 20% | 1–4 |
+| Operations Deployment | 25% | 5–8 |
+| Users and Groups | 10% | 9–10 |
+| Networking | 25% | 11–14 |
+| Storage | 20% | 15–17 |
+
+**17 tasks, 100 points, 120 minutes, 70/100 to pass.**
+Every task maps onto a **published objective** of the domain it serves. Two
+skills this capstone used to test are gone: **disk quotas**, which belong to no
+LFCS objective, and **sudo delegation**, which the blueprint names nowhere.
+They gave way to **automounting** and **ACLs**, which are objectives.
+
+
+Everything happens on a single Ubuntu 24.04 VM — the LFCS is multi-distro, and
+this run is the Debian side of it.
+
+The rule that fails candidates: **persistence**. Whatever vanishes at reboot
+scores zero. The tests read the state of the system, not the commands you typed.
+
+Read the subject: `dsoxlab challenge lfcs-mock-exam`.
+
+## LFCS Capstone — Mock Exam
 
 **Format**: 17 tasks, 100 points, 1 VM, 120 minutes.
 **Passing score**: 70/100. **No hints** will be revealed.

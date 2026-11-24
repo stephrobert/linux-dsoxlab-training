@@ -1,6 +1,21 @@
-# 🎯 Challenge — Diagnose and fix a service in a crash loop
+# Systemd service stuck in crash loop
 
-## ✅ Goal
+## The situation
+
+You are the on-call admin on **alma-rhcsa-1.lab**. The pager fires at
+3 AM: an internal API service called **`demo-crashloop`** has been
+**restarting in a loop** since last night's deployment.
+
+The release ticket doesn't mention any code change. You suspect a
+configuration or packaging issue.
+
+The service is intentionally simple: a fake HTTP daemon that boots,
+loads its config, then waits for requests. The pedagogical value is
+entirely in the **diagnostic method**.
+
+## 🎯 Challenge — Diagnose and fix a service in a crash loop
+
+### ✅ Goal
 
 Move the `demo-crashloop` service from `failed`/`activating`
 to `active` AND `enabled` on the target VM (`alma-rhcsa-1.lab` by
@@ -12,7 +27,7 @@ You work directly on the target VM, where you open a session with
 script to write. Validation is done by `dsoxlab check`, which runs
 pytest+testinfra tests.
 
-## 🧪 Expected diagnostic method
+### 🧪 Expected diagnostic method
 
 A senior sysadmin doesn't write a ready-made recipe. They follow the
 method:
@@ -35,7 +50,7 @@ method:
    `systemctl is-active demo-crashloop.service`
    `systemctl is-enabled demo-crashloop.service`
 
-## 🧩 Pitfalls to avoid
+### 🧩 Pitfalls to avoid
 
 - **Do not disable SELinux** or `firewalld` to silence the
   problem — the service is failing for a specific reason.
@@ -46,7 +61,7 @@ method:
 - **`enabled` is different from `active`**: a service can be
   `active` but not `enabled` (it won't restart after a reboot).
 
-## 🚀 Launch
+### 🚀 Launch
 
 You're already on the VM if you just ran `dsoxlab run`. Otherwise:
 
@@ -54,7 +69,7 @@ You're already on the VM if you just ran `dsoxlab run`. Otherwise:
 dsoxlab ssh alma-rhcsa-1
 ```
 
-## 🧪 Automated validation
+### 🧪 Automated validation
 
 When you think you've solved the problem (from your host, not from
 the VM):
@@ -73,7 +88,7 @@ The test checks on the target VM:
   (RHCSA persistence_after_reboot criterion).
 - The recent journal no longer contains the initial error pattern.
 
-## 🧹 Reset
+### 🧹 Reset
 
 If you want to restart the diagnosis from scratch:
 
@@ -84,7 +99,7 @@ dsoxlab reset depanner-service-crash-loop
 This replays `cleanup.yaml` then `setup.yaml` — the VM returns to the
 initial crash-loop state, ready for a fresh diagnosis.
 
-## 💡 Going further
+### 💡 Going further
 
 - **`systemctl status` exit codes**: 0 if the service is
   `active`, 3 otherwise. Useful for a monitoring script.
@@ -97,7 +112,7 @@ initial crash-loop state, ready for a fresh diagnosis.
   to modify `Restart=`, `RestartSec=`, `ExecStartPre=` without
   touching the main unit.
 
-## 🤔 Reflection questions
+### 🤔 Reflection questions
 
 1. If you found this service in a crash loop on **3 identical servers**
    in parallel (production), what strategy? Do you fix each one locally,

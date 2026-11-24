@@ -10,7 +10,7 @@ import pytest
 from conftest import message
 
 WORK = pathlib.Path(".")
-PLACEHOLDER = "VOTRE_RÉPONSE_ICI"
+PLACEHOLDER = "<value>"
 
 ABSOLUTE_COPY = WORK / "backup" / "absolute" / "source.txt"
 RELATIVE_COPY = WORK / "backup" / "relative" / "source.txt"

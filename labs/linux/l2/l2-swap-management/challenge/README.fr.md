@@ -1,6 +1,22 @@
-# Challenge — l2-04 : Ajouter et gérer de l'espace de swap
+# Ajouter du swap à un serveur juste en mémoire
 
-## Mission
+## La situation
+
+Vous administrez **alma-rhcsa-1.lab**. Un traitement par lots fait
+ponctuellement grimper la mémoire, et le OOM killer du noyau l'a déjà tué
+deux fois. En attendant la correction du traitement, il vous faut une
+**soupape** : un petit espace de swap qui absorbe les pics, sans pour autant
+faire swapper la machine en permanence.
+
+Deux exigences vont de pair : cette soupape doit être là au prochain démarrage,
+et le noyau ne doit y recourir qu'en dernier ressort.
+
+La méthode complète est dans le guide associé :
+https://www.stephane-robert.info/docs/admin-serveurs/linux/stockage/swap/
+
+## Ajouter et gérer de l'espace de swap
+
+### Mission
 
 Sur **alma-rhcsa-1.lab**, ajoute un **fichier de swap de 256 MiB** au système,
 rends-le sûr et persistant, et règle le comportement du noyau vis-à-vis du swap.
@@ -12,19 +28,19 @@ Tu dois :
 3. Le rendre **persistant** au redémarrage via `/etc/fstab`.
 4. Fixer durablement **`vm.swappiness = 10`** (drop-in dans `/etc/sysctl.d/`).
 
-## Contraintes
+### Contraintes
 
 - Le fichier de swap **doit** être en mode `0600` (il contient des pages mémoire).
 - L'entrée fstab doit référencer `/swapfile` avec le type `swap`.
 - `vm.swappiness` doit valoir `10` (`sysctl -n vm.swappiness`).
 
-## Approche utile
+### Approche utile
 
 Les gestes se déduisent du guide compagnon, dont le lien figure dans le
 `## Rappel` du cours. Si tu bloques, `dsoxlab hint` les donne, au prix
 annoncé.
 
-## Validation
+### Validation
 
 ```bash
 dsoxlab check l2-swap-management

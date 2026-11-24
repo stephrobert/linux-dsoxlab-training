@@ -31,7 +31,7 @@ candidates.
 labs/linux/<section>/<lab>/
 ├── lab.yaml            # the contract (id, level, runtime, validation…)
 ├── lab.fr.yaml         # optional: French override of title, description and criteria labels ONLY
-├── README.md / scenario.md
+├── README.md
 ├── setup.yaml / cleanup.yaml       # VM labs
 ├── fixtures/           # starting material (shell labs), copied by
 │                       # `dsoxlab run` into challenge/work/ (not versioned)

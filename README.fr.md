@@ -238,7 +238,7 @@ ci-dessous est générée à partir des vrais `lab.yaml` : lance
 | `l2-filesystem-create-xfs` | Créer et labelliser un système de fichiers XFS, puis le monter | l2 | RHCSA · LFCS | vm | [guide](https://www.stephane-robert.info/docs/admin-serveurs/linux/stockage/xfs/) |
 | `l2-disk-space-troubleshoot` | Diagnostiquer un système de fichiers plein et récupérer de l'espace | l2 | RHCSA · LFCS | vm | [guide](https://www.stephane-robert.info/docs/admin-serveurs/linux/stockage/espace-disque/) |
 | `l2-storage-performance` | Optimiser un montage avec noatime (de façon persistante) | l2 | LFCS | vm | [guide](https://www.stephane-robert.info/docs/admin-serveurs/linux/stockage/performances-disques/) |
-| `l2-lvm-extend-persist` | Étendre un volume logique et prouver que le montage survit au reboot | l2 | RHCSA · LFCS | vm | [guide](https://www.stephane-robert.info/docs/admin-serveurs/linux/stockage/lvm/) |
+| `l2-lvm-extend-persist` | Étendre un volume logique et vérifier que le montage survit au reboot | l2 | RHCSA · LFCS | vm | [guide](https://www.stephane-robert.info/docs/admin-serveurs/linux/stockage/lvm/) |
 | `l2-nfs-mount-persist` | Monter un export NFS de façon persistante depuis un serveur | l2 | LFCS | vm | [guide](https://www.stephane-robert.info/docs/services/stockage/nfs/) |
 | `l2-autofs-ondemand` | Monter un système de fichiers à la demande avec autofs | l2 | LFCS | vm | [guide](https://www.stephane-robert.info/docs/admin-serveurs/linux/stockage/autofs/) |
 | `l2-raid-mdadm` | Construire un RAID 1 logiciel avec mdadm | l2 | LFCS | vm | [guide](https://www.stephane-robert.info/docs/admin-serveurs/linux/stockage/raid-mdadm/) |

@@ -1,11 +1,27 @@
-# Challenge — l1-07 : Se repérer dans l'arborescence (FHS)
+# Savoir où Linux range ses affaires
+
+## La situation
+
+Sur une machine inconnue, la vraie question n'est jamais « comment s'appelle ce
+fichier ? » mais « où est-il censé se trouver ? ». Linux y répond par une
+convention, la **FHS**, que toutes les distributions respectent : chaque type de
+fichier a son emplacement, et qui connaît le plan trouve du premier coup.
+
+Ce lab ne demande pas de réciter la carte. Il demande de retrouver quatre
+emplacements réels sur ta machine et d'en donner le chemin absolu. La validation
+vérifie que chacun existe bien là où tu l'annonces.
+
+Méthode dans le guide compagnon :
+https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/se-reperer-fichiers/arborescence-fhs/
+
+## Se repérer dans l'arborescence (FHS)
 
 Travaille dans **`challenge/work/`** — le fichier `fhs.txt` y a été créé par
 `dsoxlab run`.
 
 ---
 
-## Mission
+### Mission
 
 La FHS (Filesystem Hierarchy Standard) dit où chaque chose vit sous Linux. Mets
 cette connaissance à l'épreuve : **localise quatre éléments réels** sur ta
@@ -16,13 +32,13 @@ machine et donne leur chemin absolu dans `fhs.txt`.
 3. `LOG_DIR` — le répertoire des journaux système.
 4. `HOME_PARENT` — le répertoire parent des dossiers personnels.
 
-## Contraintes
+### Contraintes
 
 - Chaque chemin doit **exister réellement à l'endroit attendu** : la validation
   le vérifie sur ta machine. Un chemin inventé ou mal placé échoue.
-- Tous les placeholders `VOTRE_RÉPONSE_ICI` doivent être remplacés.
+- Tous les placeholders `<value>` doivent être remplacés.
 
-## Commandes utiles
+### Commandes utiles
 
 ```bash
 which ls
@@ -31,7 +47,7 @@ ls -d /var/log
 ls -d /home
 ```
 
-## Validation
+### Validation
 
 ```bash
 dsoxlab check l1-linux-filesystem

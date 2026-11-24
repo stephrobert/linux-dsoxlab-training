@@ -1,12 +1,36 @@
-# Challenge : ebpf-tracer-bcc
+# Le processus que personne ne reconnaît
 
-## Mission
+## La situation
+
+Un serveur de la maison écrit régulièrement dans un fichier que personne ne sait
+situer. Le service qui s'en occupe s'appelle `lab-mystere`, mais le programme
+qui tourne derrière porte un nom que ni la documentation ni l'équipe ne
+reconnaissent, et le fichier qu'il alimente est caché quelque part sur le
+disque. Les outils habituels ne le montrent pas : le fichier n'est ouvert que
+l'espace d'un instant, puis refermé aussitôt.
+
+Le noyau, lui, a tout vu. Avec eBPF, on lui demande de raconter ce qui se passe :
+quels programmes sont lancés, quels fichiers sont ouverts, et par qui. L'enjeu
+est de retrouver l'identité du processus et la cible de ses écritures **sans
+l'arrêter ni le modifier** : c'est un service en production, on observe, on ne
+touche pas.
+
+Ce qui sera vérifié, c'est l'état de la machine : des outils de traçage qui
+fonctionnent vraiment, une réponse qui correspond à la réalité de la machine, et
+un service resté intact. Pas les commandes que tu auras tapées.
+
+Méthode dans le guide compagnon :
+https://www.stephane-robert.info/docs/admin-serveurs/linux/ebpf/tracer/bpftrace/
+
+## Ce qui est demandé
+
+### Mission
 
 Un service `lab-mystere` fait tourner un programme dont tu ignores le nom, et ce
 programme écrit toutes les quelques secondes dans un fichier caché. Trouve les
 deux, avec les outils de traçage eBPF, sans arrêter ni modifier le service.
 
-## Objectif (état attendu)
+### Objectif (état attendu)
 
 1. Une famille d'outils de traçage est **installée et opérationnelle** sur la
    machine : les outils BCC (`bcc-tools` sur AlmaLinux, `bpfcc-tools` sur
@@ -21,7 +45,7 @@ deux, avec les outils de traçage eBPF, sans arrêter ni modifier le service.
 Format attendu de `/var/tmp/reponse-ebpf.txt` : deux lignes `cle=valeur`, sans
 espace autour du signe égal.
 
-## Contraintes
+### Contraintes
 
 - Le programme et le fichier changent à chaque `dsoxlab run` : la réponse d'une
   session précédente ne vaut rien.
@@ -33,7 +57,7 @@ espace autour du signe égal.
 - Charger un programme eBPF demande les droits root (`sudo`).
 - La validation lit l'état de la machine, pas ton historique de commandes.
 
-## Validation
+### Validation
 
 ```bash
 dsoxlab check ebpf-tracer-bcc                  # AlmaLinux 10 (cible par défaut)

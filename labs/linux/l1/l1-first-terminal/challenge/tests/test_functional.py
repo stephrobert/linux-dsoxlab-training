@@ -18,7 +18,7 @@ from conftest import message
 
 WORK = pathlib.Path(".")
 ANSWER_FILE = WORK / "premiers-pas.txt"
-PLACEHOLDER = "VOTRE_RÉPONSE_ICI"
+PLACEHOLDER = "<value>"
 #: Une ligne de l'en-tête fourni. Elle ne survit QUE si le fichier a été
 #: édité : une redirection « > » le recrée de zéro et l'emporte.
 SENTINELLE_EN_TETE = "N'efface pas ces lignes d'en-tête"
@@ -43,7 +43,7 @@ def _field(text: str, key: str) -> str:
 # ── Présence & complétude ─────────────────────────────────────────────────────
 
 def test_no_placeholder() -> None:
-    """Tous les placeholders VOTRE_RÉPONSE_ICI doivent être remplacés."""
+    """Tous les placeholders <value> doivent être remplacés."""
     assert PLACEHOLDER not in _read(), message(
         en=f"The file still contains '{PLACEHOLDER}'. Fill in the 4 fields "
         "with the commands' real output.",
