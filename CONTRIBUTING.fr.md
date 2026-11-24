@@ -31,7 +31,7 @@ précisément ce qui fait échouer les candidats RHCSA.
 labs/linux/<section>/<lab>/
 ├── lab.yaml            # le contrat (id, level, runtime, validation…)
 ├── lab.fr.yaml         # optionnel : surcharge FR du title, de la description et des libellés de critères UNIQUEMENT
-├── README.md / scenario.md
+├── README.md
 ├── setup.yaml / cleanup.yaml       # labs VM
 ├── fixtures/           # matériel de départ (labs shell), copié par
 │                       # `dsoxlab run` dans challenge/work/ (non versionné)

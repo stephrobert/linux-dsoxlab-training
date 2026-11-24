@@ -133,8 +133,6 @@ def test_aucun_lab_n_est_declare_deux_fois() -> None:
 ATTENDUS = (
     "lab.yaml",
     "lab.fr.yaml",
-    "scenario.md",
-    "scenario.fr.md",
     "README.md",
     "README.fr.md",
     "challenge/README.md",

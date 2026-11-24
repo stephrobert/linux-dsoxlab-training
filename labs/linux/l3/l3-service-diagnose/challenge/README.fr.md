@@ -1,6 +1,23 @@
-# 🎯 Challenge — Diagnostiquer et corriger un service en crash loop
+# Service systemd en crash loop
 
-## ✅ Objectif
+## La situation
+
+Vous êtes administrateur sur **alma-rhcsa-1.lab**. Le matin, l'astreinte
+vous remonte une alerte : un service applicatif appelé
+**`demo-crashloop`** est censé tourner en permanence pour exposer une
+API interne, mais il **redémarre en boucle** depuis le déploiement
+nocturne.
+
+Aucune trace dans le ticket de release ne mentionne un changement de
+code. Vous suspectez un problème de configuration ou de packaging.
+
+Le service est volontairement simple : il s'agit d'un faux démon HTTP
+qui démarre, lit sa config, puis attend les requêtes. Tout l'enjeu
+pédagogique est dans la **méthode de diagnostic**.
+
+## 🎯 Challenge — Diagnostiquer et corriger un service en crash loop
+
+### ✅ Objectif
 
 Faire passer le service `demo-crashloop` de l'état `failed`/`activating`
 à l'état `active` ET `enabled` sur la VM cible (`alma-rhcsa-1.lab` par
@@ -12,7 +29,7 @@ Tu travailles directement sur la VM cible, où tu ouvres une session avec
 direct : il n'y a pas de script à écrire. La validation se fera par
 `dsoxlab check`, qui lance des tests pytest+testinfra.
 
-## 🧪 Méthode de diagnostic attendue
+### 🧪 Méthode de diagnostic attendue
 
 Un sysadmin senior n'écrit pas une recette toute prête. Il suit la
 méthode :
@@ -35,7 +52,7 @@ méthode :
    `systemctl is-active demo-crashloop.service`
    `systemctl is-enabled demo-crashloop.service`
 
-## 🧩 Pièges à éviter
+### 🧩 Pièges à éviter
 
 - **Ne pas désactiver SELinux** ni `firewalld` pour faire taire le
   problème — le service ne fonctionne pas pour une raison précise.
@@ -46,7 +63,7 @@ méthode :
 - **`enabled` est différent de `active`** : un service peut être
   `active` mais pas `enabled` (il ne redémarrera pas après reboot).
 
-## 🚀 Lancement
+### 🚀 Lancement
 
 Tu es déjà sur la VM si tu viens de faire `dsoxlab run`. Sinon :
 
@@ -54,7 +71,7 @@ Tu es déjà sur la VM si tu viens de faire `dsoxlab run`. Sinon :
 dsoxlab ssh alma-rhcsa-1
 ```
 
-## 🧪 Validation automatisée
+### 🧪 Validation automatisée
 
 Quand tu penses avoir résolu le problème (depuis ton hôte, pas depuis
 la VM) :
@@ -73,7 +90,7 @@ Le test vérifie sur la VM cible :
   (critère persistence_after_reboot RHCSA).
 - Le journal récent ne contient plus le pattern de l'erreur initiale.
 
-## 🧹 Reset
+### 🧹 Reset
 
 Si tu veux recommencer le diagnostic depuis zéro :
 
@@ -84,7 +101,7 @@ dsoxlab reset depanner-service-crash-loop
 Cela rejoue `cleanup.yaml` puis `setup.yaml` — la VM revient à l'état
 de crash loop initial, prête pour un nouveau diagnostic.
 
-## 💡 Pour aller plus loin
+### 💡 Pour aller plus loin
 
 - **`systemctl status` codes de sortie** : 0 si le service est
   `active`, 3 sinon. Utile pour un script de monitoring.
@@ -97,7 +114,7 @@ de crash loop initial, prête pour un nouveau diagnostic.
   pour modifier `Restart=`, `RestartSec=`, `ExecStartPre=` sans
   toucher à l'unit principal.
 
-## 🤔 Questions de réflexion
+### 🤔 Questions de réflexion
 
 1. Si tu trouvais ce service en crash loop sur **3 serveurs identiques**
    en parallèle (production), quelle stratégie ? Tu corriges en local

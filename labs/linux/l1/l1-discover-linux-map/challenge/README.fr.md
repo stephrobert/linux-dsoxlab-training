@@ -1,11 +1,28 @@
-# Challenge — Cartographier ton système Linux
+# Cartographier la machine avant d'y toucher
+
+## La situation
+
+C'est ton premier poste Linux, et tu ne sais pas encore ce qui tourne dessus.
+Avant de configurer quoi que ce soit, un administrateur répond à quatre
+questions : quel noyau, quelle distribution, où vivent les fichiers de
+configuration, où vivent les journaux. Tant que ces réponses restent
+approximatives, tout ce qui suit l'est aussi.
+
+Ce lab ne demande pas de réciter des définitions, il demande de relever quatre
+faits **réels** sur ta propre machine. La validation les compare à l'état du
+système : une valeur recopiée d'un tutoriel échoue.
+
+Méthode dans le guide compagnon :
+https://www.stephane-robert.info/docs/admin-serveurs/linux/fondamentaux/decouvrir-linux/notions/
+
+## Cartographier ton système Linux
 
 Travaille dans **`challenge/work/`** — le fichier `notions.md` y a été créé par
 `dsoxlab run`. Complète-le sans pas-à-pas.
 
 ---
 
-## Mission
+### Mission
 
 Tu prépares ton premier poste Linux. Avant de toucher à quoi que ce soit, tu dois
 savoir sur quoi tu travailles. **Explore ta machine** et relève quatre faits
@@ -16,14 +33,14 @@ réels dans `notions.md` :
 3. `ETC_FILE` — le nom d'**un** fichier réellement présent dans `/etc`.
 4. `LOG_FILE` — le nom d'**un** fichier réellement présent dans `/var/log`.
 
-## Contraintes
+### Contraintes
 
 - Chaque champ doit contenir la **vraie valeur de ta machine**, pas un exemple.
   La validation compare tes réponses à l'état réel du système : une valeur
   inventée échoue.
 - Tous les placeholders `<value>` doivent être remplacés.
 
-## Commandes utiles
+### Commandes utiles
 
 ```bash
 uname -r
@@ -32,7 +49,7 @@ ls /etc
 ls /var/log
 ```
 
-## Validation
+### Validation
 
 ```bash
 dsoxlab check l1-discover-linux-map   # valide ton travail

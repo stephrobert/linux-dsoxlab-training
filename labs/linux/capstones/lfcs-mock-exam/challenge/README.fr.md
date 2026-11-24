@@ -1,4 +1,37 @@
-# Capstone LFCS — examen blanc
+# Le LFCS, en conditions d'examen
+
+## La situation
+
+Ce capstone n'est pas un lab : c'est un **examen blanc**. Aucun indice, aucun
+pas-à-pas, un chrono et un score de réussite. Il couvre les **5 domaines
+officiels du LFCS** dans leurs poids réels :
+
+| Domaine | Poids | Tâches |
+|---|---|---|
+| Essential Commands | 20 % | 1–4 |
+| Operations Deployment | 25 % | 5–8 |
+| Users and Groups | 10 % | 9–10 |
+| Networking | 25 % | 11–14 |
+| Storage | 20 % | 15–17 |
+
+**17 tâches, 100 points, 120 minutes, 70/100 pour réussir.**
+Chaque tâche est rattachée à un **objectif publié** du domaine qu'elle sert.
+Deux compétences que ce capstone testait autrefois n'y figurent plus : les
+**quotas disque**, qui n'appartiennent à aucun objectif LFCS, et la
+**délégation sudo**, que le blueprint ne nomme nulle part. Elles ont laissé la
+place à l'**automontage** et aux **ACL**, qui sont des objectifs.
+
+
+Tout se passe sur une seule VM Ubuntu 24.04 : le LFCS est multi-distrib, et cette
+session en est le versant Debian.
+
+La règle qui fait échouer les candidats : la **persistance**. Ce qui disparaît au
+reboot vaut zéro. Les tests lisent l'état du système, pas les commandes que tu as
+tapées.
+
+Lis le sujet : `dsoxlab challenge lfcs-mock-exam`.
+
+## Capstone LFCS — examen blanc
 
 **Format** : 17 tâches, 100 points, 1 VM, 120 minutes.
 **Score de réussite** : 70/100. **Aucun indice** ne sera révélé.

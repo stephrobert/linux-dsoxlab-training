@@ -1,22 +1,38 @@
-# Challenge — l4-podman-systemd-persist
+# A container that comes back after reboot
 
-## Mission
+## The situation
+
+A container running with `podman run` dies with the machine and never returns.
+On RHEL the modern way to make a container a first-class, boot-persistent service
+is **Quadlet**: a `.container` unit that systemd turns into a real service.
+
+The point: Quadlet describes a container in a declarative unit that systemd
+converts into an ordinary service, wireable to boot like any other. This is what
+the RHCSA objective "start a container at boot" means today — not a hand-rolled
+`podman run` in rc.local.
+
+Method in the companion guide:
+https://www.stephane-robert.info/docs/conteneurs/moteurs-conteneurs/podman/quadlet/ (in French)
+
+## What is asked
+
+### Mission
 
 Make container `weblab` a boot-persistent systemd service with Quadlet.
 
-## Goal (expected state)
+### Goal (expected state)
 
 1. `/etc/containers/systemd/weblab.container` exists and has `[Install] WantedBy`.
 2. `weblab.service` is active.
 3. Container `weblab` is running.
 
-## Constraints
+### Constraints
 
 - It must be a Quadlet unit (not a manual `podman run`): the on-disk
   `.container` file with an `[Install]` section is what survives a reboot.
 - Validation reads systemd and Podman state, not your history.
 
-## Validation
+### Validation
 
 ```bash
 dsoxlab check l4-podman-systemd-persist

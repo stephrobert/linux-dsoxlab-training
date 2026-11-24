@@ -1,6 +1,20 @@
-# Challenge — l2 : Encrypt a disk with LUKS
+# Protect data at rest with LUKS
 
-## Mission
+## The situation
+
+On **alma-rhcsa-1.lab**, a removable disk will hold sensitive exports. If the
+disk leaves the building, its content must remain unreadable. You'll encrypt it
+with **LUKS2** and make it unlock automatically at boot via a key file.
+
+The spare disk to work on is named in `/root/luks-disk.env`, and the key that
+will open it is already on the machine.
+
+Method in the companion guide:
+https://www.stephane-robert.info/en/docs/linux/storage/luks-encryption/
+
+## L2 : Encrypt a disk with LUKS
+
+### Mission
 
 A spare disk is available on **alma-rhcsa-1.lab** (its name is in
 `/root/luks-disk.env`), with a key file `/root/luks.key`. Encrypt it so its
@@ -11,19 +25,19 @@ data is unreadable if the disk is stolen.
 3. Put an **xfs** filesystem on it and mount it on `/mnt/coffre`.
 4. Declare it in **`/etc/crypttab`** so it unlocks at boot.
 
-## Constraints
+### Constraints
 
 - The disk must be **LUKS version 2**.
 - `/dev/mapper/coffre` must be open and mounted on `/mnt/coffre`.
 - `/etc/crypttab` must contain the `coffre` entry.
 
-## Useful approach
+### Useful approach
 
 The steps follow from the companion guide linked in the course's
 `## Reminder`. If you get stuck, `dsoxlab hint` spells them out, at the
 stated cost.
 
-## Validation
+### Validation
 
 ```bash
 dsoxlab check l2-luks-encryption
