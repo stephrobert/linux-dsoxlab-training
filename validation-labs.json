@@ -1,7 +1,7 @@
 {
-  "genere_le": "2026-11-11 13:07:14",
+  "genere_le": "2026-11-24 22:06:15",
   "act": "act version 0.2.84",
-  "dsoxlab": "dsoxlab 0.8.2",
+  "dsoxlab": "dsoxlab 0.11.1",
   "labs": {
     "capstone-mise-en-production": {
       "id": "capstone-mise-en-production",
@@ -190,10 +190,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "4/4",
-      "duree_s": 2.5,
+      "duree_s": 3.7,
       "traces": [],
       "pourquoi": "",
-      "date": "2026-10-19"
+      "date": "2026-11-24"
     },
     "l1-discover-linux-map": {
       "id": "l1-discover-linux-map",
@@ -202,10 +202,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "5/5",
-      "duree_s": 2.5,
+      "duree_s": 3.2,
       "traces": [],
       "pourquoi": "",
-      "date": "2026-10-19"
+      "date": "2026-11-24"
     },
     "l1-env-profiles": {
       "id": "l1-env-profiles",
@@ -238,10 +238,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "6/6",
-      "duree_s": 2.7,
+      "duree_s": 3.2,
       "traces": [],
       "pourquoi": "",
-      "date": "2026-10-19"
+      "date": "2026-11-24"
     },
     "l1-get-help": {
       "id": "l1-get-help",
@@ -298,10 +298,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "5/5",
-      "duree_s": 3.0,
+      "duree_s": 3.3,
       "traces": [],
       "pourquoi": "",
-      "date": "2026-10-19"
+      "date": "2026-11-24"
     },
     "l1-navigate-filesystem": {
       "id": "l1-navigate-filesystem",
@@ -322,10 +322,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "8/8",
-      "duree_s": 3.4,
+      "duree_s": 3.2,
       "traces": [],
       "pourquoi": "",
-      "date": "2026-10-19"
+      "date": "2026-11-24"
     },
     "l1-permissions-ugo": {
       "id": "l1-permissions-ugo",
@@ -346,10 +346,10 @@
       "score_avant": 0,
       "score_apres": 100,
       "tests": "5/5",
-      "duree_s": 3.0,
+      "duree_s": 3.2,
       "traces": [],
       "pourquoi": "",
-      "date": "2026-10-19"
+      "date": "2026-11-24"
     },
     "l1-read-a-command": {
       "id": "l1-read-a-command",
