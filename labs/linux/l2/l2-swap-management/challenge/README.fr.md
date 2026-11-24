@@ -1,4 +1,4 @@
-# Challenge — l2-04 : Ajouter et gérer de l'espace de swap
+# Challenge — Ajouter et gérer de l'espace de swap
 
 ## Mission
 

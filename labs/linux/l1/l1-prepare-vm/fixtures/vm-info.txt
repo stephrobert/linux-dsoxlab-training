@@ -1,16 +1,18 @@
-# Inventaire des ressources de la machine
+# Inventaire des ressources / Resource inventory
 #
-# Inventorie TA machine avec les commandes indiquées, puis renseigne chaque
-# champ avec la VRAIE valeur — la validation la compare à l'état réel du système.
+# Inventorie TA machine avec les commandes indiquées, puis renseigne chaque champ
+# avec la VRAIE valeur : la validation la compare à l'état réel du système.
+# Inventory YOUR machine with the commands shown, then fill in each field with the
+# REAL value: the validation compares it with the actual state of the system.
 
 # nproc
-CPU_COUNT: VOTRE_RÉPONSE_ICI
+CPU_COUNT: <value>
 
 # uname -m
-ARCH: VOTRE_RÉPONSE_ICI
+ARCH: <value>
 
-# grep MemTotal /proc/meminfo     (relève le nombre en kB)
-MEM_TOTAL_KB: VOTRE_RÉPONSE_ICI
+# grep MemTotal /proc/meminfo     (le nombre en kB / the number in kB)
+MEM_TOTAL_KB: <value>
 
-# lsblk -dno NAME                 → cite UN disque réel (ex. vda, sda, nvme0n1)
-BLOCK_DEVICE: VOTRE_RÉPONSE_ICI
+# lsblk -dno NAME                 → UN disque réel / ONE real disk (vda, sda, nvme0n1)
+BLOCK_DEVICE: <value>

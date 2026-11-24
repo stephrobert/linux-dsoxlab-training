@@ -1,4 +1,4 @@
-# Challenge — l1-05 : Lire une commande, puis l'utiliser
+# Challenge — Lire une commande, puis l'utiliser
 
 Travaille dans **`challenge/work/`** — le fichier `source.txt` (5 lignes) y a été
 créé par `dsoxlab run`.

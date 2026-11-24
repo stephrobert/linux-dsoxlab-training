@@ -1,4 +1,4 @@
-# Challenge — l1-08 : Construire une arborescence
+# Challenge — Construire une arborescence
 
 ## Mission
 

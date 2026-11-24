@@ -1,4 +1,4 @@
-# Challenge — l1-01: Map your Linux system
+# Challenge — Map your Linux system
 
 Work in **`challenge/work/`** — the file `notions.md` was created there by
 `dsoxlab run`. Complete it without a step-by-step guide.
@@ -21,7 +21,7 @@ real facts in `notions.md`:
 - Each field must contain the **real value from your machine**, not an example.
   Validation compares your answers against the real system state: an
   invented value fails.
-- All `VOTRE_RÉPONSE_ICI` placeholders must be replaced.
+- All `<value>` placeholders must be replaced.
 
 ## Useful commands
 

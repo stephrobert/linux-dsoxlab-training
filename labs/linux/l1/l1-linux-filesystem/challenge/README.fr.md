@@ -1,4 +1,4 @@
-# Challenge — l1-07 : Se repérer dans l'arborescence (FHS)
+# Challenge — Se repérer dans l'arborescence (FHS)
 
 Travaille dans **`challenge/work/`** — le fichier `fhs.txt` y a été créé par
 `dsoxlab run`.
@@ -20,7 +20,7 @@ machine et donne leur chemin absolu dans `fhs.txt`.
 
 - Chaque chemin doit **exister réellement à l'endroit attendu** : la validation
   le vérifie sur ta machine. Un chemin inventé ou mal placé échoue.
-- Tous les placeholders `VOTRE_RÉPONSE_ICI` doivent être remplacés.
+- Tous les placeholders `<value>` doivent être remplacés.
 
 ## Commandes utiles
 

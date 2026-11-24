@@ -1,4 +1,4 @@
-# Challenge — l1-08: Build a directory tree
+# Challenge — Build a directory tree
 
 ## Mission
 

@@ -17,7 +17,7 @@ from conftest import message
 
 WORK = pathlib.Path(".")
 ANSWER_FILE = WORK / "choix-distro.txt"
-PLACEHOLDER = "VOTRE_RÉPONSE_ICI"
+PLACEHOLDER = "<value>"
 
 KNOWN_MANAGERS = {"apt", "apt-get", "dnf", "yum", "zypper", "pacman", "apk"}
 FAMILY_MANAGERS = {

@@ -1,4 +1,4 @@
-# Challenge — l1-02 : Reconnaître l'écosystème de ta distribution
+# Challenge — Reconnaître l'écosystème de ta distribution
 
 Travaille dans **`challenge/work/`** — le fichier `choix-distro.txt` y a été créé
 par `dsoxlab run`.
@@ -23,7 +23,7 @@ trois valeurs dans `choix-distro.txt` :
 - Chaque réponse doit correspondre à **ce que ta machine expose réellement** : la
   validation le vérifie (famille via `/etc/os-release`, gestionnaire via `which`).
   Une réponse qui ne colle pas à ta machine échoue.
-- Tous les placeholders `VOTRE_RÉPONSE_ICI` doivent être remplacés.
+- Tous les placeholders `<value>` doivent être remplacés.
 
 ## Commandes utiles
 

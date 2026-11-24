@@ -1,4 +1,4 @@
-# Challenge — l1-02: Recognize your distribution's ecosystem
+# Challenge — Recognize your distribution's ecosystem
 
 Work in **`challenge/work/`** — the file `choix-distro.txt` was created there
 by `dsoxlab run`.
@@ -23,7 +23,7 @@ three values in `choix-distro.txt`:
 - Each answer must match **what your machine actually exposes**: the
   validation checks it (family via `/etc/os-release`, manager via `which`).
   An answer that does not match your machine fails.
-- All `VOTRE_RÉPONSE_ICI` placeholders must be replaced.
+- All `<value>` placeholders must be replaced.
 
 ## Useful commands
 

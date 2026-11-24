@@ -1,4 +1,4 @@
-# Challenge — l1-09 : Absolute and relative paths
+# Challenge — Absolute and relative paths
 
 ## Mission
 

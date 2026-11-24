@@ -8,7 +8,7 @@
 # Do not erase these header lines: edit this file, do not recreate it with a
 # « > » redirection, which would wipe everything in it.
 
-USER: VOTRE_RÉPONSE_ICI
-MACHINE: VOTRE_RÉPONSE_ICI
-HOME: VOTRE_RÉPONSE_ICI
-DATE: VOTRE_RÉPONSE_ICI
+USER: <value>
+MACHINE: <value>
+HOME: <value>
+DATE: <value>

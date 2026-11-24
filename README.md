@@ -234,7 +234,7 @@ to refresh it.
 | `l2-filesystem-create-xfs` | Create and label an XFS filesystem, then mount it | l2 | RHCSA · LFCS | vm | [guide](https://www.stephane-robert.info/en/docs/linux/storage/xfs/) |
 | `l2-disk-space-troubleshoot` | Diagnose a full filesystem and reclaim space | l2 | RHCSA · LFCS | vm | [guide](https://www.stephane-robert.info/en/docs/linux/storage/disk-space/) |
 | `l2-storage-performance` | Tune a mount for performance with noatime (persistently) | l2 | LFCS | vm | [guide](https://www.stephane-robert.info/en/docs/linux/storage/disk-performance/) |
-| `l2-lvm-extend-persist` | Extend a logical volume and prove the mount survives a reboot | l2 | RHCSA · LFCS | vm | [guide](https://www.stephane-robert.info/en/docs/linux/storage/lvm/) |
+| `l2-lvm-extend-persist` | Extend a logical volume and check the mount survives a reboot | l2 | RHCSA · LFCS | vm | [guide](https://www.stephane-robert.info/en/docs/linux/storage/lvm/) |
 | `l2-nfs-mount-persist` | Mount an NFS export persistently from a server | l2 | LFCS | vm | [guide](https://www.stephane-robert.info/en/docs/linux/storage/nfs/) |
 | `l2-autofs-ondemand` | Mount a filesystem on demand with autofs | l2 | LFCS | vm | [guide](https://www.stephane-robert.info/en/docs/linux/storage/autofs/) |
 | `l2-raid-mdadm` | Build a software RAID 1 with mdadm | l2 | LFCS | vm | [guide](https://www.stephane-robert.info/en/docs/linux/storage/raid-mdadm/) |

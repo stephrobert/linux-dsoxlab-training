@@ -1,4 +1,4 @@
-# Challenge — l1-06: Find the right command with help
+# Challenge — Find the right command with help
 
 Work in **`challenge/work/`** — the file `donnees.txt` (5 log lines)
 was created there by `dsoxlab run`.

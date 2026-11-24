@@ -1,4 +1,4 @@
-# Challenge — l1-07: Find your way around the tree (FHS)
+# Challenge — Find your way around the tree (FHS)
 
 Work in **`challenge/work/`** — the file `fhs.txt` was created there by
 `dsoxlab run`.
@@ -20,7 +20,7 @@ machine and give their absolute path in `fhs.txt`.
 
 - Each path must **actually exist at the expected location**: validation
   checks it on your machine. An invented or misplaced path fails.
-- All `VOTRE_RÉPONSE_ICI` placeholders must be replaced.
+- All `<value>` placeholders must be replaced.
 
 ## Useful commands
 

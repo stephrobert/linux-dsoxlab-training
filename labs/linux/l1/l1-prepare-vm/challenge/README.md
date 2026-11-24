@@ -1,4 +1,4 @@
-# Challenge — l1-03 : Inventory your machine's resources
+# Challenge — Inventory your machine's resources
 
 Work in **`challenge/work/`** — the `vm-info.txt` file was created there by
 `dsoxlab run`.
@@ -20,7 +20,7 @@ in `vm-info.txt`:
 
 - Each value must be the **actual value of your machine**: validation compares
   it to the real system state. A made-up value fails.
-- All `VOTRE_RÉPONSE_ICI` placeholders must be replaced.
+- All `<value>` placeholders must be replaced.
 
 ## Useful commands
 

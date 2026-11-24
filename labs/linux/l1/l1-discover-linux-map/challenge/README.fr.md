@@ -1,4 +1,4 @@
-# Challenge — l1-01 : Cartographier ton système Linux
+# Challenge — Cartographier ton système Linux
 
 Travaille dans **`challenge/work/`** — le fichier `notions.md` y a été créé par
 `dsoxlab run`. Complète-le sans pas-à-pas.
@@ -21,7 +21,7 @@ réels dans `notions.md` :
 - Chaque champ doit contenir la **vraie valeur de ta machine**, pas un exemple.
   La validation compare tes réponses à l'état réel du système : une valeur
   inventée échoue.
-- Tous les placeholders `VOTRE_RÉPONSE_ICI` doivent être remplacés.
+- Tous les placeholders `<value>` doivent être remplacés.
 
 ## Commandes utiles
 

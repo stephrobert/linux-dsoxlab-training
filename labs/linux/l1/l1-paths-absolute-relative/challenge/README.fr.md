@@ -1,4 +1,4 @@
-# Challenge — l1-09 : Chemins absolus et relatifs
+# Challenge — Chemins absolus et relatifs
 
 ## Mission
 

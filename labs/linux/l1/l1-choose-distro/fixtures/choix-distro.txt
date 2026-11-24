@@ -1,16 +1,18 @@
-# Écosystème de ta distribution — l1-02
+# Écosystème de ta distribution / Your distribution's ecosystem
 #
 # Identifie l'écosystème RÉEL de ta machine avec les commandes indiquées, puis
-# renseigne chaque champ. La validation compare tes réponses à ce que ta
-# machine expose vraiment.
+# renseigne chaque champ. La validation compare tes réponses à ta machine.
+# Identify the REAL ecosystem of your machine with the commands shown, then fill
+# in each field. The validation compares your answers with your machine.
 
 # grep -E '^ID=|^ID_LIKE=' /etc/os-release
-# → famille : debian, rhel, suse, arch ou alpine
-FAMILY: VOTRE_RÉPONSE_ICI
+# → debian, rhel, suse, arch / alpine
+FAMILY: <value>
 
 # which apt ; which dnf ; which zypper ; which pacman ; which apk
-# → le gestionnaire de paquets réellement présent
-PACKAGE_MANAGER: VOTRE_RÉPONSE_ICI
+# → le gestionnaire réellement présent / the manager really present
+PACKAGE_MANAGER: <value>
 
 # la commande pour installer un paquet avec CE gestionnaire (ex. : apt install <paquet>)
-INSTALL_CMD: VOTRE_RÉPONSE_ICI
+# the command that installs a package with THIS manager (e.g. apt install <package>)
+INSTALL_CMD: <value>

@@ -1,4 +1,4 @@
-# Challenge — l1-04: First steps in the terminal
+# Challenge — First steps in the terminal
 
 ## Mission
 
@@ -12,7 +12,7 @@ Do not invent or guess — run the commands and put the actual output.
 ## Constraints
 
 - **All four fields must be filled**: `USER`, `MACHINE`, `HOME`, `DATE`.
-- **No placeholder left**: every `VOTRE_RÉPONSE_ICI` must be replaced.
+- **No placeholder left**: every `<value>` must be replaced.
 - `DATE` must be the output of the `date` command (any reasonable format).
 - `HOME` must be a path starting with `/`.
 

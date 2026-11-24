@@ -1,4 +1,4 @@
-# Challenge — l1-06 : Trouver la bonne commande avec l'aide
+# Challenge — Trouver la bonne commande avec l'aide
 
 Travaille dans **`challenge/work/`** — le fichier `donnees.txt` (5 lignes de log)
 y a été créé par `dsoxlab run`.
